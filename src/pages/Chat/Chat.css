@@ -1,0 +1,4 @@
+/* Chat Isolated Styles */
+.chat-thread-container {
+  height: calc(100vh - 140px);
+}

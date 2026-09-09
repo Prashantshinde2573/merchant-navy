@@ -1,0 +1,4 @@
+/* PostDetail Isolated Styles */
+.post-detail-container {
+  min-height: calc(100vh - 56px);
+}

@@ -1,0 +1,4 @@
+/* PostModal Styles */
+.backdrop-blur-xs {
+  backdrop-filter: blur(2px);
+}
