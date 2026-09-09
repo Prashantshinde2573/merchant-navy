@@ -7,20 +7,10 @@
 
 export const REQUIREMENT_QUESTIONS = [
   {
-    id: "scopeOfWork",
-    field: "scopeOfWork",
-    title: "Scope of Work",
-    question: "What requirement or job details do you need to post? (Describe what you are looking for)",
-    placeholder: "e.g., Multiple port services required for MV Indravati arriving next week...",
-    type: "textarea",
-    required: true,
-    helperText: "Share the details of your requirement. The first 2 lines will appear on the post preview."
-  },
-  {
     id: "services",
     field: "selectedServices",
-    title: "Services Required",
-    question: "Which services does this request apply to? (Select one or more)",
+    title: "Service Required",
+    question: "What service do you need from the merchant? Please select or describe the work you want to arrange.",
     type: "multi-select",
     required: false,
     options: [
@@ -37,13 +27,14 @@ export const REQUIREMENT_QUESTIONS = [
       "Sea Chest Grating Inspection",
       "Zinc Anode Inspection"
     ],
-    helperText: "You can select from the suggested services below or type your choice."
+    placeholder: "Type a service or pick from the options above...",
+    helperText: "You can select one or multiple services from the options, or type your custom requirement."
   },
   {
     id: "ports",
     field: "selectedPorts",
-    title: "Ports / Locations",
-    question: "Which port(s) or location is this request for?",
+    title: "Port / Location",
+    question: "Which port or ports does this requirement apply to?",
     type: "multi-select",
     required: false,
     options: [
@@ -63,26 +54,37 @@ export const REQUIREMENT_QUESTIONS = [
       "Rotterdam",
       "Fujairah"
     ],
-    helperText: "Select applicable port(s) or type the location."
+    placeholder: "Type a port name or pick from the options above...",
+    helperText: "Select one or more applicable ports, or type the specific port/anchorage."
   },
   {
-    id: "budget",
-    field: "budget",
-    title: "Budget & Currency",
-    question: "What is your estimated budget range and preferred currency for this work?",
-    type: "budget",
-    required: false,
-    currencies: ["USD", "INR", "AED", "EUR", "GBP"],
-    helperText: "Specify MIN and MAX amounts (e.g. 5000 - 8000 USD), or skip if open to quotes."
+    id: "scopeOfWork",
+    field: "scopeOfWork",
+    title: "Scope of Work",
+    question: "Please describe the work details and specific job requirements for the merchant.",
+    placeholder: "e.g., Vessel arriving next week. Need provisions, fresh water, and bunkering coordination at outer anchorage...",
+    type: "textarea",
+    required: true,
+    helperText: "Share the key details. The first 2 lines will be displayed on the post summary."
   },
   {
     id: "timeline",
     field: "timeline",
-    title: "Service Timeline",
-    question: "When is this service needed? Is it urgent (ASAP) or for a specific date window?",
+    title: "Timeline & Urgency",
+    question: "When is this service needed? Is this an urgent (ASAP) requirement?",
     type: "timing",
     required: false,
-    helperText: "Select ASAP or specify service dates (e.g. 09/09/2026 - 15/09/2026)."
+    helperText: "Choose ASAP for urgent delivery or specify the required service date window."
+  },
+  {
+    id: "budget",
+    field: "budget",
+    title: "Budget Range",
+    question: "What is your estimated budget range and preferred currency for this work?",
+    type: "budget",
+    required: false,
+    currencies: ["USD", "INR", "AED", "EUR", "GBP"],
+    helperText: "Specify MIN and MAX amounts (e.g. 4000 - 4500 USD), or skip if open to quotations."
   }
 ];
 

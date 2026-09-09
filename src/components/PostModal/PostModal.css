@@ -3,17 +3,65 @@
   backdrop-filter: blur(2px);
 }
 
+/* Modal Header and Close Button Positioning */
+.modal-header-container {
+  position: relative !important;
+}
+
+.modal-close-btn {
+  position: absolute !important;
+  top: 16px !important;
+  right: 20px !important;
+  left: auto !important;
+  z-index: 50 !important;
+}
+
+@media (max-width: 767px) {
+  .modal-close-btn {
+    top: 14px !important;
+    right: 16px !important;
+    left: auto !important;
+  }
+}
+
+/* AI Modal Fixed Height & Scroll Isolation */
+.ai-modal-fixed-height {
+  height: min(720px, calc(100dvh - 32px)) !important;
+  max-height: calc(100dvh - 32px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+
+#_r_19s_.ai-modal-body {
+  padding: 0 !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex: 1 1 0% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+}
+
 /* MOBILE ONLY */
 @media (max-width: 767px) {
-  section[role="dialog"] {
-    width: 96vw !important;
-    max-width: 96vw !important;
-    max-height: 94vh !important;
+  section[role="dialog"]#_r_19q_ {
+    width: calc(100vw - 16px) !important;
+    max-width: calc(100vw - 16px) !important;
+    max-height: 92vh !important;
+    margin: 8px auto !important;
+    border-radius: 16px !important;
+  }
+
+  .ai-modal-fixed-height {
+    height: calc(100dvh - 16px) !important;
+    max-height: calc(100dvh - 16px) !important;
     margin: 8px auto !important;
   }
 
-  #_r_19s_ {
+  #_r_19s_:not(.ai-modal-body) {
     padding: 12px !important;
+    max-height: calc(92vh - 140px) !important;
+    overflow-x: hidden !important;
   }
 
   /* Columns stack on mobile */
@@ -21,20 +69,11 @@
     max-width: 100% !important;
   }
 
-  /* Attachments & budget boxes stack vertically */
-  .flex.gap-3 > .w-1\/2 {
-    width: 100% !important;
-  }
-
-  /* Card padding inside modal */
-  .bg-content1.shadow-neutral-sm.rounded-lg.p-6 {
+  /* Card padding inside modal on mobile */
+  .bg-content1.shadow-neutral-sm.rounded-lg.p-4,
+  .bg-content1.shadow-neutral-sm.rounded-lg.p-6,
+  .bg-content1.shadow-neutral-sm.rounded-lg {
     padding: 14px !important;
-  }
-
-  /* Footer buttons */
-  footer.px-6.py-4 {
-    padding: 10px 14px !important;
-    flex-wrap: wrap !important;
   }
 }
 

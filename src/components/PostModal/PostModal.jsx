@@ -70,6 +70,17 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
     }
   }, [mode, scopeOfWork]);
 
+  // Lock background page scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const handleFileUpload = (e) => {
@@ -138,11 +149,10 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
       urgent: isAsap,
       title: content.split("\n")[0] || "Requirement",
       details: content,
-      ports: selectedPorts.length > 0 ? selectedPorts.join(", ") : "Chennai, Mumbai",
-      services: selectedServices.length > 0 ? selectedServices.join(", ") : "Bunkering Coordination, Compressed Air Utility",
-      budget: minBudget && maxBudget ? `${CURRENCY_SYMBOLS[currency]}${minBudget} - ${maxBudget}` : "$4K - 4.5K",
-      views: 1,
-      applied: false
+      services: selectedServices,
+      ports: selectedPorts,
+      budget: minBudget && maxBudget ? `${CURRENCY_SYMBOLS[currency]}${minBudget} - ${CURRENCY_SYMBOLS[currency]}${maxBudget}` : "Open for quotations",
+      timeline: isAsap ? "ASAP" : serviceDates
     };
 
     if (onPostCreated) {
@@ -171,14 +181,16 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
 
       {/* Modal Wrapper */}
       <div
-        className="flex w-screen fixed inset-0 z-50 overflow-x-auto justify-center h-full items-end sm:items-center"
+        className="flex w-screen fixed inset-0 z-50 overflow-x-hidden justify-center h-full items-end sm:items-center p-0 sm:p-4"
         data-slot="wrapper"
         onClick={onClose}
       >
         <section
           role="dialog"
           tabIndex="-1"
-          className="flex flex-col relative z-50 w-full box-border bg-content1 outline-solid outline-transparent mx-1 my-1 sm:mx-6 sm:my-16 rounded-large shadow-small overflow-y-hidden max-w-300"
+          className={`flex flex-col relative z-50 w-full box-border bg-content1 outline-solid outline-transparent mx-1 my-1 sm:mx-6 rounded-large shadow-small overflow-hidden max-w-300 ${
+            mode === "ai" ? "ai-modal-fixed-height" : "max-h-[calc(100vh-64px)] my-1 sm:my-8"
+          }`}
           id="_r_19q_"
           data-open="true"
           data-dismissable="true"
@@ -194,18 +206,23 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
           </div>
 
           {/* Modal Header */}
-          <div className="py-4 px-6 flex-initial text-large font-semibold border-default-100 shadow-neutral-sm flex items-center justify-between border-b" id="_r_19r_">
-            <div className="flex items-center gap-3">
-              <h2 className="text-content1-foreground text-xl leading-7 font-semibold">Post Your Requirements</h2>
-              {/* Mode Switcher: Manual vs AI Input */}
-              <div className="inline-flex items-center bg-blue-50 border border-blue-100 p-0.5 rounded-lg">
+          <div className="modal-header-container py-3.5 sm:py-4 px-4 sm:px-6 flex-initial border-default-100 shadow-neutral-sm flex flex-col sm:flex-row sm:items-center sm:justify-between border-b gap-3 sm:gap-4 bg-content1 shrink-0" id="_r_19r_" style={{ position: "relative" }}>
+            <div className="flex items-center pr-12 sm:pr-0">
+              <h2 className="text-content1-foreground text-lg sm:text-xl leading-6 sm:leading-7 font-semibold">
+                Post Your Requirements
+              </h2>
+            </div>
+
+            <div className="flex items-center justify-center sm:justify-end sm:pr-12 w-full sm:w-auto">
+              {/* Modern Segmented Toggle: ALWAYS visible in both modes with clear active blue background */}
+              <div className="inline-flex items-center bg-default-100 border border-default-200 p-1 rounded-full w-full sm:w-auto justify-center sm:justify-start gap-1 shadow-2xs">
                 <button
                   type="button"
                   onClick={() => setMode("manual")}
-                  className={`text-xs px-2.5 py-1 rounded-md font-medium transition-all cursor-pointer ${
+                  className={`text-xs px-4 py-1.5 rounded-full transition-all cursor-pointer flex-1 sm:flex-none text-center whitespace-nowrap ${
                     mode === "manual"
-                      ? "bg-white text-primary shadow-xs font-semibold"
-                      : "text-zinc-600 hover:text-zinc-900 bg-transparent"
+                      ? "bg-primary text-primary-foreground shadow-xs font-semibold"
+                      : "text-default-700 hover:text-default-900 bg-transparent font-medium"
                   }`}
                 >
                   Manual Form
@@ -213,10 +230,10 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                 <button
                   type="button"
                   onClick={() => setMode("ai")}
-                  className={`text-xs px-2.5 py-1 rounded-md font-medium transition-all flex items-center gap-1 cursor-pointer ${
+                  className={`text-xs px-4 py-1.5 rounded-full transition-all flex items-center justify-center gap-1.5 cursor-pointer flex-1 sm:flex-none text-center whitespace-nowrap ${
                     mode === "ai"
-                      ? "bg-primary text-white shadow-xs font-semibold"
-                      : "text-blue-700 hover:text-blue-900 bg-transparent"
+                      ? "bg-primary text-primary-foreground shadow-xs font-semibold"
+                      : "text-primary hover:text-blue-900 bg-transparent font-medium"
                   }`}
                 >
                   <span>✨ AI Input</span>
@@ -224,25 +241,23 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
               </div>
             </div>
 
-            <span className="flex items-center gap-16">
-              <button
-                type="button"
-                tabIndex="0"
-                onClick={onClose}
-                aria-label="Close"
-                data-react-aria-pressable="true"
-                className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 text-small gap-2 rounded-medium px-0 !gap-0 transition-transform-colors-opacity motion-reduce:transition-none text-default-foreground data-[hover=true]:bg-default/40 min-w-10 h-8 w-8 max-w-8 bg-blue-50"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x stroke-4 text-zinc-400" aria-hidden="true">
-                  <path d="M18 6 6 18"></path>
-                  <path d="m6 6 12 12"></path>
-                </svg>
-              </button>
-            </span>
+            {/* Single Guaranteed Close Button in Header - ALWAYS TOP RIGHT */}
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close"
+              className="modal-close-btn inline-flex items-center justify-center rounded-lg h-8 w-8 bg-default-100 text-default-500 hover:text-default-800 hover:bg-default-200 transition-colors cursor-pointer shrink-0"
+              style={{ position: "absolute", top: "16px", right: "20px", left: "auto", zIndex: 50 }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x" aria-hidden="true">
+                <path d="M18 6 6 18"></path>
+                <path d="m6 6 12 12"></path>
+              </svg>
+            </button>
           </div>
 
           {/* Modal Content Body */}
-          <div className="flex flex-1 flex-col gap-3 bg-blue-25 p-6 max-h-[calc(90vh-140px)] overflow-y-auto" id="_r_19s_">
+          <div className={`flex flex-1 min-h-0 flex-col ${mode === "ai" ? "ai-modal-body p-0 overflow-hidden bg-content1" : "bg-blue-25 p-4 sm:p-6 max-h-[calc(90vh-140px)] overflow-y-auto"}`} id="_r_19s_">
             {mode === "ai" ? (
               /* AI Guided Conversational Input Mode */
               <PostRequirementAI
@@ -266,7 +281,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                   {/* Left Column */}
                   <div className="flex flex-1 flex-col gap-3">
                     {/* Scope of work */}
-                    <div className="bg-content1 shadow-neutral-sm rounded-lg p-6">
+                    <div className="bg-content1 shadow-neutral-sm rounded-lg p-4 sm:p-6">
                       <div className="mb-4 flex flex-col gap-0.5">
                         <div className="flex items-center gap-2">
                           <div className="shrink-0">
@@ -325,10 +340,10 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                       </div>
                     </div>
 
-                    {/* Attachments & Budget row */}
-                    <div className="flex gap-3">
+                    {/* Attachments & Budget row (Vertical on mobile, Side-by-side on desktop) */}
+                    <div className="flex flex-col sm:flex-row gap-3">
                       {/* Attachments */}
-                      <div className="bg-content1 shadow-neutral-sm rounded-lg p-6 h-fit w-1/2">
+                      <div className="bg-content1 shadow-neutral-sm rounded-lg p-4 sm:p-6 h-fit w-full sm:w-1/2">
                         <div className="mb-4 flex flex-col gap-0.5">
                           <div className="flex items-center gap-2">
                             <div className="shrink-0">
@@ -362,57 +377,55 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                       </div>
 
                       {/* Budget */}
-                      <div className="bg-content1 shadow-neutral-sm rounded-lg p-6 relative w-1/2">
-                        <div className="mb-4 flex flex-col gap-0.5">
-                          <div className="flex items-center gap-2">
-                            <div className="shrink-0">
-                              <i className="material-symbols-outlined h-4 w-4 text-base text-blue-700">attach_money</i>
+                      <div className="bg-content1 shadow-neutral-sm rounded-lg p-4 sm:p-6 relative w-full sm:w-1/2">
+                        <div className="mb-4 flex items-start justify-between gap-2">
+                          <div className="flex flex-col gap-0.5 min-w-0 flex-1">
+                            <div className="flex items-center gap-2">
+                              <div className="shrink-0">
+                                <i className="material-symbols-outlined h-4 w-4 text-base text-blue-700">attach_money</i>
+                              </div>
+                              <h3 className="text-content1-foreground text-base leading-6 font-semibold">Budget</h3>
                             </div>
-                            <h3 className="text-content1-foreground text-base leading-6 font-semibold">Budget</h3>
+                            <p className="text-modified-13 text-zinc-500">Specify the budget for the project.</p>
                           </div>
-                          <p className="text-modified-13 text-zinc-500">Specify the budget for the project.</p>
+
+                          {/* Currency Selector */}
+                          <div className="relative shrink-0 w-22">
+                            <button
+                              data-slot="trigger"
+                              className="relative px-2.5 gap-1.5 w-full inline-flex flex-row items-center justify-between shadow-xs outline-solid outline-transparent tap-highlight-transparent h-9 min-h-9 rounded-medium transition-colors border border-blue-100 bg-white cursor-pointer"
+                              type="button"
+                              onClick={() => setIsCurrencyOpen(!isCurrencyOpen)}
+                            >
+                              <span className="text-foreground-500 font-medium text-xs truncate">
+                                {currency}
+                              </span>
+                              <svg aria-hidden="true" fill="none" height="1em" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="1em" className={`w-3.5 h-3.5 transition-transform duration-150 ${isCurrencyOpen ? "rotate-180" : ""}`}>
+                                <path d="m6 9 6 6 6-6"></path>
+                              </svg>
+                            </button>
+
+                            {isCurrencyOpen && (
+                              <div className="absolute right-0 top-10 w-24 bg-white rounded-medium shadow-medium border border-blue-100 py-1 z-50">
+                                {Object.keys(CURRENCY_SYMBOLS).map((curr) => (
+                                  <button
+                                    key={curr}
+                                    type="button"
+                                    onClick={() => {
+                                      setCurrency(curr);
+                                      setIsCurrencyOpen(false);
+                                    }}
+                                    className={`w-full text-left px-3 py-1.5 text-xs hover:bg-blue-50 ${currency === curr ? "font-bold text-primary bg-blue-25" : "text-gray-700"}`}
+                                  >
+                                    {curr}
+                                  </button>
+                                ))}
+                              </div>
+                            )}
+                          </div>
                         </div>
 
                         <div className="flex flex-col gap-3">
-                          {/* Currency Selector */}
-                          <div data-slot="base" data-filled="true" data-has-value="true" className="group flex flex-col w-full transition-background motion-reduce:transition-none !duration-150 justify-end absolute top-4 right-6 max-w-22">
-                            <div className="relative">
-                              <button
-                                data-slot="trigger"
-                                className="relative px-3 gap-3 w-full inline-flex flex-row items-center justify-between shadow-xs outline-solid outline-transparent tap-highlight-transparent h-10 min-h-10 rounded-medium transition-colors border border-blue-100 bg-white cursor-pointer"
-                                type="button"
-                                onClick={() => setIsCurrencyOpen(!isCurrencyOpen)}
-                              >
-                                <div data-slot="innerWrapper" className="inline-flex h-fit w-[calc(100%_-theme(spacing.6))] min-h-4 items-center gap-1.5 box-border">
-                                  <span data-slot="value" className="text-foreground-500 font-normal w-full text-start text-small truncate">
-                                    {currency}
-                                  </span>
-                                </div>
-                                <svg aria-hidden="true" fill="none" height="1em" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="1em" data-slot="selectorIcon" className={`w-4 h-4 transition-transform duration-150 ${isCurrencyOpen ? "rotate-180" : ""}`}>
-                                  <path d="m6 9 6 6 6-6"></path>
-                                </svg>
-                              </button>
-
-                              {isCurrencyOpen && (
-                                <div className="absolute right-0 top-11 w-24 bg-white rounded-medium shadow-medium border border-blue-100 py-1 z-50">
-                                  {Object.keys(CURRENCY_SYMBOLS).map((curr) => (
-                                    <button
-                                      key={curr}
-                                      type="button"
-                                      onClick={() => {
-                                        setCurrency(curr);
-                                        setIsCurrencyOpen(false);
-                                      }}
-                                      className={`w-full text-left px-3 py-1.5 text-xs hover:bg-blue-50 ${currency === curr ? "font-bold text-primary bg-blue-25" : "text-gray-700"}`}
-                                    >
-                                      {curr}
-                                    </button>
-                                  ))}
-                                </div>
-                              )}
-                            </div>
-                          </div>
-
                           {/* MIN input */}
                           <div className="group flex flex-col w-full relative justify-end" data-slot="base" data-filled="true" data-filled-within="true">
                             <div data-slot="main-wrapper" className="h-full flex flex-col">
@@ -464,7 +477,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                   {/* Right Column */}
                   <div className="flex max-w-100 flex-1 flex-col gap-3">
                     {/* Services */}
-                    <div className="bg-content1 shadow-neutral-sm rounded-lg p-6 relative">
+                    <div className="bg-content1 shadow-neutral-sm rounded-lg p-4 sm:p-6 relative">
                       <div className="mb-4 flex flex-col gap-0.5">
                         <div className="flex items-center gap-2">
                           <div className="shrink-0">
@@ -485,7 +498,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                       </div>
 
                       {isServicesOpen && (
-                        <div className="absolute left-6 right-6 top-full mt-1 bg-white rounded-medium shadow-medium border border-blue-100 p-3 z-50 max-h-48 overflow-y-auto">
+                        <div className="absolute left-4 sm:left-6 right-4 sm:right-6 top-full mt-1 bg-white rounded-medium shadow-medium border border-blue-100 p-3 z-50 max-h-48 overflow-y-auto">
                           <div className="grid grid-cols-1 gap-1">
                             {AVAILABLE_SERVICES.map(service => (
                               <label key={service} className="flex items-center gap-2 p-1.5 hover:bg-blue-50 rounded cursor-pointer text-xs">
@@ -504,7 +517,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                     </div>
 
                     {/* Ports */}
-                    <div className="bg-content1 shadow-neutral-sm rounded-lg p-6 relative">
+                    <div className="bg-content1 shadow-neutral-sm rounded-lg p-4 sm:p-6 relative">
                       <div className="mb-4 flex flex-col gap-0.5">
                         <div className="flex items-center gap-2">
                           <div className="shrink-0">
@@ -525,7 +538,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                       </div>
 
                       {isPortsOpen && (
-                        <div className="absolute left-6 right-6 top-full mt-1 bg-white rounded-medium shadow-medium border border-blue-100 p-3 z-50 max-h-48 overflow-y-auto">
+                        <div className="absolute left-4 sm:left-6 right-4 sm:right-6 top-full mt-1 bg-white rounded-medium shadow-medium border border-blue-100 p-3 z-50 max-h-48 overflow-y-auto">
                           <div className="grid grid-cols-1 gap-1">
                             {AVAILABLE_PORTS.map(port => (
                               <label key={port} className="flex items-center gap-2 p-1.5 hover:bg-blue-50 rounded cursor-pointer text-xs">
@@ -544,7 +557,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                     </div>
 
                     {/* Needed by */}
-                    <div className="bg-content1 shadow-neutral-sm rounded-lg p-6">
+                    <div className="bg-content1 shadow-neutral-sm rounded-lg p-4 sm:p-6">
                       <div className="mb-4 flex flex-col gap-0.5">
                         <div className="flex items-center gap-2">
                           <h3 className="text-content1-foreground text-base leading-6 font-semibold">Needed by</h3>
@@ -570,41 +583,43 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                             className={`z-10 flex items-center justify-center bg-white shadow-small rounded-full w-5 h-5 text-small transition-all ${isAsap ? "ms-5" : "ms-0"}`}
                           ></span>
                         </span>
-                        <span className="relative text-foreground select-none ms-2 text-medium">ASAP</span>
+                        <span className="relative text-foreground select-none ms-2 text-medium font-medium">ASAP</span>
                       </label>
 
-                      {/* Service Dates */}
-                      <div className="relative" style={{ display: "block" }}>
-                        <div className="group flex flex-col w-full is-filled" data-slot="base" data-filled="true" data-filled-within="true" data-has-elements="true" data-has-label="true" data-has-value="true">
-                          <div
-                            data-slot="input-wrapper"
-                            className="relative w-full inline-flex tap-highlight-transparent shadow-xs px-3 bg-default-100 hover:bg-default-200 min-h-10 rounded-medium flex-col items-start justify-center gap-0 transition-background !duration-150 outline-none outline-transparent border-0 h-14 py-2 is-filled"
-                            style={{ cursor: "text" }}
-                          >
-                            <label
-                              data-slot="label"
-                              className="block text-foreground-500 text-xs font-normal pe-2 max-w-full text-ellipsis overflow-hidden pointer-events-none"
+                      {/* Service Dates - completely hidden when ASAP is ON */}
+                      {!isAsap && (
+                        <div className="relative" style={{ display: "block" }}>
+                          <div className="group flex flex-col w-full is-filled" data-slot="base" data-filled="true" data-filled-within="true" data-has-elements="true" data-has-label="true" data-has-value="true">
+                            <div
+                              data-slot="input-wrapper"
+                              className="relative w-full inline-flex tap-highlight-transparent shadow-xs px-3 bg-default-100 hover:bg-default-200 min-h-10 rounded-medium flex-col items-start justify-center gap-0 transition-background !duration-150 outline-none outline-transparent border-0 h-14 py-2 is-filled"
+                              style={{ cursor: "text" }}
                             >
-                              Service dates
-                            </label>
-                            <div data-slot="inner-wrapper" className="inline-flex w-full items-center h-full box-border pb-0.5">
-                              <input
-                                data-slot="input"
-                                className="w-full font-normal bg-transparent outline-none focus:outline-none focus:ring-0 border-0 text-small text-default-foreground is-filled p-0 m-0 shadow-none ring-0"
-                                type="text"
-                                value={serviceDates}
-                                onChange={(e) => setServiceDates(e.target.value)}
-                              />
-                              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-calendar text-foreground-400 shrink-0" aria-hidden="true">
-                                <path d="M8 2v4"></path>
-                                <path d="M16 2v4"></path>
-                                <rect width="18" height="18" x="3" y="4" rx="2"></rect>
-                                <path d="M3 10h18"></path>
-                              </svg>
+                              <label
+                                data-slot="label"
+                                className="block text-foreground-500 text-xs font-normal pe-2 max-w-full text-ellipsis overflow-hidden pointer-events-none"
+                              >
+                                Service dates
+                              </label>
+                              <div data-slot="inner-wrapper" className="inline-flex w-full items-center h-full box-border pb-0.5">
+                                <input
+                                  data-slot="input"
+                                  className="w-full font-normal bg-transparent outline-none focus:outline-none focus:ring-0 border-0 text-small text-default-foreground is-filled p-0 m-0 shadow-none ring-0"
+                                  type="text"
+                                  value={serviceDates}
+                                  onChange={(e) => setServiceDates(e.target.value)}
+                                />
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-calendar text-foreground-400 shrink-0" aria-hidden="true">
+                                  <path d="M8 2v4"></path>
+                                  <path d="M16 2v4"></path>
+                                  <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                                  <path d="M3 10h18"></path>
+                                </svg>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -613,34 +628,36 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
           </div>
 
           {/* Modal Footer */}
-          <footer className="flex flex-row gap-2 px-6 py-4 justify-end border-t border-default-100 bg-content1">
+          <footer className="flex flex-col-reverse sm:flex-row gap-2 px-4 sm:px-6 py-3 sm:py-4 justify-end border-t border-default-100 bg-content1">
             <button
               type="button"
               tabIndex="0"
               onClick={onClose}
               data-react-aria-pressable="true"
-              className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent px-4 min-w-20 h-10 text-small gap-2 rounded-medium [&>svg]:max-w-[theme(spacing.8)] transition-transform-colors-opacity motion-reduce:transition-none bg-transparent text-default-foreground data-[hover=true]:bg-default/40 hover:bg-default/40"
+              className="w-full sm:w-auto z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent px-4 min-w-20 h-10 text-small gap-2 rounded-medium [&>svg]:max-w-[theme(spacing.8)] transition-transform-colors-opacity motion-reduce:transition-none bg-transparent text-default-foreground data-[hover=true]:bg-default/40 hover:bg-default/40"
             >
               Cancel
             </button>
-            <button
-              type="button"
-              tabIndex="0"
-              onClick={handleSaveDraft}
-              data-react-aria-pressable="true"
-              className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent px-4 min-w-20 h-10 text-small gap-2 rounded-medium [&>svg]:max-w-[theme(spacing.8)] transition-transform-colors-opacity motion-reduce:transition-none bg-default text-default-foreground data-[hover=true]:opacity-hover hover:opacity-80"
-            >
-              Save Draft
-            </button>
-            <button
-              type="button"
-              tabIndex="0"
-              onClick={handlePublish}
-              data-react-aria-pressable="true"
-              className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent px-4 min-w-20 h-10 text-small gap-2 rounded-medium transition-transform-colors-opacity motion-reduce:transition-none bg-primary text-primary-foreground data-[hover=true]:opacity-hover hover:opacity-80"
-            >
-              Publish Request
-            </button>
+            <div className="flex items-center gap-2 w-full sm:w-auto">
+              <button
+                type="button"
+                tabIndex="0"
+                onClick={handleSaveDraft}
+                data-react-aria-pressable="true"
+                className="flex-1 sm:flex-none z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent px-4 min-w-20 h-10 text-small gap-2 rounded-medium [&>svg]:max-w-[theme(spacing.8)] transition-transform-colors-opacity motion-reduce:transition-none bg-default text-default-foreground data-[hover=true]:opacity-hover hover:opacity-80"
+              >
+                Save Draft
+              </button>
+              <button
+                type="button"
+                tabIndex="0"
+                onClick={handlePublish}
+                data-react-aria-pressable="true"
+                className="flex-1 sm:flex-none z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-semibold subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent px-4 min-w-20 h-10 text-small gap-2 rounded-medium transition-transform-colors-opacity motion-reduce:transition-none bg-primary text-primary-foreground data-[hover=true]:opacity-hover hover:opacity-80 shadow-sm"
+              >
+                Publish Request
+              </button>
+            </div>
           </footer>
 
           {/* Bottom Accessibility Button */}

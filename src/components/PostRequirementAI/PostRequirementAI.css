@@ -2,23 +2,36 @@
 .ai-requirement-container {
   display: flex;
   flex-direction: column;
+  height: 100%;
+  width: 100%;
+  min-height: 0;
   animation: fadeIn 0.15s ease-out;
 }
 
-.ai-chat-body::-webkit-scrollbar {
+.ai-chat-body {
+  flex: 1 1 0%;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.ai-chat-body::-webkit-scrollbar,
+.ai-interactive-footer div::-webkit-scrollbar {
   width: 4px;
 }
 
-.ai-chat-body::-webkit-scrollbar-track {
+.ai-chat-body::-webkit-scrollbar-track,
+.ai-interactive-footer div::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.ai-chat-body::-webkit-scrollbar-thumb {
+.ai-chat-body::-webkit-scrollbar-thumb,
+.ai-interactive-footer div::-webkit-scrollbar-thumb {
   background: #e4e4e7;
   border-radius: 4px;
 }
 
-.ai-chat-body::-webkit-scrollbar-thumb:hover {
+.ai-chat-body::-webkit-scrollbar-thumb:hover,
+.ai-interactive-footer div::-webkit-scrollbar-thumb:hover {
   background: #d4d4d8;
 }
 
@@ -35,8 +48,13 @@
 
 /* MOBILE ONLY */
 @media (max-width: 767px) {
+  .ai-requirement-container {
+    min-height: 0 !important;
+  }
   .ai-chat-body {
-    max-height: 48vh !important;
+    flex: 1 1 0% !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
   }
 }
 

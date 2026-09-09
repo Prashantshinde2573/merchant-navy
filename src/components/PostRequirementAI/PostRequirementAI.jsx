@@ -193,72 +193,83 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
   };
 
   return (
-    <div className="ai-requirement-container flex flex-col h-full min-h-[460px] bg-white rounded-lg border border-blue-50 overflow-hidden shadow-neutral-sm">
+    <div className="ai-requirement-container flex flex-col h-full w-full min-h-0 bg-content1 overflow-hidden">
       {/* AI Assistant Header / Progress Bar */}
-      <div className="ai-header px-6 py-3 bg-blue-50/70 border-b border-blue-100 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">
+      <div className="ai-header px-4 sm:px-6 py-3.5 bg-content1 border-b border-default-100 flex items-center justify-between gap-3 shrink-0">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold shrink-0 shadow-xs">
             AI
           </div>
-          <div>
-            <h4 className="text-sm font-semibold text-zinc-800 flex items-center gap-1.5">
-              <span>AI Form Filling Assistant</span>
-              <span className="text-[11px] font-normal px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">
+          <div className="flex flex-col gap-0.5">
+            <div className="flex items-center gap-2">
+              <h3 className="text-content1-foreground text-base leading-6 font-semibold">
+                AI Form Filling Assistant
+              </h3>
+              <span className="text-tiny font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 leading-none">
                 Step {Math.min(currentIndex + 1, REQUIREMENT_QUESTIONS.length)} of {REQUIREMENT_QUESTIONS.length}
               </span>
-            </h4>
-            <p className="text-[11px] text-zinc-500">
+            </div>
+            <p className="text-modified-13 text-zinc-500">
               {currentQ ? currentQ.title : "Completing Form"}
             </p>
           </div>
         </div>
-
-        <button
-          type="button"
-          onClick={onCancel}
-          className="text-xs font-medium text-zinc-500 hover:text-zinc-800 px-2.5 py-1 rounded hover:bg-zinc-200/50 transition-colors border border-zinc-200 bg-white"
-        >
-          Switch to Manual Form
-        </button>
       </div>
 
-      {/* Message Stream */}
-      <div className="ai-chat-body flex-1 p-5 overflow-y-auto space-y-4 max-h-[320px] bg-zinc-50/50">
-        {messages.map((msg) => (
-          <div
-            key={msg.id}
-            className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
-          >
-            {msg.sender === "ai" && (
-              <div className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px] font-semibold shrink-0 mr-2 mt-1">
-                AI
-              </div>
-            )}
+      {/* Message Stream — ONLY THIS AREA SCROLLS */}
+      <div className="ai-chat-body flex-1 min-h-0 p-4 sm:p-6 overflow-y-auto space-y-3.5 bg-blue-25/40">
+        {messages.map((msg, index) => {
+          const isLatest = index === messages.length - 1;
+          const isAI = msg.sender === "ai";
+
+          return (
             <div
-              className={`max-w-[80%] rounded-xl px-4 py-2.5 text-xs sm:text-sm leading-relaxed whitespace-pre-wrap ${
-                msg.sender === "user"
-                  ? "bg-primary text-white rounded-br-none shadow-sm"
-                  : "bg-white text-zinc-800 border border-blue-100 rounded-bl-none shadow-sm"
-              }`}
+              key={msg.id}
+              className={`flex flex-col ${isAI ? "items-start" : "items-end"}`}
             >
-              {msg.text}
+              {/* Sender Label */}
+              <div className={`text-tiny font-medium mb-1 px-1 flex items-center gap-1.5 ${isAI ? "text-blue-700 font-semibold" : "text-zinc-500"}`}>
+                {isAI ? (
+                  <>
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-600 inline-block"></span>
+                    <span>AI Assistant</span>
+                  </>
+                ) : (
+                  <span>You</span>
+                )}
+              </div>
+
+              {/* Message Bubble */}
+              <div className={`flex ${isAI ? "justify-start" : "justify-end"} w-full`}>
+                <div
+                  className={`max-w-[92%] sm:max-w-[85%] rounded-lg px-4 py-3 text-small leading-relaxed whitespace-pre-wrap break-words ${
+                    isAI
+                      ? isLatest
+                        ? "bg-content1 text-content1-foreground border border-foreground-200 shadow-neutral-sm font-medium"
+                        : "bg-default-100 text-default-600 border border-default-200"
+                      : "bg-primary text-primary-foreground font-medium shadow-xs"
+                  }`}
+                >
+                  {msg.text}
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Interactive Input Area */}
+      {/* Interactive Input Area — FIXED AT BOTTOM OF AI SECTION */}
       {!isFinishing && currentQ && (
-        <div className="ai-interactive-footer p-4 border-t border-blue-100 bg-white">
+        <div className="ai-interactive-footer p-4 sm:p-6 border-t border-default-100 bg-content1 space-y-3.5 shrink-0">
           {/* Helper Text */}
           {currentQ.helperText && (
-            <p className="text-[11px] text-zinc-400 mb-2">{currentQ.helperText}</p>
+            <p className="text-modified-13 text-zinc-500 px-1">{currentQ.helperText}</p>
           )}
 
           {/* Type: Multi-Select (Chips for Services / Ports) */}
           {currentQ.type === "multi-select" && currentQ.options && (
-            <div className="mb-3 max-h-32 overflow-y-auto flex flex-wrap gap-1.5 p-1 bg-zinc-50 rounded-md border border-zinc-200">
+            <div className="max-h-44 overflow-y-auto flex flex-wrap gap-2.5 sm:gap-3 p-4 sm:p-5 bg-content1 rounded-lg border border-foreground-200">
               {currentQ.options.map((opt) => {
                 const isSelected = selectedChips.includes(opt);
                 return (
@@ -266,14 +277,14 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
                     key={opt}
                     type="button"
                     onClick={() => toggleChip(opt)}
-                    className={`text-xs px-2.5 py-1 rounded-full border transition-all cursor-pointer ${
+                    className={`text-xs px-4 sm:px-5 py-2 rounded-full border transition-all cursor-pointer font-medium leading-normal inline-flex items-center gap-2 break-words text-left max-w-full ${
                       isSelected
-                        ? "bg-primary text-white border-primary font-medium shadow-xs"
-                        : "bg-white text-zinc-700 border-zinc-200 hover:border-blue-300 hover:bg-blue-50/50"
+                        ? "bg-primary text-primary-foreground border-primary font-semibold shadow-xs"
+                        : "bg-white text-default-700 border-default-200 hover:border-blue-300 hover:bg-blue-50/40 hover:text-blue-700"
                     }`}
                   >
-                    {isSelected ? "✓ " : "+ "}
-                    {opt}
+                    <span className="font-bold text-xs shrink-0">{isSelected ? "✓" : "+"}</span>
+                    <span>{opt}</span>
                   </button>
                 );
               })}
@@ -282,11 +293,11 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
 
           {/* Type: Budget Input */}
           {currentQ.type === "budget" && (
-            <div className="mb-3 flex flex-wrap items-center gap-2 p-2 bg-zinc-50 rounded-md border border-zinc-200">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 p-3 bg-content1 rounded-lg border border-foreground-200">
               <select
                 value={budgetState.currency}
                 onChange={(e) => setBudgetState({ ...budgetState, currency: e.target.value })}
-                className="text-xs bg-white border border-zinc-300 rounded px-2 py-1.5 text-zinc-700 font-semibold focus:outline-none"
+                className="text-xs bg-white border border-blue-100 rounded-medium px-3 py-2 text-foreground-500 font-medium focus:outline-none focus:border-primary w-full sm:w-auto cursor-pointer h-10 shadow-xs"
               >
                 {currentQ.currencies.map((c) => (
                   <option key={c} value={c}>
@@ -295,64 +306,84 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
                 ))}
               </select>
 
-              <div className="flex items-center gap-1.5 flex-1">
-                <input
-                  type="number"
-                  placeholder="Min Budget"
-                  value={budgetState.minBudget}
-                  onChange={(e) => setBudgetState({ ...budgetState, minBudget: e.target.value })}
-                  className="w-1/2 text-xs bg-white border border-zinc-300 rounded px-2.5 py-1.5 text-zinc-800 placeholder:text-zinc-400 focus:outline-none focus:border-blue-500"
-                />
-                <span className="text-zinc-400 text-xs">-</span>
-                <input
-                  type="number"
-                  placeholder="Max Budget"
-                  value={budgetState.maxBudget}
-                  onChange={(e) => setBudgetState({ ...budgetState, maxBudget: e.target.value })}
-                  className="w-1/2 text-xs bg-white border border-zinc-300 rounded px-2.5 py-1.5 text-zinc-800 placeholder:text-zinc-400 focus:outline-none focus:border-blue-500"
-                />
+              <div className="flex items-center gap-2.5 flex-1 min-w-0">
+                <div className="relative w-1/2 min-w-0 inline-flex items-center shadow-xs px-3 h-10 rounded-large border border-blue-100 bg-white">
+                  <span className="text-foreground-500 text-sm font-medium mr-1.5">{CURRENCY_SYMBOLS[budgetState.currency]}</span>
+                  <input
+                    type="number"
+                    placeholder="MIN"
+                    value={budgetState.minBudget}
+                    onChange={(e) => setBudgetState({ ...budgetState, minBudget: e.target.value })}
+                    className="w-full bg-transparent outline-none border-0 text-sm text-default-foreground font-medium placeholder:text-zinc-500"
+                  />
+                </div>
+                <span className="text-zinc-400 text-xs shrink-0 font-medium">-</span>
+                <div className="relative w-1/2 min-w-0 inline-flex items-center shadow-xs px-3 h-10 rounded-large border border-blue-100 bg-white">
+                  <span className="text-foreground-500 text-sm font-medium mr-1.5">{CURRENCY_SYMBOLS[budgetState.currency]}</span>
+                  <input
+                    type="number"
+                    placeholder="MAX"
+                    value={budgetState.maxBudget}
+                    onChange={(e) => setBudgetState({ ...budgetState, maxBudget: e.target.value })}
+                    className="w-full bg-transparent outline-none border-0 text-sm text-default-foreground font-medium placeholder:text-zinc-500"
+                  />
+                </div>
               </div>
             </div>
           )}
 
           {/* Type: Timing / Timeline Input */}
           {currentQ.type === "timing" && (
-            <div className="mb-3 flex items-center gap-3 p-2 bg-zinc-50 rounded-md border border-zinc-200">
-              <button
-                type="button"
-                onClick={() => setTimelineState({ ...timelineState, isAsap: !timelineState.isAsap })}
-                className={`text-xs px-3 py-1.5 rounded-md font-semibold transition-colors flex items-center gap-1.5 cursor-pointer border ${
-                  timelineState.isAsap
-                    ? "bg-danger-500 text-white border-danger-500 shadow-xs"
-                    : "bg-white text-zinc-700 border-zinc-300 hover:bg-zinc-100"
-                }`}
-              >
-                <span>⚡ ASAP</span>
-                {timelineState.isAsap && <span>(Active)</span>}
-              </button>
-
-              <div className="flex-1 flex items-center gap-1.5">
-                <span className="text-xs text-zinc-500 whitespace-nowrap">Dates:</span>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 p-3 bg-content1 rounded-lg border border-foreground-200">
+              {/* ASAP Switch matching Manual Form */}
+              <label className="group relative max-w-fit inline-flex items-center justify-start cursor-pointer select-none shrink-0" data-selected={timelineState.isAsap}>
                 <input
-                  type="text"
-                  value={timelineState.serviceDates}
-                  disabled={timelineState.isAsap}
-                  onChange={(e) => setTimelineState({ ...timelineState, serviceDates: e.target.value })}
-                  placeholder="DD/MM/YYYY - DD/MM/YYYY"
-                  className={`w-full text-xs bg-white border border-zinc-300 rounded px-2.5 py-1.5 text-zinc-800 focus:outline-none ${
-                    timelineState.isAsap ? "opacity-50 cursor-not-allowed bg-zinc-100" : "focus:border-blue-500"
-                  }`}
+                  aria-label="ASAP"
+                  role="switch"
+                  className="sr-only"
+                  type="checkbox"
+                  checked={timelineState.isAsap}
+                  onChange={(e) => setTimelineState({ ...timelineState, isAsap: e.target.checked })}
                 />
-              </div>
+                <span
+                  aria-hidden="true"
+                  className={`px-1 relative inline-flex items-center justify-start shrink-0 overflow-hidden rounded-full w-12 h-7 transition-background ${timelineState.isAsap ? "bg-primary" : "bg-default-200"}`}
+                >
+                  <span
+                    className={`z-10 flex items-center justify-center bg-white shadow-small rounded-full w-5 h-5 transition-all ${timelineState.isAsap ? "ms-5" : "ms-0"}`}
+                  ></span>
+                </span>
+                <span className="relative text-foreground select-none ms-2 text-small font-medium">ASAP</span>
+              </label>
+
+              {!timelineState.isAsap && (
+                <div className="flex-1 flex items-center gap-2.5 min-w-0">
+                  <div className="relative w-full inline-flex items-center shadow-xs px-3 h-10 rounded-medium bg-default-100 hover:bg-default-200 transition-colors">
+                    <input
+                      type="text"
+                      value={timelineState.serviceDates}
+                      onChange={(e) => setTimelineState({ ...timelineState, serviceDates: e.target.value })}
+                      placeholder="DD/MM/YYYY - DD/MM/YYYY"
+                      className="w-full bg-transparent outline-none border-0 text-small text-default-foreground"
+                    />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-foreground-400 shrink-0">
+                      <path d="M8 2v4"></path>
+                      <path d="M16 2v4"></path>
+                      <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                      <path d="M3 10h18"></path>
+                    </svg>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
-          {/* Free-form Input + Submit / Continue Buttons */}
-          <div className="flex items-center gap-2">
+          {/* Free-form Input + Actions */}
+          <div className="space-y-3.5">
             {currentQ.type === "textarea" ? (
               <textarea
                 ref={inputRef}
-                rows={2}
+                rows={3}
                 value={textInput}
                 onChange={(e) => setTextInput(e.target.value)}
                 onKeyDown={(e) => {
@@ -362,7 +393,7 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
                   }
                 }}
                 placeholder={currentQ.placeholder || "Type your response here..."}
-                className="flex-1 text-xs sm:text-sm bg-zinc-50 border border-zinc-300 rounded-lg p-2.5 text-zinc-800 placeholder:text-zinc-400 focus:outline-none focus:border-blue-500 focus:bg-white resize-none transition-colors"
+                className="w-full text-small bg-content1 border border-foreground-200 rounded-lg p-3 text-default-foreground placeholder:text-zinc-500 focus:outline-none focus:border-primary resize-none transition-colors leading-relaxed"
               />
             ) : (
               <input
@@ -376,41 +407,46 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
                     handleNext();
                   }
                 }}
-                placeholder="Or type a custom answer..."
-                className="flex-1 text-xs sm:text-sm bg-zinc-50 border border-zinc-300 rounded-lg px-3 py-2 text-zinc-800 placeholder:text-zinc-400 focus:outline-none focus:border-blue-500 focus:bg-white transition-colors"
+                placeholder={currentQ.placeholder || "Or type a custom answer..."}
+                className="w-full text-small bg-content1 border border-foreground-200 rounded-lg px-3.5 text-default-foreground placeholder:text-zinc-500 focus:outline-none focus:border-primary transition-colors h-10"
               />
             )}
 
-            {!currentQ.required && (
+            {/* Skip & Next Action Buttons matching Manual Form */}
+            <div className="flex items-center justify-between gap-3 pt-1">
+              {!currentQ.required ? (
+                <button
+                  type="button"
+                  onClick={() => handleNext(currentQ.type === "multi-select" ? [] : "")}
+                  className="px-4 min-w-20 h-10 text-small font-normal rounded-medium bg-default text-default-foreground hover:opacity-80 transition-opacity cursor-pointer flex items-center justify-center"
+                >
+                  Skip
+                </button>
+              ) : (
+                <div />
+              )}
+
               <button
                 type="button"
-                onClick={() => handleNext(currentQ.type === "multi-select" ? [] : "")}
-                className="text-xs px-3 py-2 text-zinc-500 hover:text-zinc-700 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 font-medium transition-colors"
+                onClick={() => handleNext()}
+                className="px-5 min-w-20 h-10 text-small font-semibold rounded-medium bg-primary text-primary-foreground hover:opacity-80 transition-opacity shadow-sm flex items-center justify-center gap-1.5 cursor-pointer ml-auto"
               >
-                Skip
+                <span>{currentIndex === REQUIREMENT_QUESTIONS.length - 1 ? "Finish & Populate" : "Next"}</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
               </button>
-            )}
-
-            <button
-              type="button"
-              onClick={() => handleNext()}
-              className="text-xs sm:text-sm font-semibold px-4 py-2 rounded-lg bg-primary text-white hover:bg-blue-700 shadow-sm transition-colors flex items-center gap-1.5 cursor-pointer"
-            >
-              <span>{currentIndex === REQUIREMENT_QUESTIONS.length - 1 ? "Finish & Populate" : "Next"}</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="m9 18 6-6-6-6" />
-              </svg>
-            </button>
+            </div>
           </div>
         </div>
       )}
