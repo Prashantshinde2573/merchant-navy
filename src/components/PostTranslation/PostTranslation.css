@@ -1,0 +1,56 @@
+/* Post Translation Isolated Styles */
+.post-translation-wrapper {
+  position: relative;
+  word-break: break-word;
+}
+
+.post-translation-action-row {
+  line-height: 1.25;
+  user-select: none;
+}
+
+.post-translate-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.post-translate-btn:hover {
+  text-decoration: underline;
+}
+
+/* Slick Language Popup Card */
+.language-popup-card {
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+  transform-origin: top left;
+  animation: popupFadeIn 0.12s ease-out forwards;
+}
+
+@keyframes popupFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Custom minimal scrollbar for language list */
+.language-list-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.language-list-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.language-list-container::-webkit-scrollbar-thumb {
+  background: #e4e4e7;
+  border-radius: 4px;
+}
+
+.language-list-container::-webkit-scrollbar-thumb:hover {
+  background: #d4d4d8;
+}
