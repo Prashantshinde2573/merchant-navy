@@ -1,67 +1,126 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Help.css';
 
-export function Help() {
-  return (
-    <div className="flex flex-col gap-6 max-w-4xl mx-auto px-6 py-6">
-      <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Support & Help Center</h1>
-        <p className="text-sm text-gray-500">
-          Frequently asked questions and merchant support contact details.
-        </p>
-      </div>
+const FAQ_ITEMS = [
+  {
+    id: 'success-plan',
+    question: 'How does the Success Plan work?',
+    answer: 'You pay 2.5-5% only on jobs you successfully award through the platform. No monthly fees, perfect for businesses testing the waters.'
+  },
+  {
+    id: 'refund-policy',
+    question: "What's your refund policy?",
+    answer: 'We offer a 14-day refund policy for unused platform credits. For dispute resolutions on awarded contracts, our arbitration team mediates based on the agreed terms.'
+  },
+  {
+    id: 'verified-badge',
+    question: 'How do I get a verified badge?',
+    answer: 'Complete your merchant profile, upload valid business registration and port authority certificates. Our team verifies submissions within 24-48 business hours.'
+  },
+  {
+    id: 'upgrade-downgrade',
+    question: 'Can I upgrade or downgrade?',
+    answer: 'Yes, you can adjust your subscription plan anytime from your account settings. Upgrades take effect immediately, while downgrades apply at the next billing cycle.'
+  }
+];
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Contact card */}
-        <div className="bg-white rounded-2xl border border-blue-50 shadow-sm p-6 flex flex-col gap-4">
-          <div className="flex items-center gap-3">
-            <span className="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center">
-              <span className="material-symbols-outlined text-xl">contact_support</span>
-            </span>
-            <div>
-              <h3 className="font-semibold text-sm text-gray-900">Direct Support</h3>
-              <p className="text-xs text-gray-500">Reach out to our platform team</p>
-            </div>
-          </div>
-          <div className="p-4 bg-blue-25 rounded-xl border border-blue-100 flex flex-col gap-2">
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-gray-500">Email:</span>
-              <a href="mailto:admin@merchant.navy" className="font-semibold text-blue-700 hover:underline">
-                admin@merchant.navy
-              </a>
-            </div>
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-gray-500">Availability:</span>
-              <span className="font-semibold text-gray-800">24/7 Port Support</span>
-            </div>
+export function Help() {
+  const [openItems, setOpenItems] = useState(['success-plan']);
+
+  const toggleItem = (id) => {
+    setOpenItems((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
+
+  const handleSubmitRequest = () => {
+    alert("Support request submitted! Our team will contact you shortly at admin@merchant.navy.");
+  };
+
+  return (
+    <div className="bg-blue-25 min-h-[calc(100vh-56px)]">
+      <div className="mx-auto w-full max-w-5xl px-6 py-6">
+        <div className="mb-6">
+          <h1 className="text-content1-foreground font-['Inter'] text-2xl leading-8 font-semibold">
+            Frequently Asked Questions
+          </h1>
+          <p className="mt-1.5 font-['Inter'] text-base leading-6 font-normal text-zinc-500">
+            Billing, verification, plans, and more.
+          </p>
+        </div>
+
+        {/* FAQ Accordion Card */}
+        <div
+          className="flex flex-col relative overflow-hidden h-auto text-foreground box-border outline-solid outline-transparent data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 shadow-medium rounded-large transition-transform-background motion-reduce:transition-none shadow-neutral-sm mb-8 border border-blue-50 bg-white"
+          tabIndex="-1"
+        >
+          <div className="relative flex w-full flex-auto flex-col place-content-inherit align-items-inherit h-auto break-words text-left overflow-y-auto subpixel-antialiased p-6">
+            {FAQ_ITEMS.map((item) => {
+              const isOpen = openItems.includes(item.id);
+              return (
+                <div key={item.id} className="border-b border-blue-100 last:border-b-0">
+                  <button
+                    type="button"
+                    onClick={() => toggleItem(item.id)}
+                    className="flex w-full items-center justify-between py-4 text-left transition-all cursor-pointer"
+                  >
+                    <span className="text-modified-15-semibold text-content1-foreground pr-4 font-semibold text-[15px]">
+                      {item.question}
+                    </span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className={`lucide lucide-chevron-down text-content3-foreground shrink-0 transition-transform duration-200 ${
+                        isOpen ? 'rotate-180' : ''
+                      }`}
+                      aria-hidden="true"
+                    >
+                      <path d="m6 9 6 6 6-6"></path>
+                    </svg>
+                  </button>
+                  {isOpen && (
+                    <div className="pb-4">
+                      <p className="text-content3-foreground text-sm leading-5 font-normal text-zinc-600">
+                        {item.answer}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
 
-        {/* Quick Guide Card */}
-        <div className="bg-white rounded-2xl border border-blue-50 shadow-sm p-6 flex flex-col gap-4">
-          <div className="flex items-center gap-3">
-            <span className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
-              <span className="material-symbols-outlined text-xl">help</span>
-            </span>
-            <div>
-              <h3 className="font-semibold text-sm text-gray-900">How It Works</h3>
-              <p className="text-xs text-gray-500">Quick maritime operations workflow</p>
+        {/* Need Help CTA Banner */}
+        <div
+          className="flex flex-col relative overflow-hidden h-auto text-foreground box-border outline-solid outline-transparent data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 shadow-medium rounded-large transition-transform-background motion-reduce:transition-none bg-primary-900 border-none"
+          tabIndex="-1"
+        >
+          <div className="relative flex w-full flex-auto place-content-inherit align-items-inherit h-auto break-words text-left overflow-y-auto subpixel-antialiased flex-row items-center justify-between gap-6 p-8">
+            <div className="flex flex-col gap-2">
+              <h2 className="font-['Inter'] text-xl leading-7 font-bold text-white">
+                Need help?
+              </h2>
+              <p className="font-['Inter'] text-sm leading-5 font-normal text-blue-100">
+                Tell us what you need. We'll route it to the right team immediately.
+              </p>
             </div>
+            <button
+              type="button"
+              onClick={handleSubmitRequest}
+              tabIndex="0"
+              className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-6 min-w-24 h-12 text-medium gap-3 rounded-large transition-transform-colors-opacity motion-reduce:transition-none hover:opacity-90 text-primary-900 shrink-0 bg-white font-semibold text-sm"
+            >
+              Submit a Request
+            </button>
           </div>
-          <ul className="text-xs text-gray-600 space-y-2">
-            <li className="flex items-center gap-2">
-              <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-800 font-bold flex items-center justify-center text-[10px]">1</span>
-              <span>Post your port requirements & scope of work.</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-800 font-bold flex items-center justify-center text-[10px]">2</span>
-              <span>Receive competitive quotations from certified vendors.</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-800 font-bold flex items-center justify-center text-[10px]">3</span>
-              <span>Discuss via live chat and award the contract.</span>
-            </li>
-          </ul>
         </div>
       </div>
     </div>
