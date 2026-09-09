@@ -2,3 +2,12 @@
 .login-container {
   min-height: 100vh;
 }
+
+/* MOBILE ONLY */
+@media (max-width: 767px) {
+  .max-w-105 {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+

@@ -32,3 +32,11 @@
     transform: translateY(0);
   }
 }
+
+/* MOBILE ONLY */
+@media (max-width: 767px) {
+  .ai-chat-body {
+    max-height: 48vh !important;
+  }
+}
+

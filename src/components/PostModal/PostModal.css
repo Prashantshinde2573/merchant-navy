@@ -2,3 +2,39 @@
 .backdrop-blur-xs {
   backdrop-filter: blur(2px);
 }
+
+/* MOBILE ONLY */
+@media (max-width: 767px) {
+  section[role="dialog"] {
+    width: 96vw !important;
+    max-width: 96vw !important;
+    max-height: 94vh !important;
+    margin: 8px auto !important;
+  }
+
+  #_r_19s_ {
+    padding: 12px !important;
+  }
+
+  /* Columns stack on mobile */
+  .max-w-100 {
+    max-width: 100% !important;
+  }
+
+  /* Attachments & budget boxes stack vertically */
+  .flex.gap-3 > .w-1\/2 {
+    width: 100% !important;
+  }
+
+  /* Card padding inside modal */
+  .bg-content1.shadow-neutral-sm.rounded-lg.p-6 {
+    padding: 14px !important;
+  }
+
+  /* Footer buttons */
+  footer.px-6.py-4 {
+    padding: 10px 14px !important;
+    flex-wrap: wrap !important;
+  }
+}
+

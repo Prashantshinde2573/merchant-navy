@@ -7,6 +7,7 @@ import { Login } from '../pages/Login/Login';
 import { Home } from '../pages/Home/Home';
 import { MyPosts } from '../pages/MyPosts/MyPosts';
 import { PostDetail } from '../pages/PostDetail/PostDetail';
+import { MyPostDetail } from '../pages/MyPostDetail/MyPostDetail';
 import { MyMerchants } from '../pages/MyMerchants/MyMerchants';
 import { Notifications } from '../pages/Notifications/Notifications';
 import { Chat } from '../pages/Chat/Chat';
@@ -31,8 +32,11 @@ export function AppRoutes() {
         <Route index element={<Navigate to="/home" replace />} />
         <Route path="home" element={<Home />} />
         <Route path="my-posts" element={<MyPosts />} />
-        <Route path="my-posts/details" element={<PostDetail />} />
-        <Route path="my-posts/:id" element={<PostDetail />} />
+        <Route path="my-posts/details" element={<MyPostDetail />} />
+        <Route path="my-posts/:id" element={<MyPostDetail />} />
+        <Route path="posts/:id" element={<PostDetail />} />
+        <Route path="post/:id" element={<PostDetail />} />
+        <Route path="service-requests/:id" element={<PostDetail />} />
         <Route path="my-merchants" element={<MyMerchants />} />
         <Route path="notifications" element={<Notifications />} />
         <Route path="chats" element={<Chat />} />

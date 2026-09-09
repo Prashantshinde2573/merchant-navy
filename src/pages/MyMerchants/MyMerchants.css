@@ -2,3 +2,25 @@
 .my-merchants-table {
   width: 100%;
 }
+
+/* MOBILE ONLY */
+@media (max-width: 767px) {
+  /* Container padding */
+  .max-w-6xl.px-6 {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  /* Filter items full width on mobile */
+  .max-w-6xl .mb-6.flex.flex-wrap > div,
+  .max-w-6xl .mb-6.flex.flex-wrap > .group.inline-flex {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Smooth table scrolling */
+  table[aria-label="My merchants table"] {
+    min-width: 700px !important;
+  }
+}
+

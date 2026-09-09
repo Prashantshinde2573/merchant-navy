@@ -1,0 +1,57 @@
+/* ApplyModal Base Styles */
+.apply-modal-root {
+  position: relative;
+  z-index: 9999;
+}
+
+.apply-modal-backdrop {
+  animation: fadeIn 0.15s ease-out forwards;
+}
+
+.apply-modal-dialog {
+  animation: modalScaleIn 0.2s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Mobile-only responsive rules (Locked desktop) */
+@media (max-width: 767px) {
+  .apply-modal-wrapper {
+    align-items: flex-end !important;
+    padding: 0 !important;
+  }
+
+  .apply-modal-dialog {
+    max-height: 90vh !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-top-left-radius: 16px !important;
+    border-top-right-radius: 16px !important;
+  }
+
+  .apply-modal-body {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    gap: 16px !important;
+  }
+}

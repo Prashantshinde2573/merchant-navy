@@ -2,3 +2,18 @@
 .notifications-container {
   max-width: 100%;
 }
+
+/* MOBILE ONLY */
+@media (max-width: 767px) {
+  .max-w-5xl.px-6 {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    padding-top: 16px !important;
+  }
+
+  .max-w-5xl .mb-6.flex.items-start.justify-between {
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+  }
+}
+

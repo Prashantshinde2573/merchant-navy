@@ -2,3 +2,86 @@
 .home-feed-card {
   transition: all 0.2s ease-in-out;
 }
+
+/* MOBILE ONLY OVERRIDES - Desktop is 100% untouched */
+@media (max-width: 767px) {
+  /* Hide fixed/sticky sidebars that overflow mobile screen */
+  .sticky.h-0.w-70\.5,
+  .sticky.top-20.h-0 {
+    display: none !important;
+  }
+
+  /* Reset desktop padding for outer feed container */
+  .px-30 {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  /* Feed column takes full width on mobile */
+  .w-147,
+  .max-w-147 {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Responsive post card container */
+  .max-w-147 {
+    padding: 16px 14px !important;
+    gap: 12px !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  .max-w-147 > div {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Header row alignment on mobile */
+  .max-w-147 .flex.w-full.justify-between {
+    gap: 8px !important;
+    align-items: flex-start !important;
+  }
+
+  /* Information rows (Ports & Services) alignment */
+  .max-w-147 .mt-3.flex.w-full.min-w-0.items-center.gap-2 {
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  .max-w-147 .mt-3.flex.w-full.min-w-0.items-center.gap-2 span.material-symbols-outlined {
+    margin-top: 2px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Bottom action bar & price row */
+  .max-w-147 .flex.w-full.flex-row-reverse.items-center.justify-between {
+    flex-direction: row-reverse !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  /* Action buttons cluster (Views, Share, Bookmark, Apply) */
+  .max-w-147 .flex.items-center.justify-end.gap-6 {
+    gap: 10px !important;
+    flex-shrink: 0 !important;
+    align-items: center !important;
+  }
+
+  /* Price styling on mobile: prevents awkward line-breaks like '₹500K - \n 700K' */
+  .max-w-147 p.text-content2-foreground.text-lg {
+    white-space: nowrap !important;
+    font-size: 16px !important;
+    line-height: 24px !important;
+    flex-shrink: 0 !important;
+    font-weight: 600 !important;
+  }
+
+  /* Ensure translated text container expands naturally without clipping */
+  .post-translation-wrapper {
+    height: auto !important;
+    overflow: visible !important;
+  }
+}

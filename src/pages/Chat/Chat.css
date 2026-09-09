@@ -2,3 +2,11 @@
 .chat-thread-container {
   height: calc(100vh - 140px);
 }
+
+/* MOBILE ONLY */
+@media (max-width: 767px) {
+  .chat-thread-container {
+    height: calc(100dvh - 120px);
+  }
+}
+

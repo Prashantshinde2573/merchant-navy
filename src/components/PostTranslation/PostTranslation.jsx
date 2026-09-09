@@ -79,7 +79,11 @@ export function PostContentWithTranslation({ postId, text, className = "text-mod
     setIsPopupOpen(!isPopupOpen);
   };
 
-  const handleSelectLanguage = async (langCode, langName) => {
+  const handleSelectLanguage = async (e, langCode, langName) => {
+    if (e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
     setIsPopupOpen(false);
     setIsLoading(true);
     setHasError(false);
@@ -110,14 +114,17 @@ export function PostContentWithTranslation({ postId, text, className = "text-mod
   };
 
   return (
-    <div className="post-translation-wrapper w-full relative">
+    <div className="post-translation-wrapper w-full relative" onClick={(e) => e.stopPropagation()}>
       {/* Post Text: Displays translatedText when active, otherwise original text */}
       <p className={className}>
         {isTranslated && translatedText ? translatedText : text}
       </p>
 
       {/* Action Row */}
-      <div className="post-translation-action-row mt-1.5 flex items-center gap-2 relative">
+      <div 
+        className="post-translation-action-row mt-1.5 flex items-center gap-2 relative"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* State 1: Original -> Trigger Popup */}
         {!isTranslated && !isLoading && !hasError && (
           <button
@@ -142,12 +149,12 @@ export function PostContentWithTranslation({ postId, text, className = "text-mod
               className="lucide lucide-languages shrink-0"
               aria-hidden="true"
             >
-              <path d="m5 8 6 6"></path>
-              <path d="m4 14 6-6 2-3"></path>
-              <path d="M2 5h12"></path>
-              <path d="M7 2h1"></path>
-              <path d="m22 22-5-10-5 10"></path>
-              <path d="M14 18h6"></path>
+              <path d="m5 8 6 6" />
+              <path d="m4 14 6-6 2-3" />
+              <path d="M2 5h12" />
+              <path d="M7 2h1" />
+              <path d="m22 22-5-10-5 10" />
+              <path d="M14 18h6" />
             </svg>
             <span>Translate</span>
             <svg
@@ -162,7 +169,7 @@ export function PostContentWithTranslation({ postId, text, className = "text-mod
               strokeLinejoin="round"
               className={`transition-transform duration-150 ${isPopupOpen ? 'rotate-180' : ''}`}
             >
-              <path d="m6 9 6 6 6-6"></path>
+              <path d="m6 9 6 6 6-6" />
             </svg>
           </button>
         )}
@@ -185,12 +192,12 @@ export function PostContentWithTranslation({ postId, text, className = "text-mod
                 r="10"
                 stroke="currentColor"
                 strokeWidth="4"
-              ></circle>
+              />
               <path
                 className="opacity-75"
                 fill="currentColor"
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
+              />
             </svg>
             <span>Translating...</span>
           </span>
@@ -243,6 +250,7 @@ export function PostContentWithTranslation({ postId, text, className = "text-mod
         {isPopupOpen && (
           <div
             ref={popupRef}
+            onClick={(e) => e.stopPropagation()}
             className="language-popup-card absolute z-50 top-full left-0 mt-1.5 w-60 bg-white rounded-large shadow-medium border border-blue-50 py-2 text-foreground animate-in fade-in zoom-in-95 duration-100"
             role="dialog"
             aria-label="Language selection"
@@ -254,7 +262,7 @@ export function PostContentWithTranslation({ postId, text, className = "text-mod
             </div>
 
             {/* Search Input */}
-            <div className="px-2.5 pt-2 pb-1">
+            <div className="px-2.5 pt-2 pb-1" onClick={(e) => e.stopPropagation()}>
               <div className="relative flex items-center bg-zinc-50 border border-zinc-200 rounded-md px-2 py-1 focus-within:border-blue-500 focus-within:bg-white transition-colors">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -268,21 +276,25 @@ export function PostContentWithTranslation({ postId, text, className = "text-mod
                   strokeLinejoin="round"
                   className="text-zinc-400 shrink-0 mr-1.5"
                 >
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <path d="m21 21-4.3-4.3"></path>
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.3-4.3" />
                 </svg>
                 <input
                   ref={searchInputRef}
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
+                  onClick={(e) => e.stopPropagation()}
                   placeholder="Search language..."
                   className="w-full bg-transparent border-0 p-0 text-xs text-zinc-800 placeholder:text-zinc-400 focus:outline-none"
                 />
                 {searchQuery && (
                   <button
                     type="button"
-                    onClick={() => setSearchQuery('')}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSearchQuery('');
+                    }}
                     className="text-zinc-400 hover:text-zinc-600 p-0.5 ml-1"
                   >
                     ✕
@@ -292,13 +304,16 @@ export function PostContentWithTranslation({ postId, text, className = "text-mod
             </div>
 
             {/* Language List */}
-            <div className="language-list-container max-h-48 overflow-y-auto px-1 pt-1 scrollbar-thin">
+            <div 
+              className="language-list-container max-h-48 overflow-y-auto px-1 pt-1 scrollbar-thin"
+              onClick={(e) => e.stopPropagation()}
+            >
               {filteredLanguages.length > 0 ? (
                 filteredLanguages.map((lang) => (
                   <button
                     key={lang.code}
                     type="button"
-                    onClick={() => handleSelectLanguage(lang.code, lang.name)}
+                    onClick={(e) => handleSelectLanguage(e, lang.code, lang.name)}
                     className="w-full text-left px-2.5 py-1.5 rounded-md text-xs hover:bg-blue-50 flex items-center justify-between text-zinc-700 hover:text-blue-700 transition-colors group cursor-pointer border-0 bg-transparent"
                   >
                     <span className="font-medium">{lang.name}</span>
