@@ -11,7 +11,7 @@ export function MyPostDetail() {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
-  const { getPost } = usePosts();
+  const { getPost, getApplicationsForPost } = usePosts();
   
   const initialTab = searchParams.get('tab') || location.state?.tab || 'scope';
   const [activeTab, setActiveTab] = useState(initialTab);
@@ -27,8 +27,31 @@ export function MyPostDetail() {
 
   // Fallback to DEFAULT_MY_POST (merchant-navy 13)
   const postId = id || 'my-post-1';
-  const post = POSTS_DATA[postId] || getPost(postId) || DEFAULT_MY_POST;
-  const quotations = getQuotationsForPost(post?.id || postId);
+  const post = getPost(postId) || POSTS_DATA[postId] || DEFAULT_MY_POST;
+  const staticQuotations = getQuotationsForPost(post?.id || postId) || [];
+  const dynamicApplications = (getApplicationsForPost ? getApplicationsForPost(post?.id || postId) : []).map(app => ({
+    id: app.id,
+    postId: app.postId,
+    merchantName: app.applicantName || 'Applicant',
+    avatar: '/images/profile_avatar.webp',
+    rating: '5.00',
+    reviewCount: '1 review',
+    matchPercent: 95,
+    portMatch: '1/1',
+    serviceMatch: '1/1',
+    price: post?.budget || '$500.00',
+    validityDate: 'Recent',
+    status: app.status || 'Submitted',
+    isAwarded: false,
+    statusColor: 'bg-blue-600 text-white',
+    isRecommended: false,
+    deliveryTime: 'As agreed',
+    paymentTerms: 'Standard',
+    scopeSummary: app.message || 'Application submitted for this requirement.',
+    certifications: ['Verified Member'],
+    chatId: 'c-1'
+  }));
+  const quotations = [...dynamicApplications, ...staticQuotations];
 
   const scrollToSection = (sectionId) => {
     setActiveSection(sectionId);

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { usePosts } from '../../context/PostContext';
 import './ReportModal.css';
 
 export function ReportModal({ isOpen, onClose, postId }) {
   const [details, setDetails] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const { reportPost } = usePosts();
 
   if (!isOpen) return null;
 
@@ -14,6 +16,9 @@ export function ReportModal({ isOpen, onClose, postId }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!isValid) return;
+    if (reportPost && postId) {
+      reportPost(postId, details.trim());
+    }
     setSubmitted(true);
     setTimeout(() => {
       setSubmitted(false);

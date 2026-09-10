@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { usePosts } from '../../context/PostContext';
 import { ApplyModal } from '../../components/ApplyModal/ApplyModal';
+import { ReportModal } from '../../components/ReportModal/ReportModal';
 import { PostContentWithTranslation } from '../../components/PostTranslation/PostTranslation';
 import './PostDetail.css';
 
@@ -10,6 +11,8 @@ export function PostDetail() {
   const navigate = useNavigate();
   const { getPost, hasApplied, applyToPost } = usePosts();
   const [isApplyOpen, setIsApplyOpen] = useState(false);
+  const [isReportOpen, setIsReportOpen] = useState(false);
+  const [isActionsMenuOpen, setIsActionsMenuOpen] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [activeSection, setActiveSection] = useState('attachments');
 
@@ -17,6 +20,17 @@ export function PostDetail() {
   const postId = id || 'home-post-7';
   const post = getPost(postId);
   const isApplied = hasApplied(post.id);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (e.target && (e.target.closest('[data-post-actions-dropdown]') || e.target.closest('[data-post-actions-trigger]'))) {
+        return;
+      }
+      setIsActionsMenuOpen(false);
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleApply = (message) => {
     applyToPost(post.id, message);
@@ -164,30 +178,72 @@ export function PostDetail() {
               </button>
 
               {/* Actions Ellipsis Menu */}
-              <button
-                type="button"
-                tabIndex="0"
-                aria-label="Service request actions"
-                className="group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal overflow-hidden tap-highlight-transparent cursor-pointer outline-solid outline-transparent text-small gap-2 rounded-medium px-0 !gap-0 transition-colors bg-transparent text-default-foreground hover:bg-default/40 min-w-10 w-10 h-10"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-ellipsis-vertical"
-                  aria-hidden="true"
+              <div className="relative inline-block">
+                <button
+                  type="button"
+                  tabIndex="0"
+                  data-post-actions-trigger="true"
+                  aria-label="Service request actions"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsActionsMenuOpen(!isActionsMenuOpen);
+                  }}
+                  className="group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal overflow-hidden tap-highlight-transparent cursor-pointer outline-solid outline-transparent text-small gap-2 rounded-medium px-0 !gap-0 transition-colors bg-transparent text-default-foreground hover:bg-default/40 min-w-10 w-10 h-10"
                 >
-                  <circle cx="12" cy="12" r="1" />
-                  <circle cx="12" cy="5" r="1" />
-                  <circle cx="12" cy="19" r="1" />
-                </svg>
-              </button>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-ellipsis-vertical"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="1" />
+                    <circle cx="12" cy="5" r="1" />
+                    <circle cx="12" cy="19" r="1" />
+                  </svg>
+                </button>
+                {isActionsMenuOpen && (
+                  <div
+                    data-post-actions-dropdown="true"
+                    className="absolute right-0 top-full mt-1 z-50 min-w-[130px] rounded-lg border border-blue-50 bg-white p-1 shadow-lg animate-in fade-in"
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsActionsMenuOpen(false);
+                        setIsReportOpen(true);
+                      }}
+                      className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-xs font-medium text-red-600 hover:bg-red-50/60 transition-colors cursor-pointer text-left"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="lucide lucide-flag"
+                      >
+                        <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+                        <line x1="4" x2="4" y1="22" y2="15" />
+                      </svg>
+                      <span>Report</span>
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -233,7 +289,7 @@ export function PostDetail() {
                             Port Locations
                           </h4>
                           <div className="flex flex-wrap gap-2">
-                            {post.ports.map((port, idx) => (
+                            {(post.ports || []).map((port, idx) => (
                               <div
                                 key={idx}
                                 className="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap text-small text-default-700 h-7 rounded px-2 border border-transparent bg-[#D4D4D866]"
@@ -257,7 +313,7 @@ export function PostDetail() {
                             Services Required
                           </h4>
                           <div className="flex flex-wrap gap-2">
-                            {post.services.map((service, idx) => (
+                            {(post.services || []).map((service, idx) => (
                               <div
                                 key={idx}
                                 className="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap text-small text-default-700 h-7 rounded px-2 border border-transparent bg-[#D4D4D866]"
@@ -422,6 +478,13 @@ export function PostDetail() {
         onClose={() => setIsApplyOpen(false)}
         onApply={handleApply}
         post={post}
+      />
+
+      {/* Report Modal */}
+      <ReportModal
+        isOpen={isReportOpen}
+        onClose={() => setIsReportOpen(false)}
+        postId={post.id}
       />
     </>
   );

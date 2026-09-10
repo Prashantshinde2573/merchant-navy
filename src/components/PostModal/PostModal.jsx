@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { usePosts } from "../../context/PostContext";
 import { PostRequirementAI } from "../PostRequirementAI/PostRequirementAI";
 import "./PostModal.css";
 
@@ -44,6 +45,7 @@ const AVAILABLE_PORTS = [
 ];
 
 export function PostModal({ isOpen, onClose, onPostCreated }) {
+  const { createPost } = usePosts();
   const [mode, setMode] = useState("manual"); // "manual" | "ai"
   const [scopeOfWork, setScopeOfWork] = useState("");
   const [currency, setCurrency] = useState("USD");
@@ -142,21 +144,24 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
       return;
     }
 
-    const newPost = {
-      id: "post-" + Date.now(),
-      company: "Bluesea Marine Works Pvt Ltd.",
-      date: "Just now",
-      urgent: isAsap,
-      title: content.split("\n")[0] || "Requirement",
+    const postPayload = {
+      scopeOfWork: content,
       details: content,
+      title: content.split("\n")[0] || "Requirement",
       services: selectedServices,
       ports: selectedPorts,
       budget: minBudget && maxBudget ? `${CURRENCY_SYMBOLS[currency]}${minBudget} - ${CURRENCY_SYMBOLS[currency]}${maxBudget}` : "Open for quotations",
-      timeline: isAsap ? "ASAP" : serviceDates
+      serviceDates: isAsap ? "ASAP" : serviceDates,
+      timeline: isAsap ? "ASAP" : serviceDates,
+      isAsap: isAsap,
+      urgent: isAsap,
+      files: files.map(f => f.name || f),
+      status: "Live"
     };
 
+    const created = createPost(postPayload);
     if (onPostCreated) {
-      onPostCreated(newPost);
+      onPostCreated(created);
     }
 
     alert("Requirement published successfully!");
@@ -165,6 +170,25 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
 
   const handleSaveDraft = (e) => {
     if (e) e.preventDefault();
+    const content = editorRef.current ? editorRef.current.innerText.trim() : scopeOfWork;
+    const postPayload = {
+      scopeOfWork: content || "Draft requirement",
+      details: content || "Draft requirement",
+      title: content ? content.split("\n")[0] : "Draft Requirement",
+      services: selectedServices,
+      ports: selectedPorts,
+      budget: minBudget && maxBudget ? `${CURRENCY_SYMBOLS[currency]}${minBudget} - ${CURRENCY_SYMBOLS[currency]}${maxBudget}` : "Open for quotations",
+      serviceDates: isAsap ? "ASAP" : serviceDates,
+      timeline: isAsap ? "ASAP" : serviceDates,
+      isAsap: isAsap,
+      urgent: isAsap,
+      files: files.map(f => f.name || f),
+      status: "Draft"
+    };
+    const created = createPost(postPayload);
+    if (onPostCreated) {
+      onPostCreated(created);
+    }
     alert("Draft saved successfully!");
     onClose();
   };

@@ -1,10 +1,64 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { usePosts } from '../../context/PostContext';
 import './MyPosts.css';
+
+const DEFAULT_MY_POST = {
+  id: 'my-post-1',
+  title: 'Multiple port services required for MV Indravati (45,000 DWT bulk carrier) arriving Visakhapatnam.',
+  scopeOfWork: 'Multiple port services required for MV Indravati (45,000 DWT bulk carrier) arriving Visakhapatnam. Vendors with VPT authorisation and valid certifications only. Quotations invited ...',
+  ports: ['Chennai'],
+  services: ['Canal Transit Agency Support'],
+  isUrgent: true,
+  status: 'Awarded',
+  timeAgo: '8d ago',
+  viewsCount: 5,
+  quotationsCount: 3,
+  ownerId: 'default_user'
+};
 
 export function MyPosts() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const { getMyPosts, getApplicationsForPost } = usePosts();
+
+  const customMyPosts = getMyPosts ? getMyPosts() : [];
+  
+  // Combine custom posts with default demo post if not already present
+  const allMyPosts = [...customMyPosts];
+  if (!allMyPosts.some(p => p.id === 'my-post-1')) {
+    allMyPosts.push(DEFAULT_MY_POST);
+  }
+
+  // Calculate dynamic tab counts
+  const allCount = allMyPosts.length;
+  const liveCount = allMyPosts.filter(p => p.status === 'Live' || (!p.status && p.id !== 'my-post-1')).length;
+  const awardedCount = allMyPosts.filter(p => p.status === 'Awarded').length;
+  const draftsCount = allMyPosts.filter(p => p.status === 'Draft').length;
+  const historyCount = allMyPosts.filter(p => p.status === 'History' || p.status === 'Closed').length;
+
+  // Filter posts based on activeTab
+  const tabFilteredPosts = allMyPosts.filter(post => {
+    if (activeTab === 'all') return true;
+    if (activeTab === 'live') return post.status === 'Live' || (!post.status && post.id !== 'my-post-1');
+    if (activeTab === 'awarded') return post.status === 'Awarded';
+    if (activeTab === 'drafts') return post.status === 'Draft';
+    if (activeTab === 'history') return post.status === 'History' || post.status === 'Closed';
+    if (activeTab === 'rate-now') return post.status === 'Rate Now';
+    return true;
+  });
+
+  // Filter by search query
+  const displayedPosts = tabFilteredPosts.filter(post => {
+    if (!searchQuery.trim()) return true;
+    const query = searchQuery.toLowerCase();
+    const titleMatch = (post.title || '').toLowerCase().includes(query);
+    const scopeMatch = (post.scopeOfWork || post.description || '').toLowerCase().includes(query);
+    const serviceMatch = (post.services || []).some(s => s.toLowerCase().includes(query));
+    const portMatch = (post.ports || []).some(p => p.toLowerCase().includes(query));
+    return titleMatch || scopeMatch || serviceMatch || portMatch;
+  });
 
   return (
     <>
@@ -33,7 +87,7 @@ export function MyPosts() {
                   className="z-0 w-full flex group relative justify-center items-center cursor-pointer transition-opacity tap-highlight-transparent text-small rounded-none px-3 py-3 h-auto border-b-2 border-transparent data-[selected=true]:border-red-500"
                 >
                   <div className="relative z-10 whitespace-nowrap transition-colors group-data-[selected=true]:text-primary text-blue-600">
-                    <div className="flex items-center gap-1.5"><span className={`text-sm ${activeTab === 'all' ? 'font-semibold' : ''}`}>All</span><span className="flex h-4 min-w-4 items-center justify-center rounded-full border border-zinc-100 bg-red-50 px-1 text-xs">1</span></div>
+                    <div className="flex items-center gap-1.5"><span className={`text-sm ${activeTab === 'all' ? 'font-semibold' : ''}`}>All</span><span className="flex h-4 min-w-4 items-center justify-center rounded-full border border-zinc-100 bg-red-50 px-1 text-xs">{allCount}</span></div>
                   </div>
                 </button>
                 <button
@@ -45,7 +99,7 @@ export function MyPosts() {
                   className="z-0 w-full flex group relative justify-center items-center cursor-pointer transition-opacity tap-highlight-transparent text-small rounded-none px-3 py-3 h-auto border-b-2 border-transparent data-[selected=true]:border-red-500"
                 >
                   <div className="relative z-10 whitespace-nowrap transition-colors group-data-[selected=true]:text-primary text-blue-600">
-                    <div className="flex items-center gap-1.5"><span className={`text-sm ${activeTab === 'live' ? 'font-semibold' : ''}`}>Live</span><span className="flex h-4 min-w-4 items-center justify-center rounded-full border border-zinc-100 bg-red-50 px-1 text-xs">0</span></div>
+                    <div className="flex items-center gap-1.5"><span className={`text-sm ${activeTab === 'live' ? 'font-semibold' : ''}`}>Live</span><span className="flex h-4 min-w-4 items-center justify-center rounded-full border border-zinc-100 bg-red-50 px-1 text-xs">{liveCount}</span></div>
                   </div>
                 </button>
                 <button
@@ -57,7 +111,7 @@ export function MyPosts() {
                   className="z-0 w-full flex group relative justify-center items-center cursor-pointer transition-opacity tap-highlight-transparent text-small rounded-none px-3 py-3 h-auto border-b-2 border-transparent data-[selected=true]:border-red-500"
                 >
                   <div className="relative z-10 whitespace-nowrap transition-colors group-data-[selected=true]:text-primary text-blue-600">
-                    <div className="flex items-center gap-1.5"><span className={`text-sm ${activeTab === 'awarded' ? 'font-semibold' : ''}`}>Awarded</span><span className="flex h-4 min-w-4 items-center justify-center rounded-full border border-zinc-100 bg-red-50 px-1 text-xs">1</span></div>
+                    <div className="flex items-center gap-1.5"><span className={`text-sm ${activeTab === 'awarded' ? 'font-semibold' : ''}`}>Awarded</span><span className="flex h-4 min-w-4 items-center justify-center rounded-full border border-zinc-100 bg-red-50 px-1 text-xs">{awardedCount}</span></div>
                   </div>
                 </button>
                 <button
@@ -81,7 +135,7 @@ export function MyPosts() {
                   className="z-0 w-full flex group relative justify-center items-center cursor-pointer transition-opacity tap-highlight-transparent text-small rounded-none px-3 py-3 h-auto border-b-2 border-transparent data-[selected=true]:border-red-500"
                 >
                   <div className="relative z-10 whitespace-nowrap transition-colors group-data-[selected=true]:text-primary text-blue-600">
-                    <div className="flex items-center gap-1.5"><span className={`text-sm ${activeTab === 'history' ? 'font-semibold' : ''}`}>History</span><span className="flex h-4 min-w-4 items-center justify-center rounded-full border border-zinc-100 bg-red-50 px-1 text-xs">0</span></div>
+                    <div className="flex items-center gap-1.5"><span className={`text-sm ${activeTab === 'history' ? 'font-semibold' : ''}`}>History</span><span className="flex h-4 min-w-4 items-center justify-center rounded-full border border-zinc-100 bg-red-50 px-1 text-xs">{historyCount}</span></div>
                   </div>
                 </button>
                 <button
@@ -93,7 +147,7 @@ export function MyPosts() {
                   className="z-0 w-full flex group relative justify-center items-center cursor-pointer transition-opacity tap-highlight-transparent text-small rounded-none px-3 py-3 h-auto border-b-2 border-transparent data-[selected=true]:border-red-500"
                 >
                   <div className="relative z-10 whitespace-nowrap transition-colors group-data-[selected=true]:text-primary text-blue-600">
-                    <div className="flex items-center gap-1.5"><span className={`text-sm ${activeTab === 'drafts' ? 'font-semibold' : ''}`}>Drafts</span><span className="flex h-4 min-w-4 items-center justify-center rounded-full border border-zinc-100 bg-red-50 px-1 text-xs">0</span></div>
+                    <div className="flex items-center gap-1.5"><span className={`text-sm ${activeTab === 'drafts' ? 'font-semibold' : ''}`}>Drafts</span><span className="flex h-4 min-w-4 items-center justify-center rounded-full border border-zinc-100 bg-red-50 px-1 text-xs">{draftsCount}</span></div>
                   </div>
                 </button>
               </div>
@@ -105,7 +159,7 @@ export function MyPosts() {
                   <div className="relative w-full inline-flex flex-row items-center px-3 gap-3 rounded-small h-9 bg-white border border-blue-100 shadow-sm" style={{"cursor": "text"}}>
                     <div className="inline-flex w-full items-center h-full box-border">
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search text-zinc-400"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg>
-                      <input className="w-full font-normal bg-transparent outline-none px-1.5 text-[13px]" placeholder="Search..." type="text" />
+                      <input className="w-full font-normal bg-transparent outline-none px-1.5 text-[13px]" placeholder="Search..." type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
                     </div>
                   </div>
                 </div>
@@ -116,47 +170,84 @@ export function MyPosts() {
 
         <div className="mt-6">
           <div className="flex flex-col gap-3">
-            {/* Awarded Post */}
-            {(activeTab === 'all' || activeTab === 'awarded') && (
-              <div className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 shadow-medium rounded-large shadow-neutral-sm w-full border border-blue-50">
-                <div className="relative flex w-full flex-auto flex-col h-auto break-words text-left overflow-y-auto gap-4 p-7">
-                  <div className="flex items-center justify-between">
-                    <div className="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 text-tiny rounded-full text-default-700 bg-danger-100 h-7">
-                      <span className="flex-1 px-1 text-danger-600 font-semibold text-[13px]">Urgent</span>
-                    </div>
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
-                      Awarded
-                    </span>
-                  </div>
-                  <div><p className="text-[15px] leading-[1.4] tracking-[-0.1px] text-zinc-800">Multiple port services required for MV Indravati (45,000 DWT bulk carrier) arriving Visakhapatnam. Vendors with VPT authorisation and valid certifications only. Quotations invited ...<Link className="ml-1 text-zinc-500 hover:text-zinc-700" to="/my-posts/my-post-1">more</Link></p></div>
-                  <div className="flex flex-col gap-2">
-                    <div className="mt-3 flex w-full min-w-0 items-center gap-2"><span className="material-symbols-outlined mt-0.5 shrink-0 text-sm leading-none text-zinc-500">anchor</span><span className="min-w-0 flex-1 text-sm leading-5 break-words text-zinc-500">Chennai</span></div>
-                    <div className="mt-3 flex w-full min-w-0 items-center gap-2"><span className="material-symbols-outlined mt-0.5 shrink-0 text-sm leading-none text-zinc-500">settings</span><span className="min-w-0 flex-1 text-sm leading-5 break-words text-zinc-500">Canal Transit Agency Support</span></div>
-                  </div>
-                  <hr className="shrink-0 bg-divider border-none w-full h-divider my-2 opacity-50" role="separator" />
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4"></div>
-                    <div className="flex items-center gap-8">
-                      <div className="flex items-center gap-3">
-                        <span className="text-[13px] leading-4.5 text-zinc-500">Posted 8d ago</span>
-                        <div className="shrink-0 border-none w-divider bg-layout-divider h-3 opacity-50" role="separator"></div>
-                        <div className="flex items-center gap-1.5"><span className="material-symbols-outlined text-base text-zinc-500">visibility</span><span className="text-[13px] leading-4.5 text-zinc-500">5 Views</span></div>
-                        <div className="shrink-0 border-none w-divider bg-layout-divider h-3 opacity-50" role="separator"></div>
-                        <div className="flex items-center gap-1.5"><span className="material-symbols-outlined text-base text-zinc-500">people</span><span className="text-[13px] leading-4.5 text-zinc-500">3 Quotations</span></div>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Link className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden border-medium px-4 min-w-20 h-10 text-small gap-2 rounded-medium bg-transparent text-primary border-blue-200 hover:bg-blue-50" to="/my-posts/my-post-1">View Details</Link>
-                        <button type="button" className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden border-medium px-4 min-w-20 h-10 text-small gap-2 rounded-medium bg-transparent border-red-500 text-red-500 hover:bg-red-50">Mark Close</button>
-                        <button type="button" className="group relative inline-flex items-center justify-center min-w-8 w-8 h-8 rounded-small text-zinc-500 hover:bg-gray-100"><span className="material-symbols-outlined">more_vert</span></button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
+            {displayedPosts.length > 0 ? (
+              displayedPosts.map((post) => {
+                const isAwarded = post.status === 'Awarded';
+                const isDraft = post.status === 'Draft';
+                const isLive = post.status === 'Live' || (!post.status && post.id !== 'my-post-1');
+                const postApps = getApplicationsForPost ? getApplicationsForPost(post.id) : [];
+                const quotationsCount = post.quotationsCount !== undefined ? post.quotationsCount : postApps.length;
 
-            {/* Empty state for other tabs */}
-            {activeTab !== 'all' && activeTab !== 'awarded' && (
+                return (
+                  <div key={post.id} className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 shadow-medium rounded-large shadow-neutral-sm w-full border border-blue-50">
+                    <div className="relative flex w-full flex-auto flex-col h-auto break-words text-left overflow-y-auto gap-4 p-7">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          {post.isUrgent && (
+                            <div className="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 text-tiny rounded-full text-default-700 bg-danger-100 h-7">
+                              <span className="flex-1 px-1 text-danger-600 font-semibold text-[13px]">Urgent</span>
+                            </div>
+                          )}
+                        </div>
+                        {isAwarded && (
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
+                            Awarded
+                          </span>
+                        )}
+                        {isLive && (
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                            Live
+                          </span>
+                        )}
+                        {isDraft && (
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-zinc-100 text-zinc-800">
+                            Draft
+                          </span>
+                        )}
+                      </div>
+                      <div>
+                        <p className="text-[15px] leading-[1.4] tracking-[-0.1px] text-zinc-800">
+                          {post.scopeOfWork || post.description || post.title || ""}
+                          <Link className="ml-1 text-zinc-500 hover:text-zinc-700" to={`/my-posts/${post.id}`}>more</Link>
+                        </p>
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        {post.ports && post.ports.length > 0 && (
+                          <div className="mt-3 flex w-full min-w-0 items-center gap-2">
+                            <span className="material-symbols-outlined mt-0.5 shrink-0 text-sm leading-none text-zinc-500">anchor</span>
+                            <span className="min-w-0 flex-1 text-sm leading-5 break-words text-zinc-500">{post.ports.join(", ")}</span>
+                          </div>
+                        )}
+                        {post.services && post.services.length > 0 && (
+                          <div className="mt-3 flex w-full min-w-0 items-center gap-2">
+                            <span className="material-symbols-outlined mt-0.5 shrink-0 text-sm leading-none text-zinc-500">settings</span>
+                            <span className="min-w-0 flex-1 text-sm leading-5 break-words text-zinc-500">{post.services.join(", ")}</span>
+                          </div>
+                        )}
+                      </div>
+                      <hr className="shrink-0 bg-divider border-none w-full h-divider my-2 opacity-50" role="separator" />
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4"></div>
+                        <div className="flex items-center gap-8">
+                          <div className="flex items-center gap-3">
+                            <span className="text-[13px] leading-4.5 text-zinc-500">{post.timeAgo || "Just now"}</span>
+                            <div className="shrink-0 border-none w-divider bg-layout-divider h-3 opacity-50" role="separator"></div>
+                            <div className="flex items-center gap-1.5"><span className="material-symbols-outlined text-base text-zinc-500">visibility</span><span className="text-[13px] leading-4.5 text-zinc-500">{post.viewsCount || 1} Views</span></div>
+                            <div className="shrink-0 border-none w-divider bg-layout-divider h-3 opacity-50" role="separator"></div>
+                            <div className="flex items-center gap-1.5"><span className="material-symbols-outlined text-base text-zinc-500">people</span><span className="text-[13px] leading-4.5 text-zinc-500">{quotationsCount} Quotations</span></div>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <Link className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden border-medium px-4 min-w-20 h-10 text-small gap-2 rounded-medium bg-transparent text-primary border-blue-200 hover:bg-blue-50" to={`/my-posts/${post.id}`}>View Details</Link>
+                            <button type="button" className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden border-medium px-4 min-w-20 h-10 text-small gap-2 rounded-medium bg-transparent border-red-500 text-red-500 hover:bg-red-50">Mark Close</button>
+                            <button type="button" className="group relative inline-flex items-center justify-center min-w-8 w-8 h-8 rounded-small text-zinc-500 hover:bg-gray-100"><span className="material-symbols-outlined">more_vert</span></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
               <div className="flex flex-col items-center justify-center p-12 text-center bg-white rounded-xl border border-blue-50">
                 <span className="material-symbols-outlined text-4xl text-zinc-300 mb-2">inbox</span>
                 <p className="text-zinc-500 text-sm">No posts found in this category.</p>
