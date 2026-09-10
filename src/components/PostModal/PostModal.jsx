@@ -206,11 +206,23 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
           </div>
 
           {/* Modal Header */}
-          <div className="modal-header-container py-3.5 sm:py-4 px-4 sm:px-6 flex-initial border-default-100 shadow-neutral-sm flex flex-col sm:flex-row sm:items-center sm:justify-between border-b gap-3 sm:gap-4 bg-content1 shrink-0" id="_r_19r_" style={{ position: "relative" }}>
-            <div className="flex items-center pr-12 sm:pr-0">
-              <h2 className="text-content1-foreground text-lg sm:text-xl leading-6 sm:leading-7 font-semibold">
+          <div className="modal-header-container py-3 sm:py-4 px-4 sm:px-6 flex-initial border-default-100 shadow-neutral-sm flex flex-col sm:flex-row sm:items-center sm:justify-between border-b gap-3 sm:gap-4 bg-content1 shrink-0" id="_r_19r_">
+            <div className="flex items-center justify-between w-full sm:w-auto">
+              <h2 className="text-content1-foreground text-[18px] sm:text-xl font-semibold leading-tight sm:leading-7 tracking-tight">
                 Post Your Requirements
               </h2>
+              {/* Mobile-only Close X aligned with heading */}
+              <button
+                type="button"
+                onClick={onClose}
+                aria-label="Close"
+                className="sm:hidden inline-flex items-center justify-center rounded-lg h-8 w-8 bg-default-100 text-default-500 hover:text-default-800 hover:bg-default-200 transition-colors cursor-pointer shrink-0"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x" aria-hidden="true">
+                  <path d="M18 6 6 18"></path>
+                  <path d="m6 6 12 12"></path>
+                </svg>
+              </button>
             </div>
 
             <div className="flex items-center justify-center sm:justify-end sm:pr-12 w-full sm:w-auto">
@@ -241,12 +253,12 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
               </div>
             </div>
 
-            {/* Single Guaranteed Close Button in Header - ALWAYS TOP RIGHT */}
+            {/* Desktop Close Button - ALWAYS TOP RIGHT ON DESKTOP */}
             <button
               type="button"
               onClick={onClose}
               aria-label="Close"
-              className="modal-close-btn inline-flex items-center justify-center rounded-lg h-8 w-8 bg-default-100 text-default-500 hover:text-default-800 hover:bg-default-200 transition-colors cursor-pointer shrink-0"
+              className="hidden sm:inline-flex modal-close-btn items-center justify-center rounded-lg h-8 w-8 bg-default-100 text-default-500 hover:text-default-800 hover:bg-default-200 transition-colors cursor-pointer shrink-0"
               style={{ position: "absolute", top: "16px", right: "20px", left: "auto", zIndex: 50 }}
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x" aria-hidden="true">
@@ -628,23 +640,23 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
           </div>
 
           {/* Modal Footer */}
-          <footer className="flex flex-col-reverse sm:flex-row gap-2 px-4 sm:px-6 py-3 sm:py-4 justify-end border-t border-default-100 bg-content1">
+          <footer className="flex flex-row gap-2.5 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 justify-between sm:justify-end border-t border-default-100 bg-content1 shrink-0">
             <button
               type="button"
               tabIndex="0"
               onClick={onClose}
               data-react-aria-pressable="true"
-              className="w-full sm:w-auto z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent px-4 min-w-20 h-10 text-small gap-2 rounded-medium [&>svg]:max-w-[theme(spacing.8)] transition-transform-colors-opacity motion-reduce:transition-none bg-transparent text-default-foreground data-[hover=true]:bg-default/40 hover:bg-default/40"
+              className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent px-3.5 sm:px-4 min-w-16 sm:min-w-20 h-10 text-small gap-1.5 sm:gap-2 rounded-medium transition-transform-colors-opacity motion-reduce:transition-none bg-transparent text-default-foreground hover:bg-default/40"
             >
               Cancel
             </button>
-            <div className="flex items-center gap-2 w-full sm:w-auto">
+            <div className="flex items-center gap-2 sm:gap-2">
               <button
                 type="button"
                 tabIndex="0"
                 onClick={handleSaveDraft}
                 data-react-aria-pressable="true"
-                className="flex-1 sm:flex-none z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent px-4 min-w-20 h-10 text-small gap-2 rounded-medium [&>svg]:max-w-[theme(spacing.8)] transition-transform-colors-opacity motion-reduce:transition-none bg-default text-default-foreground data-[hover=true]:opacity-hover hover:opacity-80"
+                className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent px-3.5 sm:px-4 min-w-20 h-10 text-small gap-1.5 sm:gap-2 rounded-medium transition-transform-colors-opacity motion-reduce:transition-none bg-default text-default-foreground hover:opacity-80"
               >
                 Save Draft
               </button>
@@ -653,7 +665,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                 tabIndex="0"
                 onClick={handlePublish}
                 data-react-aria-pressable="true"
-                className="flex-1 sm:flex-none z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-semibold subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent px-4 min-w-20 h-10 text-small gap-2 rounded-medium transition-transform-colors-opacity motion-reduce:transition-none bg-primary text-primary-foreground data-[hover=true]:opacity-hover hover:opacity-80 shadow-sm"
+                className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-semibold subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent px-4 min-w-24 sm:min-w-28 h-10 text-small gap-1.5 sm:gap-2 rounded-medium transition-transform-colors-opacity motion-reduce:transition-none bg-primary text-primary-foreground hover:opacity-80 shadow-sm"
               >
                 Publish Request
               </button>

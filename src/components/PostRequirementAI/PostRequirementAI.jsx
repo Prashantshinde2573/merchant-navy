@@ -38,7 +38,7 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
   });
   const [isFinishing, setIsFinishing] = useState(false);
 
-  const messagesEndRef = useRef(null);
+  const chatBodyRef = useRef(null);
   const inputRef = useRef(null);
 
   const currentQ = REQUIREMENT_QUESTIONS[currentIndex];
@@ -55,9 +55,14 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
     ]);
   }, []);
 
-  // Scroll to bottom of message list on new messages
+  // Scroll to bottom of message list on new messages (contained inside chat container only)
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (chatBodyRef.current) {
+      chatBodyRef.current.scrollTo({
+        top: chatBodyRef.current.scrollHeight,
+        behavior: "smooth"
+      });
+    }
   }, [messages, currentIndex]);
 
   // Sync active question input state
@@ -217,7 +222,10 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
       </div>
 
       {/* Message Stream — ONLY THIS AREA SCROLLS */}
-      <div className="ai-chat-body flex-1 min-h-0 p-4 sm:p-6 overflow-y-auto space-y-3.5 bg-blue-25/40">
+      <div
+        ref={chatBodyRef}
+        className="ai-chat-body flex-1 min-h-0 p-4 sm:p-6 overflow-y-auto space-y-4 sm:space-y-3.5 bg-blue-25/40"
+      >
         {messages.map((msg, index) => {
           const isLatest = index === messages.length - 1;
           const isAI = msg.sender === "ai";
@@ -228,7 +236,7 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
               className={`flex flex-col ${isAI ? "items-start" : "items-end"}`}
             >
               {/* Sender Label */}
-              <div className={`text-tiny font-medium mb-1 px-1 flex items-center gap-1.5 ${isAI ? "text-blue-700 font-semibold" : "text-zinc-500"}`}>
+              <div className={`text-tiny font-medium mb-1.5 px-1 flex items-center gap-1.5 ${isAI ? "text-blue-700 font-semibold" : "text-zinc-500 pr-1.5 sm:pr-2.5"}`}>
                 {isAI ? (
                   <>
                     <span className="w-1.5 h-1.5 rounded-full bg-blue-600 inline-block"></span>
@@ -240,14 +248,16 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
               </div>
 
               {/* Message Bubble */}
-              <div className={`flex ${isAI ? "justify-start" : "justify-end"} w-full`}>
+              <div className={`flex ${isAI ? "justify-start" : "justify-end pr-1 sm:pr-2"} w-full`}>
                 <div
-                  className={`max-w-[92%] sm:max-w-[85%] rounded-lg px-4 py-3 text-small leading-relaxed whitespace-pre-wrap break-words ${
+                  className={`ai-message-bubble max-w-[88%] sm:max-w-[82%] rounded-lg text-small leading-relaxed whitespace-pre-wrap break-words box-border ${
                     isAI
-                      ? isLatest
-                        ? "bg-content1 text-content1-foreground border border-foreground-200 shadow-neutral-sm font-medium"
-                        : "bg-default-100 text-default-600 border border-default-200"
-                      : "bg-primary text-primary-foreground font-medium shadow-xs"
+                      ? `ai-bubble ${
+                          isLatest
+                            ? "bg-content1 text-content1-foreground border border-foreground-200 shadow-neutral-sm font-medium"
+                            : "bg-default-100 text-default-600 border border-default-200"
+                        } px-4.5 py-3.5 sm:px-5 sm:py-4`
+                      : "user-bubble bg-primary text-primary-foreground font-medium shadow-xs px-4 py-3 sm:px-5 sm:py-3.5"
                   }`}
                 >
                   {msg.text}
@@ -256,38 +266,54 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
             </div>
           );
         })}
-        <div ref={messagesEndRef} />
       </div>
 
       {/* Interactive Input Area — FIXED AT BOTTOM OF AI SECTION */}
       {!isFinishing && currentQ && (
-        <div className="ai-interactive-footer p-4 sm:p-6 border-t border-default-100 bg-content1 space-y-3.5 shrink-0">
+        <div className="ai-interactive-footer p-4 sm:p-6 border-t border-default-100 bg-content1 space-y-3 sm:space-y-3.5 shrink-0">
           {/* Helper Text */}
           {currentQ.helperText && (
             <p className="text-modified-13 text-zinc-500 px-1">{currentQ.helperText}</p>
           )}
 
-          {/* Type: Multi-Select (Chips for Services / Ports) */}
+          {/* Type: Multi-Select (Compact Controlled Selector for Services / Ports) */}
           {currentQ.type === "multi-select" && currentQ.options && (
-            <div className="max-h-44 overflow-y-auto flex flex-wrap gap-2.5 sm:gap-3 p-4 sm:p-5 bg-content1 rounded-lg border border-foreground-200">
-              {currentQ.options.map((opt) => {
-                const isSelected = selectedChips.includes(opt);
-                return (
+            <div className="flex flex-col gap-2">
+              {/* Selected Pills Summary Bar on mobile when items are selected */}
+              {selectedChips.length > 0 && (
+                <div className="flex items-center justify-between text-xs text-blue-700 bg-blue-50 px-3 py-2 rounded-md border border-blue-100">
+                  <span className="font-semibold truncate">Selected ({selectedChips.length}): {selectedChips.join(", ")}</span>
                   <button
-                    key={opt}
                     type="button"
-                    onClick={() => toggleChip(opt)}
-                    className={`text-xs px-4 sm:px-5 py-2 rounded-full border transition-all cursor-pointer font-medium leading-normal inline-flex items-center gap-2 break-words text-left max-w-full ${
-                      isSelected
-                        ? "bg-primary text-primary-foreground border-primary font-semibold shadow-xs"
-                        : "bg-white text-default-700 border-default-200 hover:border-blue-300 hover:bg-blue-50/40 hover:text-blue-700"
-                    }`}
+                    onClick={() => setSelectedChips([])}
+                    className="text-zinc-500 hover:text-red-600 font-medium ml-2 cursor-pointer underline text-[11px] shrink-0"
                   >
-                    <span className="font-bold text-xs shrink-0">{isSelected ? "✓" : "+"}</span>
-                    <span>{opt}</span>
+                    Clear
                   </button>
-                );
-              })}
+                </div>
+              )}
+
+              {/* Contained chips container with controlled max-height & smooth internal scrolling */}
+              <div className="ai-chips-box max-h-28 sm:max-h-44 overflow-y-auto flex flex-wrap gap-2 sm:gap-2.5 p-3 sm:p-4 bg-content1 rounded-lg border border-foreground-200">
+                {currentQ.options.map((opt) => {
+                  const isSelected = selectedChips.includes(opt);
+                  return (
+                    <button
+                      key={opt}
+                      type="button"
+                      onClick={() => toggleChip(opt)}
+                      className={`text-xs px-3 sm:px-4 py-1.5 sm:py-2.5 rounded-full border transition-all cursor-pointer font-medium leading-normal inline-flex items-center gap-1.5 sm:gap-2 break-words text-left max-w-full ${
+                        isSelected
+                          ? "bg-primary text-primary-foreground border-primary font-semibold shadow-xs"
+                          : "bg-white text-default-700 border-default-200 hover:border-blue-300 hover:bg-blue-50/40 hover:text-blue-700"
+                      }`}
+                    >
+                      <span className="font-bold text-xs shrink-0">{isSelected ? "✓" : "+"}</span>
+                      <span>{opt}</span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           )}
 
@@ -379,11 +405,11 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
           )}
 
           {/* Free-form Input + Actions */}
-          <div className="space-y-3.5">
+          <div className="space-y-3 sm:space-y-3.5">
             {currentQ.type === "textarea" ? (
               <textarea
                 ref={inputRef}
-                rows={3}
+                rows={2}
                 value={textInput}
                 onChange={(e) => setTextInput(e.target.value)}
                 onKeyDown={(e) => {
@@ -393,7 +419,7 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
                   }
                 }}
                 placeholder={currentQ.placeholder || "Type your response here..."}
-                className="w-full text-small bg-content1 border border-foreground-200 rounded-lg p-3 text-default-foreground placeholder:text-zinc-500 focus:outline-none focus:border-primary resize-none transition-colors leading-relaxed"
+                className="w-full text-small bg-content1 border border-foreground-200 rounded-lg p-3 sm:p-3 text-default-foreground placeholder:text-zinc-500 focus:outline-none focus:border-primary resize-none transition-colors leading-relaxed"
               />
             ) : (
               <input
@@ -408,7 +434,7 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
                   }
                 }}
                 placeholder={currentQ.placeholder || "Or type a custom answer..."}
-                className="w-full text-small bg-content1 border border-foreground-200 rounded-lg px-3.5 text-default-foreground placeholder:text-zinc-500 focus:outline-none focus:border-primary transition-colors h-10"
+                className="w-full text-small bg-content1 border border-foreground-200 rounded-lg px-4 sm:px-3.5 py-2.5 sm:py-2 text-default-foreground placeholder:text-zinc-500 focus:outline-none focus:border-primary transition-colors h-10"
               />
             )}
 
@@ -418,7 +444,7 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
                 <button
                   type="button"
                   onClick={() => handleNext(currentQ.type === "multi-select" ? [] : "")}
-                  className="px-4 min-w-20 h-10 text-small font-normal rounded-medium bg-default text-default-foreground hover:opacity-80 transition-opacity cursor-pointer flex items-center justify-center"
+                  className="px-4 min-w-18 sm:min-w-20 h-10 text-small font-normal rounded-medium bg-default text-default-foreground hover:opacity-80 transition-opacity cursor-pointer flex items-center justify-center"
                 >
                   Skip
                 </button>
@@ -429,7 +455,7 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
               <button
                 type="button"
                 onClick={() => handleNext()}
-                className="px-5 min-w-20 h-10 text-small font-semibold rounded-medium bg-primary text-primary-foreground hover:opacity-80 transition-opacity shadow-sm flex items-center justify-center gap-1.5 cursor-pointer ml-auto"
+                className="px-5 min-w-20 h-10 text-small font-semibold rounded-medium bg-primary text-primary-foreground hover:opacity-80 transition-opacity shadow-sm flex items-center justify-center gap-2 cursor-pointer ml-auto"
               >
                 <span>{currentIndex === REQUIREMENT_QUESTIONS.length - 1 ? "Finish & Populate" : "Next"}</span>
                 <svg

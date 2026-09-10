@@ -3,6 +3,16 @@
   backdrop-filter: blur(2px);
 }
 
+/* Quill Editor Single-Border (eliminates duplicate nested borders) */
+.quill .ql-toolbar.ql-snow {
+  border: none !important;
+  border-bottom: 1px solid rgba(228, 228, 231, 0.8) !important;
+}
+
+.quill .ql-container.ql-snow {
+  border: none !important;
+}
+
 /* Modal Header and Close Button Positioning */
 .modal-header-container {
   position: relative !important;
@@ -47,7 +57,7 @@
   section[role="dialog"]#_r_19q_ {
     width: calc(100vw - 16px) !important;
     max-width: calc(100vw - 16px) !important;
-    max-height: 92vh !important;
+    max-height: calc(100dvh - 16px) !important;
     margin: 8px auto !important;
     border-radius: 16px !important;
   }
@@ -56,6 +66,9 @@
     height: calc(100dvh - 16px) !important;
     max-height: calc(100dvh - 16px) !important;
     margin: 8px auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
   }
 
   #_r_19s_:not(.ai-modal-body) {

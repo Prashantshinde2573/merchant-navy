@@ -80,11 +80,11 @@ export function MyPostDetail() {
                   </svg>
                 </button>
 
-                <div className="flex max-w-150 flex-1 flex-col gap-0.5">
-                  <h2 className="text-content1-foreground truncate text-lg leading-7 font-semibold">
+                <div className="flex max-w-150 flex-1 flex-col gap-0.5 my-post-detail-header-text">
+                  <h2 className="text-content1-foreground truncate text-lg leading-7 font-semibold my-post-detail-title">
                     {post.title || post.scopeOfWork}
                   </h2>
-                  <p className="truncate text-sm leading-5 text-zinc-500">
+                  <p className="truncate text-sm leading-5 text-zinc-500 my-post-detail-services-sub">
                     <span className="font-medium">Services:</span> {post.services?.join(', ')}
                   </p>
                 </div>
@@ -172,7 +172,7 @@ export function MyPostDetail() {
             </div>
 
             {/* Tab Navigation List */}
-            <div data-slot="base" className="inline-flex w-full">
+            <div data-slot="base" className="inline-flex my-post-detail-tab-wrap">
               <div
                 data-slot="tabList"
                 className="flex h-fit items-center flex-nowrap overflow-x-scroll scrollbar-hide gap-6 w-full relative rounded-none p-0 border-none bg-transparent"
@@ -316,34 +316,33 @@ export function MyPostDetail() {
                                   key={quote.id}
                                   data-first={idx === 0}
                                   role="row"
-                                  className="group/tr border-b border-divider last:border-0 hover:bg-blue-25/40 transition-colors"
+                                  className={`group/tr border-b border-divider last:border-0 hover:bg-blue-25/40 transition-colors relative ${quote.isRecommended ? 'recommended-quotation-row' : ''}`}
                                 >
                                   {/* Merchant Name & Recommendation */}
-                                  <td role="rowheader" className="px-3 relative align-middle whitespace-normal text-small font-normal text-start py-3">
-                                    <div className="flex flex-col gap-1">
+                                  <td role="rowheader" className="px-3 relative align-middle whitespace-normal text-small font-normal text-start py-3.5">
+                                    {quote.isRecommended && (
+                                      <div className="recommended-row-accent" aria-hidden="true" />
+                                    )}
+                                    <div className="flex flex-col gap-2">
                                       {quote.isRecommended && (
                                         <div className="flex items-center">
-                                          <span
-                                            className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-medium text-[#1F285D] bg-blue-50 border border-blue-200/80 whitespace-nowrap select-none"
+                                          <div
+                                            className="recommended-badge-pill"
                                             aria-label="Recommended by Merchant Navy"
                                           >
                                             <svg
                                               xmlns="http://www.w3.org/2000/svg"
-                                              width="11"
-                                              height="11"
+                                              width="13"
+                                              height="13"
                                               viewBox="0 0 24 24"
-                                              fill="none"
-                                              stroke="currentColor"
-                                              strokeWidth="2.5"
-                                              strokeLinecap="round"
-                                              strokeLinejoin="round"
-                                              className="text-blue-700 shrink-0"
+                                              fill="#e5a500"
+                                              className="shrink-0"
                                               aria-hidden="true"
                                             >
-                                              <polyline points="20 6 9 17 4 12" />
+                                              <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z" />
                                             </svg>
-                                            <span className="font-semibold text-[#1F285D]">Recommended by Merchant Navy</span>
-                                          </span>
+                                            <span>Recommended by Merchant Navy</span>
+                                          </div>
                                         </div>
                                       )}
                                       <div className="flex items-center gap-3">
@@ -487,32 +486,33 @@ export function MyPostDetail() {
                           {quotations.map((quote) => (
                             <div
                               key={quote.id}
-                              className="bg-white border border-blue-100/90 rounded-xl p-4 shadow-sm flex flex-col gap-3 w-full box-border"
+                              className={`bg-white border ${quote.isRecommended ? 'border-blue-200 recommended-quotation-row' : 'border-blue-100/90'} rounded-xl p-4 shadow-sm flex flex-col gap-3 w-full box-border relative overflow-hidden`}
                             >
+                              {/* Left Blue Accent Bar for Recommended */}
+                              {quote.isRecommended && (
+                                <div className="recommended-row-accent" aria-hidden="true" />
+                              )}
+
                               {/* Recommendation badge */}
                               {quote.isRecommended && (
                                 <div className="flex items-center">
-                                  <span
-                                    className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-medium text-[#1F285D] bg-blue-50 border border-blue-200/80 select-none"
+                                  <div
+                                    className="recommended-badge-pill"
                                     aria-label="Recommended by Merchant Navy"
                                   >
                                     <svg
                                       xmlns="http://www.w3.org/2000/svg"
-                                      width="11"
-                                      height="11"
+                                      width="13"
+                                      height="13"
                                       viewBox="0 0 24 24"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="2.5"
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      className="text-blue-700 shrink-0"
+                                      fill="#e5a500"
+                                      className="shrink-0"
                                       aria-hidden="true"
                                     >
-                                      <polyline points="20 6 9 17 4 12" />
+                                      <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z" />
                                     </svg>
-                                    <span className="font-semibold text-[#1F285D]">Recommended by Merchant Navy</span>
-                                  </span>
+                                    <span>Recommended by Merchant Navy</span>
+                                  </div>
                                 </div>
                               )}
 
@@ -656,7 +656,7 @@ export function MyPostDetail() {
                 <div className="space-y-4">
                   {/* Attachments Section */}
                   <div
-                    className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-5"
+                    className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-5 my-post-detail-card"
                     tabIndex="-1"
                     id="attachments"
                   >
@@ -675,7 +675,7 @@ export function MyPostDetail() {
 
                   {/* Ports & Services Section */}
                   <div
-                    className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-5"
+                    className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-5 my-post-detail-card"
                     tabIndex="-1"
                     id="ports-services"
                   >
@@ -692,7 +692,7 @@ export function MyPostDetail() {
                               {post.ports?.map((port, idx) => (
                                 <div
                                   key={idx}
-                                  className="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap text-small text-default-700 h-7 rounded px-2 border border-[#E0E0E0] bg-white"
+                                  className="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap text-small text-default-700 h-7 rounded px-2 border border-[#E0E0E0] bg-white my-post-detail-pill"
                                 >
                                   <span className="flex-1 px-1 text-[14px] font-medium leading-5 text-[#3f3f46]">
                                     {port}
@@ -716,7 +716,7 @@ export function MyPostDetail() {
                               {post.services?.map((service, idx) => (
                                 <div
                                   key={idx}
-                                  className="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap text-small text-default-700 h-7 rounded px-2 border border-[#E0E0E0] bg-white"
+                                  className="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap text-small text-default-700 h-7 rounded px-2 border border-[#E0E0E0] bg-white my-post-detail-pill"
                                 >
                                   <span className="flex-1 px-1 text-[14px] font-medium leading-5 text-[#3f3f46]">
                                     {service}
@@ -732,7 +732,7 @@ export function MyPostDetail() {
 
                   {/* Scope of Work Section */}
                   <div
-                    className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-5"
+                    className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-5 my-post-detail-card"
                     tabIndex="-1"
                     id="scope-of-work"
                   >

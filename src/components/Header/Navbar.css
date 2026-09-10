@@ -9,37 +9,16 @@
   line-height: 1;
 }
 
-/* MOBILE ONLY */
+/* MOBILE ONLY (< 768px) */
 @media (max-width: 767px) {
   nav.px-10 {
-    padding-left: 12px !important;
-    padding-right: 12px !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
   }
-  nav header.px-6 {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    gap: 8px !important;
-  }
+
   .profile-dropdown-card {
     right: 0 !important;
     max-width: calc(100vw - 24px) !important;
-  }
-
-  /* Hide chat, support, and notification icons from navbar on mobile */
-  nav header ul[data-justify="end"] > div.flex.items-center.gap-2,
-  nav header ul[data-justify="end"] > div[role="separator"] {
-    display: none !important;
-  }
-
-  /* Center the Merchant Navy logo icon in mobile view */
-  nav header > div.flex.basis-0.flex-grow {
-    justify-content: center !important;
-    text-align: center !important;
-  }
-
-  nav header > div.flex.basis-0.flex-grow > a {
-    margin: 0 auto !important;
-    justify-content: center !important;
   }
 }
 

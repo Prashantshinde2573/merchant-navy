@@ -5,3 +5,11 @@
   margin-right: auto;
   width: 100%;
 }
+
+/* MOBILE ONLY (< 768px): Safe space for fixed bottom navigation */
+@media (max-width: 767px) {
+  .app-main-layout {
+    /* 56px (bottom nav) + 24px (extra comfortable breathing room) + safe-area inset */
+    padding-bottom: calc(56px + 24px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
