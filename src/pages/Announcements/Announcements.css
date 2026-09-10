@@ -1,0 +1,12 @@
+/* Announcements Isolated Styles */
+.announcements-page-wrapper {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 767px) {
+  .announcements-page-wrapper .max-w-4xl {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}

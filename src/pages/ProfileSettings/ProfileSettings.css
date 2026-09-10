@@ -1,0 +1,119 @@
+/* ProfileSettings Isolated Styles */
+.profile-settings-page-wrapper {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.profile-settings-page-wrapper .settings-content-container {
+  max-width: 1232px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+.profile-settings-page-wrapper .settings-card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid rgba(223, 226, 235, 0.8);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
+}
+
+.profile-settings-page-wrapper .settings-left-col {
+  width: 348px;
+  max-width: 348px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.profile-settings-page-wrapper .settings-right-col {
+  flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+@media (max-width: 767px) {
+  .profile-settings-page-wrapper {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  .profile-settings-page-wrapper .settings-card-inner {
+    flex-direction: column !important;
+    padding: 20px !important;
+    gap: 20px !important;
+  }
+  .profile-settings-page-wrapper .settings-left-col {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Scoped Switch / Toggle Styles matching merchant-navy.full-page.Woblo (20).zip */
+.profile-settings-page-wrapper .settings-toggle-label {
+  position: relative;
+  max-width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  user-select: none;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.profile-settings-page-wrapper .settings-toggle-track {
+  width: 48px !important;
+  height: 28px !important;
+  min-width: 48px !important;
+  min-height: 28px !important;
+  padding: 0 4px !important;
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  flex-shrink: 0 !important;
+  border-radius: 9999px !important;
+  outline: none !important;
+  border: none !important;
+  box-sizing: border-box !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.profile-settings-page-wrapper .settings-toggle-track.is-checked,
+.profile-settings-page-wrapper [data-selected="true"] .settings-toggle-track {
+  background-color: #1f285d !important;
+}
+
+.profile-settings-page-wrapper .settings-toggle-track.is-unchecked,
+.profile-settings-page-wrapper [data-selected="false"] .settings-toggle-track {
+  background-color: #e4e4e7 !important;
+}
+
+.profile-settings-page-wrapper .settings-toggle-thumb {
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  min-height: 20px !important;
+  border-radius: 9999px !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 0 1px 0 rgba(0, 0, 0, 0.3) !important;
+  pointer-events: none !important;
+  flex-shrink: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.profile-settings-page-wrapper [data-selected="true"] .settings-toggle-thumb,
+.profile-settings-page-wrapper .settings-toggle-thumb.is-checked {
+  transform: translateX(20px) !important;
+}
+
+.profile-settings-page-wrapper [data-selected="false"] .settings-toggle-thumb,
+.profile-settings-page-wrapper .settings-toggle-thumb.is-unchecked {
+  transform: translateX(0px) !important;
+}

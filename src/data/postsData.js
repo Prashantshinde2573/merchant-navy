@@ -54,6 +54,7 @@ export const POSTS_DATA = {
     vendorName: 'Indra Shipping Co.',
     vendorAvatar: 'IS',
     isVerified: true,
+    isApplied: true,
     timeAgo: '2 days ago',
     budget: '$5K - 10K',
     dateRange: 'Apr 10 - Apr 15',

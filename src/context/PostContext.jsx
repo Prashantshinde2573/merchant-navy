@@ -36,7 +36,7 @@ export function PostProvider({ children }) {
   };
 
   const hasApplied = (postId) => {
-    return !!appliedPosts[postId]?.applied;
+    return !!appliedPosts[postId]?.applied || !!POSTS_DATA[postId]?.isApplied;
   };
 
   const getPost = (postId) => {

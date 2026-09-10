@@ -1,0 +1,35 @@
+/* SupportModal Isolated Styles */
+@media (max-width: 640px) {
+  #_r_1ih_ {
+    margin-left: 8px !important;
+    margin-right: 8px !important;
+    max-height: calc(100vh - 1.5rem) !important;
+    border-radius: 16px !important;
+  }
+
+  #_r_1ii_ {
+    padding-left: 16px !important;
+    padding-right: 48px !important;
+    padding-top: 14px !important;
+    padding-bottom: 12px !important;
+  }
+
+  #_r_1ij_ {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    padding-top: 14px !important;
+    padding-bottom: 14px !important;
+    gap: 16px !important;
+  }
+
+  #_r_1ih_ footer {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+  }
+
+  #_r_1ih_ footer button {
+    width: 100% !important;
+  }
+}

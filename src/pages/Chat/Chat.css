@@ -1,12 +1,11 @@
 /* Chat Isolated Styles */
-.chat-thread-container {
-  height: calc(100vh - 140px);
+.chat-page-container {
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* MOBILE ONLY */
 @media (max-width: 767px) {
-  .chat-thread-container {
-    height: calc(100dvh - 120px);
+  .chat-page-container {
+    height: calc(100dvh - 56px) !important;
   }
 }
-

@@ -14,6 +14,9 @@ import { Notifications } from '../pages/Notifications/Notifications';
 import { Chat } from '../pages/Chat/Chat';
 import { Wins } from '../pages/Wins/Wins';
 import { Help } from '../pages/Help/Help';
+import { Announcements } from '../pages/Announcements/Announcements';
+import { CompanyProfile } from '../pages/CompanyProfile/CompanyProfile';
+import { ProfileSettings } from '../pages/ProfileSettings/ProfileSettings';
 
 export function AppRoutes() {
   return (
@@ -43,9 +46,17 @@ export function AppRoutes() {
         <Route path="my-merchants" element={<MyMerchants />} />
         <Route path="notifications" element={<Notifications />} />
         <Route path="chats" element={<Chat />} />
+        <Route path="chats/:id" element={<Chat />} />
         <Route path="chat" element={<Chat />} />
+        <Route path="chat/:id" element={<Chat />} />
         <Route path="wins" element={<Wins />} />
         <Route path="help" element={<Help />} />
+        <Route path="announcements" element={<Announcements />} />
+        <Route path="announcements/:id" element={<Announcements />} />
+        <Route path="company-profile" element={<CompanyProfile />} />
+        <Route path="company/:id" element={<CompanyProfile />} />
+        <Route path="settings" element={<ProfileSettings />} />
+        <Route path="profile-settings" element={<ProfileSettings />} />
       </Route>
 
       {/* Catch-all fallback */}

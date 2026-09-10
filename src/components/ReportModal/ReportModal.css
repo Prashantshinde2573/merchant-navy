@@ -1,0 +1,56 @@
+/* ReportModal Isolated Styles */
+@media (max-width: 640px) {
+  #_r_1s9_ {
+    margin-left: 8px !important;
+    margin-right: 8px !important;
+    max-height: calc(100vh - 1.5rem) !important;
+    border-radius: 16px !important;
+  }
+
+  #_r_1sa_ {
+    padding-left: 16px !important;
+    padding-right: 48px !important;
+    padding-top: 14px !important;
+    padding-bottom: 12px !important;
+  }
+
+  #_r_1sb_ {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    padding-top: 12px !important;
+  }
+
+  #_r_1s9_ footer {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+  }
+}
+
+/* Scoped button styles matching merchant-navy.full-page.Woblo (21).zip */
+.report-modal-cancel-btn {
+  background-color: transparent !important;
+  color: #000000 !important;
+}
+
+.report-modal-cancel-btn:hover {
+  background-color: rgba(212, 212, 216, 0.4) !important;
+}
+
+.report-modal-submit-btn {
+  background-color: #f31260 !important;
+  color: #ffffff !important;
+}
+
+.report-modal-submit-btn:disabled,
+.report-modal-submit-btn[disabled] {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+  background-color: #f31260 !important;
+  color: #ffffff !important;
+}
+
+.report-modal-submit-btn:not(:disabled):hover {
+  opacity: 0.85 !important;
+}

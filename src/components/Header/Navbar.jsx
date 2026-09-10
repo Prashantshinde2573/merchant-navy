@@ -101,25 +101,26 @@ export function Navbar() {
               </div>
 
               {isDropdownOpen && (
-                <div className="absolute right-0 top-12 w-44 bg-white rounded-large shadow-medium shadow-neutral-sm border border-blue-50 p-4 z-50 flex flex-col gap-2.5 profile-dropdown-card">
+                <div className="absolute right-0 top-12 w-48 bg-white rounded-large shadow-medium shadow-neutral-sm border border-blue-50 p-3 z-50 flex flex-col gap-1 profile-dropdown-card">
                   <Link
-                    to="/home"
+                    to="/company-profile"
                     onClick={() => setIsDropdownOpen(false)}
-                    className="text-[15px] font-medium text-gray-800 hover:text-primary transition-colors px-2 py-1 text-left block w-full rounded-md hover:bg-blue-50/50"
+                    className="text-[14px] font-medium text-gray-800 hover:text-primary transition-colors px-2.5 py-1.5 text-left block w-full rounded-md hover:bg-blue-50/50"
                   >
                     Profile
                   </Link>
                   <Link
-                    to="/help"
+                    to="/settings"
                     onClick={() => setIsDropdownOpen(false)}
-                    className="text-[15px] font-medium text-gray-800 hover:text-primary transition-colors px-2 py-1 text-left block w-full rounded-md hover:bg-blue-50/50"
+                    className="text-[14px] font-medium text-gray-800 hover:text-primary transition-colors px-2.5 py-1.5 text-left block w-full rounded-md hover:bg-blue-50/50"
                   >
                     Settings
                   </Link>
+                  <div className="h-px bg-gray-100 my-1"></div>
                   <button
                     type="button"
                     onClick={handleLogout}
-                    className="text-[15px] font-medium text-gray-800 hover:text-red-600 transition-colors px-2 py-1 text-left block w-full cursor-pointer rounded-md hover:bg-red-50/50"
+                    className="text-[14px] font-medium text-red-600 hover:text-red-700 transition-colors px-2.5 py-1.5 text-left block w-full cursor-pointer rounded-md hover:bg-red-50/50"
                   >
                     Logout
                   </button>
@@ -204,25 +205,26 @@ export function Navbar() {
               </div>
 
               {isDropdownOpen && (
-                <div className="absolute right-0 top-14 mt-1 w-44 bg-white rounded-large shadow-medium shadow-neutral-sm border border-blue-50 p-3.5 z-50 flex flex-col gap-2 profile-dropdown-card">
+                <div className="absolute right-0 top-14 mt-1 w-48 bg-white rounded-large shadow-medium shadow-neutral-sm border border-blue-50 p-3 z-50 flex flex-col gap-1 profile-dropdown-card">
                   <Link
-                    to="/home"
+                    to="/company-profile"
                     onClick={() => setIsDropdownOpen(false)}
-                    className="text-[15px] font-medium text-gray-800 hover:text-primary transition-colors px-2.5 py-1.5 text-left block w-full rounded-md hover:bg-blue-50/50"
+                    className="text-[14px] font-medium text-gray-800 hover:text-primary transition-colors px-2.5 py-1.5 text-left block w-full rounded-md hover:bg-blue-50/50"
                   >
                     Profile
                   </Link>
                   <Link
-                    to="/help"
+                    to="/settings"
                     onClick={() => setIsDropdownOpen(false)}
-                    className="text-[15px] font-medium text-gray-800 hover:text-primary transition-colors px-2.5 py-1.5 text-left block w-full rounded-md hover:bg-blue-50/50"
+                    className="text-[14px] font-medium text-gray-800 hover:text-primary transition-colors px-2.5 py-1.5 text-left block w-full rounded-md hover:bg-blue-50/50"
                   >
                     Settings
                   </Link>
+                  <div className="h-px bg-gray-100 my-1"></div>
                   <button
                     type="button"
                     onClick={handleLogout}
-                    className="text-[15px] font-medium text-gray-800 hover:text-red-600 transition-colors px-2.5 py-1.5 text-left block w-full cursor-pointer rounded-md hover:bg-red-50/50"
+                    className="text-[14px] font-medium text-red-600 hover:text-red-700 transition-colors px-2.5 py-1.5 text-left block w-full cursor-pointer rounded-md hover:bg-red-50/50"
                   >
                     Logout
                   </button>
@@ -256,20 +258,17 @@ export function Navbar() {
             </Link>
 
             {/* 3. Announcements */}
-            <button
-              type="button"
-              onClick={() => {
-                setShowAnnouncementsModal(true);
-                setIsMenuOpen(false);
-              }}
-              className="flex items-center justify-between p-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors text-left w-full cursor-pointer"
+            <Link
+              to="/announcements"
+              onClick={() => setIsMenuOpen(false)}
+              className={`flex items-center justify-between p-2.5 rounded-lg text-sm font-medium transition-colors ${pathname.startsWith('/announcements') ? "bg-blue-50 text-primary font-semibold" : "text-gray-700 hover:bg-gray-50"}`}
             >
               <div className="flex items-center gap-3">
-                <span className="material-symbols-outlined text-xl text-gray-500">campaign</span>
+                <span className={`material-symbols-outlined text-xl ${pathname.startsWith('/announcements') ? "material-symbols-fill text-primary" : "text-gray-500"}`}>campaign</span>
                 <span>Announcements</span>
               </div>
               <span className="bg-blue-50 text-primary text-xs font-semibold px-2 py-0.5 rounded-full">New</span>
-            </button>
+            </Link>
 
             {/* 4. Support / Help */}
             <Link

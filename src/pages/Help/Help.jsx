@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { SupportModal } from '../../components/SupportModal/SupportModal';
 import './Help.css';
 
 const FAQ_ITEMS = [
@@ -26,6 +27,7 @@ const FAQ_ITEMS = [
 
 export function Help() {
   const [openItems, setOpenItems] = useState(['success-plan']);
+  const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
 
   const toggleItem = (id) => {
     setOpenItems((prev) =>
@@ -34,7 +36,7 @@ export function Help() {
   };
 
   const handleSubmitRequest = () => {
-    alert("Support request submitted! Our team will contact you shortly at admin@merchant.navy.");
+    setIsSupportModalOpen(true);
   };
 
   return (
@@ -123,6 +125,11 @@ export function Help() {
           </div>
         </div>
       </div>
+
+      <SupportModal
+        isOpen={isSupportModalOpen}
+        onClose={() => setIsSupportModalOpen(false)}
+      />
     </div>
   );
 }

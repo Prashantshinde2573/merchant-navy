@@ -114,7 +114,7 @@ export function PostContentWithTranslation({ postId, text, className = "text-mod
   };
 
   return (
-    <div className="post-translation-wrapper w-full relative" onClick={(e) => e.stopPropagation()}>
+    <div className="post-translation-wrapper w-full relative">
       {/* Post Text: Displays translatedText when active, otherwise original text */}
       <p className={className}>
         {isTranslated && translatedText ? translatedText : text}
