@@ -119,6 +119,11 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
   };
 
   const canNarrate = typeof window !== "undefined" && Boolean(window.speechSynthesis && window.SpeechSynthesisUtterance);
+  useEffect(() => {
+    // Start voice discovery while the user reads/types, before they tap Listen.
+    // Never enqueue silent speech or request microphone permission to warm it up.
+    try { window.speechSynthesis?.getVoices(); } catch { /* Listen can retry. */ }
+  }, []);
   const firstQuestion = !reviewing && !returnTo && (describing || questionOrder[0] === index);
   const heading = t(reviewing ? "Review your post" : describing ? "Describe your requirement" : QUESTIONS[index].question);
   const support = t(reviewing ? "Check the details. You can make final changes in the post form." : describing
@@ -155,7 +160,7 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
     if (muted) {
       setMuted(false);
       lastNarratedKey.current = narrationKey;
-      narrator().speak(promptText, {locale});
+      narrator().speak(promptText, {locale, userInitiated:true});
     } else {
       narratorRef.current?.stop();
       setMuted(true);
@@ -169,7 +174,7 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
     lastNarratedKey.current = narrationKey;
     const reviewText = reviewing ? `${promptText} ${[2, 0, 1, 3, 4].map(item =>
       `${t(REQUIREMENT_QUESTIONS[item].title)}: ${displayAnswer(item) || t(item === 4 ? "Open to quotations" : "Not specified")}.`).join(" ")}` : promptText;
-    narrator().speak(reviewText, {locale});
+    narrator().speak(reviewText, {locale, userInitiated:true});
   };
   useEffect(() => {
     if (firstRender.current) { firstRender.current = false; return; }
@@ -402,7 +407,7 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
               {t(reading ? "Stop reading" : reviewing ? "Listen to post" : "Listen")}
             </button>
             <span className={`ai-simple-read-status ${narrationError ? "is-error" : ""}`} role="status" aria-live="polite">
-              {narrationError ? localizedNarrationError : !canNarrate ? t("Read aloud is unavailable in this browser.") : narrationState === "starting" ? t("Preparing voice…") : narrationState === "speaking" ? t("Reading aloud…") : narrationVoice ? `${t(narrationVoice.natural ? "Natural female voice" : "Female voice")} · ${narrationVoice.name}` : ""}
+              {narrationError ? localizedNarrationError : !canNarrate ? t("Read aloud is unavailable in this browser.") : narrationState === "starting" ? t("Preparing voice…") : narrationState === "speaking" ? t("Reading aloud…") : narrationVoice ? `${t(narrationVoice.female ? (narrationVoice.natural ? "Natural female voice" : "Female voice") : "Device voice")}${narrationVoice.name ? ` · ${narrationVoice.name}` : ""}` : ""}
             </span>
           </div>
         </section>

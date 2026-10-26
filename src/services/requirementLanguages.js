@@ -55,6 +55,8 @@ const ROWS = [
  ['Listen to post preview','पोस्ट का पूर्वावलोकन सुनें','पोस्टचे पूर्वावलोकन ऐका','Escuchar la vista previa','Écouter l’aperçu','Beitragsvorschau anhören'],
  ['Stop reading','पढ़ना रोकें','वाचन थांबवा','Detener lectura','Arrêter la lecture','Vorlesen stoppen'],['Stop reading aloud','आवाज़ में पढ़ना रोकें','मोठ्याने वाचन थांबवा','Detener lectura en voz alta','Arrêter la lecture vocale','Vorlesen beenden'],
  ['Reading aloud…','पढ़ा जा रहा है…','वाचन सुरू आहे…','Leyendo…','Lecture en cours…','Wird vorgelesen…'],['Preparing voice…','आवाज़ तैयार हो रही है…','आवाज तयार होत आहे…','Preparando la voz…','Préparation de la voix…','Stimme wird vorbereitet…'],
+ ['Tap Listen to play the voice-over.','आवाज़ सुनने के लिए सुनें दबाएं।','आवाज ऐकण्यासाठी ऐका दाबा.','Toca Escuchar para reproducir la voz.','Appuyez sur Écouter pour lancer la voix.','Tippe auf Anhören, um die Stimme abzuspielen.'],
+ ['Device voice','डिवाइस की आवाज़','डिव्हाइसचा आवाज','Voz del dispositivo','Voix de l’appareil','Gerätestimme'],
  ['Female voice','महिला आवाज़','स्त्री आवाज','Voz femenina','Voix féminine','Weibliche Stimme'],['Natural female voice','स्वाभाविक महिला आवाज़','नैसर्गिक स्त्री आवाज','Voz femenina natural','Voix féminine naturelle','Natürliche weibliche Stimme'],
  ['Speak','बोलें','बोला','Hablar','Parler','Sprechen'],['Speak your answer','अपना जवाब बोलें','तुमचे उत्तर बोला','Dictar respuesta','Dicter votre réponse','Antwort diktieren'],
  ['Stop voice input','बोलकर जवाब देना रोकें','आवाजी उत्तर थांबवा','Detener dictado','Arrêter la dictée','Diktat stoppen'],['Stop','रोकें','थांबवा','Detener','Arrêter','Stopp'],

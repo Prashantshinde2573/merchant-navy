@@ -45,7 +45,7 @@ test('spoken units, budgets and dates expand without changing the displayed post
 });
 
 class Utterance { constructor(text) { this.text = text; } }
-function setup(voices = [samantha]) {
+function setup(voices = [samantha], options = {}) {
   const states = [], errors = [], spoken = [], selected = [];
   const listeners = new Set();
   let cancellations = 0, available = voices;
@@ -53,9 +53,9 @@ function setup(voices = [samantha]) {
     getVoices:() => available, speak:value=>spoken.push(value), cancel:()=>cancellations++,
     addEventListener:(_,listener)=>listeners.add(listener), removeEventListener:(_,listener)=>listeners.delete(listener)
   };
-  const narrator = createRequirementNarrator({synthesis, Utterance, onState:value=>states.push(value), onError:value=>errors.push(value), onVoice:value=>selected.push(value),voiceWaitMs:20});
+  const narrator = createRequirementNarrator({synthesis, Utterance, onState:value=>states.push(value), onError:value=>errors.push(value), onVoice:value=>selected.push(value),voiceWaitMs:20,...options});
   return {narrator,synthesis,states,errors,spoken,selected,listeners,cancellations:()=>cancellations,
-    loadVoices(value) { available=value; for (const listener of [...listeners]) listener(); }};
+    loadVoices(value, notify = true) { available=value; if (notify) for (const listener of [...listeners]) listener(); }};
 }
 
 test('female voice uses neutral pitch and steady pacing, not an artificial high pitch', () => {
@@ -92,13 +92,15 @@ test('waits for asynchronously loaded female voices instead of choosing a male d
   assert.equal(state.listeners.size,0);
 });
 
-test('missing female voice reports the limitation rather than falling back to male', async () => {
+test('missing named female voice delegates locale selection to the device', async () => {
   const state=setup([]);
   state.narrator.speak('A question');
   await new Promise(resolve=>setTimeout(resolve,35));
-  assert.equal(state.spoken.length,0);
-  assert.equal(state.states.at(-1),'error');
-  assert.match(state.errors.at(-1),/female voice/);
+  assert.equal(state.spoken.length,1);
+  assert.equal(state.spoken[0].lang,'en-IN');
+  assert.equal(state.spoken[0].voice,undefined);
+  assert.equal(state.selected.at(-1).female,false);
+  state.spoken[0].onend();
   assert.equal(state.listeners.size,0);
 });
 
@@ -144,7 +146,7 @@ test('speech errors preserve text and permit retry', () => {
   const state=setup();
   state.narrator.speak('A question');
   state.spoken[0].onerror({error:'not-allowed'});
-  assert.match(state.errors.at(-1),/Try Listen again/);
+  assert.match(state.errors.at(-1),/Tap Listen/);
   state.narrator.speak('A question');
   assert.equal(state.errors.at(-1),'');
   state.spoken[1].onerror({error:'interrupted'});
@@ -160,4 +162,69 @@ test('unavailable engines and synchronous failures fall back to text', () => {
   state.narrator.speak('Question');
   assert.equal(state.states.at(-1),'error');
   assert.match(state.errors.at(-1),/continue with the text/);
+});
+
+
+test('recognizes Chrome US English and female identities exposed only in voiceURI', () => {
+  const google={name:'Google US English',lang:'en-US'};
+  const apple={name:'English (United States)',voiceURI:'com.apple.voice.compact.en-US.Samantha',lang:'en-US'};
+  assert.equal(selectRequirementVoice([google]),google);
+  assert.equal(selectRequirementVoice([apple]),apple);
+  assert.equal(selectRequirementVoice([{...google,lang:'fr-FR'}],'en-IN'),null);
+  assert.equal(selectRequirementVoice([{name:'Google UK English Male',voiceURI:'Samantha',lang:'en-GB'}]),null);
+});
+
+test('finds delayed mobile voices even when voiceschanged is never emitted', async () => {
+  const state=setup([], {voiceWaitMs:200,voicePollMs:5});
+  state.narrator.speak('Question');
+  await new Promise(resolve=>setTimeout(resolve,30));
+  state.loadVoices([samantha],false);
+  await new Promise(resolve=>setTimeout(resolve,25));
+  assert.equal(state.spoken.length,1);
+  assert.equal(state.spoken[0].voice,samantha);
+  assert.equal(state.errors.at(-1),'');
+  state.spoken[0].onend();
+  await new Promise(resolve=>setTimeout(resolve,15));
+  assert.equal(state.spoken.length,1);
+});
+
+test('mute cancels polling and retry can recover after voices become available', async () => {
+  const state=setup([], {voiceWaitMs:20,voicePollMs:5});
+  state.narrator.speak('Question');
+  await new Promise(resolve=>setTimeout(resolve,35));
+  assert.equal(state.spoken.length,1);
+  state.spoken[0].onerror({error:'language-unavailable'});
+  assert.equal(state.states.at(-1),'error');
+  state.loadVoices([samantha],false);
+  state.narrator.speak('Question');
+  assert.equal(state.spoken.length,2);
+  assert.equal(state.errors.at(-1),'');
+  state.narrator.stop();
+  await new Promise(resolve=>setTimeout(resolve,20));
+  assert.equal(state.spoken.length,2);
+  assert.equal(state.listeners.size,0);
+});
+
+
+test('mobile tap speaks synchronously even with an empty voice list', () => {
+  const state=setup([]);
+  state.narrator.speak('Bonjour', {locale:'fr-FR',userInitiated:true});
+  assert.equal(state.spoken.length,1);
+  assert.equal(state.spoken[0].lang,'fr-FR');
+  assert.equal(state.spoken[0].voice,undefined);
+  assert.equal(state.listeners.size,0);
+  assert.equal(state.selected[0].female,false);
+  state.narrator.stop();
+});
+
+test('mobile tap still prefers the matching female voice and resumes paused audio', () => {
+  const state=setup([neerja]);
+  let resumed=0;
+  state.synthesis.paused=true;
+  state.synthesis.resume=()=>resumed++;
+  state.narrator.speak('Question',{userInitiated:true});
+  assert.equal(state.spoken[0].voice,neerja);
+  assert.equal(state.selected[0].female,true);
+  assert.equal(resumed,1);
+  state.narrator.stop();
 });

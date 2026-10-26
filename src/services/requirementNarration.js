@@ -13,7 +13,15 @@ const ENHANCED = /enhanced|premium/i;
 
 export function selectRequirementVoice(voices = [], locale = 'en-IN') {
   const language = locale.split(/[-_]/)[0].toLowerCase();
-  return voices.filter(voice => voice.lang.split(/[-_]/)[0].toLowerCase() === language && FEMALE_VOICES.test((voice.name || '').normalize('NFD').replace(/\p{M}/gu, '').replace(/Neural|Multilingual|DragonHD/gi, ' ')))
+  const normalize = value => (value || '').normalize('NFD').replace(/\p{M}/gu, '').replace(/Neural|Multilingual|DragonHD/gi, ' ');
+  return voices.filter(voice => {
+    if ((voice.lang || '').split(/[-_]/)[0].toLowerCase() !== language) return false;
+    const identity = normalize(`${voice.name || ''} ${voice.voiceURI || ''}`);
+    // Some engines expose the female identity only in voiceURI. Chrome also
+    // gives its US female voice a generic label, without the word "female".
+    if (/\bmale\b/i.test(identity) && !/\bfemale\b/i.test(identity)) return false;
+    return FEMALE_VOICES.test(identity) || /^Google US English$/i.test(voice.name || '');
+  })
     .map(voice => {
       const identity = `${voice.name} ${voice.voiceURI || ''}`;
       const quality = NATURAL.test(identity) ? 1000 : ENHANCED.test(identity) ? 700 : 0;
@@ -51,10 +59,11 @@ export function requirementPrompt({ greeting, firstQuestion, heading, support, d
 }
 
 /** Own speech and pending voice discovery, so mute also cancels delayed playback. */
-export function createRequirementNarrator({ synthesis, Utterance, onState, onError, onVoice = () => {}, voiceWaitMs = 1500 }) {
+export function createRequirementNarrator({ synthesis, Utterance, onState, onError, onVoice = () => {}, voiceWaitMs = 5000, voicePollMs = 250 }) {
   let current = null;
   const detach = request => {
     clearTimeout(request.timer);
+    clearInterval(request.poll);
     if (request.listener) synthesis?.removeEventListener?.('voiceschanged', request.listener);
     if (request.utterance) request.utterance.onstart = request.utterance.onend = request.utterance.onerror = null;
   };
@@ -76,29 +85,30 @@ export function createRequirementNarrator({ synthesis, Utterance, onState, onErr
   };
   return {
     stop,
-    speak(text, {locale = 'en-IN'} = {}) {
+    speak(text, {locale = 'en-IN', userInitiated = false} = {}) {
       stop();
       if (!synthesis || !Utterance) {
         onState('error');
         onError('Read aloud is unavailable in this browser. You can read the question below.');
         return;
       }
-      const request = { utterance:null, timer:null, listener:null };
+      const request = { utterance:null, timer:null, poll:null, listener:null };
       current = request;
       onState('starting');
       onError('');
       const play = voice => {
         if (current !== request || request.utterance) return;
         clearTimeout(request.timer);
+        clearInterval(request.poll);
         if (request.listener) synthesis.removeEventListener?.('voiceschanged', request.listener);
         request.listener = null;
         try {
           const utterance = new Utterance(prepareRequirementNarration(text, locale));
           request.utterance = utterance;
-          utterance.voice = voice;
-          utterance.lang = voice.lang;
+          if (voice) utterance.voice = voice;
+          utterance.lang = voice?.lang || locale;
           // Preserve the voice's own female timbre and prosody. High pitch sounds artificial.
-          const premium = NATURAL.test(`${voice.name} ${voice.voiceURI || ''}`) || ENHANCED.test(`${voice.name} ${voice.voiceURI || ''}`);
+          const premium = NATURAL.test(`${voice?.name || ''} ${voice?.voiceURI || ''}`) || ENHANCED.test(`${voice?.name || ''} ${voice?.voiceURI || ''}`);
           utterance.rate = premium ? 1 : 0.98;
           utterance.pitch = 1;
           utterance.volume = 1;
@@ -112,9 +122,14 @@ export function createRequirementNarrator({ synthesis, Utterance, onState, onErr
           utterance.onerror = event => {
             if (current !== request) return;
             if (event.error === 'canceled' || event.error === 'interrupted') { stop(); return; }
+            if (event.error === 'not-allowed') {
+              fail(request, 'Tap Listen to play the voice-over.');
+              return;
+            }
             fail(request, 'Couldn’t play the voice-over. Try Listen again, or continue with the text.');
           };
-          onVoice({ name:voice.name, natural:premium });
+          onVoice({ name:voice?.name || '', natural:premium, female:Boolean(voice && selectRequirementVoice([voice], locale)) });
+          if (synthesis.paused) synthesis.resume?.();
           synthesis.speak(utterance);
         } catch {
           fail(request, 'Couldn’t play the voice-over. You can continue with the text.');
@@ -127,14 +142,25 @@ export function createRequirementNarrator({ synthesis, Utterance, onState, onErr
           if (voice) play(voice);
         } catch { fail(request, 'Couldn’t load a female voice. You can continue with the text.'); }
       };
+      // A direct tap must reach speak synchronously on mobile. Waiting for an
+      // event/timer can lose browser user activation. Prefer the known female
+      // voice, otherwise let the device choose for the requested language.
+      if (userInitiated) {
+        let voice = null;
+        try { voice = selectRequirementVoice(synthesis.getVoices(), locale); } catch { /* Use native language selection. */ }
+        play(voice);
+        return;
+      }
       // Chromium may report an empty voice list until voiceschanged fires.
       request.listener = discover;
       synthesis.addEventListener?.('voiceschanged', request.listener);
+      // Some mobile engines populate voices without firing voiceschanged.
+      // Poll only during this bounded discovery window; mute clears it too.
+      request.poll = setInterval(discover, voicePollMs);
       request.timer = setTimeout(() => {
         discover();
         if (current === request && !request.utterance) {
-          onVoice(null);
-          fail(request, 'No recognised female voice is available for this language. You can continue with text.');
+          play(null);
         }
       }, voiceWaitMs);
       discover();
