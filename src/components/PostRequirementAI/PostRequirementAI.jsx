@@ -389,9 +389,15 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
           return <div className="ai-review-row" key={question.id}><div><strong>{question.title}</strong><p>{value || "Not specified"}</p></div>
             <button type="button" onClick={() => editStep(index)} aria-label={`Edit ${question.title}`}>Edit</button></div>;
         })}
-        <button type="button" className="ai-primary-action" onClick={() => onComplete(formData)}>Use this draft</button>
+
         <button type="button" className="ai-restart-button" onClick={reviseDescription}>Update original description</button>
       </div>}
+      {isFinishing && (
+        <div className="ai-review-actions ai-sticky-actions">
+          <button type="button" className="ai-cancel-button" onClick={onCancel}>Cancel</button>
+          <button type="button" className="ai-primary-action" onClick={() => onComplete(formData)}>Use this draft</button>
+        </div>
+      )}
       {/* Message Stream — ONLY THIS AREA SCROLLS */}
       <div
         ref={chatBodyRef}
@@ -442,6 +448,7 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
 
       {/* Interactive Input Area — FIXED AT BOTTOM OF AI SECTION */}
       {!isFinishing && currentQ && (
+        <>
         <div className="ai-interactive-footer p-4 sm:p-6 border-t border-default-100 bg-content1 space-y-3 sm:space-y-3.5 shrink-0">
           {isDescribing && <div className="ai-description-examples">
             <span>Try an example</span>
@@ -642,8 +649,11 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
               {speechStatus || (!SpeechRecognition ? "Voice input is unavailable in this browser. You can type your answer." : "Voice input uses your browser’s speech service. Microphone access is requested when you start.")}
             </p>
             {error && <p className="ai-error" role="alert">{error}</p>}
-            {/* Skip & Next Action Buttons matching Manual Form */}
-            <div className="flex items-center justify-between gap-3 pt-1">
+
+          </div>
+        </div>
+            <div className="ai-answer-actions ai-sticky-actions flex items-center gap-3">
+              <button type="button" className="ai-cancel-button" onClick={onCancel}>Cancel</button>
               {!isDescribing && !editingReview && <button type="button" className="ai-back-button" onClick={() => {
                 if (visitedSteps.length > 1) {
                   const previous = visitedSteps.slice(0, -1);
@@ -651,7 +661,7 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
                   editStep(previous[previous.length - 1]);
                 } else reviseDescription();
               }}>Back</button>}
-              {isDescribing && <button type="button" className="ai-back-button" disabled={isListening} onClick={startGuided}>Use guided questions</button>}
+              {isDescribing && <button type="button" className="ai-back-button ai-guided-button" disabled={isListening} onClick={startGuided}>Use guided questions</button>}
               {!currentQ.required ? (
                 <button
                   type="button"
@@ -684,8 +694,7 @@ export function PostRequirementAI({ initialData, onComplete, onCancel }) {
                 </svg>
               </button>
             </div>
-          </div>
-        </div>
+        </>
       )}
     </div>
   );

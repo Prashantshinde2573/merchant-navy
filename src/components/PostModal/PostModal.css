@@ -90,3 +90,7 @@
   }
 }
 
+
+@media (max-width:767px) {
+  .post-modal-cancel { display:none; }
+}

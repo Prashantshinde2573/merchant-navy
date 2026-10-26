@@ -308,7 +308,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                   serviceDates
                 }}
                 onComplete={handleAIComplete}
-                onCancel={() => setMode("manual")}
+                onCancel={onClose}
               />
             ) : (
               /* Standard Form Mode */
@@ -670,7 +670,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
               tabIndex="0"
               onClick={onClose}
               data-react-aria-pressable="true"
-              className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent px-3.5 sm:px-4 min-w-16 sm:min-w-20 h-10 text-small gap-1.5 sm:gap-2 rounded-medium transition-transform-colors-opacity motion-reduce:transition-none bg-transparent text-default-foreground hover:bg-default/40"
+              className="post-modal-cancel z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent px-3.5 sm:px-4 min-w-16 sm:min-w-20 h-10 text-small gap-1.5 sm:gap-2 rounded-medium transition-transform-colors-opacity motion-reduce:transition-none bg-transparent text-default-foreground hover:bg-default/40"
             >
               Cancel
             </button>
