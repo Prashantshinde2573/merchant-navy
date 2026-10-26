@@ -1,162 +1,119 @@
-/* AI Requirement Filling Assistant Isolated Styles */
-.ai-requirement-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  min-height: 0;
-  animation: aiRequirementFadeIn 0.15s ease-out;
-}
-
-.ai-chat-body {
-  flex: 1 1 0%;
-  min-height: 0;
-  overflow-y: auto;
-}
-
-.ai-chat-body::-webkit-scrollbar,
-.ai-chips-box::-webkit-scrollbar,
-.ai-interactive-footer div::-webkit-scrollbar {
-  width: 4px;
-}
-
-.ai-chat-body::-webkit-scrollbar-track,
-.ai-chips-box::-webkit-scrollbar-track,
-.ai-interactive-footer div::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.ai-chat-body::-webkit-scrollbar-thumb,
-.ai-chips-box::-webkit-scrollbar-thumb,
-.ai-interactive-footer div::-webkit-scrollbar-thumb {
-  background: #e4e4e7;
-  border-radius: 4px;
-}
-
-.ai-chat-body::-webkit-scrollbar-thumb:hover,
-.ai-chips-box::-webkit-scrollbar-thumb:hover,
-.ai-interactive-footer div::-webkit-scrollbar-thumb:hover {
-  background: #d4d4d8;
-}
-
-@keyframes aiRequirementFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(2px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* DESKTOP ONLY (>= 768px): Spacious internal bubble padding */
-@media (min-width: 768px) {
-  .ai-bubble {
-    padding: 16px 20px !important;
-    box-sizing: border-box !important;
-  }
-  .user-bubble {
-    padding: 14px 20px !important;
-    box-sizing: border-box !important;
-  }
-}
-
-/* MOBILE ONLY */
-@media (max-width: 767px) {
-  .ai-requirement-container {
-    min-height: 0 !important;
-    height: 100% !important;
-  }
-  .ai-chat-body {
-    flex: 1 1 0% !important;
-    min-height: 80px !important;
-    overflow-y: auto !important;
-    padding: 16px !important;
-  }
-  .ai-chips-box {
-    max-height: 112px !important;
-    padding: 12px 14px !important;
-    gap: 8px !important;
-  }
-  .ai-interactive-footer {
-    padding: 14px 16px !important;
-  }
-}
-
-
-/* Keep all enhancements inside the AI requirement flow. */
-.ai-requirement-container .ai-header { flex-wrap: wrap; }
-.ai-requirement-container .ai-header h3 { font-size: 16px; }
-.ai-requirement-container .ai-step-track { display:flex; gap:6px; padding:12px 20px; flex-shrink:0; overflow-x:auto; border-bottom:1px solid #e4e9ec; }
-.ai-requirement-container .ai-step-track button { background:#f7f8fb; color:#64748b; border:0; border-radius:8px; padding:8px 10px; font-size:11px; white-space:nowrap; cursor:pointer; }
-.ai-requirement-container .ai-step-track button.is-active { background:#edf2ff; color:#1f285d; font-weight:600; }
-.ai-requirement-container button:disabled { opacity:.5; cursor:not-allowed; }
-.ai-requirement-container button:focus-visible, .ai-requirement-container input:focus-visible, .ai-requirement-container textarea:focus-visible { outline:2px solid #1f285d; outline-offset:3px; }
-.ai-requirement-container .ai-voice-row { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
-.ai-requirement-container .ai-voice-row > span, .ai-requirement-container .ai-feedback { color:#64748b; font-size:12px; line-height:1.5; }
-.ai-requirement-container .ai-voice-button { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:44px; border:1px solid #dfe2eb; padding:8px 12px; border-radius:10px; color:#1f285d; background:#f7f8fb; cursor:pointer; font-size:13px; font-weight:600; }
-.ai-requirement-container .ai-voice-button.is-listening { background:#fef2f2; color:#b91c1c; border-color:#fca5a5; }
-.ai-requirement-container .ai-error { color:#b91c1c; font-size:13px; }
-.ai-requirement-container .ai-back-button { min-height:44px; color:#1f285d; background:transparent; border:0; padding:8px; cursor:pointer; }
-.ai-requirement-container .ai-review { flex:1; min-height:0; overflow-y:auto; padding:24px; background:#f7f8fb; }
-.ai-requirement-container .ai-review h3 { font-size:20px; font-weight:600; color:#1f285d; margin:0 0 8px; }
-.ai-requirement-container .ai-review > p { font-size:13px; color:#64748b; margin-bottom:20px; }
-.ai-requirement-container .ai-review-row { display:flex; justify-content:space-between; gap:16px; padding:16px; margin-bottom:10px; background:white; border:1px solid #e4e9ec; border-radius:12px; }
-.ai-requirement-container .ai-review-row > div { min-width:0; }
-.ai-requirement-container .ai-review-row strong { font-size:12px; color:#64748b; }
-.ai-requirement-container .ai-review-row p { font-size:14px; color:#242e33; white-space:pre-wrap; overflow-wrap:anywhere; margin:6px 0 0; }
-.ai-requirement-container .ai-review-row button { align-self:flex-start; min-height:44px; color:#1f285d; font-size:13px; background:transparent; border:0; cursor:pointer; }
-.ai-requirement-container .ai-primary-action { width:100%; border:0; border-radius:10px; min-height:44px; padding:12px; background:#1f285d; color:white; cursor:pointer; font-weight:600; margin-top:12px; }
-.ai-requirement-container .ai-chat-body[hidden] { display:none; }
-.ai-requirement-container .ai-interactive-footer { max-height:68%; overflow-y:auto; }
-@media (max-width:767px) {
-  .ai-requirement-container .ai-step-track { padding:8px 16px; }
-  .ai-requirement-container .ai-review { padding:16px; }
-  .ai-requirement-container .ai-interactive-footer { max-height:72%; padding-bottom:max(14px, env(safe-area-inset-bottom)) !important; }
-  .ai-requirement-container input, .ai-requirement-container textarea, .ai-requirement-container select { font-size:16px; }
-}
-@media (prefers-reduced-motion:reduce) { .ai-requirement-container { animation:none; } }
-.ai-requirement-container .ai-description-examples { display:flex; align-items:center; flex-wrap:wrap; gap:8px; }
-.ai-requirement-container .ai-description-examples > span { color:#64748b; font-size:12px; width:100%; }
-.ai-requirement-container .ai-description-examples button { min-height:40px; padding:8px 12px; border:1px solid #dfe2eb; border-radius:999px; background:#f7f8fb; color:#1f285d; font-size:12px; cursor:pointer; text-align:left; }
-.ai-requirement-container .ai-extracted-summary { padding:10px 24px; background:#f0f5ff; color:#1f285d; font-size:12px; line-height:1.5; flex-shrink:0; overflow-wrap:anywhere; }
-.ai-requirement-container .ai-draft-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; color:#64748b; font-size:12px; }
-.ai-requirement-container .ai-draft-heading button { min-height:44px; background:transparent; border:0; color:#1f285d; font-size:13px; cursor:pointer; }
-.ai-requirement-container .ai-draft-preview { background:#fff; border:1px solid #e4e9ec; border-radius:12px; padding:18px; margin-bottom:16px; white-space:pre-wrap; overflow-wrap:anywhere; color:#242e33; font-size:14px; line-height:1.7; }
-.ai-requirement-container .ai-restart-button { display:block; min-height:44px; padding:10px 4px; margin:8px auto 0; background:transparent; border:0; color:#1f285d; font-size:13px; text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
-@media (max-width:767px) {
-  .ai-requirement-container .ai-extracted-summary { padding:8px 16px; }
-  .ai-requirement-container .ai-description-examples button { min-height:44px; }
-  .ai-requirement-container .ai-draft-preview { padding:14px; }
-}
-
-.ai-requirement-container .ai-continue-button { min-height:44px; white-space:nowrap; flex-shrink:0; font-size:13px; padding-left:16px; padding-right:16px; }
-.ai-requirement-container .ai-back-button { font-size:13px; text-align:left; }
-
-.ai-requirement-container .ai-cancel-button { min-height:44px; padding:8px 12px; border:0; border-radius:10px; background:transparent; color:#242e33; font-size:13px; white-space:nowrap; flex-shrink:0; cursor:pointer; }
-.ai-requirement-container .ai-cancel-button:hover { background:#f3f4f6; }
-.ai-requirement-container .ai-answer-actions .ai-back-button { white-space:nowrap; }
-.ai-requirement-container .ai-review-actions { display:flex; align-items:center; gap:12px; margin-top:12px; }
-.ai-requirement-container .ai-review-actions .ai-primary-action { margin-top:0; }
-@media (max-width:767px) {
-  .ai-requirement-container .ai-cancel-button { display:none; }
-}
-
-/* Action bars sit outside the scrollable answer/review content. */
-.ai-requirement-container .ai-sticky-actions {
-  flex-shrink:0;
-  margin:0;
-  padding:16px 24px;
-  border-top:1px solid #e4e9ec;
+/* Isolated to the existing AI post creation flow. */
+.ai-simple {
+  --ai-ink:var(--color-primary, #1f285d);
+  --ai-muted:#6b7280;
+  --ai-line:#e4e9ec;
+  display:flex;
+  flex-direction:column;
+  min-height:0;
+  height:100%;
+  width:100%;
   background:#fff;
-  position:relative;
-  z-index:1;
+  color:#242e33;
 }
-.ai-requirement-container .ai-answer-actions { justify-content:flex-start; }
-.ai-requirement-container .ai-guided-button { text-align:left; padding-left:0; margin-right:auto; }
-.ai-requirement-container .ai-review-actions .ai-primary-action { margin-left:auto; width:auto; min-width:140px; }
+.ai-simple .ai-simple-body { flex:1; min-height:0; overflow-y:auto; overscroll-behavior:contain; scrollbar-width:thin; scrollbar-color:#dfe2eb transparent; }
+.ai-simple .ai-simple-content { width:100%; max-width:728px; margin:0 auto; padding:32px 28px 36px; box-sizing:border-box; }
+.ai-simple button, .ai-simple textarea { font:inherit; }
+.ai-simple button { cursor:pointer; }
+.ai-simple button:disabled { opacity:.5; cursor:not-allowed; }
+.ai-simple button:focus-visible, .ai-simple summary:focus-visible { outline:2px solid var(--ai-ink); outline-offset:3px; }
+.ai-simple .ai-simple-meta { display:flex; align-items:center; justify-content:space-between; gap:12px; color:var(--ai-muted); font-size:12px; margin-bottom:24px; }
+.ai-simple .ai-simple-eyebrow { display:inline-flex; align-items:center; gap:7px; color:var(--ai-ink); font-weight:600; }
+.ai-simple .ai-simple-eyebrow .material-symbols-outlined { font-size:18px; }
+.ai-simple .ai-simple-progress { display:block; appearance:none; width:100%; height:3px; border:0; border-radius:4px; background:#eef0f5; margin:-12px 0 24px; color:var(--ai-ink); }
+.ai-simple .ai-simple-progress::-webkit-progress-bar { background:#eef0f5; border-radius:4px; }
+.ai-simple .ai-simple-progress::-webkit-progress-value { background:var(--ai-ink); border-radius:4px; }
+.ai-simple .ai-simple-progress::-moz-progress-bar { background:var(--ai-ink); border-radius:4px; }
+.ai-simple .ai-simple-heading { margin:0 0 10px; color:var(--ai-ink); font-size:25px; font-weight:600; line-height:1.3; letter-spacing:-.5px; outline:none; }
+.ai-simple .ai-simple-support { margin:0 0 24px; color:var(--ai-muted); font-size:14px; line-height:1.65; }
+.ai-simple .ai-simple-composer { border:1px solid #dfe2eb; border-radius:14px; background:#fafbfc; transition:border-color .15s, box-shadow .15s; overflow:hidden; }
+.ai-simple .ai-simple-composer:focus-within { border-color:var(--ai-ink); box-shadow:0 0 0 2px #1f285d0b; }
+.ai-simple .ai-simple-composer.is-listening { border-color:#b45309; background:#fffcf5; }
+.ai-simple .ai-simple-composer.has-error { border-color:#b91c1c; }
+.ai-simple textarea { display:block; width:100%; padding:16px 18px 8px; min-height:112px; max-height:260px; resize:vertical; box-sizing:border-box; background:transparent; border:0; border-radius:0; outline:none; color:#242e33; font-size:15px; line-height:1.65; }
+.ai-simple textarea::placeholder { color:#6b7280; }
+.ai-simple .ai-simple-composer-tools { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:4px 10px 8px; }
+.ai-simple .ai-simple-mic { display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:8px; border:0; border-radius:8px; background:transparent; color:var(--ai-ink); font-size:13px; }
+.ai-simple .ai-simple-mic:hover { background:#edf0f7; }
+.ai-simple .ai-simple-mic.is-active { color:#9a3412; }
+.ai-simple .ai-simple-mic .material-symbols-outlined { font-size:20px; }
+.ai-simple .ai-simple-shortcut { font-size:11px; color:#6b7280; padding-right:7px; }
+.ai-simple .ai-simple-status, .ai-simple .ai-simple-error { margin:9px 0 0; color:var(--ai-muted); font-size:12px; line-height:1.6; }
+.ai-simple .ai-simple-status.is-error, .ai-simple .ai-simple-error { color:#b91c1c; }
+.ai-simple .ai-simple-actions { display:flex; align-items:center; gap:14px; margin-top:20px; }
+.ai-simple .ai-simple-primary { display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:44px; min-width:120px; margin-left:auto; padding:10px 18px; border:0; border-radius:10px; background:var(--ai-ink); color:#fff; font-size:13px; font-weight:600; white-space:nowrap; }
+.ai-simple .ai-simple-primary:hover { opacity:.9; }
+.ai-simple .ai-simple-primary .material-symbols-outlined { font-size:18px; }
+.ai-simple .ai-simple-link, .ai-simple .ai-simple-cancel { display:inline-flex; align-items:center; min-height:44px; padding:6px 0; border:0; background:transparent; color:var(--ai-ink); font-size:13px; text-align:left; }
+.ai-simple .ai-simple-link:hover { text-decoration:underline; text-underline-offset:3px; }
+.ai-simple .ai-simple-cancel { color:var(--ai-muted); }
+.ai-simple .ai-simple-skip { margin-left:auto; }
+.ai-simple .ai-simple-skip + .ai-simple-primary { margin-left:0; }
+.ai-simple .ai-simple-guided { margin-top:12px; color:var(--ai-muted); }
+.ai-simple .ai-simple-history { margin-top:30px; border-top:1px solid var(--ai-line); padding-top:8px; }
+.ai-simple .ai-simple-history summary { cursor:pointer; color:var(--ai-muted); font-size:13px; padding:14px 0; }
+.ai-simple .ai-simple-history summary span { margin-left:4px; font-size:12px; }
+.ai-simple .ai-simple-answers { margin:0; }
+.ai-simple .ai-simple-answer { display:flex; align-items:flex-start; justify-content:space-between; gap:20px; border-bottom:1px solid var(--ai-line); padding:16px 0; }
+.ai-simple .ai-simple-answer:first-child { padding-top:0; }
+.ai-simple .ai-simple-answer > div { min-width:0; }
+.ai-simple .ai-simple-answer dt { font-size:12px; color:var(--ai-muted); margin-bottom:6px; }
+.ai-simple .ai-simple-answer dd { margin:0; font-size:14px; line-height:1.65; color:#242e33; white-space:pre-wrap; overflow-wrap:anywhere; }
+.ai-simple .ai-simple-answer .ai-simple-link { min-height:36px; flex-shrink:0; padding-top:0; }
+.ai-simple .ai-simple-history .ai-simple-answer dd { max-height:120px; overflow-y:auto; }
+.ai-simple .ai-simple-caption { text-align:right; color:var(--ai-muted); font-size:12px; margin-top:10px; }
+.ai-simple .ai-simple-spinner { width:15px; height:15px; border:2px solid #fed7aa; border-top-color:#9a3412; border-radius:50%; animation:aiSpeechSpin .8s linear infinite; }
+@keyframes aiSpeechSpin { to { transform:rotate(360deg); } }
 @media (max-width:767px) {
-  .ai-requirement-container .ai-sticky-actions { padding:12px 16px max(12px, env(safe-area-inset-bottom)); }
-  .ai-requirement-container .ai-interactive-footer { flex-shrink:1; min-height:0; }
+  .ai-simple .ai-simple-content { padding:24px 20px max(24px, env(safe-area-inset-bottom)); }
+  .ai-simple .ai-simple-heading { font-size:23px; }
+  .ai-simple .ai-simple-support { font-size:13px; margin-bottom:20px; }
+  .ai-simple textarea { font-size:16px; padding:14px 14px 6px; }
+  .ai-simple .ai-simple-shortcut, .ai-simple .ai-simple-cancel { display:none; }
+  .ai-simple .ai-simple-actions { gap:12px; }
+  .ai-simple .ai-simple-primary { padding:10px 14px; min-width:106px; }
+  .ai-simple .ai-simple-skip { font-size:12px; }
 }
+@media (prefers-reduced-motion:reduce) {
+  .ai-simple .ai-simple-composer { transition:none; }
+  .ai-simple .ai-simple-spinner { animation:none; }
+}
+
+/* Keep voice output with the question, and voice input with the answer. */
+.ai-simple .ai-simple-meta { margin-bottom:24px; }
+.ai-simple .ai-simple-audio-toggle { display:inline-flex; align-items:center; gap:6px; min-height:40px; padding:6px 10px; border:1px solid var(--ai-line); border-radius:999px; background:#f7f8fb; color:var(--ai-ink); font-size:12px; flex-shrink:0; }
+.ai-simple .ai-simple-audio-toggle.is-muted { background:transparent; color:var(--ai-muted); }
+.ai-simple .ai-simple-audio-toggle .material-symbols-outlined { font-size:18px; }
+.ai-simple .ai-simple-progress-row { display:flex; align-items:center; gap:16px; margin:0 0 24px; color:var(--ai-muted); font-size:12px; }
+.ai-simple .ai-simple-progress-row > span { white-space:nowrap; }
+.ai-simple .ai-simple-progress-row .ai-simple-progress { flex:1; min-width:0; margin:0; }
+.ai-simple .ai-simple-phase { margin:0 0 12px; color:var(--ai-muted); font-size:12px; }
+.ai-simple .ai-simple-greeting { margin:0 0 10px; color:var(--ai-ink); font-size:14px; line-height:1.6; font-weight:500; }
+.ai-simple .ai-simple-question { margin-bottom:20px; }
+.ai-simple .ai-simple-question .ai-simple-support { margin-bottom:10px; }
+.ai-simple .ai-simple-read-row { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; }
+.ai-simple .ai-simple-read { display:inline-flex; align-items:center; gap:6px; min-height:40px; padding:6px 8px 6px 0; border:0; background:transparent; color:var(--ai-ink); font-size:12px; white-space:nowrap; }
+.ai-simple .ai-simple-read .material-symbols-outlined { font-size:20px; }
+.ai-simple .ai-simple-read-status { color:var(--ai-muted); font-size:12px; line-height:1.5; }
+.ai-simple .ai-simple-read-status.is-error { color:#b91c1c; }
+@media (max-width:767px) {
+  .ai-simple .ai-simple-meta { margin-bottom:20px; }
+  .ai-simple .ai-simple-audio-toggle, .ai-simple .ai-simple-read { min-height:44px; }
+  .ai-simple .ai-simple-progress-row { margin-bottom:20px; gap:12px; }
+  .ai-simple .ai-simple-question { margin-bottom:16px; }
+}
+.ai-simple .ai-simple-meta { flex-wrap:wrap; }
+.ai-simple .ai-simple-preferences { display:flex; align-items:center; flex-wrap:wrap; justify-content:flex-end; gap:8px; margin-left:auto; }
+.ai-simple .ai-simple-language { display:inline-flex; align-items:center; gap:5px; min-height:40px; color:var(--ai-ink); border:1px solid var(--ai-line); border-radius:999px; padding:4px 8px; background:#fff; }
+.ai-simple .ai-simple-language .material-symbols-outlined { font-size:18px; }
+.ai-simple .ai-simple-language select { border:0; outline:none; background:transparent; color:inherit; max-width:120px; min-height:30px; font:inherit; font-size:12px; cursor:pointer; }
+.ai-simple .ai-simple-language:focus-within { outline:2px solid var(--ai-ink); outline-offset:2px; }
+.ai-simple .ai-simple-translation { color:var(--ai-muted); font-size:13px; line-height:1.6; padding:12px 0; }
+.ai-simple .ai-simple-read-status { min-width:0; overflow-wrap:anywhere; }
+@media (max-width:767px) {
+  .ai-simple .ai-simple-preferences { width:100%; justify-content:space-between; margin-left:0; }
+  .ai-simple .ai-simple-language { min-height:44px; }
+  .ai-simple .ai-simple-language select { font-size:16px; }
+  .ai-simple .ai-simple-primary { white-space:normal; }
+}
+.ai-simple[lang="hi"], .ai-simple[lang="mr"] { font-family:Inter,"Kohinoor Devanagari","Nirmala UI",system-ui,sans-serif; }
