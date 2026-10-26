@@ -5,7 +5,7 @@
   height: 100%;
   width: 100%;
   min-height: 0;
-  animation: fadeIn 0.15s ease-out;
+  animation: aiRequirementFadeIn 0.15s ease-out;
 }
 
 .ai-chat-body {
@@ -39,7 +39,7 @@
   background: #d4d4d8;
 }
 
-@keyframes fadeIn {
+@keyframes aiRequirementFadeIn {
   from {
     opacity: 0;
     transform: translateY(2px);
@@ -84,3 +84,52 @@
   }
 }
 
+
+/* Keep all enhancements inside the AI requirement flow. */
+.ai-requirement-container .ai-header { flex-wrap: wrap; }
+.ai-requirement-container .ai-header h3 { font-size: 16px; }
+.ai-requirement-container .ai-step-track { display:flex; gap:6px; padding:12px 20px; flex-shrink:0; overflow-x:auto; border-bottom:1px solid #e4e9ec; }
+.ai-requirement-container .ai-step-track button { background:#f7f8fb; color:#64748b; border:0; border-radius:8px; padding:8px 10px; font-size:11px; white-space:nowrap; cursor:pointer; }
+.ai-requirement-container .ai-step-track button.is-active { background:#edf2ff; color:#1f285d; font-weight:600; }
+.ai-requirement-container button:disabled { opacity:.5; cursor:not-allowed; }
+.ai-requirement-container button:focus-visible, .ai-requirement-container input:focus-visible, .ai-requirement-container textarea:focus-visible { outline:2px solid #1f285d; outline-offset:3px; }
+.ai-requirement-container .ai-voice-row { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+.ai-requirement-container .ai-voice-row > span, .ai-requirement-container .ai-feedback { color:#64748b; font-size:12px; line-height:1.5; }
+.ai-requirement-container .ai-voice-button { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:44px; border:1px solid #dfe2eb; padding:8px 12px; border-radius:10px; color:#1f285d; background:#f7f8fb; cursor:pointer; font-size:13px; font-weight:600; }
+.ai-requirement-container .ai-voice-button.is-listening { background:#fef2f2; color:#b91c1c; border-color:#fca5a5; }
+.ai-requirement-container .ai-error { color:#b91c1c; font-size:13px; }
+.ai-requirement-container .ai-back-button { min-height:44px; color:#1f285d; background:transparent; border:0; padding:8px; cursor:pointer; }
+.ai-requirement-container .ai-review { flex:1; min-height:0; overflow-y:auto; padding:24px; background:#f7f8fb; }
+.ai-requirement-container .ai-review h3 { font-size:20px; font-weight:600; color:#1f285d; margin:0 0 8px; }
+.ai-requirement-container .ai-review > p { font-size:13px; color:#64748b; margin-bottom:20px; }
+.ai-requirement-container .ai-review-row { display:flex; justify-content:space-between; gap:16px; padding:16px; margin-bottom:10px; background:white; border:1px solid #e4e9ec; border-radius:12px; }
+.ai-requirement-container .ai-review-row > div { min-width:0; }
+.ai-requirement-container .ai-review-row strong { font-size:12px; color:#64748b; }
+.ai-requirement-container .ai-review-row p { font-size:14px; color:#242e33; white-space:pre-wrap; overflow-wrap:anywhere; margin:6px 0 0; }
+.ai-requirement-container .ai-review-row button { align-self:flex-start; min-height:44px; color:#1f285d; font-size:13px; background:transparent; border:0; cursor:pointer; }
+.ai-requirement-container .ai-primary-action { width:100%; border:0; border-radius:10px; min-height:44px; padding:12px; background:#1f285d; color:white; cursor:pointer; font-weight:600; margin-top:12px; }
+.ai-requirement-container .ai-chat-body[hidden] { display:none; }
+.ai-requirement-container .ai-interactive-footer { max-height:68%; overflow-y:auto; }
+@media (max-width:767px) {
+  .ai-requirement-container .ai-step-track { padding:8px 16px; }
+  .ai-requirement-container .ai-review { padding:16px; }
+  .ai-requirement-container .ai-interactive-footer { max-height:72%; padding-bottom:max(14px, env(safe-area-inset-bottom)) !important; }
+  .ai-requirement-container input, .ai-requirement-container textarea, .ai-requirement-container select { font-size:16px; }
+}
+@media (prefers-reduced-motion:reduce) { .ai-requirement-container { animation:none; } }
+.ai-requirement-container .ai-description-examples { display:flex; align-items:center; flex-wrap:wrap; gap:8px; }
+.ai-requirement-container .ai-description-examples > span { color:#64748b; font-size:12px; width:100%; }
+.ai-requirement-container .ai-description-examples button { min-height:40px; padding:8px 12px; border:1px solid #dfe2eb; border-radius:999px; background:#f7f8fb; color:#1f285d; font-size:12px; cursor:pointer; text-align:left; }
+.ai-requirement-container .ai-extracted-summary { padding:10px 24px; background:#f0f5ff; color:#1f285d; font-size:12px; line-height:1.5; flex-shrink:0; overflow-wrap:anywhere; }
+.ai-requirement-container .ai-draft-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; color:#64748b; font-size:12px; }
+.ai-requirement-container .ai-draft-heading button { min-height:44px; background:transparent; border:0; color:#1f285d; font-size:13px; cursor:pointer; }
+.ai-requirement-container .ai-draft-preview { background:#fff; border:1px solid #e4e9ec; border-radius:12px; padding:18px; margin-bottom:16px; white-space:pre-wrap; overflow-wrap:anywhere; color:#242e33; font-size:14px; line-height:1.7; }
+.ai-requirement-container .ai-restart-button { display:block; min-height:44px; padding:10px 4px; margin:8px auto 0; background:transparent; border:0; color:#1f285d; font-size:13px; text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
+@media (max-width:767px) {
+  .ai-requirement-container .ai-extracted-summary { padding:8px 16px; }
+  .ai-requirement-container .ai-description-examples button { min-height:44px; }
+  .ai-requirement-container .ai-draft-preview { padding:14px; }
+}
+
+.ai-requirement-container .ai-continue-button { min-height:44px; white-space:nowrap; flex-shrink:0; font-size:13px; padding-left:16px; padding-right:16px; }
+.ai-requirement-container .ai-back-button { font-size:13px; text-align:left; }

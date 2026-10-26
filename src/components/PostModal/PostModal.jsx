@@ -130,7 +130,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
     if (aiData.isAsap !== undefined) {
       setIsAsap(aiData.isAsap);
     }
-    if (aiData.serviceDates) {
+    if (aiData.serviceDates !== undefined) {
       setServiceDates(aiData.serviceDates);
     }
     setMode("manual");
@@ -664,7 +664,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
           </div>
 
           {/* Modal Footer */}
-          <footer className="flex flex-row gap-2.5 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 justify-between sm:justify-end border-t border-default-100 bg-content1 shrink-0">
+          {mode === "manual" && <footer className="flex flex-row gap-2.5 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 justify-between sm:justify-end border-t border-default-100 bg-content1 shrink-0">
             <button
               type="button"
               tabIndex="0"
@@ -694,7 +694,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                 Publish Request
               </button>
             </div>
-          </footer>
+          </footer>}
 
           {/* Bottom Accessibility Button */}
           <div style={{ border: "0px", clip: "rect(0px, 0px, 0px, 0px)", clipPath: "inset(50%)", height: "1px", margin: "-1px", overflow: "hidden", padding: "0px", position: "absolute", width: "1px", whiteSpace: "nowrap" }}>
