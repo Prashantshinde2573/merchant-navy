@@ -16,7 +16,7 @@ export function PostRequirementAI({initialData={},onComplete,voiceSessionFactory
   const [error,setError]=useState('');
   const [working,setWorking]=useState(false);
   const session=useRef(null),latestText=useRef(''),pendingFinish=useRef(false),request=useRef(null),alive=useRef(true);
-  const transcriptLanguage=useRef(language),history=useRef(null);
+  const transcriptLanguage=useRef(language),history=useRef(null),turns=useRef([]),questionField=useRef(null);
   const Recognition=typeof window!=='undefined' && (window.SpeechRecognition||window.webkitSpeechRecognition);
   const active=['requesting','listening','processing','speaking'].includes(state);
   useEffect(()=>{alive.current=true;return()=>{alive.current=false;session.current?.cancel();request.current?.abort();};},[]);
@@ -27,14 +27,14 @@ export function PostRequirementAI({initialData={},onComplete,voiceSessionFactory
     session.current?.cancel();
     const controller=new AbortController();request.current=controller;setWorking(true);setError('');
     try {
-      const draft=await buildRequestVoiceDraft(latestText.current,transcriptLanguage.current,initialData,{signal:controller.signal});
+      const draft=await buildRequestVoiceDraft(latestText.current,transcriptLanguage.current,initialData,{signal:controller.signal,turns:turns.current});
       if(!controller.signal.aborted&&alive.current)onComplete(draft);
     } catch {if(!controller.signal.aborted&&alive.current){setError('Couldn’t prepare your request. Your answers are safe. Try again.');setState('complete');}}
     finally{request.current=null;if(alive.current)setWorking(false);}
   };
   const endInput=()=>{
     if(working||pendingFinish.current)return;
-    if(input.trim()){setText([latestText.current,input.trim()].filter(Boolean).join('\n'));setInput('');}
+    if(input.trim()){turns.current.push({text:input.trim(),field:questionField.current});setText([latestText.current,input.trim()].filter(Boolean).join('\n'));setInput('');}
     if(['requesting','listening','processing'].includes(state)){pendingFinish.current=true;session.current?.stop();}
     else complete();
   };
@@ -42,20 +42,26 @@ export function PostRequirementAI({initialData={},onComplete,voiceSessionFactory
     if(working)return;
     if(active){session.current?.stop();return;}
     setError('');session.current?.cancel();
+    const previousText=latestText.current;
     session.current=startRequirementVoiceOpening({language,synthesis:window.speechSynthesis,Utterance:window.SpeechSynthesisUtterance,recognitionFactory:voiceSessionFactory,Recognition,locale:language==='en'?'en-IN':language,initialText:latestText.current,
       onText:value=>{if(alive.current)setText(value);},onState:value=>{if(alive.current)setState(value);},
       onError:message=>{if(alive.current){setError(message);pendingFinish.current=false;}},
-      onFinish:()=>{if(pendingFinish.current&&alive.current){pendingFinish.current=false;complete();}}
+      onFinish:()=>{
+        if(!alive.current)return;
+        const answer=latestText.current.slice(previousText.length).trim();
+        if(answer)turns.current.push({text:answer,field:null});
+        if(pendingFinish.current){pendingFinish.current=false;complete();}
+      }
     });
   };
   const send=async event=>{
     event.preventDefault();const value=input.trim();if(!value||working)return;
-    const combined=[latestText.current,value].filter(Boolean).join('\n');setText(combined);setInput('');
+    const combined=[latestText.current,value].filter(Boolean).join('\n');turns.current.push({text:value,field:questionField.current});setText(combined);setInput('');
     setMessages(items=>[...items,{role:'user',text:value}]);setWorking(true);setError('');
     const controller=new AbortController();request.current=controller;
     try{
-      const result=await requestConversationTurn(combined,transcriptLanguage.current,initialData,{signal:controller.signal});
-      if(!controller.signal.aborted&&alive.current)setMessages(items=>[...items,{role:'assistant',text:result.question,local:true}]);
+      const result=await requestConversationTurn(combined,transcriptLanguage.current,initialData,{signal:controller.signal,turns:turns.current});
+      if(!controller.signal.aborted&&alive.current){questionField.current=result.field;setMessages(items=>[...items,{role:'assistant',text:result.question,local:true}]);}
     }catch{if(!controller.signal.aborted&&alive.current)setError('Couldn’t prepare your request. Your answers are safe. Try again.');}
     finally{request.current=null;if(alive.current)setWorking(false);}
   };
@@ -106,7 +112,11 @@ export function PostRequirementAI({initialData={},onComplete,voiceSessionFactory
     </>:<>
       {!transcript&&<div className="ai-voice-guide"><p>{t(state==='listening'?'Please describe your requirements.':'Your assistant is ready.')}</p><span>{t(state==='listening'?'Speak naturally. Review before publishing.':'Nothing is published yet.')}</span></div>}
       {transcript&&<details className="ai-voice-transcript"><summary>{t('Your answers')}</summary><label className="sr-only" htmlFor="voice-request-transcript">{t('Your answer')}</label>
-        <textarea id="voice-request-transcript" rows={3} value={transcript} readOnly={active||working} onChange={event=>setText(event.target.value)} />
+        <textarea id="voice-request-transcript" rows={3} value={transcript} readOnly={active||working} onChange={event=>{
+        const lines=event.target.value.split(/\n+/).filter(value=>value.trim());
+        turns.current=lines.map((text,index)=>({text,field:lines.length===turns.current.length?turns.current[index]?.field:null}));
+        setText(event.target.value);
+      }} />
       </details>}
       {error&&<p className="ai-simple-error" role="alert">{t(error)}</p>}
     </>}

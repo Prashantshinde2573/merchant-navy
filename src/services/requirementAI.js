@@ -253,7 +253,13 @@ export function extractRequirement(description, currentAnswers = {}, now = new D
 
   const urgent = /\b(?:asap|urgent(?:ly)?|immediate(?:ly)?)\b/i;
   const relative = /\b(day after tomorrow|tomorrow|today|next week|in \d+ days?)\b/i.exec(text);
-  const explicitDates = text.match(/\b\d{1,2}\/\d{1,2}\/\d{4}\b/g);
+  const months = 'January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec';
+  const expandedDates = text
+    .replace(new RegExp(`\\b(\\d{1,2})(?:st|nd|rd|th)?\\s*(?:to|[-–])\\s*(\\d{1,2})(?:st|nd|rd|th)?\\s+(${months})\\s+(\\d{4})\\b`, 'gi'), '$1 $3 $4 to $2 $3 $4')
+    .replace(new RegExp(`\\b(\\d{1,2})(?:st|nd|rd|th)?\\s+(${months})\\s*,?\\s*(\\d{4})\\b`, 'gi'), (_,day,month,year)=>`${day}/${new Date(`${month} 1 2000`).getMonth()+1}/${year}`)
+    .replace(new RegExp(`\\b(${months})\\s+(\\d{1,2})(?:st|nd|rd|th)?\\s*,?\\s*(\\d{4})\\b`, 'gi'), (_,month,day,year)=>`${day}/${new Date(`${month} 1 2000`).getMonth()+1}/${year}`)
+    .replace(/\b(\d{4})-(\d{2})-(\d{2})\b/g,'$3/$2/$1');
+  const explicitDates = expandedDates.match(/\b\d{1,2}\/\d{1,2}\/\d{4}\b/g);
   if (positiveMatch(text, urgent)) {
     Object.assign(data, { isAsap: true, serviceDates: "" });
     identified.push("timeline");
@@ -271,7 +277,8 @@ export function extractRequirement(description, currentAnswers = {}, now = new D
       const date = new Date(year, month - 1, day);
       return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
     });
-    if (valid) {
+    const dateValue = value => {const [day,month,year]=value.split('/').map(Number);return new Date(year,month-1,day).getTime();};
+    if (valid && (explicitDates.length<2 || dateValue(explicitDates[0])<=dateValue(explicitDates[1]))) {
       Object.assign(data, { isAsap: false, serviceDates: `${explicitDates[0]} - ${explicitDates[1] || explicitDates[0]}` });
       identified.push("timeline");
     }

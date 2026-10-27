@@ -1,4 +1,5 @@
 import { useSiteLanguage } from '../../context/LanguageContext';
+import {requestReviewError} from '../../services/requestReview';
 import React, { useState, useRef, useEffect } from "react";
 import { usePosts } from "../../context/PostContext";
 import { PostRequirementAI } from "../PostRequirementAI/PostRequirementAI";
@@ -62,6 +63,10 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
   const [isPortsOpen, setIsPortsOpen] = useState(false);
   const [files, setFiles] = useState([]);
 
+  const [aiAssisted,setAiAssisted] = useState(false);
+  const [reviewAccepted,setReviewAccepted] = useState(false);
+  const [reviewError,setReviewError] = useState("");
+  const reviewRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const submitting = useRef(false);
   const fileInputRef = useRef(null);
@@ -113,6 +118,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
   };
 
   const handleAIComplete = (aiData) => {
+    if(aiData.aiAssisted){setAiAssisted(true);setReviewAccepted(false);setReviewError("");}
     if (aiData.scopeOfWork !== undefined) {
       setScopeOfWork(aiData.scopeOfWork);
     }
@@ -143,6 +149,8 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
   const handlePublish = async (e) => {
     if (e) e.preventDefault();
     if (submitting.current) return;
+    const acknowledgmentError=requestReviewError(aiAssisted,reviewAccepted);
+    if(acknowledgmentError){setReviewError(acknowledgmentError);reviewRef.current?.focus();return;}
     const content = editorRef.current ? editorRef.current.innerText.trim() : scopeOfWork;
     if (!content) {
       alert("Please enter the Scope of Work details.");
@@ -654,6 +662,15 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
 
           {/* Modal Footer */}
           {mode === "manual" && <footer className="post-request-footer flex flex-row gap-2.5 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 justify-between sm:justify-end border-t border-default-100 bg-content1 shrink-0">
+            {aiAssisted && <div className="post-ai-review-block">
+              <label className="post-ai-acknowledgment">
+                <input type="checkbox" ref={reviewRef} checked={reviewAccepted} required aria-required="true" aria-invalid={Boolean(reviewError)} aria-describedby={reviewError?'ai-review-error':undefined}
+                  onChange={event=>{setReviewAccepted(event.target.checked);if(event.target.checked)setReviewError("");}} />
+                <span>{t("AI translation may occasionally contain errors. Please review all details before submitting.")}</span>
+              </label>
+              {reviewError && <p id="ai-review-error" className="post-ai-review-error" role="alert">{t(reviewError)}</p>}
+            </div>}
+
             <button
               type="button"
               tabIndex="0"
@@ -687,7 +704,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
             </div>
 
           </footer>}
-          <p className="post-ai-interface-note">{t("AI translation may occasionally contain errors. Please review all details before submitting.")}</p>
+          {mode==='ai' && <p className="post-ai-interface-note">{t("AI translation may occasionally contain errors. Please review all details before submitting.")}</p>}
 
           {/* Bottom Accessibility Button */}
           <div style={{ border: "0px", clip: "rect(0px, 0px, 0px, 0px)", clipPath: "inset(50%)", height: "1px", margin: "-1px", overflow: "hidden", padding: "0px", position: "absolute", width: "1px", whiteSpace: "nowrap" }}>

@@ -3,7 +3,7 @@ import {AVAILABLE_LANGUAGES} from '../../services/translationService';
 import {useSiteLanguage} from '../../context/LanguageContext';
 import './LanguageMenu.css';
 
-export function LanguageMenu() {
+export function LanguageMenu({variant='icon'}) {
   const {language,setLanguage,t}=useSiteLanguage();
   const [open,setOpen]=useState(false);
   const root=useRef(null),trigger=useRef(null),options=useRef(null);
@@ -17,9 +17,10 @@ export function LanguageMenu() {
     document.addEventListener('keydown',escape);
     return()=>{document.removeEventListener('pointerdown',outside);document.removeEventListener('keydown',escape);};
   },[open]);
-  return <div className="navbar-language" ref={root}>
+  return <div className={`navbar-language ${variant==='navigation'?'is-navigation':''}`} ref={root}>
     <button type="button" className="navbar-language-trigger" ref={trigger} aria-label={t('Language')} title={t('Language')} aria-haspopup="menu" aria-expanded={open} aria-controls={open?id:undefined} onClick={()=>setOpen(value=>!value)}>
       <span className="material-symbols-outlined" aria-hidden="true">translate</span>
+      {variant==='navigation'&&<><span className="navbar-language-label">{t('Language')}</span><span className="navbar-language-current">{AVAILABLE_LANGUAGES.find(item=>item.code===language)?.nativeName}</span><span className="material-symbols-outlined navbar-language-chevron" aria-hidden="true">{open?'expand_less':'expand_more'}</span></>}
     </button>
     {open&&<div className="navbar-language-menu" id={id} role="menu" aria-label={t('Language')} ref={options} onKeyDown={event=>{
       const buttons=[...options.current.querySelectorAll('button')];const index=buttons.indexOf(document.activeElement);

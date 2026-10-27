@@ -164,10 +164,9 @@ export function Navbar() {
             </Link>
           </div>
 
-          {/* RIGHT: Help, site language and profile */}
+          {/* RIGHT: Help and profile */}
           <div className="mobile-navbar-actions">
             <Link to="/help" className="mobile-navbar-help" aria-label="Support"><span className="material-symbols-outlined" aria-hidden="true">help</span></Link>
-            <LanguageMenu />
             <li className="text-medium whitespace-nowrap box-border list-none data-[active=true]:font-semibold relative flex items-center" ref={mobileDropdownRef}>
               <div
                 className="z-10 aria-expanded:scale-[0.97] aria-expanded:opacity-70 subpixel-antialiased cursor-pointer"
@@ -285,6 +284,8 @@ export function Navbar() {
               <span className={`material-symbols-outlined text-xl ${isHelp ? "material-symbols-fill text-primary" : "text-gray-500"}`}>help</span>
               <span>Help & Support</span>
             </Link>
+
+            <LanguageMenu variant="navigation" />
 
             {/* 5. Upgrade for More (Visual Red Promotional Banner at the VERY END) */}
             <div className="mt-2 w-full">

@@ -118,3 +118,14 @@
 .post-ai-entry-note > .material-symbols-outlined { font-size:17px; line-height:1.6; flex-shrink:0; color:#8492a9; }
 .post-ai-interface-note { border-top:1px solid #edf0f4; padding:12px 24px 14px; max-width:100%; line-height:1.6; }
 @media(max-width:767px) { .post-ai-entry-note { padding:10px 12px; font-size:11px; } .post-ai-interface-note { padding:10px 20px 12px; } }
+.post-ai-interface-note > p { margin:0; }
+.post-ai-acknowledgment { display:flex; align-items:flex-start; justify-content:center; gap:9px; cursor:pointer; text-align:left; }
+.post-ai-acknowledgment input { flex-shrink:0; width:16px; height:16px; margin:1px 0 0; accent-color:#1f285d; cursor:pointer; }
+.post-ai-acknowledgment input:focus-visible { outline:2px solid #1f285d; outline-offset:3px; }
+.post-ai-interface-note .post-ai-review-error { margin-top:6px; color:#b91c1c; }
+/* AI review belongs between the fields and the form's submission actions. */
+.post-ai-review-block { flex:0 0 100%; width:100%; padding:0 0 12px; margin:0 0 2px; border-bottom:1px solid #edf0f4; box-sizing:border-box; color:#737d90; font-size:12px; line-height:1.6; }
+.post-ai-review-block .post-ai-acknowledgment { justify-content:flex-start; gap:10px; }
+.post-ai-review-block .post-ai-acknowledgment input { margin-top:2px; }
+.post-ai-review-block .post-ai-review-error { margin:6px 0 0 26px; color:#b91c1c; font-size:12px; }
+@media(max-width:767px) { .post-ai-review-block { padding-bottom:10px; font-size:11px; } }
