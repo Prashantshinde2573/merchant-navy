@@ -1,4 +1,5 @@
 import React from 'react';
+import { LanguageProvider } from './context/LanguageContext';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { PostProvider } from './context/PostContext';
@@ -8,9 +9,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <PostProvider>
+        <LanguageProvider><PostProvider>
           <AppRoutes />
-        </PostProvider>
+        </PostProvider></LanguageProvider>
       </AuthProvider>
     </BrowserRouter>
   );

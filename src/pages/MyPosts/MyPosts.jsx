@@ -1,3 +1,4 @@
+import {PostContentWithTranslation} from '../../components/PostTranslation/PostTranslation';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { usePosts } from '../../context/PostContext';
@@ -206,10 +207,8 @@ export function MyPosts() {
                         )}
                       </div>
                       <div>
-                        <p className="text-[15px] leading-[1.4] tracking-[-0.1px] text-zinc-800">
-                          {post.scopeOfWork || post.description || post.title || ""}
-                          <Link className="ml-1 text-zinc-500 hover:text-zinc-700" to={`/my-posts/${post.id}`}>more</Link>
-                        </p>
+                        <PostContentWithTranslation postId={post.id} sourceLanguage={post.sourceLanguage} text={post.scopeOfWork || post.description || post.title || ""} className="text-[15px] leading-[1.4] tracking-[-0.1px] text-zinc-800" />
+                        <Link className="text-sm text-zinc-500 hover:text-zinc-700" to={`/my-posts/${post.id}`}>more</Link>
                       </div>
                       <div className="flex flex-col gap-2">
                         {post.ports && post.ports.length > 0 && (

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { POSTS_DATA, DEFAULT_POST, DEFAULT_MY_POST } from '../data/postsData';
+import {originalPostLanguage} from '../services/postTranslation';
 import { useAuth } from './AuthContext';
 
 const PostContext = createContext();
@@ -62,6 +63,7 @@ export function PostProvider({ children }) {
       ports: postData.ports && postData.ports.length > 0 ? postData.ports : ['Visakhapatnam'],
       services: postData.services && postData.services.length > 0 ? postData.services : ['Husbandry (General)'],
       scopeOfWork: postData.scopeOfWork || postData.details || postData.title || '',
+      sourceLanguage: originalPostLanguage(postData.scopeOfWork || postData.details || postData.title || '',postData.sourceLanguage),
       title: postData.title || (postData.scopeOfWork ? postData.scopeOfWork.split('\n')[0] : 'Requirement'),
       status: postData.status || 'Live',
       createdAt: new Date().toISOString()

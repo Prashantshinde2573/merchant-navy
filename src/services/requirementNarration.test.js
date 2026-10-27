@@ -6,8 +6,8 @@ const at = hour => new Date(2026, 9, 26, hour, 0);
 const samantha = { name:'Samantha', lang:'en-US' };
 const neerja = { name:'Microsoft Neerja Online (Natural)', lang:'en-IN' };
 
-test('greeting uses Good afternoon locally between noon and five, otherwise Hey', () => {
-  for (const [hour, expected] of [[0,'Hey'],[5,'Hey'],[11,'Hey'],[12,'Good afternoon'],[16,'Good afternoon'],[17,'Hey'],[23,'Hey']]) {
+test('greeting follows the local morning, afternoon and evening boundaries', () => {
+  for (const [hour, expected] of [[0,'Good evening'],[5,'Good morning'],[11,'Good morning'],[12,'Good afternoon'],[16,'Good afternoon'],[17,'Good evening'],[23,'Good evening']]) {
     assert.equal(requirementGreeting(at(hour)), expected);
   }
 });

@@ -1,9 +1,9 @@
 import { requirementCopy } from "./requirementLanguages.js";
 
-/** Keep the opening informal outside the user's local afternoon. */
+/** Use the device's local time each time a new voice session starts. */
 export function requirementGreeting(date = new Date(), language = 'en') {
   const hour = date.getHours();
-  return requirementCopy(hour >= 12 && hour < 17 ? 'Good afternoon' : 'Hey', language);
+  return requirementCopy(hour >= 5 && hour < 12 ? 'Good morning' : hour >= 12 && hour < 17 ? 'Good afternoon' : 'Good evening', language);
 }
 
 // Web Speech has no gender field. Match known voice names; never infer gender from pitch.
@@ -85,7 +85,7 @@ export function createRequirementNarrator({ synthesis, Utterance, onState, onErr
   };
   return {
     stop,
-    speak(text, {locale = 'en-IN', userInitiated = false} = {}) {
+    speak(text, {locale = 'en-IN', userInitiated = false, onComplete = () => {}} = {}) {
       stop();
       if (!synthesis || !Utterance) {
         onState('error');
@@ -118,6 +118,7 @@ export function createRequirementNarrator({ synthesis, Utterance, onState, onErr
             current = null;
             detach(request);
             onState('idle');
+            onComplete();
           };
           utterance.onerror = event => {
             if (current !== request) return;

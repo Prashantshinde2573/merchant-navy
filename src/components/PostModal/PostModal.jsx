@@ -1,3 +1,4 @@
+import { useSiteLanguage } from '../../context/LanguageContext';
 import React, { useState, useRef, useEffect } from "react";
 import { usePosts } from "../../context/PostContext";
 import { PostRequirementAI } from "../PostRequirementAI/PostRequirementAI";
@@ -45,6 +46,7 @@ const AVAILABLE_PORTS = [
 ];
 
 export function PostModal({ isOpen, onClose, onPostCreated }) {
+  const {t} = useSiteLanguage();
   const { createPost } = usePosts();
   const [mode, setMode] = useState("manual"); // "manual" | "ai"
   const [scopeOfWork, setScopeOfWork] = useState("");
@@ -53,13 +55,15 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
   const [minBudget, setMinBudget] = useState("");
   const [maxBudget, setMaxBudget] = useState("");
   const [isAsap, setIsAsap] = useState(false);
-  const [serviceDates, setServiceDates] = useState("09/09/2026 - 09/09/2026");
+  const [serviceDates, setServiceDates] = useState("");
   const [selectedServices, setSelectedServices] = useState([]);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [selectedPorts, setSelectedPorts] = useState([]);
   const [isPortsOpen, setIsPortsOpen] = useState(false);
   const [files, setFiles] = useState([]);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const submitting = useRef(false);
   const fileInputRef = useRef(null);
   const editorRef = useRef(null);
 
@@ -136,8 +140,9 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
     setMode("manual");
   };
 
-  const handlePublish = (e) => {
+  const handlePublish = async (e) => {
     if (e) e.preventDefault();
+    if (submitting.current) return;
     const content = editorRef.current ? editorRef.current.innerText.trim() : scopeOfWork;
     if (!content) {
       alert("Please enter the Scope of Work details.");
@@ -159,17 +164,21 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
       status: "Live"
     };
 
-    const created = createPost(postPayload);
-    if (onPostCreated) {
-      onPostCreated(created);
-    }
-
-    alert("Requirement published successfully!");
-    onClose();
+    submitting.current = true;
+    setIsSubmitting(true);
+    try {
+      const created = await createPost(postPayload);
+      if (onPostCreated) onPostCreated(created);
+      alert("Requirement published successfully!");
+      onClose();
+    } catch {
+      alert("Your request could not be published. Your details are still here. Please try again.");
+    } finally { submitting.current=false; setIsSubmitting(false); }
   };
 
-  const handleSaveDraft = (e) => {
+  const handleSaveDraft = async (e) => {
     if (e) e.preventDefault();
+    if (submitting.current) return;
     const content = editorRef.current ? editorRef.current.innerText.trim() : scopeOfWork;
     const postPayload = {
       scopeOfWork: content || "Draft requirement",
@@ -185,12 +194,16 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
       files: files.map(f => f.name || f),
       status: "Draft"
     };
-    const created = createPost(postPayload);
-    if (onPostCreated) {
-      onPostCreated(created);
-    }
-    alert("Draft saved successfully!");
-    onClose();
+    submitting.current = true;
+    setIsSubmitting(true);
+    try {
+      const created = await createPost(postPayload);
+      if (onPostCreated) onPostCreated(created);
+      alert("Draft saved successfully!");
+      onClose();
+    } catch {
+      alert("Your draft could not be saved. Please try again.");
+    } finally { submitting.current=false; setIsSubmitting(false); }
   };
 
   return (
@@ -233,8 +246,13 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
           <div className="modal-header-container py-3 sm:py-4 px-4 sm:px-6 flex-initial border-default-100 shadow-neutral-sm flex flex-col sm:flex-row sm:items-center sm:justify-between border-b gap-3 sm:gap-4 bg-content1 shrink-0" id="_r_19r_">
             <div className="flex items-center justify-between w-full sm:w-auto">
               <h2 className="text-content1-foreground text-[18px] sm:text-xl font-semibold leading-tight sm:leading-7 tracking-tight">
-                Post Your Requirements
+                {t("Post Your Requirements")}
               </h2>
+            </div>
+
+            <button type="button" role="switch" aria-checked={mode==='ai'} aria-label={t("Talk to AI")} className={`post-ai-toggle ${mode==='ai' ? 'is-active' : ''}`} onClick={()=>setMode(value=>value==='ai' ? 'manual' : 'ai')}>
+              <span className="material-symbols-outlined" aria-hidden="true">mic</span><span>{t("Talk to AI")}</span><span className="post-ai-toggle-track" aria-hidden="true"><i /></span>
+            </button>
               {/* Mobile-only Close X aligned with heading */}
               <button
                 type="button"
@@ -247,35 +265,6 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                   <path d="m6 6 12 12"></path>
                 </svg>
               </button>
-            </div>
-
-            <div className="flex items-center justify-center sm:justify-end sm:pr-12 w-full sm:w-auto">
-              {/* Modern Segmented Toggle: ALWAYS visible in both modes with clear active blue background */}
-              <div className="inline-flex items-center bg-default-100 border border-default-200 p-1 rounded-full w-full sm:w-auto justify-center sm:justify-start gap-1 shadow-2xs">
-                <button
-                  type="button"
-                  onClick={() => setMode("manual")}
-                  className={`text-xs px-4 py-1.5 rounded-full transition-all cursor-pointer flex-1 sm:flex-none text-center whitespace-nowrap ${
-                    mode === "manual"
-                      ? "bg-primary text-primary-foreground shadow-xs font-semibold"
-                      : "text-default-700 hover:text-default-900 bg-transparent font-medium"
-                  }`}
-                >
-                  Manual Form
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setMode("ai")}
-                  className={`text-xs px-4 py-1.5 rounded-full transition-all flex items-center justify-center gap-1.5 cursor-pointer flex-1 sm:flex-none text-center whitespace-nowrap ${
-                    mode === "ai"
-                      ? "bg-primary text-primary-foreground shadow-xs font-semibold"
-                      : "text-primary hover:text-blue-900 bg-transparent font-medium"
-                  }`}
-                >
-                  <span>✨ AI Input</span>
-                </button>
-              </div>
-            </div>
 
             {/* Desktop Close Button - ALWAYS TOP RIGHT ON DESKTOP */}
             <button
@@ -308,7 +297,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                   serviceDates
                 }}
                 onComplete={handleAIComplete}
-                onCancel={onClose}
+                onCancel={() => setMode("manual")}
               />
             ) : (
               /* Standard Form Mode */
@@ -664,7 +653,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
           </div>
 
           {/* Modal Footer */}
-          {mode === "manual" && <footer className="flex flex-row gap-2.5 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 justify-between sm:justify-end border-t border-default-100 bg-content1 shrink-0">
+          {mode === "manual" && <footer className="post-request-footer flex flex-row gap-2.5 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 justify-between sm:justify-end border-t border-default-100 bg-content1 shrink-0">
             <button
               type="button"
               tabIndex="0"
@@ -679,6 +668,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                 type="button"
                 tabIndex="0"
                 onClick={handleSaveDraft}
+                disabled={isSubmitting}
                 data-react-aria-pressable="true"
                 className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent px-3.5 sm:px-4 min-w-20 h-10 text-small gap-1.5 sm:gap-2 rounded-medium transition-transform-colors-opacity motion-reduce:transition-none bg-default text-default-foreground hover:opacity-80"
               >
@@ -688,13 +678,16 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                 type="button"
                 tabIndex="0"
                 onClick={handlePublish}
+                disabled={isSubmitting}
                 data-react-aria-pressable="true"
                 className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-semibold subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent px-4 min-w-24 sm:min-w-28 h-10 text-small gap-1.5 sm:gap-2 rounded-medium transition-transform-colors-opacity motion-reduce:transition-none bg-primary text-primary-foreground hover:opacity-80 shadow-sm"
               >
                 Publish Request
               </button>
             </div>
+
           </footer>}
+          <p className="post-ai-interface-note">{t("AI translation may occasionally contain errors. Please review all details before submitting.")}</p>
 
           {/* Bottom Accessibility Button */}
           <div style={{ border: "0px", clip: "rect(0px, 0px, 0px, 0px)", clipPath: "inset(50%)", height: "1px", margin: "-1px", overflow: "hidden", padding: "0px", position: "absolute", width: "1px", whiteSpace: "nowrap" }}>

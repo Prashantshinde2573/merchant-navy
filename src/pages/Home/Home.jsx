@@ -76,7 +76,7 @@ export function Home() {
       </div>
     </div>
     <div className="relative flex w-full flex-auto flex-col place-content-inherit align-items-inherit h-auto break-words text-left subpixel-antialiased overflow-y-hidden p-0">
-      <PostContentWithTranslation postId={`custom-${post.id}`} text={post.scopeOfWork || post.description || post.title || ""} />
+      <PostContentWithTranslation postId={`custom-${post.id}`} sourceLanguage={post.sourceLanguage} text={post.scopeOfWork || post.description || post.title || ""} />
       {post.ports && post.ports.length > 0 && (
         <div className="mt-3 flex w-full min-w-0 items-center gap-2">
           <span className="material-symbols-outlined mt-0.5 shrink-0 text-sm leading-none text-zinc-500" aria-hidden="true">anchor</span>

@@ -1,0 +1,36 @@
+import React, {useEffect, useId, useRef, useState} from 'react';
+import {AVAILABLE_LANGUAGES} from '../../services/translationService';
+import {useSiteLanguage} from '../../context/LanguageContext';
+import './LanguageMenu.css';
+
+export function LanguageMenu() {
+  const {language,setLanguage,t}=useSiteLanguage();
+  const [open,setOpen]=useState(false);
+  const root=useRef(null),trigger=useRef(null),options=useRef(null);
+  const id=useId();
+  useEffect(()=>{
+    if(!open)return;
+    options.current?.querySelector('[aria-checked="true"]')?.focus();
+    const outside=event=>{if(!root.current?.contains(event.target))setOpen(false);};
+    const escape=event=>{if(event.key==='Escape'){event.preventDefault();setOpen(false);trigger.current?.focus();}};
+    document.addEventListener('pointerdown',outside);
+    document.addEventListener('keydown',escape);
+    return()=>{document.removeEventListener('pointerdown',outside);document.removeEventListener('keydown',escape);};
+  },[open]);
+  return <div className="navbar-language" ref={root}>
+    <button type="button" className="navbar-language-trigger" ref={trigger} aria-label={t('Language')} title={t('Language')} aria-haspopup="menu" aria-expanded={open} aria-controls={open?id:undefined} onClick={()=>setOpen(value=>!value)}>
+      <span className="material-symbols-outlined" aria-hidden="true">translate</span>
+    </button>
+    {open&&<div className="navbar-language-menu" id={id} role="menu" aria-label={t('Language')} ref={options} onKeyDown={event=>{
+      const buttons=[...options.current.querySelectorAll('button')];const index=buttons.indexOf(document.activeElement);
+      const next=event.key==='ArrowDown'?(index+1)%buttons.length:event.key==='ArrowUp'?(index-1+buttons.length)%buttons.length:event.key==='Home'?0:event.key==='End'?buttons.length-1:null;
+      if(next!==null){event.preventDefault();buttons[next]?.focus();}
+      if(event.key==='Tab'){trigger.current?.focus();setOpen(false);}
+    }}>
+      {AVAILABLE_LANGUAGES.map(item=><button type="button" role="menuitemradio" aria-checked={language===item.code} key={item.code} lang={item.code} onClick={()=>{setLanguage(item.code);setOpen(false);trigger.current?.focus();}}>
+        <span>{item.nativeName}<small>{item.name!==item.nativeName?item.name:''}</small></span>
+        {language===item.code&&<span className="material-symbols-outlined" aria-hidden="true">check</span>}
+      </button>)}
+    </div>}
+  </div>;
+}

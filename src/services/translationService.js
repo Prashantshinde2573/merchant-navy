@@ -40,6 +40,7 @@ export const LANGUAGE_MAP = AVAILABLE_LANGUAGES.reduce((acc, lang) => {
 // Heuristic pattern matching for language detection
 const LANGUAGE_PATTERNS = [
   // Devanagari script (Hindi / Marathi)
+  { regex: /(?:आम्हाला|पाहिजे|पुरवठा|आहेत|आहे|हवे|मराठी)/, lang: 'mr' },
   { regex: /[\u0900-\u097F]/, lang: 'hi' },
   // Bengali script
   { regex: /[\u0980-\u09FF]/, lang: 'bn' },
@@ -64,7 +65,7 @@ const LANGUAGE_PATTERNS = [
   // Spanish keywords
   { regex: /\b(necesito|proveedor|restaurante|buque|puerto|servicios|cotizaci[oó]n|requerimos|gracias|por favor|limpieza|suministro)\b/i, lang: 'es' },
   // French keywords
-  { regex: /\b(bonjour|besoin|fournisseur|navire|port|services|devis|merci|s'il vous pla[iî]t|nettoyage|approvisionnement)\b/i, lang: 'fr' },
+  { regex: /\b(bonjour|besoin|fournisseur|navire|devis|merci|s'il vous pla[iî]t|nettoyage|approvisionnement)\b/i, lang: 'fr' },
   // German keywords
   { regex: /\b(wir|ben[oö]tigen|schiff|hafen|dienstleistungen|angebot|bitte|danke|reinigung|versorgung)\b/i, lang: 'de' },
   // Italian keywords
@@ -136,9 +137,11 @@ export function detectLanguage(text) {
  * Get user's preferred language.
  * @returns {string} Language code
  */
-export function getUserPreferredLanguage() {
+export function getUserPreferredLanguage(userId) {
   try {
-    return localStorage.getItem('preferredLanguage') || 'en';
+    const user = userId || localStorage.getItem('currentUser');
+    const saved = (user && localStorage.getItem(`merchant_navy_language:${user}`)) || localStorage.getItem('preferredLanguage') || 'en';
+    return LANGUAGE_MAP[saved] ? saved : 'en';
   } catch (e) {
     return 'en';
   }
@@ -148,10 +151,13 @@ export function getUserPreferredLanguage() {
  * Set user's preferred language.
  * @param {string} langCode 
  */
-export function setUserPreferredLanguage(langCode) {
+export function setUserPreferredLanguage(langCode, userId) {
   try {
     if (LANGUAGE_MAP[langCode]) {
-      localStorage.setItem('preferredLanguage', langCode);
+      const user = userId || localStorage.getItem('currentUser');
+      if (user) localStorage.setItem(`merchant_navy_language:${user}`, langCode);
+      else localStorage.setItem('preferredLanguage', langCode);
+      if (typeof window !== 'undefined') window.dispatchEvent(new Event('merchant-navy-language-change'));
     }
   } catch (e) {
     // Ignore storage issues

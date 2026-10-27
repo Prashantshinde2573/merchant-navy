@@ -3,8 +3,11 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { UpgradeBanner } from '../UpgradeBanner/UpgradeBanner';
 import './Navbar.css';
+import {LanguageMenu} from './LanguageMenu';
+import {useSiteLanguage} from '../../context/LanguageContext';
 
 export function Navbar() {
+  const {t} = useSiteLanguage();
   const location = useLocation();
   const navigate = useNavigate();
   const { currentUser, logout } = useAuth();
@@ -54,11 +57,11 @@ export function Navbar() {
           <ul className="h-full flex-row flex-nowrap items-center data-[justify=center]:justify-center data-[justify=center]:basis-0 flex gap-1" data-justify="center">
             <Link to="/home" className={`whitespace-nowrap box-border list-none data-[active=true]:font-semibold flex items-center gap-1.5 text-sm leading-5 rounded-lg px-3 py-2.5 ${isHome ? "text-primary bg-blue-50 font-semibold" : "hover:bg-blue-25 font-medium text-blue-600"}`} data-active={isHome}>
               <span className={`material-symbols-outlined text-4.5 ${isHome ? "material-symbols-fill" : ""}`}>home</span>
-              <span>Home</span>
+              <span>{t('Home')}</span>
             </Link>
             <Link to="/my-posts" className={`whitespace-nowrap box-border list-none data-[active=true]:font-semibold flex items-center gap-1.5 text-sm leading-5 rounded-lg px-3 py-2.5 ${isMyPosts ? "text-primary bg-blue-50 font-semibold" : "hover:bg-blue-25 font-medium text-blue-600"}`} data-active={isMyPosts}>
               <span className={`material-symbols-outlined text-4.5 ${isMyPosts ? "material-symbols-fill" : ""}`}>docs</span>
-              <span>My Posts</span>
+              <span>{t('My Posts')}</span>
             </Link>
             <Link to="/wins" className={`whitespace-nowrap box-border list-none data-[active=true]:font-semibold flex items-center gap-1.5 text-sm leading-5 rounded-lg px-3 py-2.5 ${isWins ? "text-primary bg-blue-50 font-semibold" : "hover:bg-blue-25 font-medium text-blue-600"}`} data-active={isWins}>
               <span className={`material-symbols-outlined text-4.5 ${isWins ? "material-symbols-fill" : ""}`}>award_star</span>
@@ -84,6 +87,7 @@ export function Navbar() {
               <Link to="/help" className={`text-medium whitespace-nowrap box-border list-none data-[active=true]:font-semibold h-11 rounded-lg px-3 py-2.5 flex items-center ${isHelp ? "text-primary bg-blue-50 font-semibold" : "hover:bg-blue-25 font-medium text-blue-600"}`} title="Support" data-active={isHelp}>
                 <span className={`material-symbols-outlined text-4.5 ${isHelp ? "material-symbols-fill" : ""}`}>help</span>
               </Link>
+              <LanguageMenu />
             </div>
 
             <div className="shrink-0 bg-divider border-none w-divider mx-1 h-6" role="separator" data-orientation="vertical" aria-orientation="vertical"></div>
@@ -107,14 +111,14 @@ export function Navbar() {
                     onClick={() => setIsDropdownOpen(false)}
                     className="text-[14px] font-medium text-gray-800 hover:text-primary transition-colors px-2.5 py-1.5 text-left block w-full rounded-md hover:bg-blue-50/50"
                   >
-                    Profile
+                    {t('Profile')}
                   </Link>
                   <Link
                     to="/settings"
                     onClick={() => setIsDropdownOpen(false)}
                     className="text-[14px] font-medium text-gray-800 hover:text-primary transition-colors px-2.5 py-1.5 text-left block w-full rounded-md hover:bg-blue-50/50"
                   >
-                    Settings
+                    {t('Settings')}
                   </Link>
                   <div className="h-px bg-gray-100 my-1"></div>
                   <button
@@ -122,7 +126,7 @@ export function Navbar() {
                     onClick={handleLogout}
                     className="text-[14px] font-medium text-red-600 hover:text-red-700 transition-colors px-2.5 py-1.5 text-left block w-full cursor-pointer rounded-md hover:bg-red-50/50"
                   >
-                    Logout
+                    {t('Logout')}
                   </button>
                 </div>
               )}
@@ -148,7 +152,7 @@ export function Navbar() {
           </div>
 
           {/* CENTER: Merchant Navy Logo (Mathematically Centered Relative to Full Viewport) */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto flex items-center justify-center z-10">
+          <div className="mobile-navbar-logo flex flex-1 min-w-0 items-center justify-center px-2 z-10">
             <Link to="/home" className="flex items-center justify-center">
               <img
                 alt="Merchant Navy"
@@ -160,8 +164,10 @@ export function Navbar() {
             </Link>
           </div>
 
-          {/* RIGHT: Profile Icon / Avatar */}
-          <div className="flex items-center z-10">
+          {/* RIGHT: Help, site language and profile */}
+          <div className="mobile-navbar-actions">
+            <Link to="/help" className="mobile-navbar-help" aria-label="Support"><span className="material-symbols-outlined" aria-hidden="true">help</span></Link>
+            <LanguageMenu />
             <li className="text-medium whitespace-nowrap box-border list-none data-[active=true]:font-semibold relative flex items-center" ref={mobileDropdownRef}>
               <div
                 className="z-10 aria-expanded:scale-[0.97] aria-expanded:opacity-70 subpixel-antialiased cursor-pointer"
@@ -211,14 +217,14 @@ export function Navbar() {
                     onClick={() => setIsDropdownOpen(false)}
                     className="text-[14px] font-medium text-gray-800 hover:text-primary transition-colors px-2.5 py-1.5 text-left block w-full rounded-md hover:bg-blue-50/50"
                   >
-                    Profile
+                    {t('Profile')}
                   </Link>
                   <Link
                     to="/settings"
                     onClick={() => setIsDropdownOpen(false)}
                     className="text-[14px] font-medium text-gray-800 hover:text-primary transition-colors px-2.5 py-1.5 text-left block w-full rounded-md hover:bg-blue-50/50"
                   >
-                    Settings
+                    {t('Settings')}
                   </Link>
                   <div className="h-px bg-gray-100 my-1"></div>
                   <button
@@ -226,7 +232,7 @@ export function Navbar() {
                     onClick={handleLogout}
                     className="text-[14px] font-medium text-red-600 hover:text-red-700 transition-colors px-2.5 py-1.5 text-left block w-full cursor-pointer rounded-md hover:bg-red-50/50"
                   >
-                    Logout
+                    {t('Logout')}
                   </button>
                 </div>
               )}
@@ -244,7 +250,7 @@ export function Navbar() {
               className={`flex items-center gap-3 p-2.5 rounded-lg text-sm font-medium transition-colors ${isHome ? "bg-blue-50 text-primary font-semibold" : "text-gray-700 hover:bg-gray-50"}`}
             >
               <span className={`material-symbols-outlined text-xl ${isHome ? "material-symbols-fill text-primary" : "text-gray-500"}`}>home</span>
-              <span>Home</span>
+              <span>{t('Home')}</span>
             </Link>
 
             {/* 2. Wins */}
@@ -296,7 +302,7 @@ export function Navbar() {
           className={`flex flex-col items-center justify-center flex-1 h-full py-1 text-center transition-colors ${isMyPosts ? "text-primary font-semibold" : "text-gray-500 hover:text-blue-600 font-medium"}`}
         >
           <span className={`material-symbols-outlined text-[22px] leading-none ${isMyPosts ? "material-symbols-fill" : ""}`}>docs</span>
-          <span className="text-[11px] leading-tight mt-1">My Posts</span>
+          <span className="text-[11px] leading-tight mt-1">{t('My Posts')}</span>
         </Link>
 
         {/* 2. My Merchants */}
@@ -317,7 +323,7 @@ export function Navbar() {
             <span className={`material-symbols-outlined text-[22px] leading-none ${isNotif ? "material-symbols-fill" : ""}`}>notifications</span>
             <span className="flex z-10 absolute box-border rounded-full whitespace-nowrap place-content-center items-center select-none font-bold text-white text-[10px] w-4.5 h-4.5 min-w-4.5 min-h-4.5 -top-1 -right-2 bg-danger-500 border-2 border-white leading-none">7</span>
           </div>
-          <span className="text-[11px] leading-tight mt-1">Notifications</span>
+          <span className="text-[11px] leading-tight mt-1">{t('Notifications')}</span>
         </Link>
 
         {/* 4. Chat */}
