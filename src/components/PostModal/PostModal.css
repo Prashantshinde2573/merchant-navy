@@ -175,3 +175,6 @@ section[role="dialog"]#_r_19q_{margin:0!important;width:100%!important;max-width
 .post-header-close:focus-visible{outline:2px solid #2999a7;outline-offset:2px}
 
 .post-request-footer{justify-content:flex-end}
+
+/* Keep manual control layers beneath the assistant overlay. */
+.post-manual-underlay.has-voice-panel{isolation:isolate}
