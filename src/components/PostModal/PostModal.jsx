@@ -265,11 +265,6 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
               </h2>
             </div>
 
-            <div className="post-header-ai"><GatedFeature featureKey="voice" showAvailability>
-              <button type="button" className="post-header-ai-button" aria-expanded={mode==='ai'} aria-controls="post-ai-workspace" onClick={()=>setMode('ai')}>
-                <span className="material-symbols-outlined" aria-hidden="true">auto_awesome</span><span>{t('Describe with AI')}</span>
-              </button>
-            </GatedFeature></div>
             <button type="button" onClick={onClose} aria-label="Close" className="post-header-close">
               <span className="material-symbols-outlined" aria-hidden="true">close</span>
             </button>
@@ -279,9 +274,9 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
           <div className={`flex flex-1 min-h-0 flex-col ${mode === "ai" ? "ai-modal-body p-0 overflow-hidden bg-content1" : "bg-blue-25 p-4 sm:p-6 max-h-[calc(90vh-140px)] overflow-y-auto"}`} id="_r_19s_">
             <div className={`post-manual-underlay ${mode==='ai'?'has-voice-panel':''}`}>
               <form className="space-y-6" onSubmit={event=>mode==='ai'?event.preventDefault():handlePublish(event)} data-ai-filled={aiReview?'true':undefined}>
-                <div className="flex flex-col gap-6 md:flex-row">
+                <div className="post-form-columns flex flex-col gap-6 md:flex-row">
                   {/* Left Column */}
-                  <div className="flex flex-1 flex-col gap-3">
+                  <div className="post-form-left flex flex-1 flex-col gap-3">
                     {/* Scope of work */}
                     <div className="bg-content1 shadow-neutral-sm rounded-lg p-4 sm:p-6">
                       <div className="mb-4 flex flex-col gap-0.5">
@@ -477,7 +472,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                   </div>
 
                   {/* Right Column */}
-                  <div className="flex max-w-100 flex-1 flex-col gap-3">
+                  <div className="post-form-right flex max-w-100 flex-1 flex-col gap-3">
                     {/* Services */}
                     <div className="bg-content1 shadow-neutral-sm rounded-lg p-4 sm:p-6 relative">
                       <div className="mb-4 flex flex-col gap-0.5">
@@ -518,6 +513,13 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                       )}
                     </div>
 
+                    {typeof navigator!=='undefined'&&typeof navigator.mediaDevices?.getUserMedia==='function'&&<div className="post-voice-entry-wrap"><GatedFeature featureKey="voice" showAvailability>
+                      <button type="button" className="post-voice-entry" aria-expanded={mode==='ai'} aria-controls="post-ai-workspace" onClick={()=>setMode('ai')}>
+                        <span className="material-symbols-outlined" aria-hidden="true">mic</span>
+                        <span><strong>{t('Describe it by voice')}</strong><small>{t('Talk to AI, we fill the form')}</small></span>
+                        <span className="material-symbols-outlined post-voice-entry-arrow" aria-hidden="true">arrow_forward</span>
+                      </button>
+                    </GatedFeature></div>}
                     {/* Ports */}
                     <div className="bg-content1 shadow-neutral-sm rounded-lg p-4 sm:p-6 relative">
                       <div className="mb-4 flex flex-col gap-0.5">

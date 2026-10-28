@@ -1,5 +1,4 @@
 import React from 'react';
-import {PrototypeGuide} from '../pages/Prototype/PrototypeGuide';
 import {MobilePrototype} from '../pages/Prototype/MobilePrototype';
 import {Plans} from '../pages/Plans/Plans';
 import { Routes, Route, Navigate } from 'react-router-dom';
@@ -38,7 +37,6 @@ export function AppRoutes() {
         }
       >
         <Route index element={<Navigate to="/home" replace />} />
-        <Route path="prototype" element={<PrototypeGuide />} />
         <Route path="plans" element={<Plans />} />
         <Route path="home" element={<Home />} />
         <Route path="my-posts" element={<MyPosts />} />

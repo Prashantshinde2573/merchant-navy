@@ -107,18 +107,6 @@ export function PostRequirementAI({initialData={},onComplete,onCancel,voiceSessi
   const status=working?'Processing':{idle:'Tap to talk',permission:'Microphone permission preview',connecting:'Connecting…',thinking:'Thinking…',filling:'Filling your form…',requesting:'Allow microphone access to start',listening:'Listening…',speaking:'Speaking…',processing:'Finishing transcription…',complete:'Tap to add more',error:'Tap to try again'}[state];
   return <div className={`ai-simple ai-minimal-agent is-${mode}-mode`} lang={language}>
     {onCancel&&<button type="button" className="ai-describe-manually" onClick={returnToManual}><span className="material-symbols-outlined" aria-hidden="true">arrow_back</span>{t('Describe Manually')}</button>}
-    <header className="ai-agent-heading">
-      <span className="ai-agent-heading-mark" aria-hidden="true">
-        <svg width="25" height="25" viewBox="0 0 24 24" fill="none">
-          <path d="m10 3 2.4 6.6L19 12l-6.6 2.4L10 21l-2.4-6.6L1 12l6.6-2.4L10 3Z" fill="currentColor" />
-          <path d="m19 2 1.1 3L23 6l-2.9 1L19 10l-1-3-3-1 3-1L19 2Z" fill="#42a8a7" />
-        </svg>
-      </span>
-      <div className="ai-agent-heading-copy">
-        <span className="ai-agent-heading-label">{t('Post assistant')}</span>
-        <h3>{t('Describe your requirement')}</h3>
-      </div>
-    </header>
     <div className="ai-minimal-stage">
       <button type="button" className={`ai-agent-orb ai-fluid-orb ${state==='listening'?'is-listening':state==='speaking'?'is-speaking':''}`}
         onClick={mode==='voice'?toggleVoice:undefined} disabled={mode==='chat'||working||state==='processing'||state==='requesting'}

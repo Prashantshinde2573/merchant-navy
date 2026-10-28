@@ -6,7 +6,7 @@ This deliverable is a React UI prototype. Browser speech recognition and device 
 
 ## Review entry points
 
-- Profile menu → **Prototype review** (`/prototype`): feature walkthrough, state selectors and coverage summary.
+- Prototype Review and its navigation entries have been removed. Previous `/prototype` URLs fall back to the feed.
 - `/plans?feature=voice`: illustrative packages with feature highlighting and an updating state. No checkout/payment.
 - `/mobile-prototype`: separate phone interaction surface with iOS/Android appearance selectors. This is not a native application binary or a separate React Native/Flutter codebase.
 - Existing request modal: manual form, right-column voice entry above Ports, side-panel assistant on desktop and full-width assistant on mobile. The duplicate header toggle is removed.

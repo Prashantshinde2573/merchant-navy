@@ -120,7 +120,6 @@ export function Navbar() {
                   >
                     {t('Settings')}
                   </Link>
-                  <Link to="/prototype" onClick={()=>setIsDropdownOpen(false)} className="text-[14px] font-medium text-primary px-2.5 py-1.5 block rounded-md hover:bg-blue-50/50">Prototype review</Link>
                   <div className="h-px bg-gray-100 my-1"></div>
                   <button
                     type="button"
@@ -226,7 +225,6 @@ export function Navbar() {
                   >
                     {t('Settings')}
                   </Link>
-                  <Link to="/prototype" onClick={()=>setIsDropdownOpen(false)} className="text-[14px] font-medium text-primary px-2.5 py-1.5 block rounded-md hover:bg-blue-50/50">Prototype review</Link>
                   <div className="h-px bg-gray-100 my-1"></div>
                   <button
                     type="button"
@@ -288,7 +286,6 @@ export function Navbar() {
             </Link>
 
             <LanguageMenu variant="navigation" />
-            <Link to="/prototype" className="flex items-center gap-3 p-2.5 rounded-lg text-sm text-primary" onClick={()=>setIsMenuOpen(false)}><span className="material-symbols-outlined" aria-hidden="true">design_services</span>Prototype review</Link>
 
             {/* 5. Upgrade for More (Visual Red Promotional Banner at the VERY END) */}
             <div className="mt-2 w-full">

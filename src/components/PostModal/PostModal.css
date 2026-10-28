@@ -135,8 +135,8 @@
 
 .post-voice-entry-wrap,.post-voice-entry-wrap>.gated-feature{width:100%}.post-voice-entry-wrap{margin-bottom:16px}.post-voice-entry{min-height:72px}.post-voice-entry>span:nth-child(2){flex:1;min-width:0}.post-voice-entry>.post-voice-entry-arrow{background:transparent;color:#1f285d;width:24px;height:24px;animation:none;flex-shrink:0}
 
-/* A single compact, centered assistant entry before the form fields. */
-.post-voice-entry-wrap{width:100%;max-width:360px;margin:0 auto 16px}
+/* Compact assistant entry in the right column, directly above Ports. */
+.post-voice-entry-wrap{width:100%;max-width:none;margin:0}
 .post-voice-entry-wrap .post-voice-entry{min-height:60px;padding:10px 14px;gap:10px;border-radius:10px}
 .post-voice-entry-wrap .post-voice-entry>.material-symbols-outlined:not(.post-voice-entry-arrow){width:32px;height:32px;font-size:20px;flex-shrink:0}
 .post-voice-entry-wrap .post-voice-entry small{margin-top:2px;line-height:1.4}
@@ -178,3 +178,14 @@ section[role="dialog"]#_r_19q_{margin:0!important;width:100%!important;max-width
 
 /* Keep manual control layers beneath the assistant overlay. */
 .post-manual-underlay.has-voice-panel{isolation:isolate}
+
+.post-voice-entry-wrap .post-voice-entry:hover{border-color:#aebfce;background:linear-gradient(110deg,#f8fafc,#e6f4f4)}
+.post-voice-entry-wrap .post-voice-entry:focus-visible{outline:2px solid #2999a7;outline-offset:3px}
+
+/* Lift the single voice entry above the fields on phones. */
+@media(max-width:767px){
+ .post-form-columns{display:flex;flex-direction:column;gap:12px}
+ .post-form-right{display:contents}
+ .post-form-columns .post-voice-entry-wrap{order:-1;margin:0 0 2px;max-width:100%;min-width:0}
+ .post-voice-entry-wrap .feature-tier-badge{top:-5px;bottom:auto}
+}
