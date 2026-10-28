@@ -65,7 +65,7 @@ test('female voice uses neutral pitch and steady pacing, not an artificial high 
   const utterance=state.spoken[0];
   assert.equal(utterance.voice,neerja);
   assert.equal(utterance.pitch,1);
-  assert.equal(utterance.rate,1);
+  assert.equal(utterance.rate,0.98);
   assert.equal(utterance.volume,1);
   assert.equal(state.selected[0].natural,true);
   utterance.onstart();
@@ -79,7 +79,7 @@ test('greeting stays in the same utterance as the question for a smooth transiti
   state.narrator.speak('Hey, let’s get your post ready. What do you need?');
   assert.equal(state.spoken.length,1);
   assert.equal(state.spoken[0].text,"Hey, let's get your post ready. What do you need?");
-  assert.equal(state.spoken[0].rate,0.98);
+  assert.equal(state.spoken[0].rate,0.96);
 });
 
 test('waits for asynchronously loaded female voices instead of choosing a male default', () => {

@@ -1,6 +1,6 @@
+import {translateRequirementText} from './requirementTranslation.js';
 import {extractRequirement,extractBudget,parseAnswer} from './requirementAI.js';
 import {requirementCurrencyHint,normalizeRequirementNumbers} from './requirementLanguages.js';
-import {translateRequirementText} from './requirementTranslation.js';
 
 const UNCLEAR=/^(?:i (?:don['’]?t know|am not sure)|not sure|unsure|maybe|maybe later|unknown|skip|later|yes|no|ok|okay|don['’]?t know)[.!?]*$/i;
 const CLEAR_OPEN=/\b(?:skip|no fixed budget|no budget|open (?:to|for) (?:quotes|quotations)|flexible|no deadline)\b/i;
@@ -27,8 +27,9 @@ export async function buildRequestVoiceDraft(transcript,language,initialData,{si
   for(const turn of answers){
     if(signal?.aborted)throw new DOMException('Aborted','AbortError');
     const raw=turn.text.trim();if(!raw)continue;
-    const normalized=normalizeRequirementNumbers(raw,language);
-    const english=language==='en'?normalized:await translate(normalized,language,'en',{signal});
+    const answerLanguage=turn.language||language;
+    const normalized=normalizeRequirementNumbers(raw,answerLanguage);
+    const english=answerLanguage==='en'?normalized:await translate(normalized,answerLanguage,'en',{signal});
     if(signal?.aborted)throw new DOMException('Aborted','AbortError');
     // Free voice responses may include explicit corrections in the same recording.
     const clauses=english.split(/\b(?:actually|correction|instead use|change (?:it|that) to)\b|(?<=[.!?])\s+(?=[a-z])/i).filter(value=>value.trim());

@@ -1,4 +1,6 @@
 import { useSiteLanguage } from '../../context/LanguageContext';
+import {GatedFeature} from '../GatedFeature/GatedFeature';
+import {getMissingQuestions,REQUIREMENT_QUESTIONS} from '../../services/requirementAI';
 import {requestReviewError} from '../../services/requestReview';
 import React, { useState, useRef, useEffect } from "react";
 import { usePosts } from "../../context/PostContext";
@@ -63,6 +65,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
   const [isPortsOpen, setIsPortsOpen] = useState(false);
   const [files, setFiles] = useState([]);
 
+  const [aiReview,setAiReview]=useState(null);
   const [aiAssisted,setAiAssisted] = useState(false);
   const [reviewAccepted,setReviewAccepted] = useState(false);
   const [reviewError,setReviewError] = useState("");
@@ -118,6 +121,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
   };
 
   const handleAIComplete = (aiData) => {
+    setAiReview({missing:getMissingQuestions(aiData,aiData.aiAnswered).map(index=>REQUIREMENT_QUESTIONS[index].title),transcript:aiData.aiTranscript,version:aiData.agentVersion});
     if(aiData.aiAssisted){setAiAssisted(true);setReviewAccepted(false);setReviewError("");}
     if (aiData.scopeOfWork !== undefined) {
       setScopeOfWork(aiData.scopeOfWork);
@@ -158,6 +162,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
     }
 
     const postPayload = {
+      scopeHtml:editorRef.current?.innerHTML || '',
       scopeOfWork: content,
       details: content,
       title: content.split("\n")[0] || "Requirement",
@@ -169,6 +174,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
       isAsap: isAsap,
       urgent: isAsap,
       files: files.map(f => f.name || f),
+      aiTranscript:aiReview?.transcript,agentVersion:aiReview?.version,
       status: "Live"
     };
 
@@ -189,6 +195,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
     if (submitting.current) return;
     const content = editorRef.current ? editorRef.current.innerText.trim() : scopeOfWork;
     const postPayload = {
+      scopeHtml:editorRef.current?.innerHTML || '',
       scopeOfWork: content || "Draft requirement",
       details: content || "Draft requirement",
       title: content ? content.split("\n")[0] : "Draft Requirement",
@@ -226,7 +233,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
 
       {/* Modal Wrapper */}
       <div
-        className="flex w-screen fixed inset-0 z-50 overflow-x-hidden justify-center h-full items-end sm:items-center p-0 sm:p-4"
+        className="post-modal-wrapper flex w-screen fixed inset-0 z-50 overflow-x-hidden justify-center h-full items-end sm:items-center p-0 sm:p-4"
         data-slot="wrapper"
         onClick={onClose}
       >
@@ -258,58 +265,20 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
               </h2>
             </div>
 
-            <button type="button" role="switch" aria-checked={mode==='ai'} aria-label={t("Talk to AI")} className={`post-ai-toggle ${mode==='ai' ? 'is-active' : ''}`} onClick={()=>setMode(value=>value==='ai' ? 'manual' : 'ai')}>
-              <span className="material-symbols-outlined" aria-hidden="true">mic</span><span>{t("Talk to AI")}</span><span className="post-ai-toggle-track" aria-hidden="true"><i /></span>
-            </button>
-              {/* Mobile-only Close X aligned with heading */}
-              <button
-                type="button"
-                onClick={onClose}
-                aria-label="Close"
-                className="sm:hidden inline-flex items-center justify-center rounded-lg h-8 w-8 bg-default-100 text-default-500 hover:text-default-800 hover:bg-default-200 transition-colors cursor-pointer shrink-0"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x" aria-hidden="true">
-                  <path d="M18 6 6 18"></path>
-                  <path d="m6 6 12 12"></path>
-                </svg>
+            <div className="post-header-ai"><GatedFeature featureKey="voice" showAvailability>
+              <button type="button" className="post-header-ai-button" aria-expanded={mode==='ai'} aria-controls="post-ai-workspace" onClick={()=>setMode('ai')}>
+                <span className="material-symbols-outlined" aria-hidden="true">auto_awesome</span><span>{t('Describe with AI')}</span>
               </button>
-
-            {/* Desktop Close Button - ALWAYS TOP RIGHT ON DESKTOP */}
-            <button
-              type="button"
-              onClick={onClose}
-              aria-label="Close"
-              className="hidden sm:inline-flex modal-close-btn items-center justify-center rounded-lg h-8 w-8 bg-default-100 text-default-500 hover:text-default-800 hover:bg-default-200 transition-colors cursor-pointer shrink-0"
-              style={{ position: "absolute", top: "16px", right: "20px", left: "auto", zIndex: 50 }}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x" aria-hidden="true">
-                <path d="M18 6 6 18"></path>
-                <path d="m6 6 12 12"></path>
-              </svg>
+            </GatedFeature></div>
+            <button type="button" onClick={onClose} aria-label="Close" className="post-header-close">
+              <span className="material-symbols-outlined" aria-hidden="true">close</span>
             </button>
           </div>
 
           {/* Modal Content Body */}
           <div className={`flex flex-1 min-h-0 flex-col ${mode === "ai" ? "ai-modal-body p-0 overflow-hidden bg-content1" : "bg-blue-25 p-4 sm:p-6 max-h-[calc(90vh-140px)] overflow-y-auto"}`} id="_r_19s_">
-            {mode === "ai" ? (
-              /* AI Guided Conversational Input Mode */
-              <PostRequirementAI
-                initialData={{
-                  scopeOfWork,
-                  selectedServices,
-                  selectedPorts,
-                  currency,
-                  minBudget,
-                  maxBudget,
-                  isAsap,
-                  serviceDates
-                }}
-                onComplete={handleAIComplete}
-                onCancel={() => setMode("manual")}
-              />
-            ) : (
-              /* Standard Form Mode */
-              <form className="space-y-6" onSubmit={handlePublish}>
+            <div className={`post-manual-underlay ${mode==='ai'?'has-voice-panel':''}`}>
+              <form className="space-y-6" onSubmit={event=>mode==='ai'?event.preventDefault():handlePublish(event)} data-ai-filled={aiReview?'true':undefined}>
                 <div className="flex flex-col gap-6 md:flex-row">
                   {/* Left Column */}
                   <div className="flex flex-1 flex-col gap-3">
@@ -657,7 +626,24 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                   </div>
                 </div>
               </form>
-            )}
+            </div>
+            {mode==='ai'&&<div className="post-ai-workspace-panel" id="post-ai-workspace">
+              <PostRequirementAI
+                initialData={{
+                  scopeOfWork,
+                  selectedServices,
+                  selectedPorts,
+                  currency,
+                  minBudget,
+                  maxBudget,
+                  isAsap,
+                  serviceDates
+                }}
+                onComplete={handleAIComplete}
+                onCancel={() => setMode("manual")}
+              />
+            </div>}
+
           </div>
 
           {/* Modal Footer */}
@@ -671,15 +657,6 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
               {reviewError && <p id="ai-review-error" className="post-ai-review-error" role="alert">{t(reviewError)}</p>}
             </div>}
 
-            <button
-              type="button"
-              tabIndex="0"
-              onClick={onClose}
-              data-react-aria-pressable="true"
-              className="post-modal-cancel z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent px-3.5 sm:px-4 min-w-16 sm:min-w-20 h-10 text-small gap-1.5 sm:gap-2 rounded-medium transition-transform-colors-opacity motion-reduce:transition-none bg-transparent text-default-foreground hover:bg-default/40"
-            >
-              Cancel
-            </button>
             <div className="flex items-center gap-2 sm:gap-2">
               <button
                 type="button"

@@ -109,7 +109,7 @@ export function createRequirementNarrator({ synthesis, Utterance, onState, onErr
           utterance.lang = voice?.lang || locale;
           // Preserve the voice's own female timbre and prosody. High pitch sounds artificial.
           const premium = NATURAL.test(`${voice?.name || ''} ${voice?.voiceURI || ''}`) || ENHANCED.test(`${voice?.name || ''} ${voice?.voiceURI || ''}`);
-          utterance.rate = premium ? 1 : 0.98;
+          utterance.rate = premium ? 0.98 : 0.96;
           utterance.pitch = 1;
           utterance.volume = 1;
           utterance.onstart = () => { if (current === request) onState('speaking'); };

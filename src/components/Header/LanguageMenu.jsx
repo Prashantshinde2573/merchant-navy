@@ -5,7 +5,7 @@ import './LanguageMenu.css';
 
 export function LanguageMenu({variant='icon'}) {
   const {language,setLanguage,t}=useSiteLanguage();
-  const [open,setOpen]=useState(false);
+  const [open,setOpen]=useState(false),[query,setQuery]=useState('');
   const root=useRef(null),trigger=useRef(null),options=useRef(null);
   const id=useId();
   useEffect(()=>{
@@ -25,11 +25,13 @@ export function LanguageMenu({variant='icon'}) {
     {open&&<div className="navbar-language-menu" id={id} role="menu" aria-label={t('Language')} ref={options} onKeyDown={event=>{
       const buttons=[...options.current.querySelectorAll('button')];const index=buttons.indexOf(document.activeElement);
       const next=event.key==='ArrowDown'?(index+1)%buttons.length:event.key==='ArrowUp'?(index-1+buttons.length)%buttons.length:event.key==='Home'?0:event.key==='End'?buttons.length-1:null;
+      if(event.target.tagName==='INPUT'&&!['ArrowDown','ArrowUp'].includes(event.key))return;
       if(next!==null){event.preventDefault();buttons[next]?.focus();}
       if(event.key==='Tab'){trigger.current?.focus();setOpen(false);}
     }}>
-      {AVAILABLE_LANGUAGES.map(item=><button type="button" role="menuitemradio" aria-checked={language===item.code} key={item.code} lang={item.code} onClick={()=>{setLanguage(item.code);setOpen(false);trigger.current?.focus();}}>
-        <span>{item.nativeName}<small>{item.name!==item.nativeName?item.name:''}</small></span>
+      <label className="sr-only" htmlFor={`${id}-search`}>Search languages</label><input id={`${id}-search`} type="search" placeholder="Search languages…" value={query} onChange={event=>setQuery(event.target.value)} className="language-menu-search" />
+      {AVAILABLE_LANGUAGES.filter(item=>`${item.name} ${item.nativeName}`.toLowerCase().includes(query.toLowerCase())).map(item=><button type="button" role="menuitemradio" aria-checked={language===item.code} key={item.code} lang={item.code} onClick={()=>{setLanguage(item.code);setOpen(false);trigger.current?.focus();}}>
+        <span><span aria-hidden="true">{({en:'🇬🇧',hi:'🇮🇳',mr:'🇮🇳',es:'🇪🇸',fr:'🇫🇷',de:'🇩🇪',ar:'🇸🇦',ja:'🇯🇵'})[item.code]||'🌐'}</span> {item.nativeName}<small>{item.name!==item.nativeName?item.name:''}</small></span>
         {language===item.code&&<span className="material-symbols-outlined" aria-hidden="true">check</span>}
       </button>)}
     </div>}

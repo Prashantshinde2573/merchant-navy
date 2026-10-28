@@ -1,4 +1,4 @@
-// Same provider as translationService, with complete text and explicit failures for this flow.
+// Lightweight translation with bounded requests and a session cache.
 const cache = new Map();
 const encoder = new TextEncoder();
 export function splitRequirementTranslation(text, limit = 450) {
@@ -18,7 +18,7 @@ export function splitRequirementTranslation(text, limit = 450) {
 function decode(text) {
   return text.replace(/&quot;/g,'"').replace(/&#39;|&apos;/g,"'").replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
 }
-export async function translateRequirementText(text, source, target, {signal, fetcher = fetch, timeoutMs = 8000} = {}) {
+export async function translateRequirementText(text, source, target, {signal, fetcher = globalThis.fetch, timeoutMs = 8000} = {}) {
   if (!text.trim() || source === target) return text;
   const key = JSON.stringify([source,target,text]);
   if (signal?.aborted) throw new DOMException('Aborted','AbortError');

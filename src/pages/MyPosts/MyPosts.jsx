@@ -207,7 +207,7 @@ export function MyPosts() {
                         )}
                       </div>
                       <div>
-                        <PostContentWithTranslation postId={post.id} sourceLanguage={post.sourceLanguage} text={post.scopeOfWork || post.description || post.title || ""} className="text-[15px] leading-[1.4] tracking-[-0.1px] text-zinc-800" />
+                        <PostContentWithTranslation postId={post.id} richHtml={post.scopeHtml} sourceLanguage={post.sourceLanguage} text={post.scopeOfWork || post.description || post.title || ""} className="text-[15px] leading-[1.4] tracking-[-0.1px] text-zinc-800" />
                         <Link className="text-sm text-zinc-500 hover:text-zinc-700" to={`/my-posts/${post.id}`}>more</Link>
                       </div>
                       <div className="flex flex-col gap-2">

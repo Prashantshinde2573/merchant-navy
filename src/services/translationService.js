@@ -1,3 +1,4 @@
+import {translateRequirementText} from './requirementTranslation.js';
 /**
  * Translation Service
  * 
@@ -140,7 +141,7 @@ export function detectLanguage(text) {
 export function getUserPreferredLanguage(userId) {
   try {
     const user = userId || localStorage.getItem('currentUser');
-    const saved = (user && localStorage.getItem(`merchant_navy_language:${user}`)) || localStorage.getItem('preferredLanguage') || 'en';
+    const saved = (user && localStorage.getItem(`merchant_navy_language:${user}`)) || localStorage.getItem('preferredLanguage') || (typeof navigator !== 'undefined' ? navigator.language?.split('-')[0] : 'en') || 'en';
     return LANGUAGE_MAP[saved] ? saved : 'en';
   } catch (e) {
     return 'en';
@@ -172,145 +173,8 @@ export function setUserPreferredLanguage(langCode, userId) {
  * @param {string} [targetLang='en'] - Target language code.
  * @returns {Promise<{success: boolean, originalText: string, translatedText?: string, sourceLanguage?: string, targetLanguage?: string, error?: string}>}
  */
-export async function translateText(text, sourceLang = 'auto', targetLang = 'en') {
-  if (!text || typeof text !== 'string' || !text.trim()) {
-    return {
-      success: false,
-      originalText: text || '',
-      error: 'Empty text provided for translation.'
-    };
-  }
-
-  const cleanText = text.trim();
-  const detectedSource = sourceLang === 'auto' ? detectLanguage(cleanText) : sourceLang;
-  const actualTarget = targetLang || 'en';
-
-  // If source and target are identical, return original
-  if (detectedSource === actualTarget) {
-    return {
-      success: true,
-      originalText: text,
-      translatedText: text,
-      sourceLanguage: LANGUAGE_MAP[detectedSource] || detectedSource,
-      targetLanguage: LANGUAGE_MAP[actualTarget] || actualTarget
-    };
-  }
-
-  // 1. Check offline dictionary for fast, deterministic demo matches
-  const normalizedKey = cleanText.toLowerCase().replace(/\s+/g, ' ');
-  if (OFFLINE_DICTIONARY[normalizedKey] && OFFLINE_DICTIONARY[normalizedKey][actualTarget]) {
-    await new Promise(resolve => setTimeout(resolve, 200));
-    return {
-      success: true,
-      originalText: text,
-      translatedText: OFFLINE_DICTIONARY[normalizedKey][actualTarget],
-      sourceLanguage: LANGUAGE_MAP[detectedSource] || detectedSource,
-      targetLanguage: LANGUAGE_MAP[actualTarget] || actualTarget
-    };
-  }
-
-  // 2. Perform real translation via MyMemory API (free, reliable, public endpoint)
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 4500);
-
-    // If text has multiple paragraphs/sections, translate each chunk
-    const chunks = cleanText.split('\n').filter(c => c.trim().length > 0);
-    
-    if (chunks.length > 1 && cleanText.length > 300) {
-      // Translate in batches or first main paragraph + headers
-      const translatedChunks = await Promise.all(
-        chunks.slice(0, 5).map(async (chunk) => {
-          try {
-            const q = encodeURIComponent(chunk.substring(0, 400));
-            const url = `https://api.mymemory.translated.net/get?q=${q}&langpair=${detectedSource}|${actualTarget}`;
-            const res = await fetch(url, { signal: controller.signal });
-            if (res.ok) {
-              const d = await res.json();
-              return d?.responseData?.translatedText || chunk;
-            }
-          } catch (e) {
-            return chunk;
-          }
-          return chunk;
-        })
-      );
-      
-      clearTimeout(timeoutId);
-      const combined = translatedChunks.join('\n\n')
-        .replace(/&quot;/g, '"')
-        .replace(/&#39;/g, "'")
-        .replace(/&amp;/g, '&')
-        .replace(/&lt;/g, '<')
-        .replace(/&gt;/g, '>');
-
-      return {
-        success: true,
-        originalText: text,
-        translatedText: combined,
-        sourceLanguage: LANGUAGE_MAP[detectedSource] || detectedSource,
-        targetLanguage: LANGUAGE_MAP[actualTarget] || actualTarget
-      };
-    } else {
-      const query = encodeURIComponent(cleanText.substring(0, 500));
-      const url = `https://api.mymemory.translated.net/get?q=${query}&langpair=${detectedSource}|${actualTarget}`;
-
-      const response = await fetch(url, { signal: controller.signal });
-      clearTimeout(timeoutId);
-
-      if (response.ok) {
-        const data = await response.json();
-        if (data && data.responseData && data.responseData.translatedText) {
-          let result = data.responseData.translatedText
-            .replace(/&quot;/g, '"')
-            .replace(/&#39;/g, "'")
-            .replace(/&amp;/g, '&')
-            .replace(/&lt;/g, '<')
-            .replace(/&gt;/g, '>');
-
-          return {
-            success: true,
-            originalText: text,
-            translatedText: result,
-            sourceLanguage: LANGUAGE_MAP[detectedSource] || detectedSource,
-            targetLanguage: LANGUAGE_MAP[actualTarget] || actualTarget
-          };
-        }
-      }
-    }
-  } catch (err) {
-    console.warn('Online translation request failed, using fallback translator:', err.message);
-  }
-
-  // 3. Resilient fallback translator
-  try {
-    let fallbackText = cleanText;
-    
-    // Common vocabulary mapping for fallback
-    if (actualTarget === 'mr') {
-      fallbackText = `[मराठी अनुवाद]: ${cleanText}`;
-    } else if (actualTarget === 'hi') {
-      fallbackText = `[हिन्दी अनुवाद]: ${cleanText}`;
-    } else if (actualTarget === 'es') {
-      fallbackText = `[Traducción al español]: ${cleanText}`;
-    } else if (actualTarget === 'fr') {
-      fallbackText = `[Traduction française]: ${cleanText}`;
-    } else if (actualTarget === 'de') {
-      fallbackText = `[Deutsche Übersetzung]: ${cleanText}`;
-    }
-
-    return {
-      success: true,
-      originalText: text,
-      translatedText: fallbackText,
-      sourceLanguage: LANGUAGE_MAP[detectedSource] || detectedSource,
-      targetLanguage: LANGUAGE_MAP[actualTarget] || actualTarget
-    };
-  } catch (error) {
-    return {
-      success: false,
-      originalText: text,
-      error: error.message || 'Translation failed.'
-    };
-  }
+export async function translateText(text,sourceLang='auto',targetLang='en') {
+  const source=sourceLang==='auto'?detectLanguage(text):sourceLang;
+  try {return {success:true,originalText:text,translatedText:await translateRequirementText(text,source,targetLang),sourceLanguage:source,targetLanguage:targetLang};}
+  catch {return {success:false,originalText:text,error:'Translation unavailable. Please try again.'};}
 }

@@ -1,3 +1,4 @@
+import {EntitlementProvider} from './context/EntitlementContext';
 import React from 'react';
 import { LanguageProvider } from './context/LanguageContext';
 import { BrowserRouter } from 'react-router-dom';
@@ -9,9 +10,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <LanguageProvider><PostProvider>
+        <LanguageProvider><EntitlementProvider><PostProvider>
           <AppRoutes />
-        </PostProvider></LanguageProvider>
+        </PostProvider></EntitlementProvider></LanguageProvider>
       </AuthProvider>
     </BrowserRouter>
   );

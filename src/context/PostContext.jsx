@@ -3,6 +3,8 @@ import { POSTS_DATA, DEFAULT_POST, DEFAULT_MY_POST } from '../data/postsData';
 import {originalPostLanguage} from '../services/postTranslation';
 import { useAuth } from './AuthContext';
 
+import {cleanRequirementSamples} from '../data/postSamples';
+
 const PostContext = createContext();
 
 const STORAGE_CUSTOM_POSTS = 'merchant_navy_custom_posts';
@@ -15,10 +17,19 @@ export function PostProvider({ children }) {
   const [customPosts, setCustomPosts] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_CUSTOM_POSTS);
-      return saved ? JSON.parse(saved) : [];
+      const {posts,removedIds}=cleanRequirementSamples(saved ? JSON.parse(saved) : []);
+      try {localStorage.setItem(STORAGE_CUSTOM_POSTS,JSON.stringify(posts));}
+      catch(error){console.error('Could not persist sample cleanup:',error);}
+      if(removedIds.length) for(const key of [STORAGE_APPLICATIONS,STORAGE_REPORTS]) {
+        try {
+          const related=JSON.parse(localStorage.getItem(key)||'[]');
+          if(Array.isArray(related))localStorage.setItem(key,JSON.stringify(related.filter(item=>!removedIds.includes(item.postId))));
+        } catch(error){console.error('Could not clean related sample records:',error);}
+      }
+      return posts;
     } catch (e) {
       console.error('Failed to load custom posts from localStorage:', e);
-      return [];
+      return cleanRequirementSamples().posts;
     }
   });
 
@@ -62,7 +73,9 @@ export function PostProvider({ children }) {
       attachments: postData.files || [],
       ports: postData.ports && postData.ports.length > 0 ? postData.ports : ['Visakhapatnam'],
       services: postData.services && postData.services.length > 0 ? postData.services : ['Husbandry (General)'],
+      scopeHtml:postData.scopeHtml || null,
       scopeOfWork: postData.scopeOfWork || postData.details || postData.title || '',
+      aiTranscript:postData.aiTranscript || null,agentVersion:postData.agentVersion || null,
       sourceLanguage: originalPostLanguage(postData.scopeOfWork || postData.details || postData.title || '',postData.sourceLanguage),
       title: postData.title || (postData.scopeOfWork ? postData.scopeOfWork.split('\n')[0] : 'Requirement'),
       status: postData.status || 'Live',

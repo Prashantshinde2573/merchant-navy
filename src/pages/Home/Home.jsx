@@ -76,7 +76,7 @@ export function Home() {
       </div>
     </div>
     <div className="relative flex w-full flex-auto flex-col place-content-inherit align-items-inherit h-auto break-words text-left subpixel-antialiased overflow-y-hidden p-0">
-      <PostContentWithTranslation postId={`custom-${post.id}`} sourceLanguage={post.sourceLanguage} text={post.scopeOfWork || post.description || post.title || ""} />
+      <PostContentWithTranslation postId={`custom-${post.id}`} richHtml={post.scopeHtml} sourceLanguage={post.sourceLanguage} text={post.scopeOfWork || post.description || post.title || ""} />
       {post.ports && post.ports.length > 0 && (
         <div className="mt-3 flex w-full min-w-0 items-center gap-2">
           <span className="material-symbols-outlined mt-0.5 shrink-0 text-sm leading-none text-zinc-500" aria-hidden="true">anchor</span>
@@ -94,7 +94,7 @@ export function Home() {
         <div className="flex items-center justify-end gap-6">
           <span className="flex items-center gap-1.5">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-eye text-zinc-500" aria-hidden="true"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>
-            <span className="text-modified-13 text-zinc-500">{post.viewsCount || 1}</span>
+            <span className="text-modified-13 text-zinc-500">{post.viewsCount ?? 0}</span>
           </span>
           <button type="button" tabIndex="0" data-react-aria-pressable="true" aria-label="Share post" className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 text-tiny gap-2 rounded-small px-0 !gap-0 transition-transform-colors-opacity motion-reduce:transition-none bg-transparent data-[hover=true]:bg-default/40 min-w-8 w-8 h-8 border-zinc-300 text-zinc-500 hover:bg-zinc-50" onClick={(e) => e.stopPropagation()}>
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-share2 lucide-share-2" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"></line><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line></svg>

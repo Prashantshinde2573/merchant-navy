@@ -769,7 +769,7 @@ export function MyPostDetail() {
                     </div>
                     <div className="relative flex w-full flex-auto flex-col place-content-inherit align-items-inherit h-auto break-words text-left overflow-y-auto subpixel-antialiased p-0 wrap-break-word whitespace-break-spaces">
                       <div className="prose text-content1-foreground text-modified-15 max-w-none">
-                        <PostContentWithTranslation postId={post.id} sourceLanguage={post.sourceLanguage} text={post.scopeOfWork} />
+                        <PostContentWithTranslation placement="detail" className="text-modified-15 text-content2-foreground" postId={post.id} richHtml={post.scopeHtml} sourceLanguage={post.sourceLanguage} text={post.scopeOfWork} />
                       </div>
                     </div>
                   </div>

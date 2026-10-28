@@ -18,3 +18,4 @@
 .navbar-language-current { color:#7b8494; max-width:100px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:12px; }
 .is-navigation .navbar-language-trigger .navbar-language-chevron { font-size:18px; }
 .is-navigation .navbar-language-menu { position:static; width:100%; max-width:100%; max-height:260px; margin:6px 0 4px; box-sizing:border-box; border-radius:10px; box-shadow:none; background:#f8fafc; }
+.language-menu-search{box-sizing:border-box;width:100%;min-height:40px;border:1px solid #dce4ee;border-radius:8px;margin-bottom:6px;padding:8px 10px;font-size:14px;background:white;color:#26314c}
