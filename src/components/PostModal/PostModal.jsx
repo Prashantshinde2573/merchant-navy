@@ -1,10 +1,6 @@
-import { useSiteLanguage } from '../../context/LanguageContext';
-import {GatedFeature} from '../GatedFeature/GatedFeature';
-import {getMissingQuestions,REQUIREMENT_QUESTIONS} from '../../services/requirementAI';
-import {requestReviewError} from '../../services/requestReview';
+import { useDialogFocus } from '../../hooks/useDialogFocus';
 import React, { useState, useRef, useEffect } from "react";
 import { usePosts } from "../../context/PostContext";
-import { PostRequirementAI } from "../PostRequirementAI/PostRequirementAI";
 import "./PostModal.css";
 
 const CURRENCY_SYMBOLS = {
@@ -49,51 +45,25 @@ const AVAILABLE_PORTS = [
 ];
 
 export function PostModal({ isOpen, onClose, onPostCreated }) {
-  const {t} = useSiteLanguage();
   const { createPost } = usePosts();
-  const [mode, setMode] = useState("manual"); // "manual" | "ai"
   const [scopeOfWork, setScopeOfWork] = useState("");
   const [currency, setCurrency] = useState("USD");
   const [isCurrencyOpen, setIsCurrencyOpen] = useState(false);
   const [minBudget, setMinBudget] = useState("");
   const [maxBudget, setMaxBudget] = useState("");
   const [isAsap, setIsAsap] = useState(false);
-  const [serviceDates, setServiceDates] = useState("");
+  const [serviceDates, setServiceDates] = useState("09/09/2026 - 09/09/2026");
   const [selectedServices, setSelectedServices] = useState([]);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [selectedPorts, setSelectedPorts] = useState([]);
   const [isPortsOpen, setIsPortsOpen] = useState(false);
   const [files, setFiles] = useState([]);
 
-  const [aiReview,setAiReview]=useState(null);
-  const [aiAssisted,setAiAssisted] = useState(false);
-  const [reviewAccepted,setReviewAccepted] = useState(false);
-  const [reviewError,setReviewError] = useState("");
-  const reviewRef = useRef(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const submitting = useRef(false);
   const fileInputRef = useRef(null);
   const editorRef = useRef(null);
 
-  // Sync editor content when switching back from AI mode with populated text
-  useEffect(() => {
-    if (mode === "manual" && editorRef.current && scopeOfWork) {
-      if (editorRef.current.innerText.trim() !== scopeOfWork.trim()) {
-        editorRef.current.innerText = scopeOfWork;
-      }
-    }
-  }, [mode, scopeOfWork]);
-
-  // Lock background page scroll when modal is open
-  useEffect(() => {
-    if (isOpen) {
-      const originalOverflow = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
-      return () => {
-        document.body.style.overflow = originalOverflow;
-      };
-    }
-  }, [isOpen]);
+  const dialogRef = useRef(null);
+  useDialogFocus(isOpen, onClose, dialogRef);
 
   if (!isOpen) return null;
 
@@ -120,41 +90,8 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
     document.execCommand(command, false, value);
   };
 
-  const handleAIComplete = (aiData) => {
-    setAiReview({missing:getMissingQuestions(aiData,aiData.aiAnswered).map(index=>REQUIREMENT_QUESTIONS[index].title),transcript:aiData.aiTranscript,version:aiData.agentVersion});
-    if(aiData.aiAssisted){setAiAssisted(true);setReviewAccepted(false);setReviewError("");}
-    if (aiData.scopeOfWork !== undefined) {
-      setScopeOfWork(aiData.scopeOfWork);
-    }
-    if (aiData.selectedServices) {
-      setSelectedServices(aiData.selectedServices);
-    }
-    if (aiData.selectedPorts) {
-      setSelectedPorts(aiData.selectedPorts);
-    }
-    if (aiData.currency) {
-      setCurrency(aiData.currency);
-    }
-    if (aiData.minBudget !== undefined) {
-      setMinBudget(aiData.minBudget);
-    }
-    if (aiData.maxBudget !== undefined) {
-      setMaxBudget(aiData.maxBudget);
-    }
-    if (aiData.isAsap !== undefined) {
-      setIsAsap(aiData.isAsap);
-    }
-    if (aiData.serviceDates !== undefined) {
-      setServiceDates(aiData.serviceDates);
-    }
-    setMode("manual");
-  };
-
-  const handlePublish = async (e) => {
+  const handlePublish = (e) => {
     if (e) e.preventDefault();
-    if (submitting.current) return;
-    const acknowledgmentError=requestReviewError(aiAssisted,reviewAccepted);
-    if(acknowledgmentError){setReviewError(acknowledgmentError);reviewRef.current?.focus();return;}
     const content = editorRef.current ? editorRef.current.innerText.trim() : scopeOfWork;
     if (!content) {
       alert("Please enter the Scope of Work details.");
@@ -162,7 +99,6 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
     }
 
     const postPayload = {
-      scopeHtml:editorRef.current?.innerHTML || '',
       scopeOfWork: content,
       details: content,
       title: content.split("\n")[0] || "Requirement",
@@ -174,28 +110,22 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
       isAsap: isAsap,
       urgent: isAsap,
       files: files.map(f => f.name || f),
-      aiTranscript:aiReview?.transcript,agentVersion:aiReview?.version,
       status: "Live"
     };
 
-    submitting.current = true;
-    setIsSubmitting(true);
-    try {
-      const created = await createPost(postPayload);
-      if (onPostCreated) onPostCreated(created);
-      alert("Requirement published successfully!");
-      onClose();
-    } catch {
-      alert("Your request could not be published. Your details are still here. Please try again.");
-    } finally { submitting.current=false; setIsSubmitting(false); }
+    const created = createPost(postPayload);
+    if (onPostCreated) {
+      onPostCreated(created);
+    }
+
+    alert("Requirement published successfully!");
+    onClose();
   };
 
-  const handleSaveDraft = async (e) => {
+  const handleSaveDraft = (e) => {
     if (e) e.preventDefault();
-    if (submitting.current) return;
     const content = editorRef.current ? editorRef.current.innerText.trim() : scopeOfWork;
     const postPayload = {
-      scopeHtml:editorRef.current?.innerHTML || '',
       scopeOfWork: content || "Draft requirement",
       details: content || "Draft requirement",
       title: content ? content.split("\n")[0] : "Draft Requirement",
@@ -209,16 +139,12 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
       files: files.map(f => f.name || f),
       status: "Draft"
     };
-    submitting.current = true;
-    setIsSubmitting(true);
-    try {
-      const created = await createPost(postPayload);
-      if (onPostCreated) onPostCreated(created);
-      alert("Draft saved successfully!");
-      onClose();
-    } catch {
-      alert("Your draft could not be saved. Please try again.");
-    } finally { submitting.current=false; setIsSubmitting(false); }
+    const created = createPost(postPayload);
+    if (onPostCreated) {
+      onPostCreated(created);
+    }
+    alert("Draft saved successfully!");
+    onClose();
   };
 
   return (
@@ -233,16 +159,15 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
 
       {/* Modal Wrapper */}
       <div
-        className="post-modal-wrapper flex w-screen fixed inset-0 z-50 overflow-x-hidden justify-center h-full items-end sm:items-center p-0 sm:p-4"
+        className="flex w-screen fixed inset-0 z-50 overflow-x-hidden justify-center h-full items-end sm:items-center p-0 sm:p-4"
         data-slot="wrapper"
         onClick={onClose}
       >
         <section
+          ref={dialogRef}
           role="dialog"
           tabIndex="-1"
-          className={`flex flex-col relative z-50 w-full box-border bg-content1 outline-solid outline-transparent mx-1 my-1 sm:mx-6 rounded-large shadow-small overflow-hidden max-w-300 ${
-            mode === "ai" ? "ai-modal-fixed-height" : "max-h-[calc(100vh-64px)] my-1 sm:my-8"
-          }`}
+          className="flex flex-col relative z-50 w-full box-border bg-content1 outline-solid outline-transparent mx-1 my-1 sm:mx-6 rounded-large shadow-small overflow-hidden max-w-300 max-h-[calc(100vh-64px)] my-1 sm:my-8"
           id="_r_19q_"
           data-open="true"
           data-dismissable="true"
@@ -261,22 +186,43 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
           <div className="modal-header-container py-3 sm:py-4 px-4 sm:px-6 flex-initial border-default-100 shadow-neutral-sm flex flex-col sm:flex-row sm:items-center sm:justify-between border-b gap-3 sm:gap-4 bg-content1 shrink-0" id="_r_19r_">
             <div className="flex items-center justify-between w-full sm:w-auto">
               <h2 className="text-content1-foreground text-[18px] sm:text-xl font-semibold leading-tight sm:leading-7 tracking-tight">
-                {t("Post Your Requirements")}
+                Post Your Requirements
               </h2>
+              {/* Mobile-only Close X aligned with heading */}
+              <button
+                type="button"
+                onClick={onClose}
+                aria-label="Close"
+                className="sm:hidden inline-flex items-center justify-center rounded-lg h-8 w-8 bg-default-100 text-default-500 hover:text-default-800 hover:bg-default-200 transition-colors cursor-pointer shrink-0"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x" aria-hidden="true">
+                  <path d="M18 6 6 18"></path>
+                  <path d="m6 6 12 12"></path>
+                </svg>
+              </button>
             </div>
 
-            <button type="button" onClick={onClose} aria-label="Close" className="post-header-close">
-              <span className="material-symbols-outlined" aria-hidden="true">close</span>
+            {/* Desktop Close Button - ALWAYS TOP RIGHT ON DESKTOP */}
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close"
+              className="hidden sm:inline-flex modal-close-btn items-center justify-center rounded-lg h-8 w-8 bg-default-100 text-default-500 hover:text-default-800 hover:bg-default-200 transition-colors cursor-pointer shrink-0"
+              style={{ position: "absolute", top: "16px", right: "20px", left: "auto", zIndex: 50 }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x" aria-hidden="true">
+                <path d="M18 6 6 18"></path>
+                <path d="m6 6 12 12"></path>
+              </svg>
             </button>
           </div>
 
           {/* Modal Content Body */}
-          <div className={`flex flex-1 min-h-0 flex-col ${mode === "ai" ? "ai-modal-body p-0 overflow-hidden bg-content1" : "bg-blue-25 p-4 sm:p-6 max-h-[calc(90vh-140px)] overflow-y-auto"}`} id="_r_19s_">
-            <div className={`post-manual-underlay ${mode==='ai'?'has-voice-panel':''}`}>
-              <form className="space-y-6" onSubmit={event=>mode==='ai'?event.preventDefault():handlePublish(event)} data-ai-filled={aiReview?'true':undefined}>
-                <div className="post-form-columns flex flex-col gap-6 md:flex-row">
+          <div className="flex flex-1 min-h-0 flex-col bg-blue-25 p-4 sm:p-6 max-h-[calc(90vh-140px)] overflow-y-auto" id="_r_19s_">
+              <form className="space-y-6" onSubmit={handlePublish}>
+                <div className="flex flex-col gap-6 md:flex-row">
                   {/* Left Column */}
-                  <div className="post-form-left flex flex-1 flex-col gap-3">
+                  <div className="flex flex-1 flex-col gap-3">
                     {/* Scope of work */}
                     <div className="bg-content1 shadow-neutral-sm rounded-lg p-4 sm:p-6">
                       <div className="mb-4 flex flex-col gap-0.5">
@@ -325,6 +271,9 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                               <div
                                 ref={editorRef}
                                 className="ql-editor"
+                                role="textbox"
+                                aria-label="Scope of work"
+                                aria-multiline="true"
                                 contentEditable="true"
                                 onInput={(e) => setScopeOfWork(e.currentTarget.innerText)}
                                 style={{ minHeight: "150px" }}
@@ -472,7 +421,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                   </div>
 
                   {/* Right Column */}
-                  <div className="post-form-right flex max-w-100 flex-1 flex-col gap-3">
+                  <div className="flex max-w-100 flex-1 flex-col gap-3">
                     {/* Services */}
                     <div className="bg-content1 shadow-neutral-sm rounded-lg p-4 sm:p-6 relative">
                       <div className="mb-4 flex flex-col gap-0.5">
@@ -513,13 +462,6 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                       )}
                     </div>
 
-                    {typeof navigator!=='undefined'&&typeof navigator.mediaDevices?.getUserMedia==='function'&&<div className="post-voice-entry-wrap"><GatedFeature featureKey="voice" showAvailability>
-                      <button type="button" className="post-voice-entry" aria-expanded={mode==='ai'} aria-controls="post-ai-workspace" onClick={()=>setMode('ai')}>
-                        <span className="material-symbols-outlined" aria-hidden="true">mic</span>
-                        <span><strong>{t('Describe it by voice')}</strong><small>{t('Talk to AI, we fill the form')}</small></span>
-                        <span className="material-symbols-outlined post-voice-entry-arrow" aria-hidden="true">arrow_forward</span>
-                      </button>
-                    </GatedFeature></div>}
                     {/* Ports */}
                     <div className="bg-content1 shadow-neutral-sm rounded-lg p-4 sm:p-6 relative">
                       <div className="mb-4 flex flex-col gap-0.5">
@@ -628,43 +570,24 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                   </div>
                 </div>
               </form>
-            </div>
-            {mode==='ai'&&<div className="post-ai-workspace-panel" id="post-ai-workspace">
-              <PostRequirementAI
-                initialData={{
-                  scopeOfWork,
-                  selectedServices,
-                  selectedPorts,
-                  currency,
-                  minBudget,
-                  maxBudget,
-                  isAsap,
-                  serviceDates
-                }}
-                onComplete={handleAIComplete}
-                onCancel={() => setMode("manual")}
-              />
-            </div>}
-
           </div>
 
           {/* Modal Footer */}
-          {mode === "manual" && <footer className="post-request-footer flex flex-row gap-2.5 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 justify-between sm:justify-end border-t border-default-100 bg-content1 shrink-0">
-            {aiAssisted && <div className="post-ai-review-block">
-              <label className="post-ai-acknowledgment">
-                <input type="checkbox" ref={reviewRef} checked={reviewAccepted} required aria-required="true" aria-invalid={Boolean(reviewError)} aria-describedby={reviewError?'ai-review-error':undefined}
-                  onChange={event=>{setReviewAccepted(event.target.checked);if(event.target.checked)setReviewError("");}} />
-                <span>{t("AI translation may occasionally contain errors. Please review all details before submitting.")}</span>
-              </label>
-              {reviewError && <p id="ai-review-error" className="post-ai-review-error" role="alert">{t(reviewError)}</p>}
-            </div>}
-
+          <footer className="flex flex-row gap-2.5 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 justify-between sm:justify-end border-t border-default-100 bg-content1 shrink-0">
+            <button
+              type="button"
+              tabIndex="0"
+              onClick={onClose}
+              data-react-aria-pressable="true"
+              className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent px-3.5 sm:px-4 min-w-16 sm:min-w-20 h-10 text-small gap-1.5 sm:gap-2 rounded-medium transition-transform-colors-opacity motion-reduce:transition-none bg-transparent text-default-foreground hover:bg-default/40"
+            >
+              Cancel
+            </button>
             <div className="flex items-center gap-2 sm:gap-2">
               <button
                 type="button"
                 tabIndex="0"
                 onClick={handleSaveDraft}
-                disabled={isSubmitting}
                 data-react-aria-pressable="true"
                 className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent px-3.5 sm:px-4 min-w-20 h-10 text-small gap-1.5 sm:gap-2 rounded-medium transition-transform-colors-opacity motion-reduce:transition-none bg-default text-default-foreground hover:opacity-80"
               >
@@ -674,16 +597,13 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                 type="button"
                 tabIndex="0"
                 onClick={handlePublish}
-                disabled={isSubmitting}
                 data-react-aria-pressable="true"
                 className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-semibold subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent px-4 min-w-24 sm:min-w-28 h-10 text-small gap-1.5 sm:gap-2 rounded-medium transition-transform-colors-opacity motion-reduce:transition-none bg-primary text-primary-foreground hover:opacity-80 shadow-sm"
               >
                 Publish Request
               </button>
             </div>
-
-          </footer>}
-          {mode==='ai' && <p className="post-ai-interface-note">{t("AI translation may occasionally contain errors. Please review all details before submitting.")}</p>}
+          </footer>
 
           {/* Bottom Accessibility Button */}
           <div style={{ border: "0px", clip: "rect(0px, 0px, 0px, 0px)", clipPath: "inset(50%)", height: "1px", margin: "-1px", overflow: "hidden", padding: "0px", position: "absolute", width: "1px", whiteSpace: "nowrap" }}>

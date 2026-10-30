@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './ProfileSettings.css';
-import {LanguageMenu} from '../../components/Header/LanguageMenu';
 
 export function ProfileSettings() {
   const [settings, setSettings] = useState({
@@ -56,7 +55,7 @@ export function ProfileSettings() {
           <h1 className="text-content1-foreground text-2xl leading-8 font-semibold text-[#18181b]">Settings</h1>
           <p className="text-base leading-6 font-normal text-zinc-500">Manage your account preferences</p>
         </div>
-        <div className="flex flex-col gap-6 w-full"><section className="settings-card bg-content1 rounded-large border border-blue-50 p-6"><h3 className="text-xl font-semibold">Preferred language</h3><p className="text-sm text-zinc-500 mt-1 mb-4">Applies instantly to posts and the assistant. Defaults to your browser language.</p><div style={{maxWidth:360}}><LanguageMenu variant="navigation" /></div></section>
+        <div className="flex flex-col gap-6 w-full">
           <div className="settings-card bg-content1 shadow-medium rounded-large transition-transform-background shadow-neutral-sm border border-blue-50" tabIndex="-1">
             <div className="settings-card-inner relative w-full flex-auto flex flex-col md:flex-row gap-6 p-6 sm:p-8">
               <div className="settings-left-col">

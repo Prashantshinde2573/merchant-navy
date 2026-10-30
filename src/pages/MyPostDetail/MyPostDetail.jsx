@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link, useLocation, useSearchParams } from 'reac
 import { usePosts } from '../../context/PostContext';
 import { DEFAULT_MY_POST, POSTS_DATA } from '../../data/postsData';
 import { getQuotationsForPost } from '../../data/quotationsData';
-import { PostContentWithTranslation } from '../../components/PostTranslation/PostTranslation';
+
 import './MyPostDetail.css';
 
 export function MyPostDetail() {
@@ -769,7 +769,7 @@ export function MyPostDetail() {
                     </div>
                     <div className="relative flex w-full flex-auto flex-col place-content-inherit align-items-inherit h-auto break-words text-left overflow-y-auto subpixel-antialiased p-0 wrap-break-word whitespace-break-spaces">
                       <div className="prose text-content1-foreground text-modified-15 max-w-none">
-                        <PostContentWithTranslation placement="detail" className="text-modified-15 text-content2-foreground" postId={post.id} richHtml={post.scopeHtml} sourceLanguage={post.sourceLanguage} text={post.scopeOfWork} />
+                        <p className="text-modified-15 text-content2-foreground">{post.scopeOfWork}</p>
                       </div>
                     </div>
                   </div>

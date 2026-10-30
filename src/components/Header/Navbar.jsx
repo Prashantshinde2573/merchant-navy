@@ -3,11 +3,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { UpgradeBanner } from '../UpgradeBanner/UpgradeBanner';
 import './Navbar.css';
-import {LanguageMenu} from './LanguageMenu';
-import {useSiteLanguage} from '../../context/LanguageContext';
 
 export function Navbar() {
-  const {t} = useSiteLanguage();
   const location = useLocation();
   const navigate = useNavigate();
   const { currentUser, logout } = useAuth();
@@ -30,6 +27,22 @@ export function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    setIsMenuOpen(false);
+    setIsDropdownOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') {
+        setIsMenuOpen(false);
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('keydown', closeOnEscape);
+    return () => document.removeEventListener('keydown', closeOnEscape);
+  }, []);
+
   const handleLogout = () => {
     logout();
     navigate('/login');
@@ -45,7 +58,7 @@ export function Navbar() {
 
   return (
     <>
-      <nav className="flex z-40 w-full items-center justify-center data-[menu-open=true]:border-none sticky top-0 inset-x-0 backdrop-blur-lg data-[menu-open=true]:backdrop-blur-xl backdrop-saturate-150 bg-content1 border-default-100 shadow-neutral-sm h-14 border-b px-10" style={{"--navbar-height": "4rem"}} data-menu-open={isMenuOpen}>
+      <nav className="app-top-nav flex z-40 w-full items-center justify-center data-[menu-open=true]:border-none sticky top-0 inset-x-0 backdrop-blur-lg data-[menu-open=true]:backdrop-blur-xl backdrop-saturate-150 bg-content1 border-default-100 shadow-neutral-sm h-14 border-b px-10" style={{"--navbar-height": "4rem"}} data-menu-open={isMenuOpen}>
         {/* ==================== DESKTOP NAVBAR (>= 768px) - 100% UNCHANGED ==================== */}
         <header className="z-40 hidden md:flex px-6 gap-4 w-full flex-row relative flex-nowrap items-center justify-between h-[var(--navbar-height)] max-w-[1280px]">
           <div className="flex basis-0 flex-row flex-grow flex-nowrap justify-start bg-transparent items-center no-underline text-medium whitespace-nowrap box-border shrink-0">
@@ -57,11 +70,11 @@ export function Navbar() {
           <ul className="h-full flex-row flex-nowrap items-center data-[justify=center]:justify-center data-[justify=center]:basis-0 flex gap-1" data-justify="center">
             <Link to="/home" className={`whitespace-nowrap box-border list-none data-[active=true]:font-semibold flex items-center gap-1.5 text-sm leading-5 rounded-lg px-3 py-2.5 ${isHome ? "text-primary bg-blue-50 font-semibold" : "hover:bg-blue-25 font-medium text-blue-600"}`} data-active={isHome}>
               <span className={`material-symbols-outlined text-4.5 ${isHome ? "material-symbols-fill" : ""}`}>home</span>
-              <span>{t('Home')}</span>
+              <span>Home</span>
             </Link>
             <Link to="/my-posts" className={`whitespace-nowrap box-border list-none data-[active=true]:font-semibold flex items-center gap-1.5 text-sm leading-5 rounded-lg px-3 py-2.5 ${isMyPosts ? "text-primary bg-blue-50 font-semibold" : "hover:bg-blue-25 font-medium text-blue-600"}`} data-active={isMyPosts}>
               <span className={`material-symbols-outlined text-4.5 ${isMyPosts ? "material-symbols-fill" : ""}`}>docs</span>
-              <span>{t('My Posts')}</span>
+              <span>My Posts</span>
             </Link>
             <Link to="/wins" className={`whitespace-nowrap box-border list-none data-[active=true]:font-semibold flex items-center gap-1.5 text-sm leading-5 rounded-lg px-3 py-2.5 ${isWins ? "text-primary bg-blue-50 font-semibold" : "hover:bg-blue-25 font-medium text-blue-600"}`} data-active={isWins}>
               <span className={`material-symbols-outlined text-4.5 ${isWins ? "material-symbols-fill" : ""}`}>award_star</span>
@@ -87,7 +100,6 @@ export function Navbar() {
               <Link to="/help" className={`text-medium whitespace-nowrap box-border list-none data-[active=true]:font-semibold h-11 rounded-lg px-3 py-2.5 flex items-center ${isHelp ? "text-primary bg-blue-50 font-semibold" : "hover:bg-blue-25 font-medium text-blue-600"}`} title="Support" data-active={isHelp}>
                 <span className={`material-symbols-outlined text-4.5 ${isHelp ? "material-symbols-fill" : ""}`}>help</span>
               </Link>
-              <LanguageMenu />
             </div>
 
             <div className="shrink-0 bg-divider border-none w-divider mx-1 h-6" role="separator" data-orientation="vertical" aria-orientation="vertical"></div>
@@ -111,14 +123,14 @@ export function Navbar() {
                     onClick={() => setIsDropdownOpen(false)}
                     className="text-[14px] font-medium text-gray-800 hover:text-primary transition-colors px-2.5 py-1.5 text-left block w-full rounded-md hover:bg-blue-50/50"
                   >
-                    {t('Profile')}
+                    Profile
                   </Link>
                   <Link
                     to="/settings"
                     onClick={() => setIsDropdownOpen(false)}
                     className="text-[14px] font-medium text-gray-800 hover:text-primary transition-colors px-2.5 py-1.5 text-left block w-full rounded-md hover:bg-blue-50/50"
                   >
-                    {t('Settings')}
+                    Settings
                   </Link>
                   <div className="h-px bg-gray-100 my-1"></div>
                   <button
@@ -126,7 +138,7 @@ export function Navbar() {
                     onClick={handleLogout}
                     className="text-[14px] font-medium text-red-600 hover:text-red-700 transition-colors px-2.5 py-1.5 text-left block w-full cursor-pointer rounded-md hover:bg-red-50/50"
                   >
-                    {t('Logout')}
+                    Logout
                   </button>
                 </div>
               )}
@@ -135,7 +147,7 @@ export function Navbar() {
         </header>
 
         {/* ==================== MOBILE TOP NAVBAR (< 768px) ==================== */}
-        <header className="z-40 flex md:hidden px-3 w-full flex-row relative items-center justify-between h-[var(--navbar-height)]">
+        <header className="mobile-top-header z-40 flex md:hidden px-3 w-full flex-row relative items-center justify-between h-[var(--navbar-height)]">
           {/* LEFT: Hamburger Menu Icon */}
           <div className="flex items-center z-10">
             <button
@@ -145,7 +157,9 @@ export function Navbar() {
                 setIsMenuOpen(!isMenuOpen);
                 setIsDropdownOpen(false);
               }}
-              aria-label="open navigation menu"
+              aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-navigation-menu"
             >
               <span className="material-symbols-outlined text-2xl">{isMenuOpen ? 'close' : 'menu'}</span>
             </button>
@@ -168,7 +182,7 @@ export function Navbar() {
           <div className="mobile-navbar-actions">
             <Link to="/help" className="mobile-navbar-help" aria-label="Support"><span className="material-symbols-outlined" aria-hidden="true">help</span></Link>
             <li className="text-medium whitespace-nowrap box-border list-none data-[active=true]:font-semibold relative flex items-center" ref={mobileDropdownRef}>
-              <div
+              <button
                 className="z-10 aria-expanded:scale-[0.97] aria-expanded:opacity-70 subpixel-antialiased cursor-pointer"
                 data-slot="trigger"
                 onClick={() => {
@@ -178,6 +192,7 @@ export function Navbar() {
                 type="button"
                 tabIndex="0"
                 aria-label="Profile"
+                aria-expanded={isDropdownOpen}
               >
                 <div className="relative inline-flex shrink-0">
                   <span
@@ -207,7 +222,7 @@ export function Navbar() {
                     </svg>
                   </span>
                 </div>
-              </div>
+              </button>
 
               {isDropdownOpen && (
                 <div className="absolute right-0 top-14 mt-1 w-48 bg-white rounded-large shadow-medium shadow-neutral-sm border border-blue-50 p-3 z-50 flex flex-col gap-1 profile-dropdown-card">
@@ -216,14 +231,14 @@ export function Navbar() {
                     onClick={() => setIsDropdownOpen(false)}
                     className="text-[14px] font-medium text-gray-800 hover:text-primary transition-colors px-2.5 py-1.5 text-left block w-full rounded-md hover:bg-blue-50/50"
                   >
-                    {t('Profile')}
+                    Profile
                   </Link>
                   <Link
                     to="/settings"
                     onClick={() => setIsDropdownOpen(false)}
                     className="text-[14px] font-medium text-gray-800 hover:text-primary transition-colors px-2.5 py-1.5 text-left block w-full rounded-md hover:bg-blue-50/50"
                   >
-                    {t('Settings')}
+                    Settings
                   </Link>
                   <div className="h-px bg-gray-100 my-1"></div>
                   <button
@@ -231,7 +246,7 @@ export function Navbar() {
                     onClick={handleLogout}
                     className="text-[14px] font-medium text-red-600 hover:text-red-700 transition-colors px-2.5 py-1.5 text-left block w-full cursor-pointer rounded-md hover:bg-red-50/50"
                   >
-                    {t('Logout')}
+                    Logout
                   </button>
                 </div>
               )}
@@ -241,7 +256,7 @@ export function Navbar() {
 
         {/* ==================== MOBILE HAMBURGER MENU DROPDOWN ==================== */}
         {isMenuOpen && (
-          <div className="md:hidden absolute top-14 left-0 right-0 bg-white border-b border-gray-200 p-4 shadow-xl z-50 flex flex-col gap-1.5 max-h-[calc(100vh-120px)] overflow-y-auto">
+          <div id="mobile-navigation-menu" className="mobile-navigation-menu md:hidden absolute top-14 left-0 right-0 bg-white border-b border-gray-200 p-4 shadow-xl z-50 flex flex-col gap-1.5 max-h-[calc(100vh-120px)] overflow-y-auto">
             {/* 1. Home */}
             <Link
               to="/home"
@@ -249,7 +264,7 @@ export function Navbar() {
               className={`flex items-center gap-3 p-2.5 rounded-lg text-sm font-medium transition-colors ${isHome ? "bg-blue-50 text-primary font-semibold" : "text-gray-700 hover:bg-gray-50"}`}
             >
               <span className={`material-symbols-outlined text-xl ${isHome ? "material-symbols-fill text-primary" : "text-gray-500"}`}>home</span>
-              <span>{t('Home')}</span>
+              <span>Home</span>
             </Link>
 
             {/* 2. Wins */}
@@ -285,7 +300,6 @@ export function Navbar() {
               <span>Help & Support</span>
             </Link>
 
-            <LanguageMenu variant="navigation" />
 
             {/* 5. Upgrade for More (Visual Red Promotional Banner at the VERY END) */}
             <div className="mt-2 w-full">
@@ -296,45 +310,23 @@ export function Navbar() {
       </nav>
 
       {/* ==================== MOBILE FIXED BOTTOM NAVIGATION (< 768px) ==================== */}
-      <nav className="md:hidden fixed bottom-0 inset-x-0 z-40 backdrop-blur-lg backdrop-saturate-150 bg-content1 border-default-100 shadow-neutral-sm border-t h-[calc(3.5rem+env(safe-area-inset-bottom,0px))] pb-[env(safe-area-inset-bottom,0px)] box-border px-2 flex items-center justify-around">
-        {/* 1. My Posts */}
-        <Link
-          to="/my-posts"
-          className={`flex flex-col items-center justify-center flex-1 h-full py-1 text-center transition-colors ${isMyPosts ? "text-primary font-semibold" : "text-gray-500 hover:text-blue-600 font-medium"}`}
-        >
-          <span className={`material-symbols-outlined text-[22px] leading-none ${isMyPosts ? "material-symbols-fill" : ""}`}>docs</span>
-          <span className="text-[11px] leading-tight mt-1">{t('My Posts')}</span>
-        </Link>
-
-        {/* 2. My Merchants */}
-        <Link
-          to="/my-merchants"
-          className={`flex flex-col items-center justify-center flex-1 h-full py-1 text-center transition-colors ${isMerchants ? "text-primary font-semibold" : "text-gray-500 hover:text-blue-600 font-medium"}`}
-        >
-          <span className={`material-symbols-outlined text-[22px] leading-none ${isMerchants ? "material-symbols-fill" : ""}`}>favorite</span>
-          <span className="text-[11px] leading-tight mt-1">My Merchants</span>
-        </Link>
-
-        {/* 3. Notifications */}
-        <Link
-          to="/notifications"
-          className={`flex flex-col items-center justify-center flex-1 h-full py-1 text-center relative transition-colors ${isNotif ? "text-primary font-semibold" : "text-gray-500 hover:text-blue-600 font-medium"}`}
-        >
-          <div className="relative inline-flex items-center justify-center">
-            <span className={`material-symbols-outlined text-[22px] leading-none ${isNotif ? "material-symbols-fill" : ""}`}>notifications</span>
-            <span className="flex z-10 absolute box-border rounded-full whitespace-nowrap place-content-center items-center select-none font-bold text-white text-[10px] w-4.5 h-4.5 min-w-4.5 min-h-4.5 -top-1 -right-2 bg-danger-500 border-2 border-white leading-none">7</span>
-          </div>
-          <span className="text-[11px] leading-tight mt-1">{t('Notifications')}</span>
-        </Link>
-
-        {/* 4. Chat */}
-        <Link
-          to="/chats"
-          className={`flex flex-col items-center justify-center flex-1 h-full py-1 text-center transition-colors ${isChats ? "text-primary font-semibold" : "text-gray-500 hover:text-blue-600 font-medium"}`}
-        >
-          <span className={`material-symbols-outlined text-[22px] leading-none ${isChats ? "material-symbols-fill" : ""}`}>chat</span>
-          <span className="text-[11px] leading-tight mt-1">Chat</span>
-        </Link>
+      <nav className="mobile-bottom-nav md:hidden" aria-label="Primary mobile navigation">
+        {[
+          { to: '/home', label: 'Home', icon: 'home', active: isHome },
+          { to: '/my-posts', label: 'My Posts', icon: 'docs', active: isMyPosts },
+          { to: '/my-merchants', label: 'Merchants', icon: 'favorite', active: isMerchants },
+          { to: '/notifications', label: 'Alerts', icon: 'notifications', active: isNotif, count: 7 },
+          { to: '/chats', label: 'Chat', icon: 'chat', active: isChats },
+        ].map(item => (
+          <Link key={item.to} to={item.to} aria-current={item.active ? 'page' : undefined}
+            className={`mobile-nav-item ${item.active ? 'is-active' : ''}`}>
+            <span className="mobile-nav-icon">
+              <span aria-hidden="true" className={`material-symbols-outlined ${item.active ? 'material-symbols-fill' : ''}`}>{item.icon}</span>
+              {item.count && <span className="mobile-nav-count" aria-label={`${item.count} notifications`}>{item.count}</span>}
+            </span>
+            <span>{item.label}</span>
+          </Link>
+        ))}
       </nav>
 
       {/* ==================== MOBILE ANNOUNCEMENTS MODAL ==================== */}

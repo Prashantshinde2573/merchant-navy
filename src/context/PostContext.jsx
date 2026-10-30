@@ -1,9 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { POSTS_DATA, DEFAULT_POST, DEFAULT_MY_POST } from '../data/postsData';
-import {originalPostLanguage} from '../services/postTranslation';
 import { useAuth } from './AuthContext';
-
-import {cleanRequirementSamples} from '../data/postSamples';
 
 const PostContext = createContext();
 
@@ -17,19 +14,13 @@ export function PostProvider({ children }) {
   const [customPosts, setCustomPosts] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_CUSTOM_POSTS);
-      const {posts,removedIds}=cleanRequirementSamples(saved ? JSON.parse(saved) : []);
-      try {localStorage.setItem(STORAGE_CUSTOM_POSTS,JSON.stringify(posts));}
-      catch(error){console.error('Could not persist sample cleanup:',error);}
-      if(removedIds.length) for(const key of [STORAGE_APPLICATIONS,STORAGE_REPORTS]) {
-        try {
-          const related=JSON.parse(localStorage.getItem(key)||'[]');
-          if(Array.isArray(related))localStorage.setItem(key,JSON.stringify(related.filter(item=>!removedIds.includes(item.postId))));
-        } catch(error){console.error('Could not clean related sample records:',error);}
-      }
-      return posts;
+      const posts=saved ? JSON.parse(saved) : [];
+      const originalPosts=posts.filter(post=>post.id!=='demo-requirement-marseille-fr');
+      if(originalPosts.length!==posts.length)localStorage.setItem(STORAGE_CUSTOM_POSTS,JSON.stringify(originalPosts));
+      return originalPosts;
     } catch (e) {
       console.error('Failed to load custom posts from localStorage:', e);
-      return cleanRequirementSamples().posts;
+      return [];
     }
   });
 
@@ -73,10 +64,7 @@ export function PostProvider({ children }) {
       attachments: postData.files || [],
       ports: postData.ports && postData.ports.length > 0 ? postData.ports : ['Visakhapatnam'],
       services: postData.services && postData.services.length > 0 ? postData.services : ['Husbandry (General)'],
-      scopeHtml:postData.scopeHtml || null,
       scopeOfWork: postData.scopeOfWork || postData.details || postData.title || '',
-      aiTranscript:postData.aiTranscript || null,agentVersion:postData.agentVersion || null,
-      sourceLanguage: originalPostLanguage(postData.scopeOfWork || postData.details || postData.title || '',postData.sourceLanguage),
       title: postData.title || (postData.scopeOfWork ? postData.scopeOfWork.split('\n')[0] : 'Requirement'),
       status: postData.status || 'Live',
       createdAt: new Date().toISOString()

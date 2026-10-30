@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { usePosts } from '../../context/PostContext';
 import { ApplyModal } from '../../components/ApplyModal/ApplyModal';
 import { ReportModal } from '../../components/ReportModal/ReportModal';
-import { PostContentWithTranslation } from '../../components/PostTranslation/PostTranslation';
+
 import './PostDetail.css';
 
 export function PostDetail() {
@@ -346,7 +346,7 @@ export function PostDetail() {
                   </div>
                   <div className="relative flex w-full flex-auto flex-col place-content-inherit align-items-inherit h-auto break-words text-left overflow-y-auto subpixel-antialiased p-0 wrap-break-word whitespace-break-spaces">
                     <div className="prose text-content1-foreground text-modified-15 max-w-none">
-                      <PostContentWithTranslation placement="detail" className="text-modified-15 text-content2-foreground" postId={post.id} richHtml={post.scopeHtml} sourceLanguage={post.sourceLanguage} text={post.scopeOfWork} />
+                      <p className="text-modified-15 text-content2-foreground">{post.scopeOfWork}</p>
                     </div>
                   </div>
                 </div>

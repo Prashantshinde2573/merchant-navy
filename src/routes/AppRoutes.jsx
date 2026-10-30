@@ -1,6 +1,4 @@
 import React from 'react';
-import {MobilePrototype} from '../pages/Prototype/MobilePrototype';
-import {Plans} from '../pages/Plans/Plans';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { ProtectedRoute } from './ProtectedRoute';
 import { AppLayout } from '../components/Layout/AppLayout';
@@ -23,7 +21,6 @@ import { ProfileSettings } from '../pages/ProfileSettings/ProfileSettings';
 export function AppRoutes() {
   return (
     <Routes>
-      <Route path="/mobile-prototype" element={<MobilePrototype />} />
       {/* Public Login Route */}
       <Route path="/login" element={<Login />} />
 
@@ -37,7 +34,6 @@ export function AppRoutes() {
         }
       >
         <Route index element={<Navigate to="/home" replace />} />
-        <Route path="plans" element={<Plans />} />
         <Route path="home" element={<Home />} />
         <Route path="my-posts" element={<MyPosts />} />
         <Route path="my-posts/details" element={<MyPostDetail />} />

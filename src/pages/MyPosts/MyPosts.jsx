@@ -1,4 +1,3 @@
-import {PostContentWithTranslation} from '../../components/PostTranslation/PostTranslation';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { usePosts } from '../../context/PostContext';
@@ -63,7 +62,7 @@ export function MyPosts() {
 
   return (
     <>
-      <div className="mx-auto w-full max-w-5xl px-6 py-6">
+      <div className="my-posts-page mobile-page mx-auto w-full max-w-5xl px-6 py-6">
         <div className="mb-6">
           <div className="inline-flex flex-col items-start justify-start gap-1.5">
             <div className="inline-flex items-center justify-start gap-2">
@@ -207,8 +206,10 @@ export function MyPosts() {
                         )}
                       </div>
                       <div>
-                        <PostContentWithTranslation postId={post.id} richHtml={post.scopeHtml} sourceLanguage={post.sourceLanguage} text={post.scopeOfWork || post.description || post.title || ""} className="text-[15px] leading-[1.4] tracking-[-0.1px] text-zinc-800" />
-                        <Link className="text-sm text-zinc-500 hover:text-zinc-700" to={`/my-posts/${post.id}`}>more</Link>
+                        <p className="my-post-summary text-[15px] leading-[1.4] tracking-[-0.1px] text-zinc-800">
+                          {post.scopeOfWork || post.description || post.title || ""}
+                          <Link className="my-post-inline-more ml-1 text-zinc-500 hover:text-zinc-700" to={`/my-posts/${post.id}`}>more</Link>
+                        </p>
                       </div>
                       <div className="flex flex-col gap-2">
                         {post.ports && post.ports.length > 0 && (

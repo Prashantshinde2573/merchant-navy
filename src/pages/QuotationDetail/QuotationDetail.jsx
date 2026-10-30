@@ -1,4 +1,3 @@
-import {PostContentWithTranslation} from '../../components/PostTranslation/PostTranslation';
 import React from 'react';
 import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
 import { getQuotationById } from '../../data/quotationsData';
@@ -185,7 +184,7 @@ export function QuotationDetail() {
               </div>
 
               {/* Match Highlights */}
-              <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-gray-100">
+              <div className="quotation-metrics mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-gray-100">
                 <div className="flex flex-col gap-0.5 bg-blue-25/50 p-3 rounded-lg border border-blue-50">
                   <span className="text-xs text-zinc-500">Requirement Match</span>
                   <span className="text-lg font-bold text-blue-900">{quotation.matchPercent}%</span>
@@ -241,7 +240,7 @@ export function QuotationDetail() {
             {/* Parent Post Reference */}
             <div className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 shadow-neutral-sm rounded-large border border-blue-50 p-6 bg-white space-y-3">
               <div className="flex items-center justify-between">
-                <h4 className="text-base font-semibold text-zinc-900">Post Information</h4>
+                <h4 className="text-base font-semibold text-zinc-900">Original Post Information</h4>
                 <button
                   onClick={handleBack}
                   className="text-xs text-primary font-semibold hover:underline"
@@ -249,7 +248,9 @@ export function QuotationDetail() {
                   View Full Post →
                 </button>
               </div>
-              <PostContentWithTranslation postId={post.id} sourceLanguage={post.sourceLanguage} text={post.scopeOfWork} className="text-sm text-zinc-700 line-clamp-3" />
+              <div className="text-sm text-zinc-700 line-clamp-3">
+                {post.scopeOfWork}
+              </div>
               <div className="flex flex-wrap gap-2 pt-1">
                 {post.services?.map((s, idx) => (
                   <span

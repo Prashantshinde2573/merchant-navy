@@ -79,9 +79,4 @@
     font-weight: 600 !important;
   }
 
-  /* Ensure translated text container expands naturally without clipping */
-  .post-translation-wrapper {
-    height: auto !important;
-    overflow: visible !important;
-  }
 }

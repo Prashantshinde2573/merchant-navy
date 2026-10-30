@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useDialogFocus } from '../../hooks/useDialogFocus';
+import React, { useState, useRef } from 'react';
 import './ApplyModal.css';
 
 export function ApplyModal({ isOpen, onClose, onApply, post }) {
@@ -6,6 +7,9 @@ export function ApplyModal({ isOpen, onClose, onApply, post }) {
   const [fileName, setFileName] = useState('');
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  const dialogRef = useRef(null);
+  useDialogFocus(isOpen && Boolean(post), onClose, dialogRef);
 
   if (!isOpen || !post) return null;
 
@@ -52,12 +56,14 @@ export function ApplyModal({ isOpen, onClose, onApply, post }) {
         }}
       >
         <section
+          ref={dialogRef}
           role="dialog"
           tabIndex="-1"
           className="flex flex-col relative z-50 w-full box-border bg-content1 outline-solid outline-transparent mx-1 my-1 sm:mx-6 sm:my-16 rounded-large shadow-small max-h-[calc(100%_-_4rem)] sm:max-h-[calc(100%_-_8rem)] max-w-[600px] apply-modal-dialog"
           data-open="true"
           data-dismissable="true"
           aria-modal="true"
+          aria-label="Send your application"
         >
           {/* Header */}
           <header className="py-4 px-6 flex-initial text-large font-semibold border-divider flex items-center justify-between border-b pb-4">

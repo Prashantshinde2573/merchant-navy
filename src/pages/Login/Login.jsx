@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth, DEMO_EMAIL, DEMO_OTP } from '../../context/AuthContext';
+import { useAuth, DEMO_OTP } from '../../context/AuthContext';
 import './Login.css';
 
 export function Login() {
@@ -53,7 +53,7 @@ export function Login() {
   };
 
   return (
-    <main className="min-h-screen w-full text-white">
+    <main className="auth-page min-h-screen w-full text-white">
       <div className="grid min-h-screen w-full lg:grid-cols-[1fr_720px]">
         <section
           className="hidden min-h-screen bg-cover bg-center lg:block"
@@ -85,9 +85,6 @@ export function Login() {
                   <h1 className="text-content1-foreground text-2xl leading-8 font-semibold">
                     Sign in to your account
                   </h1>
-                  <p className="text-xs text-neutral-500">
-                    Demo email: <strong className="text-blue-800 font-mono">shivhare.yuvraj@gmail.com</strong>
-                  </p>
                 </div>
 
                 <form onSubmit={handleEmailSubmit} className="w-full space-y-4">
@@ -123,17 +120,7 @@ export function Login() {
                     {loading ? "Sending..." : "Continue"}
                   </button>
 
-                  <div className="flex items-center justify-between text-xs pt-1">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setEmail(DEMO_EMAIL);
-                        setError("");
-                      }}
-                      className="text-blue-700 hover:text-blue-900 font-medium cursor-pointer"
-                    >
-                      Fill Demo Email
-                    </button>
+                  <div className="flex items-center justify-center text-xs pt-1">
                     <a className="block text-sm text-neutral-400 transition hover:text-neutral-600" href="#forgot">
                       Forgot password?
                     </a>

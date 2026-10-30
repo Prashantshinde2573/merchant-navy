@@ -1,0 +1,255 @@
+/* Mobile adaptation of the existing Merchant Navy system.
+   Desktop components and their styling remain the source of truth. */
+.mobile-bottom-nav { display: none; }
+
+@media (max-width: 1023px) {
+  :root { --mobile-header-height: 56px; --mobile-nav-height: 60px; }
+  html { scroll-padding-top: 68px; }
+  body { -webkit-text-size-adjust: 100%; }
+  .app-main-layout {
+    min-height: 100dvh;
+    padding-bottom: calc(var(--mobile-nav-height) + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  .app-main-layout *, .auth-page * { box-sizing: border-box; }
+  .app-main-layout :is(button, a, input, textarea, select):focus-visible,
+  .auth-page :is(button, a, input):focus-visible {
+    outline: 2px solid #1f285d;
+    outline-offset: 3px;
+  }
+  .app-main-layout :is(input:not([type=checkbox]):not([type=radio]), textarea, select),
+  .auth-page input, [role=dialog] :is(input:not([type=checkbox]):not([type=radio]), textarea, select, [contenteditable=true]) {
+    font-size: 16px !important;
+  }
+  .app-main-layout :is(input, textarea), [role=dialog] :is(input, textarea) { min-width: 0; }
+  .app-main-layout button, .app-main-layout a, [role=dialog] button { touch-action: manipulation; }
+  .app-top-nav {
+    height: var(--mobile-header-height) !important;
+    padding: 0 12px !important;
+    z-index: 40;
+  }
+  .app-top-nav .mobile-top-header {
+    display: grid !important;
+    grid-template-columns: 44px minmax(0, 1fr) 88px;
+    padding: 0 !important;
+    height: 56px !important;
+    gap: 8px;
+  }
+  .mobile-top-header .mobile-navbar-logo { justify-content: flex-start; padding: 0; }
+  .mobile-top-header .mobile-navbar-logo img { height: 30px; max-width: 128px; }
+  .mobile-navbar-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+  .mobile-navbar-help { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 44px; color: #424976; }
+  .mobile-navbar-actions > li > button { display: flex; align-items: center; justify-content: center; min-width: 40px; height: 44px; }
+  .mobile-navbar-actions img { width: 32px; height: 32px; }
+  .mobile-navbar-actions .w-10 { width: 32px; height: 32px; }
+  .mobile-top-header .profile-dropdown-card { top: 44px; right: 0; min-width: 200px; }
+  .mobile-top-header .profile-dropdown-card :is(a, button) { min-height: 44px; display: flex; align-items: center; }
+  .mobile-navigation-menu { top: 56px !important; padding: 12px !important; max-height: calc(100dvh - 128px) !important; overscroll-behavior: contain; }
+  .mobile-navigation-menu > a, .mobile-navigation-menu > button { min-height: 44px; }
+  .mobile-bottom-nav {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    position: fixed;
+    inset: auto 0 0;
+    z-index: 40;
+    height: calc(var(--mobile-nav-height) + env(safe-area-inset-bottom, 0px));
+    padding: 0 max(4px, env(safe-area-inset-right, 0px)) env(safe-area-inset-bottom, 0px) max(4px, env(safe-area-inset-left, 0px));
+    background: #fff;
+    border-top: 1px solid #e1e7ef;
+  }
+  .mobile-nav-item { min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: #71717a; font-size: 11px; line-height: 16px; font-weight: 500; }
+  .mobile-nav-item.is-active { color: #1f285d; font-weight: 600; }
+  .mobile-nav-icon { position: relative; display: flex; align-items: center; justify-content: center; width: 40px; height: 26px; border-radius: 8px; }
+  .is-active .mobile-nav-icon { background: #f0f2f8; }
+  .mobile-nav-icon .material-symbols-outlined { font-size: 23px; line-height: 24px; }
+  .mobile-nav-count { position: absolute; right: 0; top: -3px; min-width: 16px; height: 16px; padding: 0 3px; display: grid; place-items: center; border: 1px solid white; border-radius: 50%; background: #e6505a; color: white; font-size: 10px; line-height: 14px; }
+
+  /* Consistent page rhythm: compact headings, full-width useful content. */
+  .app-main-layout .mobile-page,
+  .app-main-layout :is(.wins-page-wrapper, .company-profile-page-wrapper, .profile-settings-page-wrapper, .announcements-page-wrapper) > .mx-auto {
+    width: 100%; min-width: 0; padding: 16px 12px !important;
+  }
+  .app-main-layout :is(.mobile-page, .wins-page-wrapper, .company-profile-page-wrapper, .profile-settings-page-wrapper, .announcements-page-wrapper) h1 { font-size: 20px !important; line-height: 26px !important; font-weight: 600; margin-bottom: 4px !important; overflow-wrap: anywhere; }
+  .app-main-layout :is(.mobile-page, .wins-page-wrapper, .company-profile-page-wrapper, .profile-settings-page-wrapper, .announcements-page-wrapper) h1 + p { font-size: 13px !important; line-height: 19px !important; }
+  .mobile-page > .mb-6 { margin-bottom: 16px !important; }
+  .mobile-page :is(h2,h3,h4) { overflow-wrap: anywhere; }
+
+  /* Feed keeps professional content prominent without inflated cards. */
+  .app-main-layout .home-page { padding: 0 8px !important; }
+  .home-page > .w-full { padding-top: 10px !important; padding-bottom: 12px !important; }
+  .home-page .w-147 { width: 100% !important; max-width: 100% !important; gap: 8px !important; }
+  .home-page .max-w-147 { max-width: 100% !important; padding: 14px !important; border-radius: 10px !important; gap: 12px !important; }
+  .home-page .max-w-147 .h-12 { height: 40px; }
+  .home-page .max-w-147 .w-12 { width: 40px; }
+  .home-page .max-w-147 .text-modified-15 { font-size: 14px; line-height: 21px; }
+  .home-page [data-post-actions-wrapper] > button { min-width: 36px; min-height: 36px; }
+  .home-page .max-w-147 .gap-6 { gap: 12px !important; }
+
+  /* My Posts: summary first, complete text remains available in View Details. */
+  .my-posts-page .my-post-summary { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden; font-size: 14px; line-height: 21px; }
+  .my-posts-page .my-post-inline-more { display: none; }
+  .my-posts-page .p-7 { padding: 14px !important; gap: 12px !important; }
+  .my-posts-page .p-7 > .flex.items-center.justify-between { flex-direction: row !important; align-items: center !important; flex-wrap: wrap; }
+  .my-posts-page .p-7 > .flex.flex-col.gap-2 > div { margin-top: 0 !important; align-items: flex-start; }
+  .my-posts-page .p-7 > .flex.flex-col.gap-2 > div > span:last-child { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+  .my-posts-page .p-7 .gap-8 { gap: 10px !important; }
+  .my-posts-page .p-7 hr { margin: 0; }
+  .my-posts-page .p-7 .gap-8 > .flex { gap: 10px !important; }
+  .my-posts-page .p-7 .gap-8 > .flex:last-child :is(a, button) { min-height: 40px; }
+  .my-posts-page .my-posts-tabs { gap: 0; }
+
+  /* The same merchant table becomes a labelled card, with all columns retained. */
+  .my-merchants-page > .mb-6.flex.flex-wrap { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .my-merchants-page > .mb-6.flex.flex-wrap > div { min-width: 0 !important; width: 100% !important; }
+  .my-merchants-page > .mb-6.flex.flex-wrap > div:first-child { grid-column: 1 / -1; max-width: none; }
+  .my-merchants-page > .mb-6.flex.flex-wrap > button { grid-column: 1 / -1; min-height: 40px; }
+  .my-merchants-page table[aria-label="My merchants table"] { display: block; width: 100%; min-width: 0 !important; }
+  .my-merchants-page table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .my-merchants-page table tbody, .my-merchants-page table tr { display: block; width: 100%; }
+  .my-merchants-page table td { display: block; width: 100%; padding: 8px 0; }
+  .my-merchants-page table td:first-child { padding: 0 0 12px; }
+  .my-merchants-page table td:last-child { padding-top: 12px; border-top: 1px solid #e1e7ef; margin-top: 4px; }
+  .my-merchants-page td[data-mobile-label]:not(:first-child):not(:last-child)::before { content: attr(data-mobile-label); display: block; font-size: 12px; line-height: 18px; color: #71717a; margin-bottom: 3px; }
+  .my-merchants-page table td:last-child :is(a,button) { min-height: 40px; min-width: 40px; }
+  .my-merchants-page table td:last-child a { flex: 1; }
+  .my-merchants-page [data-slot=wrapper] { padding: 14px; }
+
+  .wins-page-wrapper .wins-toolbar-row { gap: 10px !important; margin-bottom: 14px !important; }
+  .wins-page-wrapper .wins-card { padding: 14px !important; gap: 12px !important; }
+  .wins-page-wrapper .wins-card-header { gap: 8px !important; }
+  .wins-page-wrapper .wins-ratings-row { gap: 12px !important; }
+  .notifications-page > .mb-6.flex { gap: 10px !important; }
+  .notifications-page [role=tablist] { flex-wrap: wrap; gap: 0; }
+  .notifications-page [role=tab] { padding: 8px !important; min-height: 40px; font-size: 12px; }
+  .notifications-page [role=tab] > * { white-space: normal; }
+
+  /* Detail headers must not consume most of the screen or clip their titles. */
+  .app-main-layout :is(.post-detail-header-wrap, .my-post-detail-header-wrap, .quotation-detail-header-wrap) { position: relative !important; top: auto !important; z-index: 10; }
+  .app-main-layout :is(.post-detail-content-wrap, .my-post-detail-content-wrap, .quotation-detail-content-wrap) { padding: 12px !important; }
+  .app-main-layout :is(.post-detail-container, .my-post-detail-container, .quotation-detail-container) { min-height: 0; }
+  .app-main-layout :is(.post-detail-container, .my-post-detail-container, .quotation-detail-container) .p-5,
+  .app-main-layout .quotation-detail-left > .p-6 { padding: 14px !important; }
+  .post-detail-container #scope-of-work, .my-post-detail-container #scope-of-work { order: -1; }
+  .post-detail-container #attachments, .my-post-detail-container #attachments { order: 2; }
+  .post-detail-container .prose, .my-post-detail-container .prose { font-size: 14px; line-height: 22px; overflow-wrap: anywhere; }
+  .post-detail-container .post-detail-header { gap: 8px !important; }
+  .quotation-detail-header-left { min-width: 0; width: 100%; padding-left: 40px !important; }
+  .quotation-detail-header-left > div { min-width: 0; width: 100%; }
+  .quotation-detail-header-left .flex.items-center { flex-wrap: wrap; gap: 4px; }
+  .quotation-detail-header-left h2 { white-space: normal; font-size: 16px; line-height: 22px; }
+  .quotation-detail-header-left p { max-width: 100%; }
+  .quotation-detail-header-actions { padding-top: 8px; }
+  .quotation-detail-left { min-width: 0; width: 100% !important; }
+  .quotation-detail-left > div > .flex.flex-wrap > .flex { min-width: 0; gap: 10px; }
+  .quotation-detail-left h3 { font-size: 16px; }
+  .quotation-detail-left h3 + span { font-size: 10px; }
+  .quotation-detail-left .quotation-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-top: 14px; padding-top: 12px; }
+  .quotation-metrics > div { padding: 8px; min-width: 0; }
+  .quotation-metrics > div > span:first-child { font-size: 11px; line-height: 15px; min-height: 30px; }
+  .quotation-metrics > div > span:last-child { font-size: 14px; line-height: 20px; overflow-wrap: anywhere; }
+
+  /* Chat: independent scrolling, composer above the bottom navigation. */
+  .app-main-layout .chat-page-container { height: calc(var(--app-viewport-height, 100dvh) - var(--mobile-header-height) - var(--mobile-nav-height) - env(safe-area-inset-bottom, 0px)) !important; min-height: 0; }
+  .chat-page-container > div { max-width: 100%; }
+  .chat-page-container input { width: 100%; min-width: 0; }
+  .chat-page-container [aria-label="Back to conversations"] { min-width: 40px; min-height: 40px; padding: 8px; }
+  .chat-page-container .chat-desktop-back { display: none !important; }
+  .chat-page-container .overflow-y-auto { overscroll-behavior-y: contain; }
+  .chat-page-container .max-w-\[80\%\] { max-width: 90%; }
+
+  /* Profile and account forms use the same compact section rhythm. */
+  .company-profile-page-wrapper .sticky { top: 56px !important; z-index: 20 !important; }
+  .app-main-layout .company-profile-page-wrapper :is(.p-6,.p-5),
+  .app-main-layout .profile-settings-page-wrapper :is(.p-6,.p-5) { padding: 16px !important; }
+  .company-profile-page-wrapper :is(h2,h3), .profile-settings-page-wrapper :is(h2,h3) { font-size: 16px !important; line-height: 22px !important; }
+  .company-profile-page-wrapper :is(input,textarea,select) { scroll-margin-top: 112px; }
+  .profile-settings-page-wrapper label { gap: 12px; }
+  .help-page .p-6 { padding: 16px !important; }
+  .help-page button { white-space: normal; text-align: left; }
+  .announcements-page-wrapper .px-6 { padding-left: 14px !important; padding-right: 14px !important; }
+
+  /* Focused mobile tasks use the viewport, not a small desktop modal. */
+  section[role=dialog]#_r_19q_, .apply-modal-root .apply-modal-dialog {
+    width: 100% !important; max-width: 100% !important; height: var(--app-viewport-height, 100dvh) !important;
+    max-height: var(--app-viewport-height, 100dvh) !important; margin: 0 !important; border-radius: 0 !important;
+    padding-top: env(safe-area-inset-top, 0px); overflow: hidden;
+  }
+  #_r_19q_ .modal-header-container, .apply-modal-dialog > header { padding: 10px 16px !important; min-height: 56px; }
+  #_r_19q_ .modal-header-container h2, .apply-modal-dialog > header h2 { font-size: 17px !important; line-height: 24px; }
+  #_r_19q_ .modal-header-container button { min-width: 36px; min-height: 36px; }
+  #_r_19q_ .modal-close-btn { display: none !important; }
+  #_r_19q_ .modal-header-container > div > button { display: inline-flex !important; }
+  #_r_19q_ #_r_19s_, .apply-modal-root .apply-modal-body { flex: 1; min-height: 0; max-height: none !important; overflow-y: auto; overscroll-behavior: contain; padding: 12px !important; }
+  #_r_19q_ form > .flex { gap: 12px !important; }
+  #_r_19q_ .quill { height: auto !important; }
+  #_r_19q_ .ql-container { height: auto !important; }
+  #_r_19q_ .ql-editor { min-height: 128px !important; max-height: 240px; padding: 12px; }
+  #_r_19q_ .ql-toolbar button { width: 36px; height: 36px; }
+  #_r_19q_ .ql-toolbar { padding: 4px; }
+  #_r_19q_ .ql-formats { margin-right: 4px; }
+  #_r_19q_ footer, .apply-modal-dialog > footer { padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px)) !important; gap: 8px; }
+  #_r_19q_ footer > button { display: none; }
+  #_r_19q_ footer > div { width: 100%; display: grid; grid-template-columns: 1fr 1.5fr; gap: 8px; }
+  #_r_19q_ footer button, .apply-modal-dialog > footer button { min-height: 44px; font-size: 14px; }
+  .apply-modal-dialog form { min-height: 0; overflow-y: auto; }
+  .auth-page, .auth-page > div, .auth-page section { min-height: 100dvh !important; }
+  .auth-page section { padding: max(24px, env(safe-area-inset-top, 0px)) 24px max(24px, env(safe-area-inset-bottom, 0px)) !important; }
+  .auth-page .max-w-105 { width: 100%; max-width: 400px; padding: 0 !important; }
+  .auth-page h1 { font-size: 22px !important; line-height: 30px; }
+}
+
+@media (max-width: 359px) {
+  .mobile-top-header .mobile-navbar-logo img { max-width: 110px; height: 28px; }
+  .app-top-nav .mobile-top-header { grid-template-columns: 36px minmax(0, 1fr) 80px; gap: 4px; }
+  .mobile-navbar-actions { gap: 4px; }
+  .mobile-nav-item { font-size: 10px; }
+  .quotation-metrics > div { padding: 6px; }
+  #_r_19q_ .modal-header-container h2 { font-size: 16px !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-bottom-nav *, .apply-modal-dialog { animation: none !important; transition: none !important; }
+}
+
+@media (max-width: 1023px) {
+  .my-merchants-page td[data-mobile-label]:not(:first-child):not(:last-child)::before { position: static; opacity: 1; pointer-events: none; background: none; }
+  .notifications-page [role=tablist] { display: grid !important; grid-template-columns: .7fr 1fr 1fr 1.3fr; width: 100%; overflow: visible; }
+  .notifications-page [role=tab] { width: auto !important; min-width: 0; padding: 8px 4px !important; }
+  .notifications-page [role=tab] .gap-2 { gap: 4px; }
+  .post-detail-left > .space-y-4, .my-post-detail-left > .space-y-4 { display: flex; flex-direction: column; gap: 12px; }
+  .post-detail-left > .space-y-4 > *, .my-post-detail-left > .space-y-4 > * { margin: 0 !important; }
+  .wins-page-wrapper .wins-card-body { padding: 14px !important; gap: 12px !important; }
+  .chat-page-container .w-150 { width: auto; white-space: normal; overflow-wrap: anywhere; }
+  .chat-page-container .scrollbar-theme { padding: 12px; }
+  .chat-page-container .scrollbar-theme .px-4.py-4 { padding: 0; }
+  .chat-page-container .scrollbar-theme .flex.items-start.justify-between { flex-direction: column; gap: 8px; }
+  .chat-page-container .scrollbar-theme .flex.items-start.gap-3\.25 { min-width: 0; gap: 10px; }
+  .chat-page-container .quill, .chat-page-container .ql-container { height: auto !important; min-height: 0 !important; }
+  .chat-page-container .ql-editor { min-height: 64px; max-height: 120px; height: auto; font-size: 16px; }
+  .chat-page-container .relative.bg-white.p-4 { padding: 8px 8px 0; }
+  .chat-page-container .min-h-32 { min-height: 0; }
+  .chat-page-container .ql-toolbar { padding: 4px; }
+  .chat-page-container .ql-toolbar button { width: 30px; height: 32px; }
+  .chat-page-container .ql-formats { margin-right: 4px; }
+  .chat-page-container [aria-label="Attach file"] { width: 40px; height: 40px; }
+  .company-profile-page-wrapper > .px-6 { padding: 16px 12px !important; }
+}
+
+/* Use the compact navigation on portrait tablets too; desktop begins at 1024px. */
+@media (max-width: 1023px) {
+  .app-top-nav > header:not(.mobile-top-header) { display: none !important; }
+  .app-top-nav .mobile-navigation-menu { display: flex !important; }
+  .home-page > .sticky { display: none !important; }
+  .home-page > .w-full { min-height: 0; }
+  .app-main-layout .home-page .w-147 { max-width: 720px !important; }
+  .post-detail-left, .my-post-detail-left { width: 100% !important; min-width: 0; }
+  .quotation-detail-header-top { height: auto !important; padding: 10px 0; flex-wrap: wrap; gap: 8px; }
+  .quotation-detail-back-btn { left: 0 !important; top: 0 !important; }
+  .quotation-detail-header-actions { margin-left: auto; }
+  .my-post-detail-header-top { height: auto !important; flex-wrap: wrap; gap: 8px; padding: 10px 0; }
+  #_r_19q_ form > .flex { flex-direction: column !important; }
+  #_r_19q_ .max-w-100 { max-width: none; }
+  .chat-page-container[data-thread-open=true] > div:first-child { display: none !important; }
+  .chat-page-container[data-thread-open=false] > div:first-child { display: flex !important; max-width: 100%; }
+  .chat-page-container[data-thread-open=false] > div:last-child { display: none !important; }
+  .chat-page-container [aria-label="Back to conversations"] { display: inline-flex !important; }
+}

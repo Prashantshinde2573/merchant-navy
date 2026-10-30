@@ -41,7 +41,7 @@ export function Help() {
 
   return (
     <div className="bg-blue-25 min-h-[calc(100vh-56px)]">
-      <div className="mx-auto w-full max-w-5xl px-6 py-6">
+      <div className="help-page mobile-page mx-auto w-full max-w-5xl px-6 py-6">
         <div className="mb-6">
           <h1 className="text-content1-foreground font-['Inter'] text-2xl leading-8 font-semibold">
             Frequently Asked Questions
