@@ -236,7 +236,7 @@ export function MyPostDetail() {
                       </span>
                       <div className="relative max-w-fit inline-flex items-center justify-between box-border whitespace-nowrap text-tiny rounded-full text-default-700 h-4 min-w-4 px-1 bg-red-50 border border-zinc-100">
                         <span className="flex-1 font-normal px-1 text-tiny text-default-foreground leading-4">
-                          {post.appliedCount ?? 1}
+                          {dynamicApplications.length}
                         </span>
                       </div>
                     </div>
@@ -293,7 +293,24 @@ export function MyPostDetail() {
           <div className="flex gap-6 my-post-detail-grid">
             {/* Left Content Column */}
             <div className="w-226 flex-1 my-post-detail-left">
-              {activeTab === 'quotation' ? (
+              {activeTab === 'applied' || activeTab === 'discussion' ? (
+                <section className="post-conversation-list bg-white border border-blue-50 rounded-large shadow-neutral-sm p-5">
+                  <h3 className="text-base font-semibold">{activeTab === 'applied' ? 'Applications' : 'In discussion'}</h3>
+                  {(() => {
+                    const applications = activeTab === 'discussion' ? dynamicApplications.filter(application => /discussion|invited/i.test(application.status)) : dynamicApplications;
+                    return applications.length ? applications.map(application => (
+                      <article key={application.id} className="post-application-row">
+                        <div className="flex items-center gap-3">
+                          <img src={application.avatar} alt="" className="h-10 w-10 rounded-lg" />
+                          <div><h4 className="text-sm font-semibold">{application.merchantName}</h4><span className="text-xs text-zinc-500">{application.status}</span></div>
+                        </div>
+                        <p className="text-sm leading-5 mt-3 whitespace-pre-wrap">{application.scopeSummary}</p>
+                        <Link className="post-application-action" to={`/chats/${application.chatId}`}>Open conversation</Link>
+                      </article>
+                    )) : <div className="post-conversation-empty" role="status"><p>{activeTab === 'applied' ? 'No applications yet.' : 'No conversations in progress.'}</p><p>{activeTab === 'applied' ? 'Applications from merchants will appear here.' : 'Invited merchants will appear here when a discussion starts.'}</p></div>;
+                  })()}
+                </section>
+              ) : activeTab === 'quotation' ? (
                 /* Quotations Section Tab View */
                 <div className="rounded-large shadow-neutral-sm border border-blue-50 bg-white p-6 my-post-detail-quotations-card">
                   <div className="flex flex-col relative gap-4 w-full">

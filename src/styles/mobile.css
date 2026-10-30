@@ -330,3 +330,20 @@
   .app-main-layout .desktop-quotations-table { display: none !important; }
   .app-main-layout .mobile-quotations-cards { display: flex !important; flex-direction: column; gap: 12px; min-width: 0; width: 100%; }
 }
+@media (max-width: 1023px) {
+  .app-main-layout .my-post-detail-tab-wrap { display: block; width: 100% !important; }
+  .app-main-layout .my-post-detail-tab-wrap [role=tablist] { display: grid !important; grid-template-columns: .8fr .9fr 1.3fr 1.2fr; gap: 0 !important; overflow: visible !important; }
+  .app-main-layout .my-post-detail-tab-wrap [role=tab] { min-width: 0; min-height: 40px; padding: 8px 3px !important; }
+  .app-main-layout .my-post-detail-tab-wrap [role=tab] .text-sm { font-size: 12px; line-height: 17px; }
+  .app-main-layout .my-post-detail-tab-wrap [role=tab] .gap-1\.5 { gap: 3px; }
+  .app-main-layout .mobile-quotations-cards .border { border-color: #e1e7ef; }
+  .app-main-layout .mobile-quotations-cards :is(button,a) { min-height: 40px; }
+  .company-profile-page-wrapper #gallery img { max-height: 240px; object-fit: cover; }
+}
+@media (max-width: 1023px) {
+  :root { --mobile-header-height: calc(56px + env(safe-area-inset-top, 0px)); }
+  .app-top-nav { padding-top: env(safe-area-inset-top, 0px) !important; }
+  .app-top-nav .mobile-navigation-menu { top: var(--mobile-header-height) !important; }
+  .company-profile-page-wrapper .sticky { top: var(--mobile-header-height) !important; }
+  .app-main-layout { padding-left: env(safe-area-inset-left, 0px); padding-right: env(safe-area-inset-right, 0px); }
+}

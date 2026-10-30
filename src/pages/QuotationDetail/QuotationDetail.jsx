@@ -9,7 +9,7 @@ export function QuotationDetail() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const quotation = getQuotationById(id) || getQuotationById('quote-1');
+  const quotation = getQuotationById(id);
   const parentPostId = location.state?.fromPostId || quotation?.postId || 'my-post-1';
   const post = POSTS_DATA[parentPostId] || DEFAULT_MY_POST;
 

@@ -72,14 +72,11 @@ export function ProfileSettings() {
                     <label
                       className="settings-toggle-label group relative max-w-fit inline-flex items-center justify-start cursor-pointer touch-none select-none"
                       data-selected={settings[item.key] ? 'true' : 'false'}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        toggleSetting(item.key);
-                      }}
                     >
                       <input
                         type="checkbox"
                         role="switch"
+                        aria-label={item.title}
                         aria-checked={settings[item.key]}
                         checked={settings[item.key]}
                         onChange={() => toggleSetting(item.key)}

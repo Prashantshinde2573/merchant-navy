@@ -117,3 +117,7 @@
 .profile-settings-page-wrapper .settings-toggle-thumb.is-unchecked {
   transform: translateX(0px) !important;
 }
+.settings-toggle-label:has(input:focus-visible) { outline: 2px solid #1f285d; outline-offset: 3px; border-radius: 999px; }
+@media (max-width: 1023px) {
+  .profile-settings-page-wrapper .settings-toggle-label { min-height: 44px; min-width: 48px; touch-action: manipulation; }
+}

@@ -9,3 +9,7 @@
     height: calc(100dvh - 56px) !important;
   }
 }
+.chat-sent-message { align-self: flex-end; max-width: 85%; margin: 12px 0 0; padding: 10px 14px; border: 1px solid #e1e7ef; border-radius: 8px; background: #f6f8fd; }
+.chat-sent-message p { font-size: 14px; line-height: 21px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.chat-sent-message time { display: block; margin-top: 4px; color: #71717a; font-size: 11px; text-align: right; }
+.chat-attachment-summary { font-size: 12px; line-height: 18px; color: #71717a; overflow-wrap: anywhere; margin-bottom: 6px; }

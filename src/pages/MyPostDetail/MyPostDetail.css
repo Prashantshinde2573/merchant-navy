@@ -257,3 +257,9 @@
     display: none !important;
   }
 }
+
+.post-application-row { padding: 14px 0; border-bottom: 1px solid #e1e7ef; }
+.post-application-row:last-child { border: 0; padding-bottom: 0; }
+.post-application-action { display: inline-flex; align-items: center; min-height: 40px; margin-top: 10px; padding: 8px 12px; color: #1f285d; border: 1px solid #e1e7ef; border-radius: 6px; font-size: 13px; }
+.post-conversation-empty { padding: 24px 0; font-size: 14px; line-height: 21px; }
+.post-conversation-empty p + p { margin-top: 6px; font-size: 13px; color: #71717a; }
