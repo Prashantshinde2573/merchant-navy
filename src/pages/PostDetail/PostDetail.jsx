@@ -123,7 +123,7 @@ export function PostDetail() {
 
             {/* Right Header: Budget + Apply/Applied button + Actions */}
             <div className="flex items-center gap-4 post-detail-header-right">
-              <div className="flex flex-col gap-0.5 text-right sm:text-left">
+              <div className="post-detail-budget flex flex-col gap-0.5 text-right sm:text-left">
                 <p className="text-content2-foreground text-lg leading-7 font-semibold">{post.budget}</p>
                 <p className="text-[13px] text-zinc-500">{post.dateRange}</p>
               </div>
@@ -135,7 +135,7 @@ export function PostDetail() {
                 <button
                   type="button"
                   disabled
-                  className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-medium subpixel-antialiased overflow-hidden h-12 text-medium gap-2 rounded-small bg-success text-success-foreground !bg-success-600 !text-white min-w-31 px-4 cursor-default opacity-100"
+                  className="post-detail-apply z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-medium subpixel-antialiased overflow-hidden h-12 text-medium gap-2 rounded-small bg-success text-success-foreground !bg-success-600 !text-white min-w-31 px-4 cursor-default opacity-100"
                 >
                   Applied
                 </button>
@@ -144,7 +144,7 @@ export function PostDetail() {
                   type="button"
                   tabIndex="0"
                   onClick={() => setIsApplyOpen(true)}
-                  className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-medium subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent h-12 text-medium gap-3 rounded-small transition-colors bg-primary text-primary-foreground hover:opacity-hover min-w-31 px-4"
+                  className="post-detail-apply z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-medium subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent h-12 text-medium gap-3 rounded-small transition-colors bg-primary text-primary-foreground hover:opacity-hover min-w-31 px-4"
                 >
                   Apply Now
                 </button>

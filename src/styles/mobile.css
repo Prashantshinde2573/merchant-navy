@@ -347,3 +347,40 @@
   .company-profile-page-wrapper .sticky { top: var(--mobile-header-height) !important; }
   .app-main-layout { padding-left: env(safe-area-inset-left, 0px); padding-right: env(safe-area-inset-right, 0px); }
 }
+
+/* Profile selector and requirement actions share a compact mobile alignment. */
+@media (max-width: 1023px) {
+  .company-profile-page-wrapper .profile-section-picker {
+    appearance: none;
+    -webkit-appearance: none;
+    padding: 8px 42px 8px 12px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23424976' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 16px 16px;
+  }
+  .post-detail-header-wrap .post-detail-header-right {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 104px 40px 40px;
+    align-items: center;
+    justify-content: initial !important;
+    gap: 8px !important;
+    width: 100%;
+  }
+  .post-detail-header-right > [role=separator] { display: none !important; }
+  .post-detail-header-right .post-detail-budget { min-width: 0; text-align: left; gap: 2px; }
+  .post-detail-budget > p:first-child { font-size: 16px; line-height: 22px; overflow-wrap: anywhere; }
+  .post-detail-budget > p:last-child { font-size: 12px; line-height: 17px; }
+  .post-detail-header-right .post-detail-apply {
+    width: 104px;
+    min-width: 0;
+    height: 44px;
+    padding: 0 12px;
+    font-size: 14px;
+    line-height: 20px;
+    border-radius: 6px;
+  }
+  .post-detail-header-right > button[aria-label="Save post"],
+  .post-detail-header-right button[aria-label="Service request actions"] { width: 40px; min-width: 40px; height: 44px; }
+  .post-detail-header-right > .relative.inline-block { width: 40px; display: flex; align-items: center; }
+}
