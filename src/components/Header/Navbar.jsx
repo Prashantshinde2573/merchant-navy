@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useNotifications } from '../../context/NotificationContext';
 import { useAuth } from '../../context/AuthContext';
 import { UpgradeBanner } from '../UpgradeBanner/UpgradeBanner';
 import './Navbar.css';
@@ -8,6 +9,7 @@ export function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { currentUser, logout } = useAuth();
+  const { unreadCount } = useNotifications();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showAnnouncementsModal, setShowAnnouncementsModal] = useState(false);
@@ -91,7 +93,7 @@ export function Navbar() {
               <Link to="/notifications" className={`text-medium whitespace-nowrap box-border list-none data-[active=true]:font-semibold h-11 rounded-lg px-3 py-2.5 flex items-center ${isNotif ? "text-primary bg-blue-50 font-semibold" : "hover:bg-blue-25 font-medium text-blue-600"}`} title="Notifications" data-active={isNotif}>
                 <div className="relative inline-flex shrink-0">
                   <span className={`material-symbols-outlined text-4.5 ${isNotif ? "material-symbols-fill" : ""}`}>notifications</span>
-                  <span className="flex z-10 flex-wrap absolute box-border rounded-full whitespace-nowrap place-content-center origin-center items-center select-none font-regular scale-100 opacity-100 subpixel-antialiased text-small px-0 border-2 text-danger-foreground w-5 h-5 min-w-5 min-h-5 top-[10%] right-[10%] translate-x-1/2 -translate-y-1/2 bg-danger-500 border-danger-500 text-white text-[10px] font-bold justify-center items-center leading-none">7</span>
+                  <span className="flex z-10 flex-wrap absolute box-border rounded-full whitespace-nowrap place-content-center origin-center items-center select-none font-regular scale-100 opacity-100 subpixel-antialiased text-small px-0 border-2 text-danger-foreground w-5 h-5 min-w-5 min-h-5 top-[10%] right-[10%] translate-x-1/2 -translate-y-1/2 bg-danger-500 border-danger-500 text-white text-[10px] font-bold justify-center items-center leading-none" style={{display: unreadCount ? undefined : "none"}}>{unreadCount}</span>
                 </div>
               </Link>
               <Link to="/chats" className={`text-medium whitespace-nowrap box-border list-none data-[active=true]:font-semibold h-11 rounded-lg px-3 py-2.5 flex items-center ${isChats ? "text-primary bg-blue-50 font-semibold" : "hover:bg-blue-25 font-medium text-blue-600"}`} title="Chats" data-active={isChats}>
@@ -315,14 +317,14 @@ export function Navbar() {
           { to: '/home', label: 'Home', icon: 'home', active: isHome },
           { to: '/my-posts', label: 'My Posts', icon: 'docs', active: isMyPosts },
           { to: '/my-merchants', label: 'Merchants', icon: 'favorite', active: isMerchants },
-          { to: '/notifications', label: 'Alerts', icon: 'notifications', active: isNotif, count: 7 },
+          { to: '/notifications', label: 'Alerts', icon: 'notifications', active: isNotif, count: unreadCount },
           { to: '/chats', label: 'Chat', icon: 'chat', active: isChats },
         ].map(item => (
           <Link key={item.to} to={item.to} aria-current={item.active ? 'page' : undefined}
             className={`mobile-nav-item ${item.active ? 'is-active' : ''}`}>
             <span className="mobile-nav-icon">
               <span aria-hidden="true" className={`material-symbols-outlined ${item.active ? 'material-symbols-fill' : ''}`}>{item.icon}</span>
-              {item.count && <span className="mobile-nav-count" aria-label={`${item.count} notifications`}>{item.count}</span>}
+              {Boolean(item.count) && <span className="mobile-nav-count" aria-label={`${item.count} notifications`}>{item.count}</span>}
             </span>
             <span>{item.label}</span>
           </Link>

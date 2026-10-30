@@ -139,7 +139,7 @@ export function ApplyModal({ isOpen, onClose, onApply, post }) {
                 >
                   <textarea
                     className="w-full font-normal bg-transparent outline-none placeholder:text-zinc-400 text-sm resize-none text-zinc-800"
-                    aria-label="Write a message to introduce yourself and explain why you're a great fit for this project..."
+                    aria-label="Message"
                     maxLength={600}
                     rows={3}
                     value={message}

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useDialogFocus } from '../../hooks/useDialogFocus';
+import React, { useState, useRef } from 'react';
 import { usePosts } from '../../context/PostContext';
 import './ReportModal.css';
 
@@ -6,6 +7,9 @@ export function ReportModal({ isOpen, onClose, postId }) {
   const [details, setDetails] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const { reportPost } = usePosts();
+
+  const dialogRef = useRef(null);
+  useDialogFocus(isOpen, onClose, dialogRef);
 
   if (!isOpen) return null;
 
@@ -47,6 +51,8 @@ export function ReportModal({ isOpen, onClose, postId }) {
         }}
       >
         <section 
+          ref={dialogRef}
+          aria-label="Report post"
           role="dialog" 
           tabIndex="-1" 
           className="flex flex-col relative z-50 w-full box-border bg-content1 bg-white outline-solid outline-transparent mx-1 my-1 sm:mx-6 sm:my-16 max-w-lg rounded-large shadow-small overflow-hidden max-h-[calc(100vh-2rem)]" 

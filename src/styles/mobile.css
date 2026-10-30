@@ -253,3 +253,80 @@
   .chat-page-container[data-thread-open=false] > div:last-child { display: none !important; }
   .chat-page-container [aria-label="Back to conversations"] { display: inline-flex !important; }
 }
+
+@media (max-width: 1023px) {
+  #_r_19q_ :is(h3, .text-base) { font-size: 15px !important; line-height: 21px !important; }
+  #_r_19q_ :is(p, .text-sm) { font-size: 13px; line-height: 19px; }
+  #_r_19q_ .quill .ql-toolbar { display: flex; flex-wrap: nowrap; align-items: center; min-height: 42px; padding: 3px 4px; }
+  #_r_19q_ .quill .ql-formats { display: inline-flex; margin: 0 4px 0 0; }
+  #_r_19q_ .quill .ql-toolbar button { display: flex; justify-content: center; align-items: center; width: 34px; height: 34px; padding: 7px; }
+  #_r_19q_ .quill .ql-toolbar button svg { width: 18px !important; height: 18px !important; }
+  #_r_19q_ .quill { min-height: 180px; }
+  #_r_19q_ .ql-editor { font-family: inherit; font-size: 16px !important; line-height: 1.5; min-height: 152px !important; }
+  #_r_19q_ .ql-editor * { font-family: inherit !important; font-size: inherit !important; line-height: inherit !important; }
+  #_r_19q_ .ql-editor :is(ul,ol) { padding-left: 1.5em; }
+  #_r_19q_ .ql-editor ul { list-style: disc; }
+  #_r_19q_ .ql-editor ol { list-style: decimal; }
+  .auth-page #otp-instructions { font-size: 13px; line-height: 20px; overflow-wrap: anywhere; }
+  .auth-page input[aria-label=OTP] { font-size: 20px !important; letter-spacing: .3em; font-weight: 500; }
+  .auth-page input[aria-label=OTP]::placeholder { font-size: 15px; letter-spacing: normal; }
+  .auth-page .otp-resend, .auth-page button:has(.material-symbols-outlined) { min-height: 44px; }
+  .auth-page .otp-resend:disabled { opacity: .6; cursor: default; }
+}
+.profile-section-picker { display: none; }
+@media (max-width: 1023px) {
+  .company-profile-page-wrapper .profile-section-tabs { display: none !important; }
+  .company-profile-page-wrapper .profile-section-picker { display: block; width: 100%; min-height: 44px; border: 1px solid #e1e7ef; border-radius: 6px; background: white; color: #1f285d; padding: 8px 12px; font-size: 14px !important; font-weight: 500; }
+  .company-profile-page-wrapper .sticky { padding: 8px 12px !important; margin: 0 -12px 12px !important; }
+  .company-profile-page-wrapper :is(#company,#ports_and_services,#certifications,#insurance,#team,#gallery) { scroll-margin-top: 124px; }
+  .company-profile-page-wrapper #company .flex.items-start.gap-6 { display: grid !important; grid-template-columns: 80px minmax(0,1fr); gap: 12px !important; align-items: start !important; }
+  .company-profile-page-wrapper #company button[aria-label="Remove logo"] { width: 28px !important; height: 28px !important; min-width: 28px !important; padding: 6px !important; right: -4px; top: -4px; }
+  .company-profile-page-wrapper #company label[for=logo-upload] { width: 80px !important; height: 80px !important; min-width: 0 !important; }
+  .company-profile-page-wrapper #company label[for=cover-upload] { min-height: 80px !important; padding: 8px !important; }
+  .company-profile-page-wrapper #company .flex.items-start.gap-6 .text-xs { font-size: 11px; }
+  .company-profile-page-wrapper #company .flex.items-start.gap-6 .flex.gap-2 { gap: 4px !important; }
+  .company-profile-page-wrapper #company .flex.items-start.gap-6 .flex.gap-2 button { height: 36px !important; }
+  #_r_19q_ .post-field-options { position: static; margin-top: 8px; max-height: 224px; box-shadow: none; padding: 6px; }
+  #_r_19q_ .post-field-options label { min-height: 40px; font-size: 13px; padding: 8px; }
+  #_r_19q_ .post-field-options input { width: 16px; height: 16px; flex-shrink: 0; }
+  #_r_1ih_, #_r_1s9_ { width: calc(100% - 16px); max-height: calc(var(--app-viewport-height,100dvh) - 16px) !important; margin: 8px !important; }
+  #_r_1ih_ header span, #_r_1s9_ header span { font-size: 17px !important; line-height: 24px; }
+  #_r_1ih_ :is(input,textarea,select), #_r_1s9_ :is(input,textarea,select) { font-size: 16px; }
+  #_r_1ih_ form { min-height: 0; }
+  #_r_1ih_ footer, #_r_1s9_ footer { padding-bottom: calc(12px + env(safe-area-inset-bottom,0px)); }
+}
+.my-posts-reset { margin-top: 12px; padding: 10px 14px; color: #1f285d; font-size: 13px; border: 1px solid #e1e7ef; border-radius: 6px; }
+@media (max-width: 1023px) {
+  .my-posts-page > .mb-6 .text-base { font-size: 13px; line-height: 19px; }
+  .profile-settings-page-wrapper .settings-card-inner { flex-direction: column !important; padding: 16px !important; gap: 16px !important; }
+  .profile-settings-page-wrapper .settings-left-col { width: 100%; max-width: none; }
+  .profile-settings-page-wrapper .settings-right-col > .flex { gap: 12px; }
+}
+
+@media (max-width: 1023px) {
+  .company-profile-page-wrapper .sticky .profile-section-tabs[role=group] { display: none !important; }
+  .company-profile-page-wrapper #company .flex.items-start.gap-6 > .flex.flex-col.gap-2,
+  .company-profile-page-wrapper #company label[for=cover-upload].flex.gap-2 { display: flex !important; flex-direction: column !important; grid-template-columns: none !important; }
+  .company-profile-page-wrapper #company .flex.items-start.gap-6 .flex.gap-2 button[aria-label="Remove logo"] { width: 28px !important; height: 28px !important; min-width: 28px !important; min-height: 28px !important; }
+  .company-profile-page-wrapper #company label[for=logo-upload] img { width: 72px !important; height: 72px !important; }
+  .company-profile-page-wrapper #company label[for=cover-upload] svg { width: 20px !important; height: 20px !important; }
+  .company-profile-page-wrapper #company label[for=cover-upload] p { font-size: 12px !important; line-height: 16px !important; }
+}
+@media (max-width: 1023px) {
+  #profile-desktop-tabs { display: none !important; }
+  .company-profile-page-wrapper :is(#company,#ports_and_services,#certifications,#insurance,#team,#gallery) h3 { font-size: 16px !important; line-height: 22px !important; }
+}
+@media (max-width: 1023px) {
+  .chat-page-container .ql-toolbar { display: flex; align-items: center; flex-wrap: nowrap; padding: 3px; }
+  .chat-page-container .ql-toolbar .ql-formats { display: inline-flex; flex-shrink: 0; margin: 0 2px 0 0; }
+  .chat-page-container .ql-toolbar button { display: flex; justify-content: center; align-items: center; width: 28px; height: 32px; padding: 5px; }
+  .chat-page-container .ql-toolbar button svg { width: 16px; height: 16px; }
+  .chat-page-container .ql-toolbar .ql-picker.ql-header { width: 68px; font-size: 12px; }
+  .chat-page-container .ql-toolbar .ql-picker-label { padding-left: 4px; }
+}
+@media (max-width: 1023px) {
+  .app-main-layout .my-post-detail-title { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden !important; font-size: 15px !important; line-height: 21px !important; }
+  .app-main-layout .my-post-detail-header-text { min-width: 0; }
+  .app-main-layout .desktop-quotations-table { display: none !important; }
+  .app-main-layout .mobile-quotations-cards { display: flex !important; flex-direction: column; gap: 12px; min-width: 0; width: 100%; }
+}

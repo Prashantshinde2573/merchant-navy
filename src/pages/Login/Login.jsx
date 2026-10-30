@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth, DEMO_OTP } from '../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import './Login.css';
 
 export function Login() {
@@ -12,6 +12,32 @@ export function Login() {
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [resendAt, setResendAt] = useState(0);
+  const [resendSeconds, setResendSeconds] = useState(0);
+  const [notice, setNotice] = useState('');
+
+  useEffect(() => {
+    if (!resendAt) return;
+    const update = () => setResendSeconds(Math.max(0, Math.ceil((resendAt - Date.now()) / 1000)));
+    update();
+    const timer = window.setInterval(update, 1000);
+    return () => window.clearInterval(timer);
+  }, [resendAt]);
+
+  const startResendCountdown = () => {
+    setResendSeconds(30);
+    setResendAt(Date.now() + 30000);
+  };
+
+  const handleResend = () => {
+    if (resendSeconds > 0 || loading) return;
+    setError('');
+    const result = sendOtp(email);
+    if (result.success) {
+      setNotice('A new verification code has been sent.');
+      startResendCountdown();
+    } else setError(result.message);
+  };
 
   const handleEmailSubmit = (e) => {
     e.preventDefault();
@@ -26,6 +52,8 @@ export function Login() {
       setLoading(false);
       if (res.success) {
         setStep('otp');
+        startResendCountdown();
+        setNotice('');
         setError('');
       } else {
         setError(res.message);
@@ -36,7 +64,7 @@ export function Login() {
   const handleOtpSubmit = (e) => {
     e.preventDefault();
     setError('');
-    if (!otp.trim()) {
+    if (otp.trim().length !== 6) {
       setError('Please enter the 6-digit OTP');
       return;
     }
@@ -53,7 +81,7 @@ export function Login() {
   };
 
   return (
-    <main className="auth-page min-h-screen w-full text-white">
+    <main className="auth-page min-h-screen w-full text-content1-foreground">
       <div className="grid min-h-screen w-full lg:grid-cols-[1fr_720px]">
         <section
           className="hidden min-h-screen bg-cover bg-center lg:block"
@@ -73,7 +101,7 @@ export function Login() {
             />
 
             {error && (
-              <div className="w-full p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs font-medium text-left flex items-center gap-2">
+              <div role="alert" className="w-full p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs font-medium text-left flex items-center gap-2">
                 <span className="material-symbols-outlined text-sm shrink-0">error</span>
                 <span>{error}</span>
               </div>
@@ -133,14 +161,13 @@ export function Login() {
                   <h1 className="text-content1-foreground text-2xl leading-8 font-semibold">
                     Enter verification code
                   </h1>
-                  <p className="text-xs text-neutral-500">
+                  <p id="otp-instructions" className="text-xs text-neutral-500">
                     Enter the 6-digit OTP code sent to <strong>{email}</strong>
                   </p>
-                  <p className="text-xs text-blue-800 bg-blue-50 py-1 px-3 rounded-full font-mono font-bold inline-block">
-                    Demo OTP: 123456
-                  </p>
+
                 </div>
 
+                {notice && <p role="status" className="text-sm text-neutral-500">{notice}</p>}
                 <form onSubmit={handleOtpSubmit} className="w-full space-y-4">
                   <div className="group flex flex-col relative justify-end w-full" data-slot="base">
                     <div data-slot="main-wrapper" className="h-full flex flex-col">
@@ -150,7 +177,11 @@ export function Login() {
                             data-slot="input"
                             className="w-full bg-transparent outline-none border-none text-center tracking-widest text-lg font-bold caret-content1-foreground text-content1-foreground placeholder:text-sm placeholder:tracking-normal placeholder:font-normal placeholder:text-foreground-400"
                             aria-label="OTP"
-                            placeholder="Enter 6-digit OTP (123456)"
+                            placeholder="6-digit code"
+                            inputMode="numeric"
+                            autoComplete="one-time-code"
+                            pattern="[0-9]{6}"
+                            aria-describedby="otp-instructions"
                             maxLength={6}
                             autoFocus
                             value={otp}
@@ -186,13 +217,11 @@ export function Login() {
                     </button>
                     <button
                       type="button"
-                      onClick={() => {
-                        setOtp(DEMO_OTP);
-                        setError("");
-                      }}
-                      className="text-blue-700 hover:text-blue-900 font-medium cursor-pointer"
+                      onClick={handleResend}
+                      disabled={resendSeconds > 0 || loading}
+                      className="otp-resend text-blue-700 hover:text-blue-900 font-medium cursor-pointer"
                     >
-                      Fill Demo OTP
+                      {resendSeconds > 0 ? `Resend in ${resendSeconds}s` : 'Resend code'}
                     </button>
                   </div>
                 </form>

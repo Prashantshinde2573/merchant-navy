@@ -1,3 +1,4 @@
+import { useDialogFocus } from '../../hooks/useDialogFocus';
 import React, { useState, useRef } from 'react';
 import './SupportModal.css';
 
@@ -11,6 +12,9 @@ export function SupportModal({ isOpen, onClose }) {
   const [files, setFiles] = useState([]);
   const [submitted, setSubmitted] = useState(false);
   const fileInputRef = useRef(null);
+
+  const dialogRef = useRef(null);
+  useDialogFocus(isOpen, onClose, dialogRef);
 
   if (!isOpen) return null;
 
@@ -49,6 +53,8 @@ export function SupportModal({ isOpen, onClose }) {
         }}
       >
         <section 
+          ref={dialogRef}
+          aria-label="Submit a Support Request"
           role="dialog" 
           tabIndex="-1" 
           className="flex flex-col relative z-50 w-full box-border bg-content1 bg-white outline-solid outline-transparent mx-1 my-1 sm:mx-6 sm:my-16 max-w-3xl rounded-large shadow-small max-h-[calc(100vh-4rem)] overflow-hidden" 
@@ -95,7 +101,7 @@ export function SupportModal({ isOpen, onClose }) {
                       <div data-slot="innerWrapper" className="inline-flex h-fit w-full min-h-4 items-center gap-1.5 box-border pt-4">
                         <select
                           required
-                          value={topic}
+                          value={topic} aria-label="Topic"
                           onChange={(e) => setTopic(e.target.value)}
                           className="w-full bg-transparent text-small text-zinc-800 font-normal outline-none appearance-none cursor-pointer pr-6 text-sm"
                         >
@@ -125,7 +131,7 @@ export function SupportModal({ isOpen, onClose }) {
                       <div data-slot="innerWrapper" className="inline-flex h-fit w-full min-h-4 items-center gap-1.5 box-border pt-4">
                         <select
                           required
-                          value={issue}
+                          value={issue} aria-label="What's the issue?"
                           onChange={(e) => setIssue(e.target.value)}
                           className="w-full bg-transparent text-small text-zinc-800 font-normal outline-none appearance-none cursor-pointer pr-6 text-sm"
                         >
@@ -162,7 +168,7 @@ export function SupportModal({ isOpen, onClose }) {
                       placeholder="What happened, where (screen), when (date/time), any error message, expected vs. actual result..." 
                       tabIndex="0" 
                       id="react-aria8552086545-_r_1jc_" 
-                      value={description}
+                      value={description} aria-label="Describe the issue"
                       onChange={(e) => setDescription(e.target.value)}
                       title="" 
                       style={{ height: "100px" }}
@@ -231,7 +237,7 @@ export function SupportModal({ isOpen, onClose }) {
                           required 
                           tabIndex="0" 
                           type="text" 
-                          value={name} 
+                          value={name} aria-label="Name"
                           onChange={(e) => setName(e.target.value)}
                         />
                       </div>
@@ -252,7 +258,7 @@ export function SupportModal({ isOpen, onClose }) {
                           required 
                           tabIndex="0" 
                           type="email" 
-                          value={email} 
+                          value={email} aria-label="Email"
                           onChange={(e) => setEmail(e.target.value)}
                         />
                       </div>
@@ -271,7 +277,7 @@ export function SupportModal({ isOpen, onClose }) {
                           className="w-full font-normal bg-transparent !outline-solid placeholder:text-foreground-500 focus-visible:outline-solid outline-transparent text-small text-zinc-800 text-sm is-filled" 
                           tabIndex="0" 
                           type="text" 
-                          value={phone} 
+                          value={phone} aria-label="Phone"
                           onChange={(e) => setPhone(e.target.value)}
                         />
                       </div>

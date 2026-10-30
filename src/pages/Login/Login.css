@@ -11,3 +11,6 @@
   }
 }
 
+
+.auth-page #otp-instructions { color: #71717a; }
+.auth-page .otp-resend:disabled { opacity: .6; cursor: default; }

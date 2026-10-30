@@ -22,7 +22,7 @@ export function AuthProvider({ children }) {
     if (trimmed.includes('@') && trimmed.includes('.')) {
       return { success: true };
     }
-    return { success: false, message: 'Please enter a valid email address (Demo: shivhare.yuvraj@gmail.com)' };
+    return { success: false, message: 'Please enter a valid email address' };
   };
 
   const verifyOtp = (otp, email) => {
@@ -34,7 +34,7 @@ export function AuthProvider({ children }) {
       localStorage.setItem('currentUser', email || DEMO_EMAIL);
       return { success: true };
     }
-    return { success: false, message: 'Invalid verification code. Please enter 123456' };
+    return { success: false, message: 'Invalid verification code. Please check the code and try again.' };
   };
 
   const logout = () => {

@@ -61,6 +61,29 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
 
   const fileInputRef = useRef(null);
   const editorRef = useRef(null);
+  const editorHtmlRef = useRef('');
+  const editorSelectionRef = useRef(null);
+
+  useEffect(() => {
+    if (isOpen && editorRef.current) editorRef.current.innerHTML = editorHtmlRef.current;
+  }, [isOpen]);
+
+  const rememberEditor = () => {
+    if (!editorRef.current) return;
+    editorHtmlRef.current = editorRef.current.innerHTML;
+    setScopeOfWork(editorRef.current.innerText);
+    const selection = window.getSelection();
+    if (selection?.rangeCount && editorRef.current.contains(selection.anchorNode)) {
+      editorSelectionRef.current = selection.getRangeAt(0).cloneRange();
+    }
+  };
+
+  const handleEditorPaste = (event) => {
+    event.preventDefault();
+    // Plain-text paste avoids importing external font sizes, colors or unsafe markup.
+    document.execCommand('insertText', false, event.clipboardData.getData('text/plain'));
+    rememberEditor();
+  };
 
   const dialogRef = useRef(null);
   useDialogFocus(isOpen, onClose, dialogRef);
@@ -87,7 +110,17 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
   };
 
   const handleFormat = (command, value = null) => {
+    const editor = editorRef.current;
+    if (!editor) return;
+    editor.focus();
+    const range = editorSelectionRef.current;
+    if (range && editor.contains(range.commonAncestorContainer)) {
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
     document.execCommand(command, false, value);
+    rememberEditor();
   };
 
   const handlePublish = (e) => {
@@ -275,10 +308,15 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                                 aria-label="Scope of work"
                                 aria-multiline="true"
                                 contentEditable="true"
-                                onInput={(e) => setScopeOfWork(e.currentTarget.innerText)}
+                                onInput={rememberEditor}
+                                onKeyUp={rememberEditor}
+                                onMouseUp={rememberEditor}
+                                onTouchEnd={rememberEditor}
+                                onPaste={handleEditorPaste}
+                                suppressContentEditableWarning
                                 style={{ minHeight: "150px" }}
                               >
-                                {scopeOfWork ? scopeOfWork : <p><br /></p>}
+
                               </div>
                             </div>
                           </div>
@@ -434,6 +472,11 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                         <p className="text-modified-13 text-zinc-500">Choose services for this request</p>
                       </div>
                       <div
+                        role="button"
+                        tabIndex={0}
+                        aria-label="Select services"
+                        aria-expanded={isServicesOpen}
+                        onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setIsServicesOpen(!isServicesOpen); } }}
                         onClick={() => setIsServicesOpen(!isServicesOpen)}
                         className="border-default-200 hover:border-default-400 rounded-medium min-h-10 cursor-pointer border-2 bg-white px-3 py-2 transition-colors flex items-center justify-between"
                       >
@@ -444,7 +487,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                       </div>
 
                       {isServicesOpen && (
-                        <div className="absolute left-4 sm:left-6 right-4 sm:right-6 top-full mt-1 bg-white rounded-medium shadow-medium border border-blue-100 p-3 z-50 max-h-48 overflow-y-auto">
+                        <div className="post-field-options absolute left-4 sm:left-6 right-4 sm:right-6 top-full mt-1 bg-white rounded-medium shadow-medium border border-blue-100 p-3 z-50 max-h-48 overflow-y-auto">
                           <div className="grid grid-cols-1 gap-1">
                             {AVAILABLE_SERVICES.map(service => (
                               <label key={service} className="flex items-center gap-2 p-1.5 hover:bg-blue-50 rounded cursor-pointer text-xs">
@@ -474,6 +517,11 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                         <p className="text-modified-13 text-zinc-500">Pick ports this request applies to</p>
                       </div>
                       <div
+                        role="button"
+                        tabIndex={0}
+                        aria-label="Select ports"
+                        aria-expanded={isPortsOpen}
+                        onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setIsPortsOpen(!isPortsOpen); } }}
                         onClick={() => setIsPortsOpen(!isPortsOpen)}
                         className="border-default-200 hover:border-default-400 rounded-medium min-h-10 cursor-pointer border-2 bg-white px-3 py-2 transition-colors flex items-center justify-between"
                       >
@@ -484,7 +532,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                       </div>
 
                       {isPortsOpen && (
-                        <div className="absolute left-4 sm:left-6 right-4 sm:right-6 top-full mt-1 bg-white rounded-medium shadow-medium border border-blue-100 p-3 z-50 max-h-48 overflow-y-auto">
+                        <div className="post-field-options absolute left-4 sm:left-6 right-4 sm:right-6 top-full mt-1 bg-white rounded-medium shadow-medium border border-blue-100 p-3 z-50 max-h-48 overflow-y-auto">
                           <div className="grid grid-cols-1 gap-1">
                             {AVAILABLE_PORTS.map(port => (
                               <label key={port} className="flex items-center gap-2 p-1.5 hover:bg-blue-50 rounded cursor-pointer text-xs">

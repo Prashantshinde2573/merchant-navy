@@ -66,7 +66,7 @@ export function MyPosts() {
         <div className="mb-6">
           <div className="inline-flex flex-col items-start justify-start gap-1.5">
             <div className="inline-flex items-center justify-start gap-2">
-              <div className="text-content1-foreground justify-center font-sans text-2xl leading-8 font-semibold">Ship - your ask</div>
+              <h1 className="text-content1-foreground justify-center font-sans text-2xl leading-8 font-semibold">Ship - your ask</h1>
             </div>
             <div className="inline-flex items-center justify-start gap-2.5">
               <div className="justify-center font-sans text-base leading-6 font-normal text-zinc-500">Keep your requests moving, from live to awarded.</div>
@@ -159,7 +159,7 @@ export function MyPosts() {
                   <div className="relative w-full inline-flex flex-row items-center px-3 gap-3 rounded-small h-9 bg-white border border-blue-100 shadow-sm" style={{"cursor": "text"}}>
                     <div className="inline-flex w-full items-center h-full box-border">
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search text-zinc-400"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg>
-                      <input className="w-full font-normal bg-transparent outline-none px-1.5 text-[13px]" placeholder="Search..." type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+                      <input className="w-full font-normal bg-transparent outline-none px-1.5 text-[13px]" placeholder="Search posts..." aria-label="Search posts" type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
                     </div>
                   </div>
                 </div>
@@ -250,7 +250,9 @@ export function MyPosts() {
             ) : (
               <div className="flex flex-col items-center justify-center p-12 text-center bg-white rounded-xl border border-blue-50">
                 <span className="material-symbols-outlined text-4xl text-zinc-300 mb-2">inbox</span>
-                <p className="text-zinc-500 text-sm">No posts found in this category.</p>
+                <h2 className="text-base font-semibold text-content1-foreground">{searchQuery ? 'No matching posts' : 'No posts in this category'}</h2>
+                <p className="text-zinc-500 text-sm mt-2">{searchQuery ? 'Try a different keyword, service or port.' : 'Your posts will appear here when their status changes.'}</p>
+                {(searchQuery || activeTab !== 'all') && <button type="button" className="my-posts-reset" onClick={() => { setSearchQuery(''); setActiveTab('all'); }}>Show all posts</button>}
               </div>
             )}
           </div>

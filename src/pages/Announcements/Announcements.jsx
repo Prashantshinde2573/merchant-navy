@@ -46,7 +46,7 @@ export function Announcements() {
                 <circle cx="11" cy="11" r="8"></circle>
               </svg>
               <input
-                placeholder="Search..."
+                placeholder="Search announcements..." aria-label="Search announcements"
                 className="w-full bg-transparent text-[13px] leading-4.5 text-zinc-800 placeholder:text-zinc-500 focus:outline-none"
                 type="text"
                 value={searchQuery}

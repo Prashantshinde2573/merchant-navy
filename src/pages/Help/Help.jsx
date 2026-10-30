@@ -64,6 +64,8 @@ export function Help() {
                   <button
                     type="button"
                     onClick={() => toggleItem(item.id)}
+                    aria-expanded={isOpen}
+                    aria-controls={`faq-${item.id}`}
                     className="flex w-full items-center justify-between py-4 text-left transition-all cursor-pointer"
                   >
                     <span className="text-modified-15-semibold text-content1-foreground pr-4 font-semibold text-[15px]">
@@ -88,7 +90,7 @@ export function Help() {
                     </svg>
                   </button>
                   {isOpen && (
-                    <div className="pb-4">
+                    <div id={`faq-${item.id}`} className="pb-4">
                       <p className="text-content3-foreground text-sm leading-5 font-normal text-zinc-600">
                         {item.answer}
                       </p>

@@ -17,3 +17,6 @@
   }
 }
 
+.notifications-page [data-unread=true] { background: #ecfeff; }
+.notification-empty { padding: 24px 16px; text-align: center; font-size: 14px; line-height: 21px; color: #71717a; }
+.notifications-page button:disabled { opacity: .5; cursor: default; }
