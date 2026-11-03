@@ -547,3 +547,10 @@
   /* The more-actions menu opens downward again from the top bar. */
   .app-main-layout.is-post-detail .post-detail-header-right [data-post-actions-dropdown] { top: 100% !important; bottom: auto; right: 0; margin-top: 4px !important; margin-bottom: 0; }
 }
+
+/* Post creation: field labels (e.g. "Service dates" under Needed by) were squeezed and clipped because the
+   input row took the field's full height. Keep the label at its natural height. Mobile/tablet only. */
+@media (max-width: 1023px) {
+  [role=dialog] [data-slot=input-wrapper] > [data-slot=label] { flex-shrink: 0; line-height: 16px; }
+  [role=dialog] [data-slot=input-wrapper] > [data-slot=inner-wrapper] { height: auto; }
+}
