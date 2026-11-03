@@ -44,6 +44,15 @@ export function PostProvider({ children }) {
     }
   });
 
+  const [postChanges, setPostChanges] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('merchant_navy_post_changes') || '{}'); } catch { return {}; }
+  });
+  const updatePost = (id, changes) => setPostChanges(previous => {
+    const next = { ...previous, [id]: { ...previous[id], ...changes } };
+    localStorage.setItem('merchant_navy_post_changes', JSON.stringify(next));
+    return next;
+  });
+
   // Create Post
   const createPost = (postData) => {
     const uniqueId = 'custom-post-' + Date.now();
@@ -153,10 +162,10 @@ export function PostProvider({ children }) {
 
     // 1. Check custom created posts
     const custom = customPosts.find(p => p.id === postId || p.postIdCode === postId || p.postIdCode === `#${postId}`);
-    if (custom) return custom;
+    if (custom) return { ...custom, ...postChanges[custom.id] };
 
     // 2. Check static POSTS_DATA
-    if (POSTS_DATA[postId]) return POSTS_DATA[postId];
+    if (POSTS_DATA[postId]) return { ...POSTS_DATA[postId], ...postChanges[postId] };
 
     // 3. Check fallback
     return {
@@ -172,9 +181,9 @@ export function PostProvider({ children }) {
 
     // If logged in as default user, include the initial default my post
     if (currentUser === 'shivhare.yuvraj@gmail.com') {
-      return [...userCustomPosts, DEFAULT_MY_POST];
+      return [...userCustomPosts, { ...DEFAULT_MY_POST, status: 'Live' }, POSTS_DATA['n8zXLc4RjgxncUntWUAPQ']].map(post => ({ ...post, ...postChanges[post.id] })).filter(post => !post.deleted);
     }
-    return userCustomPosts;
+    return userCustomPosts.map(post => ({ ...post, ...postChanges[post.id] })).filter(post => !post.deleted);
   };
 
   // Get applications received for a post
@@ -186,6 +195,8 @@ export function PostProvider({ children }) {
     <PostContext.Provider
       value={{
         customPosts,
+        updatePost,
+        postChanges,
         createPost,
         applications,
         applyToPost,

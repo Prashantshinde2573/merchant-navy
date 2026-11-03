@@ -2,6 +2,9 @@ import { useDialogFocus } from '../../hooks/useDialogFocus';
 import React, { useState, useRef, useEffect } from "react";
 import { usePosts } from "../../context/PostContext";
 import "./PostModal.css";
+import { DateRangePicker, formatServiceDate } from "../DateRangePicker/DateRangePicker";
+import { TreeSelectionModal } from "../TreeSelectionModal/TreeSelectionModal";
+import { SERVICE_GROUPS, PORT_GROUPS } from "../../data/selectionOptions";
 
 const CURRENCY_SYMBOLS = {
   USD: "$",
@@ -11,39 +14,6 @@ const CURRENCY_SYMBOLS = {
   GBP: "£"
 };
 
-const AVAILABLE_SERVICES = [
-  "Ship Chandlering",
-  "Bunker Supply",
-  "Fresh Water Supply",
-  "Underwater Hull Cleaning",
-  "Propeller Polishing",
-  "Waste Disposal",
-  "Crew Transfer",
-  "Canal Transit Agency Support",
-  "Cash to Master (CTM) Coordination",
-  "Compressed Air Utility",
-  "Sea Chest Grating Inspection",
-  "Zinc Anode Inspection"
-];
-
-const AVAILABLE_PORTS = [
-  "Chennai",
-  "Mumbai",
-  "Visakhapatnam (Vizag)",
-  "Cochin",
-  "Kolkata",
-  "Jawaharlal Nehru Port (JNPT)",
-  "Kandla",
-  "Paradip",
-  "Tuticorin",
-  "Mormugao",
-  "Mangalore",
-  "Dubai (UAE)",
-  "Singapore",
-  "Rotterdam",
-  "Fujairah"
-];
-
 export function PostModal({ isOpen, onClose, onPostCreated }) {
   const { createPost } = usePosts();
   const [scopeOfWork, setScopeOfWork] = useState("");
@@ -52,7 +22,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
   const [minBudget, setMinBudget] = useState("");
   const [maxBudget, setMaxBudget] = useState("");
   const [isAsap, setIsAsap] = useState(false);
-  const [serviceDates, setServiceDates] = useState("09/09/2026 - 09/09/2026");
+  const [serviceDates, setServiceDates] = useState(() => { const today = formatServiceDate(new Date()); return `${today} - ${today}`; });
   const [selectedServices, setSelectedServices] = useState([]);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [selectedPorts, setSelectedPorts] = useState([]);
@@ -86,7 +56,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
   };
 
   const dialogRef = useRef(null);
-  useDialogFocus(isOpen, onClose, dialogRef);
+  useDialogFocus(isOpen && !isServicesOpen && !isPortsOpen, onClose, dialogRef);
 
   if (!isOpen) return null;
 
@@ -95,18 +65,6 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
       const newFiles = Array.from(e.target.files).slice(0, 3);
       setFiles(newFiles);
     }
-  };
-
-  const toggleService = (service) => {
-    setSelectedServices(prev =>
-      prev.includes(service) ? prev.filter(s => s !== service) : [...prev, service]
-    );
-  };
-
-  const togglePort = (port) => {
-    setSelectedPorts(prev =>
-      prev.includes(port) ? prev.filter(p => p !== port) : [...prev, port]
-    );
   };
 
   const handleFormat = (command, value = null) => {
@@ -274,6 +232,9 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                             {/* Quill Toolbar */}
                             <div role="toolbar" className="ql-toolbar ql-snow border-b border-foreground-200 bg-default-50">
                               <span className="ql-formats">
+                                <select aria-label="Paragraph style" className="ql-paragraph-style" defaultValue="p" onChange={event => handleFormat('formatBlock', event.target.value)}>
+                                  <option value="p">Normal</option><option value="h1">Heading 1</option><option value="h2">Heading 2</option><option value="h3">Heading 3</option>
+                                </select>
                                 <button type="button" className="ql-bold" onClick={() => handleFormat("bold")} aria-label="bold">
                                   <svg viewBox="0 0 18 18"><path className="ql-stroke" d="M5,4H9.5A2.5,2.5,0,0,1,12,6.5v0A2.5,2.5,0,0,1,9.5,9H5A0,0,0,0,1,5,9V4A0,0,0,0,1,5,4Z"></path><path className="ql-stroke" d="M5,9h5.5A2.5,2.5,0,0,1,13,11.5v0A2.5,2.5,0,0,1,10.5,14H5a0,0,0,0,1,0,0V9A0,0,0,0,1,5,9Z"></path></svg>
                                 </button>
@@ -486,23 +447,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400"><path d="m6 9 6 6 6-6"></path></svg>
                       </div>
 
-                      {isServicesOpen && (
-                        <div className="post-field-options absolute left-4 sm:left-6 right-4 sm:right-6 top-full mt-1 bg-white rounded-medium shadow-medium border border-blue-100 p-3 z-50 max-h-48 overflow-y-auto">
-                          <div className="grid grid-cols-1 gap-1">
-                            {AVAILABLE_SERVICES.map(service => (
-                              <label key={service} className="flex items-center gap-2 p-1.5 hover:bg-blue-50 rounded cursor-pointer text-xs">
-                                <input
-                                  type="checkbox"
-                                  checked={selectedServices.includes(service)}
-                                  onChange={() => toggleService(service)}
-                                  className="rounded border-gray-300 text-primary"
-                                />
-                                <span className={selectedServices.includes(service) ? "font-semibold text-primary" : "text-gray-700"}>{service}</span>
-                              </label>
-                            ))}
-                          </div>
-                        </div>
-                      )}
+
                     </div>
 
                     {/* Ports */}
@@ -531,23 +476,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400"><path d="m6 9 6 6 6-6"></path></svg>
                       </div>
 
-                      {isPortsOpen && (
-                        <div className="post-field-options absolute left-4 sm:left-6 right-4 sm:right-6 top-full mt-1 bg-white rounded-medium shadow-medium border border-blue-100 p-3 z-50 max-h-48 overflow-y-auto">
-                          <div className="grid grid-cols-1 gap-1">
-                            {AVAILABLE_PORTS.map(port => (
-                              <label key={port} className="flex items-center gap-2 p-1.5 hover:bg-blue-50 rounded cursor-pointer text-xs">
-                                <input
-                                  type="checkbox"
-                                  checked={selectedPorts.includes(port)}
-                                  onChange={() => togglePort(port)}
-                                  className="rounded border-gray-300 text-primary"
-                                />
-                                <span className={selectedPorts.includes(port) ? "font-semibold text-primary" : "text-gray-700"}>{port}</span>
-                              </label>
-                            ))}
-                          </div>
-                        </div>
-                      )}
+
                     </div>
 
                     {/* Needed by */}
@@ -581,39 +510,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                       </label>
 
                       {/* Service Dates - completely hidden when ASAP is ON */}
-                      {!isAsap && (
-                        <div className="relative" style={{ display: "block" }}>
-                          <div className="group flex flex-col w-full is-filled" data-slot="base" data-filled="true" data-filled-within="true" data-has-elements="true" data-has-label="true" data-has-value="true">
-                            <div
-                              data-slot="input-wrapper"
-                              className="relative w-full inline-flex tap-highlight-transparent shadow-xs px-3 bg-default-100 hover:bg-default-200 min-h-10 rounded-medium flex-col items-start justify-center gap-0 transition-background !duration-150 outline-none outline-transparent border-0 h-14 py-2 is-filled"
-                              style={{ cursor: "text" }}
-                            >
-                              <label
-                                data-slot="label"
-                                className="block text-foreground-500 text-xs font-normal pe-2 max-w-full text-ellipsis overflow-hidden pointer-events-none"
-                              >
-                                Service dates
-                              </label>
-                              <div data-slot="inner-wrapper" className="inline-flex w-full items-center h-full box-border pb-0.5">
-                                <input
-                                  data-slot="input"
-                                  className="w-full font-normal bg-transparent outline-none focus:outline-none focus:ring-0 border-0 text-small text-default-foreground is-filled p-0 m-0 shadow-none ring-0"
-                                  type="text"
-                                  value={serviceDates}
-                                  onChange={(e) => setServiceDates(e.target.value)}
-                                />
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-calendar text-foreground-400 shrink-0" aria-hidden="true">
-                                  <path d="M8 2v4"></path>
-                                  <path d="M16 2v4"></path>
-                                  <rect width="18" height="18" x="3" y="4" rx="2"></rect>
-                                  <path d="M3 10h18"></path>
-                                </svg>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      )}
+                      {!isAsap && <DateRangePicker value={serviceDates} onChange={setServiceDates} />}
                     </div>
                   </div>
                 </div>
@@ -659,6 +556,8 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
           </div>
         </section>
       </div>
+      <TreeSelectionModal isOpen={isServicesOpen} title="Select Services" subtitle="Choose services for this request" searchPlaceholder="Search categories or services..." groups={SERVICE_GROUPS} selected={selectedServices} onApply={setSelectedServices} onClose={() => setIsServicesOpen(false)} />
+      <TreeSelectionModal isOpen={isPortsOpen} title="Select Ports" subtitle="Pick ports this request applies to" searchPlaceholder="Search countries or ports..." groups={PORT_GROUPS} selected={selectedPorts} onApply={setSelectedPorts} onClose={() => setIsPortsOpen(false)} />
     </div>
   );
 }

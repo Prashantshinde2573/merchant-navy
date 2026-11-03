@@ -1,0 +1,31 @@
+.service-date-picker { position: relative; }
+.service-date-input { padding: 6px 12px; border-radius: 12px; background: #f4f4f5; }
+.service-date-input label { display: block; font-size: 12px; color: #52525b; line-height: 18px; }
+.service-date-input > div { display: flex; align-items: center; gap: 6px; }
+.service-date-input input { width: 100%; min-width: 0; background: transparent; border: 0; outline: none; font-size: 14px; line-height: 24px; cursor: pointer; }
+.service-date-input button { display: grid; place-items: center; width: 24px; height: 24px; flex-shrink: 0; color: #a1a1aa; cursor: pointer; }
+.service-date-calendar { position: absolute; z-index: 60; right: 24px; bottom: calc(100% + 8px); width: 256px; max-width: calc(100vw - 40px); padding: 8px 12px; border: 1px solid #e4e4e7; border-radius: 14px; background: white; color: #181e21; box-shadow: 0 5px 20px #0001; }
+.service-date-calendar header { display: flex; align-items: center; justify-content: space-between; padding: 0 0 8px; border: 0; }
+.service-date-calendar header > button { display: flex; align-items: center; justify-content: center; gap: 4px; height: 32px; min-width: 24px; font-size: 14px; cursor: pointer; }
+.service-date-calendar .service-date-month { padding: 0 8px; border-radius: 16px; background: #f4f4f5; color: #71717a; }
+.service-date-weekdays, .service-date-days { display: grid; grid-template-columns: repeat(7,minmax(0,1fr)); text-align: center; }
+.service-date-weekdays { color: #a1a1aa; font-size: 14px; line-height: 24px; margin-bottom: 8px; }
+.service-date-days button { display: grid; place-items: center; height: 36px; font-size: 14px; cursor: pointer; border-radius: 50%; }
+.service-date-calendar button:disabled { color: #d4d4d8; cursor: default; }
+.service-date-days button[aria-pressed=true] { box-shadow: 0 0 0 2px #006fee; }
+.service-date-days button[data-in-range=true] { background: #e8edfb; border-radius: 0; }
+.service-date-days button:not(:disabled):hover { background: #f0f1f5; }
+.service-date-months { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; max-height: 220px; }
+.service-date-months > div { display: flex; flex-direction: column; overflow-y: auto; }
+.service-date-months button { min-height: 32px; font-size: 14px; cursor: pointer; border-radius: 6px; }
+.service-date-months button[aria-pressed=true] { background: #ececf3; }
+.service-date-picker :is(button,input):focus-visible { outline: 2px solid #1f285d; outline-offset: 2px; }
+@media (max-width: 767px) {
+  .service-date-calendar { right: 0; }
+  .service-date-input button { min-height: 44px; }
+  .service-date-days button { min-height: 36px; }
+}
+@media (max-width: 767px) {
+  .service-date-calendar { width: min(320px, calc(100vw - 40px)); }
+  .service-date-days button { min-height: 44px; }
+}

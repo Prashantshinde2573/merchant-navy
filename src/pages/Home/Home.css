@@ -80,3 +80,36 @@
   }
 
 }
+
+/* Keep menus outside card clipping and preserve the source card geometry. */
+[data-feed-post][hidden] { display: none !important; }
+[data-feed-post] { overflow: visible; }
+[data-feed-post]:focus-visible { outline: 2px solid #1f285d; outline-offset: 3px; }
+[data-feed-post] button[aria-pressed=true] { color: #20285d; }
+[data-feed-post] button[aria-pressed=true] .lucide-bookmark { fill: #20285d; }
+.home-feed-empty { min-height: 192px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 24px; border: 1px dashed #d4d4d8; border-radius: 8px; background: white; text-align: center; }
+.home-feed-empty p { font-size: 14px; font-weight: 500; }
+.home-feed-empty span { color: #52525b; font-size: 12px; }
+.home-advertisement { display: block; width: 100%; height: auto; border-radius: 8px; }
+[data-feed-post] .line-clamp-2 { line-clamp: 3; -webkit-line-clamp: 3; }
+[data-feed-post] button:disabled { background: #0da34c !important; }
+[data-post-actions-dropdown] { min-width: 200px; padding: 8px; border-radius: 14px; }
+[data-post-actions-dropdown] button { min-height: 32px; font-size: 14px; font-weight: 400; }
+[data-post-actions-dropdown] .lucide-flag { display: none; }
+@media (max-width: 1023px) {
+  [data-post-actions-dropdown] { min-width: 160px; max-width: calc(100vw - 48px); }
+  [data-post-actions-dropdown] button { min-height: 44px; }
+}
+@media (min-width: 1024px) {
+  [data-feed-post] .line-clamp-2 { line-height: 21px; }
+}
+/* Three source columns need 1,200px plus outer breathing room. */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .home-page { padding-inline: 24px; }
+  .home-page > .sticky { display: none; }
+  .home-page .w-147 { width: 100%; max-width: 720px; }
+  .home-page .max-w-147 { max-width: 100%; }
+}
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .home-page { padding-inline: 24px; }
+}

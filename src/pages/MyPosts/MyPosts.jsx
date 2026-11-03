@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { usePosts } from '../../context/PostContext';
+import { PostActions } from '../../components/PostActions/PostActions';
 import './MyPosts.css';
 
 const DEFAULT_MY_POST = {
@@ -21,14 +22,14 @@ export function MyPosts() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const { getMyPosts, getApplicationsForPost } = usePosts();
+  const { getMyPosts, getApplicationsForPost, postChanges } = usePosts();
 
   const customMyPosts = getMyPosts ? getMyPosts() : [];
   
   // Combine custom posts with default demo post if not already present
   const allMyPosts = [...customMyPosts];
-  if (!allMyPosts.some(p => p.id === 'my-post-1')) {
-    allMyPosts.push(DEFAULT_MY_POST);
+  if (!postChanges['my-post-1']?.deleted && !allMyPosts.some(p => p.id === 'my-post-1')) {
+    allMyPosts.push({ ...DEFAULT_MY_POST, ...postChanges['my-post-1'] });
   }
 
   // Calculate dynamic tab counts
@@ -87,7 +88,7 @@ export function MyPosts() {
                   className="z-0 w-full flex group relative justify-center items-center cursor-pointer transition-opacity tap-highlight-transparent text-small rounded-none px-3 py-3 h-auto border-b-2 border-transparent data-[selected=true]:border-red-500"
                 >
                   <div className="relative z-10 whitespace-nowrap transition-colors group-data-[selected=true]:text-primary text-blue-600">
-                    <div className="flex items-center gap-1.5"><span className={`text-sm ${activeTab === 'all' ? 'font-semibold' : ''}`}>All</span><span className="flex h-4 min-w-4 items-center justify-center rounded-full border border-zinc-100 bg-red-50 px-1 text-xs">{allCount}</span></div>
+                    <div className="flex items-center gap-1.5"><span className={`text-sm ${activeTab === 'all' ? 'font-semibold' : ''}`}>All</span><span className="flex h-4 min-w-4 items-center justify-center rounded-full border border-zinc-100 tab-count bg-zinc-50 px-1 text-xs">{allCount}</span></div>
                   </div>
                 </button>
                 <button
@@ -99,7 +100,7 @@ export function MyPosts() {
                   className="z-0 w-full flex group relative justify-center items-center cursor-pointer transition-opacity tap-highlight-transparent text-small rounded-none px-3 py-3 h-auto border-b-2 border-transparent data-[selected=true]:border-red-500"
                 >
                   <div className="relative z-10 whitespace-nowrap transition-colors group-data-[selected=true]:text-primary text-blue-600">
-                    <div className="flex items-center gap-1.5"><span className={`text-sm ${activeTab === 'live' ? 'font-semibold' : ''}`}>Live</span><span className="flex h-4 min-w-4 items-center justify-center rounded-full border border-zinc-100 bg-red-50 px-1 text-xs">{liveCount}</span></div>
+                    <div className="flex items-center gap-1.5"><span className={`text-sm ${activeTab === 'live' ? 'font-semibold' : ''}`}>Live</span><span className="flex h-4 min-w-4 items-center justify-center rounded-full border border-zinc-100 tab-count bg-zinc-50 px-1 text-xs">{liveCount}</span></div>
                   </div>
                 </button>
                 <button
@@ -111,7 +112,7 @@ export function MyPosts() {
                   className="z-0 w-full flex group relative justify-center items-center cursor-pointer transition-opacity tap-highlight-transparent text-small rounded-none px-3 py-3 h-auto border-b-2 border-transparent data-[selected=true]:border-red-500"
                 >
                   <div className="relative z-10 whitespace-nowrap transition-colors group-data-[selected=true]:text-primary text-blue-600">
-                    <div className="flex items-center gap-1.5"><span className={`text-sm ${activeTab === 'awarded' ? 'font-semibold' : ''}`}>Awarded</span><span className="flex h-4 min-w-4 items-center justify-center rounded-full border border-zinc-100 bg-red-50 px-1 text-xs">{awardedCount}</span></div>
+                    <div className="flex items-center gap-1.5"><span className={`text-sm ${activeTab === 'awarded' ? 'font-semibold' : ''}`}>Awarded</span><span className="flex h-4 min-w-4 items-center justify-center rounded-full border border-zinc-100 tab-count bg-zinc-50 px-1 text-xs">{awardedCount}</span></div>
                   </div>
                 </button>
                 <button
@@ -135,7 +136,7 @@ export function MyPosts() {
                   className="z-0 w-full flex group relative justify-center items-center cursor-pointer transition-opacity tap-highlight-transparent text-small rounded-none px-3 py-3 h-auto border-b-2 border-transparent data-[selected=true]:border-red-500"
                 >
                   <div className="relative z-10 whitespace-nowrap transition-colors group-data-[selected=true]:text-primary text-blue-600">
-                    <div className="flex items-center gap-1.5"><span className={`text-sm ${activeTab === 'history' ? 'font-semibold' : ''}`}>History</span><span className="flex h-4 min-w-4 items-center justify-center rounded-full border border-zinc-100 bg-red-50 px-1 text-xs">{historyCount}</span></div>
+                    <div className="flex items-center gap-1.5"><span className={`text-sm ${activeTab === 'history' ? 'font-semibold' : ''}`}>History</span><span className="flex h-4 min-w-4 items-center justify-center rounded-full border border-zinc-100 tab-count bg-zinc-50 px-1 text-xs">{historyCount}</span></div>
                   </div>
                 </button>
                 <button
@@ -147,7 +148,7 @@ export function MyPosts() {
                   className="z-0 w-full flex group relative justify-center items-center cursor-pointer transition-opacity tap-highlight-transparent text-small rounded-none px-3 py-3 h-auto border-b-2 border-transparent data-[selected=true]:border-red-500"
                 >
                   <div className="relative z-10 whitespace-nowrap transition-colors group-data-[selected=true]:text-primary text-blue-600">
-                    <div className="flex items-center gap-1.5"><span className={`text-sm ${activeTab === 'drafts' ? 'font-semibold' : ''}`}>Drafts</span><span className="flex h-4 min-w-4 items-center justify-center rounded-full border border-zinc-100 bg-red-50 px-1 text-xs">{draftsCount}</span></div>
+                    <div className="flex items-center gap-1.5"><span className={`text-sm ${activeTab === 'drafts' ? 'font-semibold' : ''}`}>Drafts</span><span className="flex h-4 min-w-4 items-center justify-center rounded-full border border-zinc-100 tab-count bg-zinc-50 px-1 text-xs">{draftsCount}</span></div>
                   </div>
                 </button>
               </div>
@@ -156,10 +157,10 @@ export function MyPosts() {
             <div className="absolute top-0 right-0">
               <div className="group flex flex-col relative justify-end w-[220px]">
                 <div className="h-full flex flex-col">
-                  <div className="relative w-full inline-flex flex-row items-center px-3 gap-3 rounded-small h-9 bg-white border border-blue-100 shadow-sm" style={{"cursor": "text"}}>
+                  <div className="relative w-full inline-flex flex-row items-center px-3 gap-3 my-posts-search rounded-small h-10 min-h-10 bg-white border border-blue-100 shadow-sm" style={{"cursor": "text"}}>
                     <div className="inline-flex w-full items-center h-full box-border">
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search text-zinc-400"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg>
-                      <input className="w-full font-normal bg-transparent outline-none px-1.5 text-[13px]" placeholder="Search posts..." aria-label="Search posts" type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+                      <input className="w-full font-normal bg-transparent outline-none px-1.5 text-[13px]" placeholder="Search..." aria-label="Search posts" type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
                     </div>
                   </div>
                 </div>
@@ -179,8 +180,8 @@ export function MyPosts() {
                 const quotationsCount = post.quotationsCount !== undefined ? post.quotationsCount : postApps.length;
 
                 return (
-                  <div key={post.id} className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 shadow-medium rounded-large shadow-neutral-sm w-full border border-blue-50">
-                    <div className="relative flex w-full flex-auto flex-col h-auto break-words text-left overflow-y-auto gap-4 p-7">
+                  <div key={post.id} className="flex flex-col relative overflow-visible h-auto text-foreground box-border bg-content1 shadow-medium rounded-large shadow-neutral-sm w-full border border-blue-50">
+                    <div className="relative flex w-full flex-auto flex-col h-auto break-words text-left overflow-visible gap-4 p-7">
                       <div className="flex items-center justify-between">
                         <div>
                           {post.isUrgent && (
@@ -207,7 +208,7 @@ export function MyPosts() {
                       </div>
                       <div>
                         <p className="my-post-summary text-[15px] leading-[1.4] tracking-[-0.1px] text-zinc-800">
-                          {post.scopeOfWork || post.description || post.title || ""}
+                          {(post.scopeOfWork || post.description || post.title || "").split("\n")[0]}
                           <Link className="my-post-inline-more ml-1 text-zinc-500 hover:text-zinc-700" to={`/my-posts/${post.id}`}>more</Link>
                         </p>
                       </div>
@@ -236,10 +237,9 @@ export function MyPosts() {
                             <div className="shrink-0 border-none w-divider bg-layout-divider h-3 opacity-50" role="separator"></div>
                             <div className="flex items-center gap-1.5"><span className="material-symbols-outlined text-base text-zinc-500">people</span><span className="text-[13px] leading-4.5 text-zinc-500">{quotationsCount} Quotations</span></div>
                           </div>
-                          <div className="flex items-center gap-3">
+                          <div className="my-post-card-actions flex items-center gap-3">
                             <Link className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden border-medium px-4 min-w-20 h-10 text-small gap-2 rounded-medium bg-transparent text-primary border-blue-200 hover:bg-blue-50" to={`/my-posts/${post.id}`}>View Details</Link>
-                            <button type="button" className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden border-medium px-4 min-w-20 h-10 text-small gap-2 rounded-medium bg-transparent border-red-500 text-red-500 hover:bg-red-50">Mark Close</button>
-                            <button type="button" className="group relative inline-flex items-center justify-center min-w-8 w-8 h-8 rounded-small text-zinc-500 hover:bg-gray-100"><span className="material-symbols-outlined">more_vert</span></button>
+                            <PostActions post={post} showClose />
                           </div>
                         </div>
                       </div>

@@ -1,0 +1,95 @@
+.vendor-profile-backdrop { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; padding: 64px 24px; background: #0008; }
+.vendor-profile-dialog { display: flex; flex-direction: column; width: 800px; min-height: 500px; max-width: 100%; max-height: calc(100dvh - 128px); border-radius: 8px; background: white; color: #181e21; box-shadow: 0 1px 3px #0002; outline: none; overflow: hidden; }
+.vendor-profile-header { display: flex; align-items: center; gap: 12px; padding: 16px 24px; flex-shrink: 0; }
+.vendor-profile-avatar { display: inline-flex; flex-shrink: 0; align-items: center; justify-content: center; height: 56px; width: 56px; border-radius: 8px; overflow: hidden; background: #f4f4f5; font-size: 14px; }
+.vendor-profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.vendor-profile-identity { flex: 1; min-width: 0; }
+.vendor-profile-identity h2 { max-width: 164px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 15px; line-height: 22px; font-weight: 600; }
+.vendor-profile-identity p { display: flex; align-items: center; gap: 4px; margin-top: 4px; color: #696f93; font-size: 14px; line-height: 20px; }
+.vendor-profile-identity strong { color: #424976; font-weight: 500; }
+.vendor-profile-star { color: #f5a524; }
+.vendor-profile-close { display: grid; place-items: center; width: 32px; height: 32px; align-self: flex-start; margin-top: 4px; cursor: pointer; border-radius: 8px; }
+.vendor-profile-close:hover { background: #f4f4f5; }
+.vendor-profile-scroll { min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+.vendor-profile-tabs { display: flex; gap: 12px; padding: 0 24px; border-bottom: 1px solid #f0f1f4; overflow-x: auto; scrollbar-width: none; }
+.vendor-profile-tabs button { flex: 1; flex-shrink: 0; padding: 4px 12px 12px; border-bottom: 2px solid transparent; font-size: 14px; line-height: 20px; color: #696f93; white-space: nowrap; cursor: pointer; }
+.vendor-profile-tabs button[aria-selected=true] { border-bottom-color: #ef3f49; color: #1f285d; font-weight: 600; }
+.vendor-profile-panel { padding: 24px; outline: none; }
+.vendor-profile-fields { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; border-radius: 8px; padding: 24px; background: #f7f7fb; margin: 0; }
+.vendor-profile-fields dt { color: #52525b; font-size: 14px; line-height: 20px; }
+.vendor-profile-fields dd { font-size: 15px; line-height: 22px; margin: 2px 0 0; overflow-wrap: anywhere; }
+.vendor-profile-fields > div:last-child:has(dt:first-child) { min-width: 0; }
+.vendor-profile-fields > div:has(dt):last-child:nth-child(odd) { grid-column: 1 / -1; }
+.vendor-profile-section { margin-top: 32px; }
+.vendor-profile-section h3 { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 400; color: #52525b; line-height: 20px; margin-bottom: 12px; }
+.vendor-profile-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.vendor-profile-chips > span { display: inline-block; padding: 4px 12px; border: 1px solid #f0f1f4; border-radius: 2px; font-size: 14px; line-height: 18px; }
+.vendor-profile-documents { display: grid; gap: 16px; }
+.vendor-profile-documents article { position: relative; padding: 16px; border: 1px solid #f0f1f4; border-radius: 8px; }
+.vendor-profile-documents h4 { font-size: 15px; line-height: 22px; font-weight: 600; margin: 0 0 8px; }
+.vendor-profile-documents p { font-size: 14px; line-height: 20px; margin: 4px 0; color: #696f93; }
+.vendor-profile-pdf { display: inline-block; margin-top: 8px; padding: 2px 8px; background: #f4f4f5; border-radius: 4px; font-size: 12px; }
+.vendor-profile-team article { display: flex; align-items: center; gap: 20px; border-bottom: 1px solid #f0f1f4; padding: 12px 0; }
+.vendor-profile-team article:last-child { border-bottom: 0; }
+.vendor-profile-team .vendor-profile-avatar { width: 48px; height: 48px; border: 1px solid #e5e7eb; }
+.vendor-profile-team h4 { font-size: 16px; line-height: 24px; font-weight: 600; }
+.vendor-profile-team p { font-size: 12px; line-height: 16px; color: #71717a; margin-top: 2px; }
+.vendor-profile-gallery { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+.vendor-profile-gallery img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; border: 1px solid #f0f1f4; }
+.vendor-profile-empty { padding: 32px 0; text-align: center; font-size: 14px; color: #696f93; }
+.vendor-profile-team-empty { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 48px 0; text-align: center; color: #696f93; }
+.vendor-profile-team-empty svg { color: #dfe1ec; margin-bottom: 8px; }
+.vendor-profile-team-empty h3 { font-size: 18px; font-weight: 600; color: #1f285d; }
+.vendor-profile-team-empty p { font-size: 14px; }
+.vendor-profile-reviews { display: flex; flex-direction: column; gap: 16px; }
+.vendor-profile-reviews article { display: flex; align-items: center; gap: 12px; padding: 16px; border: 1px solid #f0f1f4; border-radius: 8px; }
+.vendor-profile-reviews .vendor-profile-avatar { width: 40px; height: 40px; }
+.vendor-profile-review-content { flex: 1; min-width: 0; }
+.vendor-profile-review-content h4 { font-size: 14px; line-height: 20px; font-weight: 500; }
+.vendor-profile-review-content time { font-size: 12px; color: #71717a; }
+.vendor-profile-review-rating { display: flex; align-items: center; gap: 4px; font-size: 14px; }
+.vendor-profile-review-rating svg { color: #f5a524; }
+.vendor-profile-dialog :is(button,[role=tabpanel]):focus-visible { outline: 2px solid #1f285d; outline-offset: -2px; }
+@media (max-width: 767px) {
+  .vendor-profile-backdrop { padding: 12px; }
+  .vendor-profile-dialog { max-height: calc(100dvh - 24px); min-height: min(500px, calc(100dvh - 24px)); }
+  .vendor-profile-header { padding: 16px; }
+  .vendor-profile-tabs { padding: 0 16px; gap: 4px; }
+  .vendor-profile-tabs button { flex: 0 0 auto; min-height: 44px; padding-inline: 12px; }
+  .vendor-profile-panel { padding: 16px; }
+  .vendor-profile-fields { padding: 16px; gap: 20px; }
+  .vendor-profile-gallery { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+  .vendor-profile-close { width: 44px; height: 44px; margin: -4px -8px 0 0; }
+  .vendor-profile-chips > span { max-width: 100%; overflow-wrap: anywhere; }
+}
+@media (max-width: 360px) {
+  .vendor-profile-fields { grid-template-columns: minmax(0,1fr); }
+  .vendor-profile-identity h2 { max-width: 140px; }
+}
+.vendor-profile-fields .vendor-profile-address { grid-column: 1 / -1; }
+.vendor-profile-documents { gap: 0; }
+.vendor-profile-documents article { padding: 12px 0; border: 0; border-bottom: 1px solid #f0f1f4; border-radius: 0; }
+.vendor-profile-documents article:last-child { border-bottom: 0; }
+.vendor-profile-documents h4 { margin-bottom: 2px; font-weight: 500; }
+.vendor-profile-documents p { margin: 0; font-size: 13px; }
+.vendor-insurance-metadata { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+.vendor-insurance-metadata p + p { border-left: 1px solid #e4e4e7; padding-left: 12px; }
+.vendor-profile-reviews { gap: 0; }
+.vendor-profile-reviews article { border: 0; border-bottom: 1px solid #f0f1f4; border-radius: 0; padding: 12px 0; }
+.vendor-profile-reviews article:last-child { border-bottom: 0; }
+.vendor-profile-reviews .vendor-profile-avatar { width: 48px; height: 48px; }
+.vendor-profile-reviews time { color: #71717a; font-size: 12px; flex-shrink: 0; }
+.vendor-profile-review-rating { gap: 2px; margin-top: 2px; }
+.vendor-profile-review-rating svg { color: #e4e4e7; }
+.vendor-profile-review-rating svg.is-filled { color: #f5a524; }
+@media (max-width: 480px) {
+  .vendor-profile-reviews article { flex-wrap: wrap; gap: 8px; }
+  .vendor-profile-reviews time { width: 100%; padding-left: 56px; }
+}
+.vendor-profile-documents .vendor-profile-certificate { display: flex; align-items: center; gap: 16px; }
+.vendor-profile-file-icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 8px; border: 1px solid #f0f1f4; background: #f7f7fb; color: #696f93; }
+.vendor-profile-pdf { margin: 0 0 0 8px; padding: 0 0 0 8px; border-left: 1px solid #e4e4e7; border-radius: 0; background: none; }
+.vendor-profile-fields dd { margin-top: 0; }
+.vendor-profile-reviews article { padding: 16px 0; }
+.vendor-profile-reviews article:first-child { padding-top: 0; }
+.vendor-profile-review-content h4 { font-size: 15px; line-height: 22px; }

@@ -62,3 +62,23 @@
     padding: 14px !important;
   }
 }
+@media (min-width: 1024px) {
+  #_r_19r_ { min-height: 65px; padding: 16px 24px; }
+  #_r_19s_ { padding: 24px; }
+  #_r_19s_ .bg-content1.shadow-neutral-sm.rounded-lg { padding: 24px; }
+  #_r_19q_ .ql-editor { min-height: 180px; }
+  #_r_19q_ > footer { min-height: 72px; padding: 16px 24px; justify-content: flex-end; gap: 12px; }
+}
+#_r_19q_ .ql-paragraph-style { width: 98px; border: 0; outline: none; background: transparent; color: #444; font-size: 14px; vertical-align: middle; height: 24px; margin-right: 10px; cursor: pointer; }
+@media (min-width: 1024px) {
+  #_r_19q_ .ql-editor { min-height: 180px !important; }
+}
+@media (max-width: 1023px) {
+  #_r_19q_ footer > button { display: inline-flex !important; flex-shrink: 0; min-width: 56px; padding-inline: 8px; font-size: 13px; }
+  #_r_19q_ footer > div { display: flex !important; width: auto !important; flex: 1; min-width: 0; }
+  #_r_19q_ footer > div > button { min-width: 0; padding-inline: 8px; font-size: 13px; flex: 1; }
+  #_r_19q_ footer > div > button:last-child { flex: 1.4; }
+  #_r_19q_ .quill .ql-toolbar { flex-wrap: wrap !important; }
+  #_r_19q_ .quill .ql-formats { flex-wrap: wrap; gap: 2px; width: 100%; }
+}
+#_r_19q_ .ql-paragraph-style { float: left; }

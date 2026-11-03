@@ -1,0 +1,64 @@
+.applied-merchants{background:white;border:1px solid #edf0f7;border-radius:16px;padding:24px;box-shadow:0 1px 2px #0000000d;color:#181f23}
+.applied-selection{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;min-height:32px;color:#a1a1aa;font-size:13px}
+.applied-selection button{border:1px solid #dce0eb;border-radius:8px;padding:6px 12px;color:#1f285d;font-size:12px;min-height:32px}
+.applied-selection button:disabled{opacity:.5;cursor:default}
+.applied-merchants table{width:100%;border-collapse:separate;border-spacing:0;table-layout:auto}
+.applied-merchants th{text-align:left;background:#f0f1f5;color:#71717a;font-size:12px;line-height:18px;text-transform:uppercase;font-weight:600;padding:12px 10px;white-space:nowrap}
+.applied-merchants th:first-child{border-radius:8px 0 0 8px}.applied-merchants th:last-child{border-radius:0 8px 8px 0}
+.applied-merchants td{padding:20px 10px 16px;border-bottom:1px solid #ececf0;vertical-align:middle;font-size:14px}
+.applied-merchants th.applied-checkbox,.applied-merchants td.applied-checkbox{width:32px;padding-left:8px;padding-right:4px}
+.applied-checkbox input{appearance:none;width:20px;height:20px;border:1px solid #d4d4d8;border-radius:4px;background:white;vertical-align:middle;cursor:pointer}.applied-checkbox input:checked{appearance:auto;accent-color:#1f285d}
+.applied-identity{display:flex;gap:8px;align-items:center;min-width:200px}.applied-identity img{width:40px;height:40px;border-radius:8px;object-fit:cover}.applied-identity h2{font-size:15px;line-height:22px;font-weight:500;white-space:nowrap}.applied-identity p{display:flex;gap:4px;align-items:center;color:#424976;font-size:14px;line-height:20px}.applied-identity p>svg{color:#f5a623}.applied-reviews{color:#747a9f}.applied-match{font-size:14px;line-height:20px}.applied-match-detail{display:flex;align-items:center;gap:8px;color:#71717a;font-size:12px;margin-top:4px;white-space:nowrap}.applied-match-detail span{display:flex;align-items:center;gap:4px}.applied-match-detail i{height:12px;width:1px;background:#e4e4e7}.applied-date{white-space:nowrap}.applied-row-actions{display:flex;align-items:center;gap:8px;white-space:nowrap}.applied-row-actions .merchant-row-actions{gap:8px}.application-notes-button,.applied-row-actions .merchant-card-trigger{display:grid;place-items:center;width:32px;height:32px;min-width:32px;border:1px solid #d5daea;border-radius:8px;color:#181f23}.application-invite{height:32px;min-width:80px;padding:0 16px;border-radius:8px;background:#1f285d;color:white;font-size:12px;font-weight:500}.application-invite:disabled{opacity:.6}.application-notes-control{position:relative}.application-notes-popover{position:absolute;top:calc(100% + 8px);right:0;width:260px;padding:16px;z-index:45;background:white;border:1px solid #e4e4e7;border-radius:12px;box-shadow:0 8px 24px #0002;white-space:normal}.application-notes-popover h3{font-size:13px;color:#71717a;margin-bottom:8px}.application-notes-popover p{font-size:14px;line-height:20px}.applied-empty{text-align:center;padding:32px 0;color:#71717a;font-size:14px}
+/* Mobile cards group identity, paired details, and a single action row. */
+@media(max-width:1023px){
+  .applied-merchants{padding:16px}
+  .applied-selection{margin-bottom:12px}
+  .applied-table-wrap table,.applied-table-wrap tbody{display:block}
+  .applied-table-wrap thead{display:none}
+  .applied-table-wrap tbody tr{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr) 24px;
+    gap:16px 12px;
+    padding:20px 0 4px;
+    border-top:1px solid #ececf0;
+  }
+  .applied-table-wrap tbody tr + tr{margin-top:16px}
+  .applied-merchants td{display:block;min-width:0;border:0;padding:0}
+  .applied-merchants td.applied-checkbox{
+    grid-column:3;grid-row:1;width:24px;padding:0;
+    display:flex;align-items:center;justify-content:flex-end;min-height:44px;
+  }
+  .applied-merchant-cell{grid-column:1 / 3;grid-row:1}
+  .applied-identity{min-width:0;gap:10px;align-items:center}
+  .applied-identity img{width:40px;height:40px;flex-shrink:0}
+  .applied-identity > div{min-width:0}
+  .applied-identity h2{white-space:normal;overflow-wrap:break-word;font-weight:600;line-height:21px}
+  .applied-identity p{margin-top:3px;font-size:13px;line-height:18px;flex-wrap:wrap}
+  .applied-merchants td[data-label]:before{
+    content:attr(data-label);display:block;color:#71717a;font-size:12px;line-height:16px;margin-bottom:6px;
+  }
+  .applied-match-cell{grid-column:1;grid-row:2}
+  .applied-merchants td.applied-date{
+    grid-column:2 / 4;grid-row:2;border-left:1px solid #ececf0;padding-left:16px;white-space:normal;font-size:13px;line-height:20px;
+  }
+  .applied-match{font-weight:600;font-size:14px;line-height:20px}
+  .applied-match-detail{gap:6px;margin-top:5px;font-size:11px}
+  .applied-match-detail span{gap:3px}
+  .applied-merchants td.applied-actions-cell{
+    grid-column:1 / -1;grid-row:3;border-top:1px solid #ececf0;padding-top:14px;
+  }
+  .applied-row-actions{display:flex;gap:8px;flex-wrap:nowrap;width:100%}
+  .applied-row-actions .merchant-row-actions{
+    flex:1;min-width:0;display:grid;grid-template-columns:40px minmax(0,1fr) 40px;gap:8px;
+  }
+  .applied-row-actions .application-notes-button,.applied-row-actions .merchant-card-trigger,
+  .applied-row-actions .post-overflow-trigger{width:40px;height:40px;min-width:40px}
+  .applied-row-actions .application-invite{width:100%;min-width:0;height:40px;font-size:13px}
+  .application-notes-popover{left:0;right:auto;width:min(260px,calc(100vw - 80px))}
+}
+@media(min-width:1024px){
+.applied-merchants th{line-height:20px;padding-top:10px;padding-bottom:10px}
+.applied-merchants td{padding-bottom:10px}
+.applied-merchants th.applied-checkbox,.applied-merchants td.applied-checkbox{width:38px}
+.applied-identity{gap:12px}.applied-identity img{flex-shrink:0}
+}

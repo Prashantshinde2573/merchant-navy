@@ -4,6 +4,10 @@ import { usePosts } from '../../context/PostContext';
 import { DEFAULT_MY_POST, POSTS_DATA } from '../../data/postsData';
 import { getQuotationsForPost } from '../../data/quotationsData';
 
+import { AppliedMerchants } from '../../components/AppliedMerchants/AppliedMerchants';
+import { PostActions } from '../../components/PostActions/PostActions';
+import { MerchantRowActions } from '../../components/MerchantRowActions/MerchantRowActions';
+import { ShareModal } from '../../components/ShareModal/ShareModal';
 import './MyPostDetail.css';
 
 export function MyPostDetail() {
@@ -16,19 +20,20 @@ export function MyPostDetail() {
   const initialTab = searchParams.get('tab') || location.state?.tab || 'scope';
   const [activeTab, setActiveTab] = useState(initialTab);
   const [activeSection, setActiveSection] = useState('attachments');
-  const [privateNote, setPrivateNote] = useState('');
+  const [privateNote, setPrivateNote] = useState(() => localStorage.getItem(`merchant_navy_note_${id || 'my-post-1'}`) || '');
+  const [servicesExpanded, setServicesExpanded] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
 
   useEffect(() => {
     const tabParam = searchParams.get('tab') || location.state?.tab;
-    if (tabParam) {
-      setActiveTab(tabParam);
-    }
+    setActiveTab(tabParam || 'scope');
   }, [searchParams, location.state]);
 
   // Fallback to DEFAULT_MY_POST (merchant-navy 13)
   const postId = id || 'my-post-1';
+  useEffect(() => { setPrivateNote(localStorage.getItem(`merchant_navy_note_${postId}`) || ''); }, [postId]);
   const post = getPost(postId) || POSTS_DATA[postId] || DEFAULT_MY_POST;
-  const staticQuotations = getQuotationsForPost(post?.id || postId) || [];
+  const staticQuotations = postId === 'n8zXLc4RjgxncUntWUAPQ' ? [] : getQuotationsForPost(post?.id || postId) || [];
   const dynamicApplications = (getApplicationsForPost ? getApplicationsForPost(post?.id || postId) : []).map(app => ({
     id: app.id,
     postId: app.postId,
@@ -52,6 +57,21 @@ export function MyPostDetail() {
     chatId: 'c-1'
   }));
   const quotations = [...dynamicApplications, ...staticQuotations];
+  const referenceApplications = ['my-post-1', 'n8zXLc4RjgxncUntWUAPQ'].includes(postId) ? [{
+    id: `reference-application-${postId}`, merchantName: 'Indra Shipping Co.', avatar: '/images/indra_avatar.jpg',
+    rating: '5.00', reviewCount: '2 reviews', matchPercent: postId === 'my-post-1' ? 100 : 58,
+    portMatch: postId === 'my-post-1' ? '1/1' : '4/25', serviceMatch: postId === 'my-post-1' ? '1/1' : '12/12',
+    appliedDate: postId === 'my-post-1' ? 'Aug 31, 2026' : 'Nov 3, 2026',
+    scopeSummary: 'This is exactly what I do, lets connect.', status: 'Applied'
+  }] : [];
+  const applications = [...dynamicApplications, ...referenceApplications];
+  const [invitations, setInvitations] = useState(() => { try { return JSON.parse(localStorage.getItem('merchant_navy_invitations') || '{}'); } catch { return {}; } });
+  const invited = invitations[postId] || [];
+  const inviteApplications = ids => setInvitations(previous => {
+    const next = { ...previous, [postId]: [...new Set([...(previous[postId] || []), ...ids])] };
+    localStorage.setItem('merchant_navy_invitations', JSON.stringify(next)); return next;
+  });
+
 
   const scrollToSection = (sectionId) => {
     setActiveSection(sectionId);
@@ -66,12 +86,14 @@ export function MyPostDetail() {
 
   const handleTabChange = (newTab) => {
     setActiveTab(newTab);
+    navigate({ pathname: location.pathname, search: newTab === 'scope' ? '' : `?tab=${newTab}` }, { replace: true });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <>
-      <div className="relative min-h-[calc(100vh-56px)] my-post-detail-container">
+      {shareOpen && <ShareModal post={{ description: post.scopeOfWork || post.title, url: window.location.href }} onClose={() => setShareOpen(false)} />}
+      <div className={`relative min-h-[calc(100vh-56px)] my-post-detail-container${['applied', 'discussion'].includes(activeTab) ? ' is-applications-view' : ''}`}>
         {/* Sticky Sub-Header */}
         <div className="border-default-100 bg-white sticky top-14 z-40 border-b shadow-sm my-post-detail-header-wrap">
           <div className="mx-auto max-w-300 px-6 my-post-detail-header-inner">
@@ -107,12 +129,14 @@ export function MyPostDetail() {
                   <h2 className="text-content1-foreground truncate text-lg leading-7 font-semibold my-post-detail-title">
                     {post.title || post.scopeOfWork}
                   </h2>
-                  <p className="truncate text-sm leading-5 text-zinc-500 my-post-detail-services-sub">
+                  <p data-expanded={servicesExpanded} className="truncate text-sm leading-5 text-zinc-500 my-post-detail-services-sub">
                     <span className="font-medium">Services:</span> {post.services?.join(', ')}
                   </p>
+                  {post.services?.length > 2 && <button type="button" className="my-post-services-toggle" aria-expanded={servicesExpanded} onClick={() => setServicesExpanded(!servicesExpanded)}>{servicesExpanded ? 'Show fewer services' : 'Show all services'}</button>}
                 </div>
               </div>
 
+            </div>
               {/* Status pill & Actions */}
               <div className="flex items-center gap-5 my-post-detail-header-actions">
                 <div className="flex items-center gap-3">
@@ -129,19 +153,13 @@ export function MyPostDetail() {
 
                 <div className="flex items-center gap-4">
                   {/* Edit Post Button */}
-                  <button
-                    type="button"
-                    tabIndex="0"
-                    className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent border-medium min-w-16 gap-2 rounded-small text-primary h-9 border-blue-200 px-4 text-sm font-medium hover:bg-blue-50 transition-colors"
-                  >
-                    Edit Post
-                  </button>
+                  <PostActions post={post} editOnly />
 
                   {/* Share Post Button */}
                   <button
                     type="button"
                     tabIndex="0"
-                    aria-label="Share post"
+                    aria-label="Share post" onClick={() => setShareOpen(true)}
                     className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent cursor-pointer outline-solid outline-transparent text-tiny gap-2 rounded-small px-0 !gap-0 transition-colors bg-transparent text-default-foreground hover:bg-default/40 min-w-8 w-8 h-8"
                   >
                     <svg
@@ -166,33 +184,9 @@ export function MyPostDetail() {
                   </button>
 
                   {/* Ellipsis Menu Button */}
-                  <button
-                    type="button"
-                    tabIndex="0"
-                    aria-label="More actions"
-                    className="group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal overflow-hidden tap-highlight-transparent cursor-pointer outline-solid outline-transparent text-tiny gap-2 rounded-small px-0 !gap-0 transition-colors bg-transparent text-default-foreground hover:bg-default/40 min-w-8 w-8 h-8"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="lucide lucide-ellipsis-vertical"
-                      aria-hidden="true"
-                    >
-                      <circle cx="12" cy="12" r="1" />
-                      <circle cx="12" cy="5" r="1" />
-                      <circle cx="12" cy="19" r="1" />
-                    </svg>
-                  </button>
+                  <PostActions post={post} />
                 </div>
               </div>
-            </div>
 
             {/* Tab Navigation List */}
             <div data-slot="base" className="inline-flex my-post-detail-tab-wrap">
@@ -234,9 +228,9 @@ export function MyPostDetail() {
                       <span className={`text-sm leading-5 ${activeTab === 'applied' ? 'text-primary font-semibold' : 'text-blue-600 font-normal'}`}>
                         Applied
                       </span>
-                      <div className="relative max-w-fit inline-flex items-center justify-between box-border whitespace-nowrap text-tiny rounded-full text-default-700 h-4 min-w-4 px-1 bg-red-50 border border-zinc-100">
+                      <div className="relative max-w-fit inline-flex items-center justify-between box-border whitespace-nowrap text-tiny rounded-full text-default-700 h-4 min-w-4 px-1 tab-count bg-zinc-50 border border-zinc-100">
                         <span className="flex-1 font-normal px-1 text-tiny text-default-foreground leading-4">
-                          {dynamicApplications.length}
+                          {applications.length}
                         </span>
                       </div>
                     </div>
@@ -275,9 +269,9 @@ export function MyPostDetail() {
                       <span className={`text-sm leading-5 ${activeTab === 'quotation' ? 'text-primary font-semibold' : 'text-blue-600 font-normal'}`}>
                         Quotation
                       </span>
-                      <div className="relative max-w-fit inline-flex items-center justify-between box-border whitespace-nowrap text-tiny rounded-full text-default-700 h-4 min-w-4 px-1 bg-red-50 border border-zinc-100">
+                      <div className="relative max-w-fit inline-flex items-center justify-between box-border whitespace-nowrap text-tiny rounded-full text-default-700 h-4 min-w-4 px-1 tab-count bg-zinc-50 border border-zinc-100">
                         <span className="flex-1 font-normal px-1 text-tiny text-default-foreground leading-4">
-                          {quotations.length}
+                          {quotations.length || ''}
                         </span>
                       </div>
                     </div>
@@ -294,22 +288,7 @@ export function MyPostDetail() {
             {/* Left Content Column */}
             <div className="w-226 flex-1 my-post-detail-left">
               {activeTab === 'applied' || activeTab === 'discussion' ? (
-                <section className="post-conversation-list bg-white border border-blue-50 rounded-large shadow-neutral-sm p-5">
-                  <h3 className="text-base font-semibold">{activeTab === 'applied' ? 'Applications' : 'In discussion'}</h3>
-                  {(() => {
-                    const applications = activeTab === 'discussion' ? dynamicApplications.filter(application => /discussion|invited/i.test(application.status)) : dynamicApplications;
-                    return applications.length ? applications.map(application => (
-                      <article key={application.id} className="post-application-row">
-                        <div className="flex items-center gap-3">
-                          <img src={application.avatar} alt="" className="h-10 w-10 rounded-lg" />
-                          <div><h4 className="text-sm font-semibold">{application.merchantName}</h4><span className="text-xs text-zinc-500">{application.status}</span></div>
-                        </div>
-                        <p className="text-sm leading-5 mt-3 whitespace-pre-wrap">{application.scopeSummary}</p>
-                        <Link className="post-application-action" to={`/chats/${application.chatId}`}>Open conversation</Link>
-                      </article>
-                    )) : <div className="post-conversation-empty" role="status"><p>{activeTab === 'applied' ? 'No applications yet.' : 'No conversations in progress.'}</p><p>{activeTab === 'applied' ? 'Applications from merchants will appear here.' : 'Invited merchants will appear here when a discussion starts.'}</p></div>;
-                  })()}
-                </section>
+                <AppliedMerchants applications={applications} invited={invited} onInvite={inviteApplications} discussion={activeTab === 'discussion'} />
               ) : activeTab === 'quotation' ? (
                 /* Quotations Section Tab View */
                 <div className="rounded-large shadow-neutral-sm border border-blue-50 bg-white p-6 my-post-detail-quotations-card">
@@ -490,29 +469,7 @@ export function MyPostDetail() {
                                       >
                                         Open Thread
                                       </Link>
-                                      <button
-                                        type="button"
-                                        aria-label="More options"
-                                        className="inline-flex items-center justify-center h-8 w-8 text-zinc-500 hover:text-zinc-700 hover:bg-zinc-100 rounded-full transition-colors shrink-0 cursor-pointer"
-                                      >
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          width="16"
-                                          height="16"
-                                          viewBox="0 0 24 24"
-                                          fill="none"
-                                          stroke="currentColor"
-                                          strokeWidth="2"
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                          className="lucide lucide-ellipsis-vertical"
-                                          aria-hidden="true"
-                                        >
-                                          <circle cx="12" cy="12" r="1" />
-                                          <circle cx="12" cy="5" r="1" />
-                                          <circle cx="12" cy="19" r="1" />
-                                        </svg>
-                                      </button>
+                                      <MerchantRowActions companyName={quote.merchantName} />
                                     </div>
                                   </td>
                                 </tr>
@@ -528,6 +485,7 @@ export function MyPostDetail() {
                               key={quote.id}
                               className={`bg-white border ${quote.isRecommended ? 'border-blue-200 recommended-quotation-row' : 'border-blue-100/90'} rounded-xl p-4 shadow-sm flex flex-col gap-3 w-full box-border relative overflow-hidden`}
                             >
+                              <MerchantRowActions companyName={quote.merchantName} />
                               {/* Left Blue Accent Bar for Recommended */}
                               {quote.isRecommended && (
                                 <div className="recommended-row-accent" aria-hidden="true" />
@@ -652,29 +610,7 @@ export function MyPostDetail() {
                                     Open Thread
                                   </Link>
                                 </div>
-                                <button
-                                  type="button"
-                                  aria-label="More options"
-                                  className="inline-flex items-center justify-center h-8 w-8 text-zinc-500 hover:text-zinc-700 hover:bg-zinc-100 rounded-full transition-colors shrink-0 cursor-pointer"
-                                >
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="16"
-                                    height="16"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="lucide lucide-ellipsis-vertical"
-                                    aria-hidden="true"
-                                  >
-                                    <circle cx="12" cy="12" r="1" />
-                                    <circle cx="12" cy="5" r="1" />
-                                    <circle cx="12" cy="19" r="1" />
-                                  </svg>
-                                </button>
+                                <MerchantRowActions companyName={quote.merchantName} />
                               </div>
                             </div>
                           ))}
@@ -832,7 +768,7 @@ export function MyPostDetail() {
                       <button
                         type="button"
                         onClick={() => {
-                          setActiveTab('scope');
+                          handleTabChange('scope');
                           scrollToSection('attachments');
                         }}
                         className={`w-full cursor-pointer rounded px-2 py-0.5 text-left text-sm leading-5 font-medium transition-colors ${
@@ -846,7 +782,7 @@ export function MyPostDetail() {
                       <button
                         type="button"
                         onClick={() => {
-                          setActiveTab('scope');
+                          handleTabChange('scope');
                           scrollToSection('ports-services');
                         }}
                         className={`w-full cursor-pointer rounded px-2 py-0.5 text-left text-sm leading-5 font-medium transition-colors ${
@@ -860,7 +796,7 @@ export function MyPostDetail() {
                       <button
                         type="button"
                         onClick={() => {
-                          setActiveTab('scope');
+                          handleTabChange('scope');
                           scrollToSection('scope-of-work');
                         }}
                         className={`w-full cursor-pointer rounded px-2 py-0.5 text-left text-sm leading-5 font-medium transition-colors ${
@@ -873,7 +809,7 @@ export function MyPostDetail() {
                       </button>
                       <button
                         type="button"
-                        onClick={() => setActiveTab('quotation')}
+                        onClick={() => handleTabChange('quotation')}
                         className={`w-full cursor-pointer rounded px-2 py-0.5 text-left text-sm leading-5 font-medium transition-colors ${
                           activeTab === 'quotation'
                             ? 'text-[#1F285D] font-semibold bg-blue-25'
@@ -920,7 +856,7 @@ export function MyPostDetail() {
                           placeholder="Add notes for this request…"
                           rows={3}
                           value={privateNote}
-                          onChange={(e) => setPrivateNote(e.target.value)}
+                          onChange={(e) => { setPrivateNote(e.target.value); localStorage.setItem(`merchant_navy_note_${postId}`, e.target.value); }}
                           style={{ height: '80px' }}
                         />
                       </div>

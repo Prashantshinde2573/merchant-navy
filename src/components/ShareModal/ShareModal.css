@@ -1,0 +1,28 @@
+.share-modal-backdrop { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; padding: 16px; background: #0008; }
+.share-modal { position: relative; width: 448px; max-width: 100%; max-height: calc(100dvh - 32px); overflow-y: auto; padding: 24px; border-radius: 14px; background: white; color: #181e21; outline: none; }
+.share-modal h2 { margin: 0 32px 6px 0; font-size: 18px; line-height: 28px; font-weight: 600; }
+.share-modal #share-subtitle { margin-bottom: 8px; color: #71717a; font-size: 14px; }
+.share-close { position: absolute; top: 12px; right: 12px; display: grid; place-items: center; width: 24px; height: 24px; color: #71717a; cursor: pointer; }
+.share-close .material-symbols-outlined { font-size: 20px; }
+.share-preview { border: 1px solid #e4e4e7; border-radius: 8px; background: #fafafa; padding: 12px; font-size: 14px; line-height: 22px; }
+.share-preview strong { display: block; font-weight: 600; }
+.share-preview p { color: #52525b; margin-top: 6px; }
+.share-preview a { display: block; color: #717596; font-size: 12px; margin-top: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.share-platforms { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; margin-top: 16px; }
+.share-platforms button { min-height: 42px; border: 2px solid #e4e4e7; border-radius: 12px; font-size: 14px; cursor: pointer; }
+.share-copy-actions { display: flex; gap: 8px; margin-top: 16px; }
+.share-copy-actions button, .share-more { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; border-radius: 12px; cursor: pointer; font-size: 14px; }
+.share-copy-actions button { flex: 1; background: #f0f0f2; color: #52525b; }
+.share-copy-actions .material-symbols-outlined, .share-more .material-symbols-outlined { font-size: 18px; }
+.share-more { margin-top: 16px; width: 100%; background: #20285d; color: white; }
+.share-feedback { margin-top: 12px; font-size: 13px; color: #52525b; }
+.share-modal button:hover { filter: brightness(.96); }
+.share-modal :is(button,a):focus-visible { outline: 2px solid #1f285d; outline-offset: 3px; }
+@media (max-width: 480px) {
+  .share-modal { padding: 20px; }
+  .share-platforms { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .share-modal button { min-height: 44px; }
+  .share-close { top: 8px; right: 8px; }
+}
+.share-platforms button { display: flex; align-items: center; justify-content: center; gap: 8px; }
+.share-preview p { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }

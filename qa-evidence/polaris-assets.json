@@ -1,0 +1,22 @@
+{
+  "summary": {
+    "downloadedCount": 3,
+    "elapsedMs": 7035.179917000001,
+    "failedCount": 0,
+    "requestedCount": 3
+  },
+  "assets": [
+    {
+      "name": "han-chenxu-cIU-BKDnCy8-unsplash.jpg",
+      "kind": "image"
+    },
+    {
+      "name": "peter-chirkov-Wa47nqbL8ic-unsplash.jpg",
+      "kind": "image"
+    },
+    {
+      "name": "michael-nandong-AWxWjmNSoNU-unsplash.jpg",
+      "kind": "image"
+    }
+  ]
+}

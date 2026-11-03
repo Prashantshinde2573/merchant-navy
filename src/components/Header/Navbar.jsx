@@ -107,7 +107,7 @@ export function Navbar() {
             <div className="shrink-0 bg-divider border-none w-divider mx-1 h-6" role="separator" data-orientation="vertical" aria-orientation="vertical"></div>
 
             <li className="text-medium whitespace-nowrap box-border list-none data-[active=true]:font-semibold relative" ref={desktopDropdownRef}>
-              <div className="z-10 aria-expanded:scale-[0.97] aria-expanded:opacity-70 subpixel-antialiased cursor-pointer" data-slot="trigger" onClick={() => setIsDropdownOpen(!isDropdownOpen)} type="button" tabIndex="0">
+              <div className="z-10 aria-expanded:scale-[0.97] aria-expanded:opacity-70 subpixel-antialiased cursor-pointer" data-slot="trigger" role="button" aria-label="Profile" aria-haspopup="menu" aria-expanded={isDropdownOpen} onKeyDown={event => { if (["Enter", " "].includes(event.key)) { event.preventDefault(); setIsDropdownOpen(previous => !previous); } }} onClick={() => setIsDropdownOpen(!isDropdownOpen)} tabIndex="0">
                 <div className="relative inline-flex shrink-0">
                   <span tabIndex="-1" className="flex relative justify-center items-center box-border overflow-hidden align-middle z-0 outline-solid outline-transparent data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 w-10 h-10 text-tiny bg-default text-default-foreground rounded-medium">
                     <img className="flex object-cover w-full h-full transition-opacity !duration-500 opacity-100" alt="Profile" src="/images/profile_avatar.webp" />

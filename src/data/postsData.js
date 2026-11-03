@@ -350,3 +350,10 @@ Payment: Net 15 days from invoice | Quote deadline: 48 hours | GST applicable`
 
 export const DEFAULT_POST = POSTS_DATA['home-post-7'];
 export const DEFAULT_MY_POST = POSTS_DATA['my-post-1'];
+
+// The additional My Posts reference supplied for the Applied view.
+POSTS_DATA['n8zXLc4RjgxncUntWUAPQ'] = {
+  ...POSTS_DATA['my-post-1'], id: 'n8zXLc4RjgxncUntWUAPQ',
+  postIdCode: '#n8zXLc4RjgxncUntWUAPQ', status: 'Live', viewsCount: 3,
+  services: [...POSTS_DATA['home-post-1'].services], appliedCount: 1
+};

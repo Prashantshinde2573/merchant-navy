@@ -5,6 +5,8 @@ import { ApplyModal } from '../../components/ApplyModal/ApplyModal';
 import { ReportModal } from '../../components/ReportModal/ReportModal';
 import { avatarToneClass } from '../../utils/avatarTone';
 
+import { useSavedPosts } from '../../hooks/useSavedPosts';
+import { VendorProfileModal } from '../../components/VendorProfileModal/VendorProfileModal';
 import './PostDetail.css';
 
 export function PostDetail() {
@@ -14,13 +16,15 @@ export function PostDetail() {
   const [isApplyOpen, setIsApplyOpen] = useState(false);
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [isActionsMenuOpen, setIsActionsMenuOpen] = useState(false);
-  const [isBookmarked, setIsBookmarked] = useState(false);
+  const { savedIds, toggleSavedPost } = useSavedPosts();
+  const [isVendorProfileOpen, setIsVendorProfileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('attachments');
 
   // Fallback to 'home-post-7' if no ID provided (matches merchant-navy 11 default)
   const postId = id || 'home-post-7';
   const post = getPost(postId);
   const isApplied = hasApplied(post.id);
+  const isBookmarked = savedIds.includes(post.id);
   // Same image the feed card shows: the post's own image, or the poster's profile image for posts created in the app.
   const postImage = post.vendorImage || (String(post.id).startsWith('custom-post') ? '/images/profile_avatar.webp' : null);
 
@@ -104,8 +108,8 @@ export function PostDetail() {
                 </span>
               </span>
 
-              <div>
-                <div className="flex items-center gap-2">
+              <div className="post-detail-identity">
+                <div className="flex items-center gap-2 post-detail-company-line">
                   <h2 className="text-lg leading-7 font-semibold text-content1-foreground">{post.vendorName}</h2>
                   {post.isVerified && (
                     <img
@@ -119,7 +123,7 @@ export function PostDetail() {
                     />
                   )}
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 post-detail-metadata">
                   {post.isUrgent && (
                     <div className="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-7 text-small rounded-small text-default-foreground bg-danger-100">
                       <span className="flex-1 px-2 text-danger-600 font-semibold text-[13px]">Urgent</span>
@@ -133,41 +137,14 @@ export function PostDetail() {
               </div>
             </div>
 
-            {/* Right Header: Budget + Apply/Applied button + Actions */}
-            <div className="flex items-center gap-4 post-detail-header-right">
-              <div className="post-detail-budget flex flex-col gap-0.5 text-right sm:text-left">
-                <p className="text-content2-foreground text-lg leading-7 font-semibold">{post.budget}</p>
-                <p className="text-[13px] text-zinc-500">{post.dateRange}</p>
-              </div>
-
-              <div className="shrink-0 bg-divider border-none w-divider mx-2 h-10 hidden sm:block" role="separator" />
-
-              {/* Apply / Applied Action Button */}
-              {isApplied ? (
-                <button
-                  type="button"
-                  disabled
-                  className="post-detail-apply z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-medium subpixel-antialiased overflow-hidden h-12 text-medium gap-2 rounded-small bg-success text-success-foreground !bg-success-600 !text-white min-w-31 px-4 cursor-default opacity-100"
-                >
-                  Applied
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  tabIndex="0"
-                  onClick={() => setIsApplyOpen(true)}
-                  className="post-detail-apply z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-medium subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent h-12 text-medium gap-3 rounded-small transition-colors bg-primary text-primary-foreground hover:opacity-hover min-w-31 px-4"
-                >
-                  Apply Now
-                </button>
-              )}
-
+            {/* Save and overflow actions stay beside the company identity. */}
+            <div className="flex items-center gap-4 post-detail-top-actions" onKeyDown={event => { if (event.key === 'Escape') { setIsActionsMenuOpen(false); event.currentTarget.querySelector('[data-post-actions-trigger]')?.focus(); } }}>
               {/* Bookmark Button */}
               <button
                 type="button"
                 tabIndex="0"
-                onClick={() => setIsBookmarked(!isBookmarked)}
-                aria-label="Save post"
+                onClick={() => toggleSavedPost(post.id)}
+                aria-label={isBookmarked ? "Unsave post" : "Save post"} aria-pressed={isBookmarked}
                 className={`z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent cursor-pointer outline-solid outline-transparent text-small gap-2 rounded-medium px-0 !gap-0 transition-colors bg-transparent ${
                   isBookmarked ? 'text-primary' : 'text-default-foreground'
                 } hover:bg-default/40 min-w-10 w-10 h-10`}
@@ -195,7 +172,7 @@ export function PostDetail() {
                   type="button"
                   tabIndex="0"
                   data-post-actions-trigger="true"
-                  aria-label="Service request actions"
+                  aria-label="Service request actions" aria-haspopup="menu" aria-expanded={isActionsMenuOpen}
                   onClick={(e) => {
                     e.stopPropagation();
                     setIsActionsMenuOpen(!isActionsMenuOpen);
@@ -222,13 +199,13 @@ export function PostDetail() {
                 </button>
                 {isActionsMenuOpen && (
                   <div
-                    data-post-actions-dropdown="true"
+                    data-post-actions-dropdown="true" role="menu"
                     className="absolute right-0 top-full mt-1 z-50 min-w-[130px] rounded-lg border border-blue-50 bg-white p-1 shadow-lg animate-in fade-in"
                     onMouseDown={(e) => e.stopPropagation()}
                     onClick={(e) => e.stopPropagation()}
                   >
                     <button
-                      type="button"
+                      type="button" role="menuitem"
                       onClick={(e) => {
                         e.stopPropagation();
                         setIsActionsMenuOpen(false);
@@ -259,6 +236,36 @@ export function PostDetail() {
             </div>
           </div>
         </div>
+
+        <footer className="post-detail-apply-footer" aria-label="Post application">
+          <div className="post-detail-apply-footer-inner">
+              <div className="post-detail-budget flex flex-col gap-0.5 text-left">
+                <p className="text-content2-foreground text-lg leading-7 font-semibold">{post.budget}</p>
+                <p className="text-[13px] text-zinc-500">{post.dateRange}</p>
+              </div>
+
+              {/* Apply / Applied Action Button */}
+              {isApplied ? (
+                <button
+                  type="button"
+                  disabled
+                  className="post-detail-apply z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-medium subpixel-antialiased overflow-hidden h-12 text-medium gap-2 rounded-small bg-success text-success-foreground !bg-success-600 !text-white min-w-31 px-4 cursor-default opacity-100"
+                >
+                  Applied
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  tabIndex="0"
+                  onClick={() => setIsApplyOpen(true)}
+                  className="post-detail-apply z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-medium subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent h-12 text-medium gap-3 rounded-small transition-colors bg-primary text-primary-foreground hover:opacity-hover min-w-31 px-4"
+                >
+                  Apply Now
+                </button>
+              )}
+
+          </div>
+        </footer>
 
         {/* Main Content Grid */}
         <div className="mx-auto max-w-308 px-6 py-6 post-detail-content-wrap">
@@ -427,7 +434,7 @@ export function PostDetail() {
                       <button
                         type="button"
                         tabIndex="0"
-                        aria-label="View vendor profile"
+                        aria-label="View vendor profile" onClick={() => setIsVendorProfileOpen(true)}
                         className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent cursor-pointer outline-solid outline-transparent text-tiny gap-2 rounded-large px-0 !gap-0 transition-opacity text-foreground hover:opacity-hover h-8 w-8 min-w-8 border border-[#d0d4e1] bg-white"
                       >
                         <svg
@@ -493,6 +500,7 @@ export function PostDetail() {
       />
 
       {/* Report Modal */}
+      <VendorProfileModal companyName={isVendorProfileOpen ? post.vendorName : null} onClose={() => setIsVendorProfileOpen(false)} />
       <ReportModal
         isOpen={isReportOpen}
         onClose={() => setIsReportOpen(false)}

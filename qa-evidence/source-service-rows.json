@@ -1,0 +1,938 @@
+[
+  {
+    "indent": "0.5rem",
+    "name": "Ship Agency & Husbandry"
+  },
+  {
+    "indent": "2rem",
+    "name": "Canal Transit Agency Support"
+  },
+  {
+    "indent": "2rem",
+    "name": "Cash to Master (CTM) Coordination"
+  },
+  {
+    "indent": "2rem",
+    "name": "Courier / Mail & Documents Handling"
+  },
+  {
+    "indent": "2rem",
+    "name": "Crew Change Coordination (Agency)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Disbursement Account (DA) Management"
+  },
+  {
+    "indent": "2rem",
+    "name": "Husbandry (General)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Medical Call Coordination"
+  },
+  {
+    "indent": "2rem",
+    "name": "Port Agency (Full Agency)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Port Call Planning & Coordination"
+  },
+  {
+    "indent": "2rem",
+    "name": "Protective Agency (OPA/CPA)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Spares Clearance & Delivery Coordination"
+  },
+  {
+    "indent": "2rem",
+    "name": "Supplier Booking Coordination"
+  },
+  {
+    "indent": "0.5rem",
+    "name": "Bunkers, Freshwater & Utilities"
+  },
+  {
+    "indent": "2rem",
+    "name": "Bunkering Coordination"
+  },
+  {
+    "indent": "2rem",
+    "name": "Compressed Air Utility"
+  },
+  {
+    "indent": "2rem",
+    "name": "Freshwater Supply"
+  },
+  {
+    "indent": "2rem",
+    "name": "Fuel Supply (MGO/MDO)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Fuel Supply (VLSFO/HSFO)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Industrial / Welding Gases Supply"
+  },
+  {
+    "indent": "2rem",
+    "name": "LNG / Alternative Fuel Bunkering"
+  },
+  {
+    "indent": "2rem",
+    "name": "Lubricants (Bulk) Supply"
+  },
+  {
+    "indent": "2rem",
+    "name": "Nitrogen Services"
+  },
+  {
+    "indent": "2rem",
+    "name": "Refrigerant Gases Supply"
+  },
+  {
+    "indent": "2rem",
+    "name": "Shore Power Connection"
+  },
+  {
+    "indent": "2rem",
+    "name": "Shore Utility Hookups (General)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Steam / Hot Water Utility"
+  },
+  {
+    "indent": "0.5rem",
+    "name": "Crew, Welfare & Staffing"
+  },
+  {
+    "indent": "2rem",
+    "name": "Accommodation / Hotel Booking"
+  },
+  {
+    "indent": "2rem",
+    "name": "Bonded Stores (Crew) Supply"
+  },
+  {
+    "indent": "2rem",
+    "name": "Catering Services / Cook Hire"
+  },
+  {
+    "indent": "2rem",
+    "name": "Crew Recruitment / Manning"
+  },
+  {
+    "indent": "2rem",
+    "name": "Crew Transport (Local)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Crew Welfare (General)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Interpreter / Local Support Staff"
+  },
+  {
+    "indent": "2rem",
+    "name": "Labor Supply (Non-technical)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Laundry / Linen Services"
+  },
+  {
+    "indent": "2rem",
+    "name": "Medical Services (Non-emergency)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Provisions Supply"
+  },
+  {
+    "indent": "2rem",
+    "name": "Shore Leave Facilitation"
+  },
+  {
+    "indent": "2rem",
+    "name": "Training & Certifications Coordination"
+  },
+  {
+    "indent": "0.5rem",
+    "name": "Cargo & Terminal Operations"
+  },
+  {
+    "indent": "2rem",
+    "name": "Breakbulk / Project Cargo Handling"
+  },
+  {
+    "indent": "2rem",
+    "name": "Bulk Trimming & Hold Management"
+  },
+  {
+    "indent": "2rem",
+    "name": "Cargo Gear / Equipment Rental (Ops)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Cargo Hold Cleaning & Preparation"
+  },
+  {
+    "indent": "2rem",
+    "name": "Cargo Sampling Coordination"
+  },
+  {
+    "indent": "2rem",
+    "name": "Cargo Tallying & Documentation"
+  },
+  {
+    "indent": "2rem",
+    "name": "Container Stuffing / Stripping"
+  },
+  {
+    "indent": "2rem",
+    "name": "Dunnage & Packing Service"
+  },
+  {
+    "indent": "2rem",
+    "name": "Heavy Lift & Rigging (Cargo Ops)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Lashing & Securing"
+  },
+  {
+    "indent": "2rem",
+    "name": "Reefer Plug / Monitoring (Ops)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Stevedoring & Cargo Handling"
+  },
+  {
+    "indent": "2rem",
+    "name": "Terminal Handling (Bulk)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Terminal Handling (Containers)"
+  },
+  {
+    "indent": "0.5rem",
+    "name": "Environmental & Waste Management"
+  },
+  {
+    "indent": "2rem",
+    "name": "Ballast Water Compliance Support (Ops)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Bilge Water Disposal"
+  },
+  {
+    "indent": "2rem",
+    "name": "Environmental Reporting Support"
+  },
+  {
+    "indent": "2rem",
+    "name": "Garbage Collection & Disposal (MARPOL)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Hazardous / Chemical Waste Disposal"
+  },
+  {
+    "indent": "2rem",
+    "name": "In-water Hull Cleaning / Biofouling Control"
+  },
+  {
+    "indent": "2rem",
+    "name": "Pest Control / Fumigation"
+  },
+  {
+    "indent": "2rem",
+    "name": "Sewage Disposal"
+  },
+  {
+    "indent": "2rem",
+    "name": "Sludge / Oily Waste Disposal"
+  },
+  {
+    "indent": "2rem",
+    "name": "Tank Wash Residues / Slops Handling"
+  },
+  {
+    "indent": "0.5rem",
+    "name": "Finance, Insurance & Claims Support"
+  },
+  {
+    "indent": "2rem",
+    "name": "Claims Documentation Support"
+  },
+  {
+    "indent": "2rem",
+    "name": "Invoice / Disbursement Audit Support"
+  },
+  {
+    "indent": "2rem",
+    "name": "Marine Insurance Brokerage"
+  },
+  {
+    "indent": "2rem",
+    "name": "P&I Correspondence Support"
+  },
+  {
+    "indent": "0.5rem",
+    "name": "IT, Communications & Navigation Electronics"
+  },
+  {
+    "indent": "2rem",
+    "name": "AIS / VDR Service"
+  },
+  {
+    "indent": "2rem",
+    "name": "BNWAS / Bridge Alarm Systems"
+  },
+  {
+    "indent": "2rem",
+    "name": "CCTV / Access Control Systems"
+  },
+  {
+    "indent": "2rem",
+    "name": "Crew WiFi Solutions (Managed)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Cybersecurity Support"
+  },
+  {
+    "indent": "2rem",
+    "name": "ECDIS Licensing & Support"
+  },
+  {
+    "indent": "2rem",
+    "name": "GMDSS Radio Survey & Service"
+  },
+  {
+    "indent": "2rem",
+    "name": "Gyro / Compass Service"
+  },
+  {
+    "indent": "2rem",
+    "name": "Maritime IT Network Support"
+  },
+  {
+    "indent": "2rem",
+    "name": "Radar Service"
+  },
+  {
+    "indent": "2rem",
+    "name": "SSAS / EPIRB / SART Service"
+  },
+  {
+    "indent": "2rem",
+    "name": "Ship Software Licensing / Updates"
+  },
+  {
+    "indent": "2rem",
+    "name": "VHF/UHF Radio Service"
+  },
+  {
+    "indent": "2rem",
+    "name": "VSAT / Satcom Service"
+  },
+  {
+    "indent": "0.5rem",
+    "name": "Logistics, Transport & Warehousing"
+  },
+  {
+    "indent": "2rem",
+    "name": "Bonded Warehousing"
+  },
+  {
+    "indent": "2rem",
+    "name": "Courier & Express Shipments"
+  },
+  {
+    "indent": "2rem",
+    "name": "Equipment Rental (Shore)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Freight Forwarding"
+  },
+  {
+    "indent": "2rem",
+    "name": "Heavy Haulage / OOG Transport"
+  },
+  {
+    "indent": "2rem",
+    "name": "Last-mile Delivery to Vessel"
+  },
+  {
+    "indent": "2rem",
+    "name": "Local Trucking & Inland Transport"
+  },
+  {
+    "indent": "2rem",
+    "name": "Packaging & Crating Services"
+  },
+  {
+    "indent": "2rem",
+    "name": "Spares Consolidation / Logistics Hub"
+  },
+  {
+    "indent": "2rem",
+    "name": "Warehousing & Storage"
+  },
+  {
+    "indent": "0.5rem",
+    "name": "Marine & Port Operations"
+  },
+  {
+    "indent": "2rem",
+    "name": "Anchorage Operations Support"
+  },
+  {
+    "indent": "2rem",
+    "name": "Berth Booking & Scheduling"
+  },
+  {
+    "indent": "2rem",
+    "name": "Berth Shifting / Warp Services"
+  },
+  {
+    "indent": "2rem",
+    "name": "Channel / River Transit Assistance"
+  },
+  {
+    "indent": "2rem",
+    "name": "Escort / Guard Boat Service"
+  },
+  {
+    "indent": "2rem",
+    "name": "Fendering & Berthing Aids"
+  },
+  {
+    "indent": "2rem",
+    "name": "Gangway / Safe Access Services"
+  },
+  {
+    "indent": "2rem",
+    "name": "Ice Navigation Support"
+  },
+  {
+    "indent": "2rem",
+    "name": "Launch / Crew Boat Service"
+  },
+  {
+    "indent": "2rem",
+    "name": "Lighterage / Barge Services"
+  },
+  {
+    "indent": "2rem",
+    "name": "Mooring & Unmooring (Line Handling)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Pilotage"
+  },
+  {
+    "indent": "2rem",
+    "name": "Port Craft Rental (Small craft)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Ship-to-Ship (STS) Ops Support"
+  },
+  {
+    "indent": "2rem",
+    "name": "Towage (Harbor/Coastal)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Tug Assistance"
+  },
+  {
+    "indent": "2rem",
+    "name": "Vessel Movement Coordination (Ops)"
+  },
+  {
+    "indent": "0.5rem",
+    "name": "Regulatory, Documentation & Clearance"
+  },
+  {
+    "indent": "2rem",
+    "name": "Cargo Manifest / BL Coordination"
+  },
+  {
+    "indent": "2rem",
+    "name": "Crew Health Documentation Support"
+  },
+  {
+    "indent": "2rem",
+    "name": "Customs Clearance & Brokerage"
+  },
+  {
+    "indent": "2rem",
+    "name": "DG / IMDG Documentation Support"
+  },
+  {
+    "indent": "2rem",
+    "name": "Immigration Handling"
+  },
+  {
+    "indent": "2rem",
+    "name": "PSC Preparation (Docs)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Permits for Hot Work / Diving / Special Ops (Docs)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Port Authority Filings & Permits"
+  },
+  {
+    "indent": "2rem",
+    "name": "Port Health / Quarantine Handling"
+  },
+  {
+    "indent": "2rem",
+    "name": "Ship Registry / Statutory Filings (Docs)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Single Window / EDI Reporting"
+  },
+  {
+    "indent": "0.5rem",
+    "name": "Ocean Freight & Carrier Capacity"
+  },
+  {
+    "indent": "2rem",
+    "name": "Vessel Space Offer (Container Slots)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Backhaul / Empty Capacity Offer"
+  },
+  {
+    "indent": "2rem",
+    "name": "Reefer Capacity Offer"
+  },
+  {
+    "indent": "2rem",
+    "name": "Space Charter / Slot Charter Agreement"
+  },
+  {
+    "indent": "2rem",
+    "name": "Vessel Charter Offer (Time/Voyage)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Slot Swap / Capacity Exchange"
+  },
+  {
+    "indent": "0.5rem",
+    "name": "Surveys, Inspections & Class Support"
+  },
+  {
+    "indent": "2rem",
+    "name": "Bunker Survey"
+  },
+  {
+    "indent": "2rem",
+    "name": "Cargo Survey"
+  },
+  {
+    "indent": "2rem",
+    "name": "Class Attendance"
+  },
+  {
+    "indent": "2rem",
+    "name": "Coating Inspection"
+  },
+  {
+    "indent": "2rem",
+    "name": "Condition / Damage Survey"
+  },
+  {
+    "indent": "2rem",
+    "name": "Draft Survey"
+  },
+  {
+    "indent": "2rem",
+    "name": "Drone / Rope Access Inspection"
+  },
+  {
+    "indent": "2rem",
+    "name": "Flag State Inspection Support"
+  },
+  {
+    "indent": "2rem",
+    "name": "Hold Cleanliness Inspection"
+  },
+  {
+    "indent": "2rem",
+    "name": "Incident Investigation Support"
+  },
+  {
+    "indent": "2rem",
+    "name": "NDT (Non-Destructive Testing)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Oil / Fuel / Lube Lab Testing"
+  },
+  {
+    "indent": "2rem",
+    "name": "On/Off-hire Survey"
+  },
+  {
+    "indent": "2rem",
+    "name": "P&I / H&M Survey"
+  },
+  {
+    "indent": "2rem",
+    "name": "UT Thickness Measurement"
+  },
+  {
+    "indent": "2rem",
+    "name": "Underwater Hull Inspection (Diver/ROV)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Water Lab Testing"
+  },
+  {
+    "indent": "0.5rem",
+    "name": "Safety, Security & Emergency Services"
+  },
+  {
+    "indent": "2rem",
+    "name": "Access Control Services"
+  },
+  {
+    "indent": "2rem",
+    "name": "Breathing Apparatus (BA) Service"
+  },
+  {
+    "indent": "2rem",
+    "name": "Confined Space Rescue Standby"
+  },
+  {
+    "indent": "2rem",
+    "name": "Emergency Response Standby"
+  },
+  {
+    "indent": "2rem",
+    "name": "FFA Service (Extinguishers/Hydrants/Fire pumps)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Fire Detection & Alarm Service"
+  },
+  {
+    "indent": "2rem",
+    "name": "Fixed Fire Systems Service"
+  },
+  {
+    "indent": "2rem",
+    "name": "Gas Detection Calibration"
+  },
+  {
+    "indent": "2rem",
+    "name": "Immersion Suit / Lifejacket Testing"
+  },
+  {
+    "indent": "2rem",
+    "name": "LSA Service (Lifeboat/Liferaft/Rescue boat)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Lifting Appliances Load Testing"
+  },
+  {
+    "indent": "2rem",
+    "name": "Medical Emergency Response"
+  },
+  {
+    "indent": "2rem",
+    "name": "Permit-to-Work (PTW) Safety Standby"
+  },
+  {
+    "indent": "2rem",
+    "name": "Safety Audits & Risk Assessments"
+  },
+  {
+    "indent": "2rem",
+    "name": "Security Guards / ISPS Watchmen"
+  },
+  {
+    "indent": "2rem",
+    "name": "Spill Response Equipment & Support"
+  },
+  {
+    "indent": "0.5rem",
+    "name": "Supplies & Consumables"
+  },
+  {
+    "indent": "2rem",
+    "name": "Anodes & CP Materials Supply"
+  },
+  {
+    "indent": "2rem",
+    "name": "Batteries & Electrical Consumables"
+  },
+  {
+    "indent": "2rem",
+    "name": "Cabin Appliances & Small Equipment"
+  },
+  {
+    "indent": "2rem",
+    "name": "Cabin Stores Supply"
+  },
+  {
+    "indent": "2rem",
+    "name": "Charts & Nautical Publications"
+  },
+  {
+    "indent": "2rem",
+    "name": "Cleaning Chemicals & Housekeeping Consumables"
+  },
+  {
+    "indent": "2rem",
+    "name": "Deck Stores Supply"
+  },
+  {
+    "indent": "2rem",
+    "name": "Engine Stores Supply"
+  },
+  {
+    "indent": "2rem",
+    "name": "Fasteners / Hardware Supply"
+  },
+  {
+    "indent": "2rem",
+    "name": "Filters & Consumables Supply"
+  },
+  {
+    "indent": "2rem",
+    "name": "Galley Equipment Spares Supply"
+  },
+  {
+    "indent": "2rem",
+    "name": "Gas Cylinders & Welding Consumables"
+  },
+  {
+    "indent": "2rem",
+    "name": "Medical Stores Supply"
+  },
+  {
+    "indent": "2rem",
+    "name": "Paints, Coatings & Chemicals Supply"
+  },
+  {
+    "indent": "2rem",
+    "name": "Ropes, Wires & Rigging Supply"
+  },
+  {
+    "indent": "2rem",
+    "name": "Safety Stores & PPE Supply"
+  },
+  {
+    "indent": "2rem",
+    "name": "Ship Chandlery (General)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Spare Parts Procurement & Delivery"
+  },
+  {
+    "indent": "2rem",
+    "name": "Stationery & Office Supplies"
+  },
+  {
+    "indent": "2rem",
+    "name": "Tools & MRO Supply"
+  },
+  {
+    "indent": "0.5rem",
+    "name": "Technical Repair & Maintenance"
+  },
+  {
+    "indent": "2rem",
+    "name": "Air Compressors / Starting Air Systems"
+  },
+  {
+    "indent": "2rem",
+    "name": "Automation & Control Systems (PLC/ICSS)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Auxiliary Engines / Gensets Repair"
+  },
+  {
+    "indent": "2rem",
+    "name": "BWTS (Ballast Water Treatment) Service"
+  },
+  {
+    "indent": "2rem",
+    "name": "Boiler & Economizer Service"
+  },
+  {
+    "indent": "2rem",
+    "name": "Calibration & Instrumentation"
+  },
+  {
+    "indent": "2rem",
+    "name": "Cargo Gear / Hatch Cover Repair"
+  },
+  {
+    "indent": "2rem",
+    "name": "Cathodic Protection Install/Repair"
+  },
+  {
+    "indent": "2rem",
+    "name": "Coatings / Painting & Corrosion Control"
+  },
+  {
+    "indent": "2rem",
+    "name": "Deck Machinery Repair"
+  },
+  {
+    "indent": "2rem",
+    "name": "EGCS / Scrubber Service"
+  },
+  {
+    "indent": "2rem",
+    "name": "Electrical Inverters / Chargers / UPS"
+  },
+  {
+    "indent": "2rem",
+    "name": "Electrical Motors / Rewinding"
+  },
+  {
+    "indent": "2rem",
+    "name": "Electrical Power Systems Repair"
+  },
+  {
+    "indent": "2rem",
+    "name": "Galley & Laundry Equipment Repair"
+  },
+  {
+    "indent": "2rem",
+    "name": "HVAC & Refrigeration Repair"
+  },
+  {
+    "indent": "2rem",
+    "name": "Heat Exchangers / Coolers Service"
+  },
+  {
+    "indent": "2rem",
+    "name": "Hull & Steel Repairs (Afloat/Alongside)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Hydraulic Systems Repair"
+  },
+  {
+    "indent": "2rem",
+    "name": "Incinerator Service"
+  },
+  {
+    "indent": "2rem",
+    "name": "Insulation & Lagging"
+  },
+  {
+    "indent": "2rem",
+    "name": "Lifeboat Davit / Launching Gear Repair"
+  },
+  {
+    "indent": "2rem",
+    "name": "Machining & Workshop Services"
+  },
+  {
+    "indent": "2rem",
+    "name": "Main Engine Maintenance & Repair"
+  },
+  {
+    "indent": "2rem",
+    "name": "Oily Water Separator (OWS) Service"
+  },
+  {
+    "indent": "2rem",
+    "name": "Piping & Plumbing Repair"
+  },
+  {
+    "indent": "2rem",
+    "name": "Pneumatic Systems Repair"
+  },
+  {
+    "indent": "2rem",
+    "name": "Propeller / Shaft / Rudder Works"
+  },
+  {
+    "indent": "2rem",
+    "name": "Pumps & Rotating Equipment Repair"
+  },
+  {
+    "indent": "2rem",
+    "name": "Purifiers / Separators Service"
+  },
+  {
+    "indent": "2rem",
+    "name": "Rope Access (Work at Height)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Rudder / Thruster Systems Service"
+  },
+  {
+    "indent": "2rem",
+    "name": "STP (Sewage Treatment Plant) Service"
+  },
+  {
+    "indent": "2rem",
+    "name": "Scaffolding & Access Systems"
+  },
+  {
+    "indent": "2rem",
+    "name": "Shipyard / Drydock / Retrofit Services"
+  },
+  {
+    "indent": "2rem",
+    "name": "Steering Gear Repair"
+  },
+  {
+    "indent": "2rem",
+    "name": "Stern Tube / Seals / Bearings"
+  },
+  {
+    "indent": "2rem",
+    "name": "Tank Cleaning & Gas Freeing (Technical)"
+  },
+  {
+    "indent": "2rem",
+    "name": "Turbocharger Service"
+  },
+  {
+    "indent": "2rem",
+    "name": "Valves & Actuators Service"
+  },
+  {
+    "indent": "2rem",
+    "name": "Welding & Fabrication"
+  },
+  {
+    "indent": "2rem",
+    "name": "Workshop Riding Squad (Technical Labor)"
+  }
+]

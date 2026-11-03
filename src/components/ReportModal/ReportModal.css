@@ -54,3 +54,9 @@
 .report-modal-submit-btn:not(:disabled):hover {
   opacity: 0.85 !important;
 }
+/* Desktop reference: uninterrupted white dialog with a generous details field. */
+#_r_1s9_ header, #_r_1s9_ footer { border: 0; background: white; }
+#_r_1s9_ textarea { height: 80px !important; }
+@media (min-width: 1024px) {
+  #_r_1s9_ textarea { height: 96px !important; }
+}

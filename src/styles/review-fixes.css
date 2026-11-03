@@ -1,0 +1,141 @@
+/* Shared heading rhythm across the primary pages. */
+.mobile-page > .mb-6:first-child h1{margin:0 0 6px!important;line-height:32px!important}
+.mobile-page > .mb-6:first-child h1 + p{margin-top:0!important;line-height:24px!important}
+.my-posts-page > .mb-6:first-child .inline-flex.flex-col{gap:0!important}
+.my-posts-page [role=tab] .tab-count,.my-post-detail-container [role=tab] .tab-count{background:#f4f4f5!important;color:#1f285d!important;border-color:#e4e4e7!important;font-size:12px!important;font-weight:400!important;line-height:16px!important;min-width:16px;height:16px;border-radius:999px;padding:0 4px}
+.my-posts-search{height:40px!important;min-height:40px!important;border-radius:8px!important}
+.my-posts-search input{font-size:13px!important;min-width:0}
+.my-post-card-actions{position:relative;flex-wrap:nowrap!important;gap:12px!important}
+.my-post-card-actions > a,.my-post-card-actions .post-close-button{width:112px;min-width:112px;height:40px;border-width:1px;font-size:14px;border-radius:8px}
+.my-post-card-actions .post-actions{gap:12px}
+.my-posts-page .p-7{overflow:visible!important}
+.my-posts-page .flex.flex-col.relative{overflow:visible!important}
+@media(max-width:1023px){
+.my-post-detail-header-top{height:auto!important;min-height:88px!important;padding:20px 0 18px!important;align-items:center!important}
+.my-post-detail-header-text{max-width:none!important;gap:6px!important;min-width:0}
+.my-post-detail-header-actions{width:100%;min-height:56px;padding:10px 0 14px;justify-content:space-between;border-top:1px solid #f4f4f5}
+.my-post-detail-header-actions > [role=separator]{display:none!important}
+.my-post-detail-header-actions > .flex:last-child{gap:16px!important}
+}
+.post-detail-header{height:auto!important;min-height:92px;display:flex;flex-wrap:wrap;padding-top:18px!important;padding-bottom:0!important;gap:18px!important}
+.post-detail-header-left{width:100%;padding-bottom:4px}
+.post-detail-header-right{position:relative!important;inset:auto!important;width:100%;padding:12px 0!important;border-top:1px solid #f4f4f5;justify-content:flex-end;box-shadow:none!important;background:white}
+.merchant-card-trigger{border:1px solid #dce1f0;border-radius:6px}
+.merchant-row-actions{display:inline-flex;vertical-align:middle;overflow:visible}
+@media(max-width:1023px){
+.app-main-layout.is-post-detail .mobile-bottom-nav{display:none!important}
+.app-main-layout.is-post-detail{padding-bottom:24px!important;--mobile-header-height:0px}
+.app-main-layout.is-post-detail .app-top-nav{display:none!important}
+.my-post-detail-header-wrap,.post-detail-header-wrap{top:0!important}
+.my-post-detail-header-inner{padding-top:0!important;padding-bottom:0!important}
+.my-post-detail-header-top{padding:20px 0!important;min-height:92px!important}
+.my-post-detail-header-title,.my-post-detail-title{margin-bottom:0!important}
+.my-post-detail-header-actions{padding:12px 0!important;flex-direction:row!important;gap:12px!important}
+.my-post-detail-header-text{gap:6px!important}
+.post-detail-header{padding:16px 16px 0!important;gap:16px!important;flex-direction:column!important;align-items:stretch!important}
+.post-detail-header-right{position:relative!important;bottom:auto!important;inset:auto!important;padding:12px 0!important}
+}
+@media(max-width:767px){
+.my-post-card-actions{display:flex!important;width:100%;align-items:center!important;flex-wrap:nowrap!important}
+.my-post-card-actions > a{flex:1;width:auto;min-width:0}
+.my-post-card-actions > .post-actions{flex:1;min-width:0;flex-wrap:nowrap!important}
+.my-post-card-actions .post-close-button{flex:1;width:auto;min-width:0;padding:0 10px}
+.my-posts-page .my-posts-search{width:100%}
+.my-post-detail-header-text .my-post-detail-title{white-space:normal!important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+}
+.my-posts-page .my-post-summary{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;line-height:1.4}
+:is(.wins-page-wrapper,.my-merchants-page) [data-slot=input-wrapper]:has(input[placeholder^="Search"]){height:40px!important;min-height:40px!important;background:white!important;border:1px solid #e5e9f4!important;border-radius:8px!important;box-shadow:0 1px 2px #0000000d;padding:0 12px!important}
+:is(.wins-page-wrapper,.my-merchants-page) input[placeholder^="Search"]{font-size:13px!important}
+:is(.wins-page-wrapper,.my-merchants-page) [data-slot=input-wrapper]:has(input[placeholder^="Search"]) .lucide-search{width:14px;height:14px;flex-shrink:0}
+@media(max-width:1023px){
+.app-main-layout.is-post-detail .post-detail-header-wrap .post-detail-header-right{position:relative!important;display:flex!important;inset:auto!important;flex-wrap:wrap;gap:12px!important;padding:12px 0!important}
+.app-main-layout.is-post-detail .post-detail-header-left{padding-right:0!important}
+.app-main-layout.is-post-detail .post-detail-header-right > button[aria-label="Save post"],.app-main-layout.is-post-detail .post-detail-header-right > .relative.inline-block{position:relative!important;inset:auto!important}
+.app-main-layout.is-post-detail .post-detail-header-right [data-post-actions-dropdown]{top:100%!important;bottom:auto!important}
+.app-main-layout.is-post-detail .my-post-detail-header-wrap,.app-main-layout.is-post-detail .post-detail-header-wrap{position:sticky!important;top:0!important}
+}
+.my-post-detail-header-left{min-width:0;max-width:100%;width:100%}
+.my-post-detail-title{max-width:100%;min-width:0}
+.my-post-detail-header-text{width:100%;overflow:hidden}
+.my-post-summary{position:relative}
+.my-post-summary .my-post-inline-more{position:absolute;right:0;bottom:0;background:white;padding-left:8px;box-shadow:-8px 0 8px white}
+@media(max-width:767px){
+.my-posts-page .my-post-card-actions{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 32px;gap:12px!important}
+.my-posts-page .my-post-card-actions > .post-actions{display:contents!important}
+.my-posts-page .my-post-card-actions > a,.my-posts-page .my-post-card-actions .post-close-button{width:100%;min-width:0;margin:0}
+.my-posts-page .my-post-card-actions .post-overflow-trigger{grid-column:3}
+.my-posts-page .my-post-card-actions:not(:has(.post-close-button)) > a{grid-column:1 / 3}
+}
+.wins-header-section h1{margin-bottom:6px!important;line-height:32px!important}
+.wins-header-section p{margin-top:0!important;line-height:24px!important}
+.wins-page-wrapper [role=tab] .rounded-full{background:#f4f4f5!important;color:#1f285d!important;border-color:#e4e4e7!important;font-size:12px!important;font-weight:400!important;line-height:16px!important}
+.wins-search-box .relative.w-full{height:40px!important;min-height:40px!important;border-radius:8px!important;border:1px solid #e5e9f4!important;background:white!important;box-shadow:0 1px 2px #0000000d}
+.wins-search-box input{font-size:13px!important}
+.wins-search-box .lucide-search{width:14px;height:14px}
+@media(min-width:768px){.my-post-summary .my-post-inline-more{position:static;padding-left:0;box-shadow:none;background:transparent}}
+/* Application view: a quiet identity header and a persistent price/action footer. */
+.app-main-layout.is-post-detail .post-detail-header-wrap .post-detail-header{display:grid!important;grid-template-columns:minmax(0,1fr) auto;align-items:center!important;gap:16px!important;padding:20px 24px!important;min-height:96px}
+.app-main-layout.is-post-detail .post-detail-header-left{width:auto;min-width:0;padding-right:0!important;padding-bottom:0;gap:12px!important}
+.post-detail-top-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-shrink:0}
+.post-detail-top-actions > button,.post-detail-top-actions > div > button{width:40px;min-width:40px;height:40px}
+.post-detail-top-actions [data-post-actions-dropdown]{top:100%!important;bottom:auto!important;margin-top:8px!important}
+.post-detail-apply-footer{position:fixed;inset:auto 0 0;z-index:40;border-top:1px solid #e1e7ef;background:white;box-shadow:0 -2px 12px #0f172a08;padding:12px max(24px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(24px,env(safe-area-inset-left,0px))}
+.post-detail-apply-footer-inner{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.post-detail-apply-footer .post-detail-budget{text-align:left;min-width:0;gap:2px}
+.post-detail-apply-footer .post-detail-budget > p:first-child{font-size:18px;line-height:24px;font-weight:600}
+.post-detail-apply-footer .post-detail-budget > p:last-child{font-size:13px;line-height:18px;color:#71717a}
+.post-detail-apply-footer .post-detail-apply{height:44px;min-width:140px;flex-shrink:0;border-radius:8px}
+.post-detail-container{padding-bottom:96px}
+@media(max-width:1023px){
+.app-main-layout.is-post-detail .post-detail-header-wrap .post-detail-header{padding:18px 12px!important;min-height:92px;gap:8px!important;grid-template-columns:minmax(0,1fr) auto}
+.post-detail-top-actions{gap:2px}
+.post-detail-top-actions > button,.post-detail-top-actions > div > button{width:36px;min-width:36px;height:44px}
+.app-main-layout.is-post-detail .post-detail-header-left{gap:10px!important}
+.post-detail-header-left > div{min-width:0}
+.post-detail-header-left h2{font-size:15px!important;line-height:21px!important;white-space:normal!important;overflow-wrap:anywhere}
+.post-detail-apply-footer{padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.post-detail-apply-footer-inner{gap:16px}
+.post-detail-apply-footer .post-detail-apply{min-width:136px}
+.post-detail-header-left .post-detail-avatar{width:36px!important;height:36px!important}
+}
+.post-detail-identity{min-width:0}
+.post-detail-company-line h2{min-width:0;overflow-wrap:break-word}
+.post-detail-company-line > img{flex-shrink:0}
+.post-detail-metadata{margin-top:4px;flex-wrap:wrap;row-gap:4px}
+.post-detail-metadata > p{white-space:nowrap}
+.post-detail-apply-footer .post-detail-budget > p{overflow-wrap:break-word}
+@media(max-width:1023px){
+.post-detail-company-line{align-items:baseline;gap:6px!important}
+.post-detail-metadata{column-gap:6px!important}
+.post-detail-header-left h2{overflow-wrap:break-word!important}
+}
+/* My Posts desktop follows the source: identity and actions share the first row. */
+@media(min-width:1024px){
+.my-post-detail-header-inner{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:24px}
+.my-post-detail-header-top{grid-column:1;grid-row:1;min-height:64px!important;height:64px!important;padding:0!important;min-width:0}
+.my-post-detail-header-left{width:auto;min-width:0}
+.my-post-detail-header-text{max-width:600px!important;gap:2px!important}
+.my-post-detail-header-actions{grid-column:2;grid-row:1;width:auto;min-height:64px;padding:0;border:0;gap:20px;justify-content:flex-end}
+.my-post-detail-header-actions > [role=separator]{display:block!important}
+.my-post-detail-header-actions > .flex:last-child{gap:16px!important}
+.my-post-detail-header-actions .post-edit-button{height:36px;min-width:0;padding:0 16px;border-radius:6px}
+.my-post-detail-tab-wrap{grid-column:1 / -1;grid-row:2}
+.my-post-detail-container [role=tab] .tab-count{background:#fef8f9!important}
+.my-post-detail-container [role=tab] .tab-count:has(>span:only-child){min-width:16px}
+.my-posts-page .my-post-card-actions > a,.my-posts-page .my-post-card-actions .post-close-button{width:auto;min-width:80px}
+}
+.is-applications-view .my-post-detail-sidebar > div > div:nth-child(-n+2){display:none}
+.is-applications-view .my-post-detail-sidebar > div{top:176px}
+.applied-merchants th:nth-child(2){width:37%}
+.applied-merchants th:last-child{width:210px}
+@media(max-width:1023px){
+.is-applications-view .my-post-detail-sidebar{display:block!important;width:100%!important}
+.is-applications-view .my-post-detail-sidebar > div{position:static!important}
+}
+@media(min-width:1024px){.my-post-detail-tab-wrap{padding-bottom:2px}.my-post-detail-container .tab-count:has(span:empty){display:none}}
+.my-post-detail-container .tab-count:has(span:empty){display:none}
+.my-post-services-toggle{display:none}
+@media(max-width:1023px){
+.my-post-detail-services-sub[data-expanded=false]{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden!important}
+.my-post-services-toggle{display:block;text-align:left;color:#1f285d;font-size:12px;line-height:18px;font-weight:500;width:fit-content}
+}

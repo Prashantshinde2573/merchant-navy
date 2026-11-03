@@ -16,7 +16,7 @@ function handleTabNavigation(event) {
 }
 
 // Post detail is a focused view on mobile/tablet: the app bars give way to the post's own header and action bar.
-const POST_DETAIL_ROUTE = /^\/(posts|post|service-requests)\/[^/]+\/?$/;
+const POST_DETAIL_ROUTE = /^\/(posts|post|service-requests|my-posts)\/[^/]+\/?$/;
 
 export function AppLayout() {
   const { pathname } = useLocation();
