@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { usePosts } from '../../context/PostContext';
 import { ApplyModal } from '../../components/ApplyModal/ApplyModal';
 import { ReportModal } from '../../components/ReportModal/ReportModal';
+import { avatarToneClass } from '../../utils/avatarTone';
 
 import './PostDetail.css';
 
@@ -92,7 +93,7 @@ export function PostDetail() {
               )}
               <span
                 tabIndex="-1"
-                className={`post-detail-avatar${postImage ? ' post-detail-avatar--desktop' : ''} flex relative justify-center items-center box-border overflow-hidden align-middle z-0 outline-solid outline-transparent text-tiny bg-[#e4e4e7] text-zinc-700 font-bold rounded-full h-12 w-12 shrink-0`}
+                className={`post-detail-avatar ${avatarToneClass(post.vendorName)}${postImage ? ' post-detail-avatar--desktop' : ''} flex relative justify-center items-center box-border overflow-hidden align-middle z-0 outline-solid outline-transparent text-tiny bg-[#e4e4e7] text-zinc-700 font-bold rounded-full h-12 w-12 shrink-0`}
               >
                 <span
                   aria-label={post.vendorName}

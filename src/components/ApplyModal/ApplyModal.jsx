@@ -1,6 +1,7 @@
 import { useDialogFocus } from '../../hooks/useDialogFocus';
 import React, { useState, useRef } from 'react';
 import './ApplyModal.css';
+import { avatarToneClass } from '../../utils/avatarTone';
 
 export function ApplyModal({ isOpen, onClose, onApply, post }) {
   const [message, setMessage] = useState('');
@@ -101,7 +102,7 @@ export function ApplyModal({ isOpen, onClose, onApply, post }) {
               <div className="flex gap-3 items-center">
                 <span
                   tabIndex="-1"
-                  className="flex relative justify-center items-center box-border overflow-hidden align-middle z-0 outline-solid outline-transparent w-14 h-14 text-small bg-[#e4e4e7] text-zinc-700 font-semibold rounded-full shrink-0"
+                  className={`${avatarToneClass(post.vendorName)} flex relative justify-center items-center box-border overflow-hidden align-middle z-0 outline-solid outline-transparent w-14 h-14 text-small bg-[#e4e4e7] text-zinc-700 font-semibold rounded-full shrink-0`}
                 >
                   <span
                     aria-label={post.vendorName}

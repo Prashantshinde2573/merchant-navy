@@ -394,12 +394,11 @@
   .mobile-navbar-notifications .mobile-nav-count { right: -2px; top: 6px; }
 }
 
-/* Post detail on mobile/tablet: no app bars; the post header stays on top and
-   the Apply action group (budget, Apply, save, more) becomes the bottom action bar. */
+/* Post detail on mobile/tablet: the top app bar is hidden (the post header takes its place);
+   the bottom nav stays, and the Apply action group (budget, Apply, save, more) sits right above it. */
 @media (max-width: 1023px) {
-  .app-main-layout.is-post-detail { --mobile-header-height: 0px; padding-bottom: calc(68px + env(safe-area-inset-bottom, 0px)) !important; }
-  .app-main-layout.is-post-detail .app-top-nav,
-  .app-main-layout.is-post-detail .mobile-bottom-nav { display: none !important; }
+  .app-main-layout.is-post-detail { --mobile-header-height: 0px; padding-bottom: calc(68px + var(--mobile-nav-height) + env(safe-area-inset-bottom, 0px)) !important; }
+  .app-main-layout.is-post-detail .app-top-nav { display: none !important; }
   .app-main-layout.is-post-detail .post-detail-header-wrap {
     position: sticky !important;
     top: 0 !important;
@@ -419,11 +418,11 @@
   .post-detail-header-left .post-detail-avatar { width: 40px; height: 40px; }
   .app-main-layout.is-post-detail .post-detail-header-wrap .post-detail-header-right {
     position: fixed;
-    inset: auto 0 0 0;
-    z-index: 40;
+    inset: auto 0 calc(var(--mobile-nav-height) + env(safe-area-inset-bottom, 0px)) 0;
+    z-index: 39;
     width: auto;
     margin: 0;
-    padding: 12px max(12px, env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px)) !important;
+    padding: 12px max(12px, env(safe-area-inset-right, 0px)) 12px max(12px, env(safe-area-inset-left, 0px)) !important;
     background: #fff;
     border-top: 1px solid #e1e7ef !important;
     box-shadow: 0 -2px 8px rgba(15, 23, 43, 0.04);
@@ -486,4 +485,44 @@
   .post-detail-header-left { gap: 12px !important; }
   .post-detail-left > .space-y-4, .my-post-detail-left > .space-y-4 { display: flex; flex-direction: column; gap: 12px; }
   .post-detail-left > .space-y-4 > *, .my-post-detail-left > .space-y-4 > * { margin: 0 !important; }
+}
+
+/* Letter avatars (no company image): a coloured background from the Figma palette so they read
+   as a profile picture, with the same 8px corners as image avatars. Mobile/tablet only. */
+@media (max-width: 1023px) {
+  .avatar-tone { border-radius: 8px !important; }
+  .avatar-tone-0 { background-color: #1f285d !important; color: #fff !important; }
+  .avatar-tone-1 { background-color: #565d85 !important; color: #fff !important; }
+  .avatar-tone-2 { background-color: #6020a0 !important; color: #fff !important; }
+  .avatar-tone-3 { background-color: #12a150 !important; color: #fff !important; }
+  .avatar-tone-4 { background-color: #d03740 !important; color: #fff !important; }
+}
+
+/* ------------------------------------------------------------------
+   Card element spacing from the Figma Home card (node 5502-471),
+   applied to every card on mobile/tablet. Figma card rhythm:
+   header -> description -> meta rows: 12px; between meta rows: 8px;
+   meta -> divider: 16px; divider -> footer: 12px; name -> time: 2px;
+   footer: views -> icon buttons wide gap, icon buttons tight, 12px before the main button.
+   ------------------------------------------------------------------ */
+@media (max-width: 1023px) {
+  /* Feed (Home) cards */
+  .home-page .max-w-147 .min-w-0.flex-1 > button + p { margin-top: 2px; }
+  .home-page .max-w-147 .mt-3 + .mt-3 { margin-top: 8px !important; }
+  .home-page .max-w-147 hr.my-3 { margin-top: 16px !important; margin-bottom: 12px !important; }
+  .home-page .max-w-147 .flex.items-center.justify-end.gap-6 { gap: 4px !important; }
+  .home-page .max-w-147 .flex.items-center.justify-end.gap-6 > span:first-child { margin-right: 12px; }
+  .home-page .max-w-147 .flex.items-center.justify-end.gap-6 > a { margin-left: 8px; }
+
+  /* My Posts cards: 16px above the divider (card gap 12 + 4) */
+  .my-posts-page .p-7 > hr { margin: 4px 0 0 !important; }
+
+  /* Wins cards: name -> date 2px, 16px above the divider */
+  .wins-page-wrapper .wins-card-header .flex.min-w-0.flex-col.gap-1 { gap: 2px !important; }
+  .wins-page-wrapper .wins-card-body > hr { margin-top: 4px !important; }
+
+  /* Merchants cards: 12px header -> details, 8px between detail rows, 16px above / 12px below the divider */
+  .my-merchants-page table td { padding: 4px 0 !important; }
+  .my-merchants-page table td:first-child { padding: 0 0 8px !important; }
+  .my-merchants-page table td:last-child { margin-top: 12px !important; padding-top: 12px !important; }
 }
