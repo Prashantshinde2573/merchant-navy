@@ -526,3 +526,24 @@
   .my-merchants-page table td:first-child { padding: 0 0 8px !important; }
   .my-merchants-page table td:last-child { margin-top: 12px !important; padding-top: 12px !important; }
 }
+
+/* Post detail (mobile/tablet): save + more-actions sit in the sticky top bar beside the company name;
+   the bottom action bar keeps only the budget and a right-aligned Apply button. */
+@media (max-width: 1023px) {
+  .app-main-layout.is-post-detail .post-detail-header-wrap .post-detail-header-right {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .app-main-layout.is-post-detail .post-detail-header-left { padding-right: 88px; }
+  .app-main-layout.is-post-detail .post-detail-header-right > button[aria-label="Save post"],
+  .app-main-layout.is-post-detail .post-detail-header-right > .relative.inline-block {
+    position: fixed;
+    top: calc(env(safe-area-inset-top, 0px) + 10px);
+    z-index: 41;
+    width: 40px;
+    height: 44px;
+  }
+  .app-main-layout.is-post-detail .post-detail-header-right > button[aria-label="Save post"] { right: calc(max(12px, env(safe-area-inset-right, 0px)) + 44px); }
+  .app-main-layout.is-post-detail .post-detail-header-right > .relative.inline-block { right: max(12px, env(safe-area-inset-right, 0px)); }
+  /* The more-actions menu opens downward again from the top bar. */
+  .app-main-layout.is-post-detail .post-detail-header-right [data-post-actions-dropdown] { top: 100% !important; bottom: auto; right: 0; margin-top: 4px !important; margin-bottom: 0; }
+}
