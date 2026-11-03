@@ -29,14 +29,16 @@
   }
   .app-top-nav .mobile-top-header {
     display: grid !important;
-    grid-template-columns: 44px minmax(0, 1fr) 88px;
+    grid-template-columns: minmax(0, 1fr) auto;
     padding: 0 !important;
     height: 56px !important;
     gap: 8px;
   }
   .mobile-top-header .mobile-navbar-logo { justify-content: flex-start; padding: 0; }
   .mobile-top-header .mobile-navbar-logo img { height: 30px; max-width: 128px; }
-  .mobile-navbar-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+  .mobile-navbar-actions { display: flex; align-items: center; justify-content: flex-end; gap: 4px; }
+  .mobile-navbar-actions > button.w-10 { width: 44px; height: 44px; }
+  .mobile-navbar-actions .mobile-navbar-notifications { width: 44px; }
   .mobile-navbar-help { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 44px; color: #424976; }
   .mobile-navbar-actions > li > button { display: flex; align-items: center; justify-content: center; min-width: 40px; height: 44px; }
   .mobile-navbar-actions img { width: 32px; height: 32px; }
@@ -75,9 +77,9 @@
 
   /* Feed keeps professional content prominent without inflated cards. */
   .app-main-layout .home-page { padding: 0 8px !important; }
-  .home-page > .w-full { padding-top: 10px !important; padding-bottom: 12px !important; }
+  .home-page > .w-full { padding-top: 12px !important; padding-bottom: 12px !important; }
   .home-page .w-147 { width: 100% !important; max-width: 100% !important; gap: 8px !important; }
-  .home-page .max-w-147 { max-width: 100% !important; padding: 14px !important; border-radius: 10px !important; gap: 12px !important; }
+  .home-page .max-w-147 { max-width: 100% !important; padding: 16px !important; gap: 12px !important; }
   .home-page .max-w-147 .h-12 { height: 40px; }
   .home-page .max-w-147 .w-12 { width: 40px; }
   .home-page .max-w-147 .text-modified-15 { font-size: 14px; line-height: 21px; }
@@ -87,13 +89,13 @@
   /* My Posts: summary first, complete text remains available in View Details. */
   .my-posts-page .my-post-summary { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden; font-size: 14px; line-height: 21px; }
   .my-posts-page .my-post-inline-more { display: none; }
-  .my-posts-page .p-7 { padding: 14px !important; gap: 12px !important; }
+  .my-posts-page .p-7 { padding: 16px !important; gap: 12px !important; }
   .my-posts-page .p-7 > .flex.items-center.justify-between { flex-direction: row !important; align-items: center !important; flex-wrap: wrap; }
   .my-posts-page .p-7 > .flex.flex-col.gap-2 > div { margin-top: 0 !important; align-items: flex-start; }
   .my-posts-page .p-7 > .flex.flex-col.gap-2 > div > span:last-child { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
-  .my-posts-page .p-7 .gap-8 { gap: 10px !important; }
+  .my-posts-page .p-7 .gap-8 { gap: 12px !important; }
   .my-posts-page .p-7 hr { margin: 0; }
-  .my-posts-page .p-7 .gap-8 > .flex { gap: 10px !important; }
+  .my-posts-page .p-7 .gap-8 > .flex { gap: 12px !important; }
   .my-posts-page .p-7 .gap-8 > .flex:last-child :is(a, button) { min-height: 40px; }
   .my-posts-page .my-posts-tabs { gap: 0; }
 
@@ -111,13 +113,13 @@
   .my-merchants-page td[data-mobile-label]:not(:first-child):not(:last-child)::before { content: attr(data-mobile-label); display: block; font-size: 12px; line-height: 18px; color: #71717a; margin-bottom: 3px; }
   .my-merchants-page table td:last-child :is(a,button) { min-height: 40px; min-width: 40px; }
   .my-merchants-page table td:last-child a { flex: 1; }
-  .my-merchants-page [data-slot=wrapper] { padding: 14px; }
+  .my-merchants-page [data-slot=wrapper] { padding: 16px; }
 
-  .wins-page-wrapper .wins-toolbar-row { gap: 10px !important; margin-bottom: 14px !important; }
-  .wins-page-wrapper .wins-card { padding: 14px !important; gap: 12px !important; }
+  .wins-page-wrapper .wins-toolbar-row { gap: 12px !important; margin-bottom: 16px !important; }
+  .wins-page-wrapper .wins-card { padding: 16px !important; gap: 12px !important; }
   .wins-page-wrapper .wins-card-header { gap: 8px !important; }
   .wins-page-wrapper .wins-ratings-row { gap: 12px !important; }
-  .notifications-page > .mb-6.flex { gap: 10px !important; }
+  .notifications-page > .mb-6.flex { gap: 12px !important; }
   .notifications-page [role=tablist] { flex-wrap: wrap; gap: 0; }
   .notifications-page [role=tab] { padding: 8px !important; min-height: 40px; font-size: 12px; }
   .notifications-page [role=tab] > * { white-space: normal; }
@@ -127,7 +129,7 @@
   .app-main-layout :is(.post-detail-content-wrap, .my-post-detail-content-wrap, .quotation-detail-content-wrap) { padding: 12px !important; }
   .app-main-layout :is(.post-detail-container, .my-post-detail-container, .quotation-detail-container) { min-height: 0; }
   .app-main-layout :is(.post-detail-container, .my-post-detail-container, .quotation-detail-container) .p-5,
-  .app-main-layout .quotation-detail-left > .p-6 { padding: 14px !important; }
+  .app-main-layout .quotation-detail-left > .p-6 { padding: 16px !important; }
   .post-detail-container #scope-of-work, .my-post-detail-container #scope-of-work { order: -1; }
   .post-detail-container #attachments, .my-post-detail-container #attachments { order: 2; }
   .post-detail-container .prose, .my-post-detail-container .prose { font-size: 14px; line-height: 22px; overflow-wrap: anywhere; }
@@ -139,10 +141,10 @@
   .quotation-detail-header-left p { max-width: 100%; }
   .quotation-detail-header-actions { padding-top: 8px; }
   .quotation-detail-left { min-width: 0; width: 100% !important; }
-  .quotation-detail-left > div > .flex.flex-wrap > .flex { min-width: 0; gap: 10px; }
+  .quotation-detail-left > div > .flex.flex-wrap > .flex { min-width: 0; gap: 12px; }
   .quotation-detail-left h3 { font-size: 16px; }
   .quotation-detail-left h3 + span { font-size: 10px; }
-  .quotation-detail-left .quotation-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-top: 14px; padding-top: 12px; }
+  .quotation-detail-left .quotation-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-top: 16px; padding-top: 12px; }
   .quotation-metrics > div { padding: 8px; min-width: 0; }
   .quotation-metrics > div > span:first-child { font-size: 11px; line-height: 15px; min-height: 30px; }
   .quotation-metrics > div > span:last-child { font-size: 14px; line-height: 20px; overflow-wrap: anywhere; }
@@ -165,7 +167,7 @@
   .profile-settings-page-wrapper label { gap: 12px; }
   .help-page .p-6 { padding: 16px !important; }
   .help-page button { white-space: normal; text-align: left; }
-  .announcements-page-wrapper .px-6 { padding-left: 14px !important; padding-right: 14px !important; }
+  .announcements-page-wrapper .px-6 { padding-left: 16px !important; padding-right: 16px !important; }
 
   /* Focused mobile tasks use the viewport, not a small desktop modal. */
   section[role=dialog]#_r_19q_, .apply-modal-root .apply-modal-dialog {
@@ -173,7 +175,7 @@
     max-height: var(--app-viewport-height, 100dvh) !important; margin: 0 !important; border-radius: 0 !important;
     padding-top: env(safe-area-inset-top, 0px); overflow: hidden;
   }
-  #_r_19q_ .modal-header-container, .apply-modal-dialog > header { padding: 10px 16px !important; min-height: 56px; }
+  #_r_19q_ .modal-header-container, .apply-modal-dialog > header { padding: 12px 16px !important; min-height: 56px; }
   #_r_19q_ .modal-header-container h2, .apply-modal-dialog > header h2 { font-size: 17px !important; line-height: 24px; }
   #_r_19q_ .modal-header-container button { min-width: 36px; min-height: 36px; }
   #_r_19q_ .modal-close-btn { display: none !important; }
@@ -186,7 +188,7 @@
   #_r_19q_ .ql-toolbar button { width: 36px; height: 36px; }
   #_r_19q_ .ql-toolbar { padding: 4px; }
   #_r_19q_ .ql-formats { margin-right: 4px; }
-  #_r_19q_ footer, .apply-modal-dialog > footer { padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px)) !important; gap: 8px; }
+  #_r_19q_ footer, .apply-modal-dialog > footer { padding: 12px 12px calc(12px + env(safe-area-inset-bottom, 0px)) !important; gap: 8px; }
   #_r_19q_ footer > button { display: none; }
   #_r_19q_ footer > div { width: 100%; display: grid; grid-template-columns: 1fr 1.5fr; gap: 8px; }
   #_r_19q_ footer button, .apply-modal-dialog > footer button { min-height: 44px; font-size: 14px; }
@@ -199,7 +201,7 @@
 
 @media (max-width: 359px) {
   .mobile-top-header .mobile-navbar-logo img { max-width: 110px; height: 28px; }
-  .app-top-nav .mobile-top-header { grid-template-columns: 36px minmax(0, 1fr) 80px; gap: 4px; }
+  .app-top-nav .mobile-top-header { gap: 4px; }
   .mobile-navbar-actions { gap: 4px; }
   .mobile-nav-item { font-size: 10px; }
   .quotation-metrics > div { padding: 6px; }
@@ -217,12 +219,12 @@
   .notifications-page [role=tab] .gap-2 { gap: 4px; }
   .post-detail-left > .space-y-4, .my-post-detail-left > .space-y-4 { display: flex; flex-direction: column; gap: 12px; }
   .post-detail-left > .space-y-4 > *, .my-post-detail-left > .space-y-4 > * { margin: 0 !important; }
-  .wins-page-wrapper .wins-card-body { padding: 14px !important; gap: 12px !important; }
+  .wins-page-wrapper .wins-card-body { padding: 16px !important; gap: 12px !important; }
   .chat-page-container .w-150 { width: auto; white-space: normal; overflow-wrap: anywhere; }
   .chat-page-container .scrollbar-theme { padding: 12px; }
   .chat-page-container .scrollbar-theme .px-4.py-4 { padding: 0; }
   .chat-page-container .scrollbar-theme .flex.items-start.justify-between { flex-direction: column; gap: 8px; }
-  .chat-page-container .scrollbar-theme .flex.items-start.gap-3\.25 { min-width: 0; gap: 10px; }
+  .chat-page-container .scrollbar-theme .flex.items-start.gap-3\.25 { min-width: 0; gap: 12px; }
   .chat-page-container .quill, .chat-page-container .ql-container { height: auto !important; min-height: 0 !important; }
   .chat-page-container .ql-editor { min-height: 64px; max-height: 120px; height: auto; font-size: 16px; }
   .chat-page-container .relative.bg-white.p-4 { padding: 8px 8px 0; }
@@ -242,10 +244,10 @@
   .home-page > .w-full { min-height: 0; }
   .app-main-layout .home-page .w-147 { max-width: 720px !important; }
   .post-detail-left, .my-post-detail-left { width: 100% !important; min-width: 0; }
-  .quotation-detail-header-top { height: auto !important; padding: 10px 0; flex-wrap: wrap; gap: 8px; }
+  .quotation-detail-header-top { height: auto !important; padding: 12px 0; flex-wrap: wrap; gap: 8px; }
   .quotation-detail-back-btn { left: 0 !important; top: 0 !important; }
   .quotation-detail-header-actions { margin-left: auto; }
-  .my-post-detail-header-top { height: auto !important; flex-wrap: wrap; gap: 8px; padding: 10px 0; }
+  .my-post-detail-header-top { height: auto !important; flex-wrap: wrap; gap: 8px; padding: 12px 0; }
   #_r_19q_ form > .flex { flex-direction: column !important; }
   #_r_19q_ .max-w-100 { max-width: none; }
   .chat-page-container[data-thread-open=true] > div:first-child { display: none !important; }
@@ -383,4 +385,105 @@
   .post-detail-header-right > button[aria-label="Save post"],
   .post-detail-header-right button[aria-label="Service request actions"] { width: 40px; min-width: 40px; height: 44px; }
   .post-detail-header-right > .relative.inline-block { width: 40px; display: flex; align-items: center; }
+}
+
+/* Mobile top bar: notifications moved here from the bottom navigation. */
+@media (max-width: 1023px) {
+  .mobile-navbar-notifications { position: relative; }
+  .mobile-navbar-notifications.is-active { color: #1f285d; }
+  .mobile-navbar-notifications .mobile-nav-count { right: -2px; top: 6px; }
+}
+
+/* Post detail on mobile/tablet: no app bars; the post header stays on top and
+   the Apply action group (budget, Apply, save, more) becomes the bottom action bar. */
+@media (max-width: 1023px) {
+  .app-main-layout.is-post-detail { --mobile-header-height: 0px; padding-bottom: calc(68px + env(safe-area-inset-bottom, 0px)) !important; }
+  .app-main-layout.is-post-detail .app-top-nav,
+  .app-main-layout.is-post-detail .mobile-bottom-nav { display: none !important; }
+  .app-main-layout.is-post-detail .post-detail-header-wrap {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 30;
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .app-main-layout.is-post-detail .post-detail-header-wrap .post-detail-header {
+    flex-direction: row !important;
+    align-items: center !important;
+    height: auto !important;
+    min-height: 64px;
+    padding: 8px 12px !important;
+  }
+  .post-detail-header-left { width: 100%; min-width: 0; gap: 12px !important; }
+  .post-detail-header-left > div { min-width: 0; }
+  .post-detail-header-left h2 { font-size: 16px; line-height: 22px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .post-detail-header-left .post-detail-avatar { width: 40px; height: 40px; }
+  .app-main-layout.is-post-detail .post-detail-header-wrap .post-detail-header-right {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 40;
+    width: auto;
+    margin: 0;
+    padding: 12px max(12px, env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px)) !important;
+    background: #fff;
+    border-top: 1px solid #e1e7ef !important;
+    box-shadow: 0 -2px 8px rgba(15, 23, 43, 0.04);
+  }
+  .post-detail-header-right .post-detail-apply { height: 44px; }
+  /* The more-actions menu opens upward from the bottom bar. */
+  .post-detail-header-right [data-post-actions-dropdown] { top: auto !important; bottom: 100%; margin-top: 0 !important; margin-bottom: 8px; }
+  .post-detail-content-wrap { padding-bottom: 16px !important; }
+  .app-main-layout.is-post-detail .post-detail-back-btn { position: static !important; flex-shrink: 0; }
+  .post-detail-header-right .post-detail-budget > p { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* Ports & Services: headings sit beside their icon like Scope of Work, content starts at the card's left edge. */
+  .post-detail-container #ports-services .flex.items-start.gap-3 {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: 8px;
+    row-gap: 12px;
+  }
+  .post-detail-container #ports-services .flex.items-start.gap-3 > .flex-1 { display: contents; }
+  .post-detail-container #ports-services .flex.items-start.gap-3 > .flex-1 > .flex-wrap { grid-column: 1 / -1; justify-content: flex-start; }
+  .post-detail-container #ports-services hr { margin: 16px 0 !important; }
+  .post-detail-container #scope-of-work .prose,
+  .post-detail-container #scope-of-work .prose p { text-align: left; }
+}
+
+/* Post image in the post header: mobile/tablet only. Desktop keeps the original avatar. */
+.post-detail-avatar--image { display: none !important; }
+@media (max-width: 1023px) {
+  .post-detail-avatar--image { display: flex !important; }
+  .post-detail-avatar--desktop { display: none !important; }
+}
+
+/* ------------------------------------------------------------------
+   Figma design guidelines (Merchant Navy file), mobile/tablet only.
+   Radius tokens: rounded-large 8px (cards, avatars, buttons),
+   rounded-small 4px (chips, badges). Spacing on a 4px grid.
+   Desktop keeps its existing values: nothing below applies >= 1024px.
+   ------------------------------------------------------------------ */
+@media (max-width: 1023px) {
+  :root, .light, .dark, [data-theme] {
+    --heroui-radius-large: 8px !important;
+    --heroui-radius-medium: 8px !important;
+    --heroui-radius-small: 4px !important;
+  }
+
+  /* Feed: 12px between cards, card header gap 12px, footer actions on 12px steps. */
+  .home-page .w-147 { gap: 12px !important; }
+  .home-page .max-w-147 > div:first-child > .flex { gap: 12px; }
+  .home-page .max-w-147 hr + div,
+  .home-page .max-w-147 hr + div > div { gap: 12px !important; }
+  /* Buttons (icon buttons included) use the 8px button radius. Circular icon buttons (rounded-full) stay round. */
+  .app-main-layout :is(button, a):is(.rounded-small, .rounded-md, .rounded-medium, .rounded-large, .rounded-lg, .rounded-xl),
+  [role=dialog] :is(button, a):is(.rounded-small, .rounded-md, .rounded-medium, .rounded-large, .rounded-lg, .rounded-xl) { border-radius: 8px !important; }
+  /* Cards use the 8px card radius. */
+  .app-main-layout :is(.rounded-md, .rounded-xl, .rounded-2xl):is(.p-3, .p-4, .p-5, .p-6, .p-7) { border-radius: 8px !important; }
+
+  /* Post detail: section cards follow the same 8px radius / 16px padding,
+     header to content 12px, avatar to name 12px. */
+  .post-detail-header-left { gap: 12px !important; }
+  .post-detail-left > .space-y-4, .my-post-detail-left > .space-y-4 { display: flex; flex-direction: column; gap: 12px; }
+  .post-detail-left > .space-y-4 > *, .my-post-detail-left > .space-y-4 > * { margin: 0 !important; }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { Navbar } from '../Header/Navbar';
 import './AppLayout.css';
 
@@ -15,11 +15,16 @@ function handleTabNavigation(event) {
   tabs[next].click();
 }
 
+// Post detail is a focused view on mobile/tablet: the app bars give way to the post's own header and action bar.
+const POST_DETAIL_ROUTE = /^\/(posts|post|service-requests)\/[^/]+\/?$/;
+
 export function AppLayout() {
+  const { pathname } = useLocation();
+  const isPostDetail = POST_DETAIL_ROUTE.test(pathname);
   return (
     <div data-overlay-container="true">
       <div data-overlay-container="true">
-        <main onKeyDown={handleTabNavigation} className="bg-blue-25 min-h-screen app-main-layout md:pb-0">
+        <main onKeyDown={handleTabNavigation} className={`bg-blue-25 min-h-screen app-main-layout md:pb-0${isPostDetail ? ' is-post-detail' : ''}`}>
           <Navbar />
           <Outlet />
         </main>

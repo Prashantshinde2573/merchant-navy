@@ -150,8 +150,25 @@ export function Navbar() {
 
         {/* ==================== MOBILE TOP NAVBAR (< 768px) ==================== */}
         <header className="mobile-top-header z-40 flex md:hidden px-3 w-full flex-row relative items-center justify-between h-[var(--navbar-height)]">
-          {/* LEFT: Hamburger Menu Icon */}
-          <div className="flex items-center z-10">
+          {/* LEFT: Merchant Navy Logo */}
+          <div className="mobile-navbar-logo flex flex-1 min-w-0 items-center justify-center px-2 z-10">
+            <Link to="/home" className="flex items-center justify-center">
+              <img
+                alt="Merchant Navy"
+                width="140"
+                height="36"
+                className="h-8 w-auto max-w-[130px] sm:max-w-[150px] object-contain cursor-pointer"
+                src="/images/logo.png"
+              />
+            </Link>
+          </div>
+
+          {/* RIGHT: Notifications and menu (profile lives inside the menu) */}
+          <div className="mobile-navbar-actions">
+            <Link to="/notifications" className={`mobile-navbar-help mobile-navbar-notifications ${isNotif ? 'is-active' : ''}`} aria-label={unreadCount ? `Notifications, ${unreadCount} unread` : 'Notifications'} aria-current={isNotif ? 'page' : undefined}>
+              <span className={`material-symbols-outlined ${isNotif ? 'material-symbols-fill' : ''}`} aria-hidden="true">notifications</span>
+              {Boolean(unreadCount) && <span className="mobile-nav-count" aria-hidden="true">{unreadCount}</span>}
+            </Link>
             <button
               className="flex items-center justify-center w-10 h-10 rounded-lg text-gray-700 hover:bg-blue-25 transition-colors cursor-pointer"
               type="button"
@@ -165,94 +182,6 @@ export function Navbar() {
             >
               <span className="material-symbols-outlined text-2xl">{isMenuOpen ? 'close' : 'menu'}</span>
             </button>
-          </div>
-
-          {/* CENTER: Merchant Navy Logo (Mathematically Centered Relative to Full Viewport) */}
-          <div className="mobile-navbar-logo flex flex-1 min-w-0 items-center justify-center px-2 z-10">
-            <Link to="/home" className="flex items-center justify-center">
-              <img
-                alt="Merchant Navy"
-                width="140"
-                height="36"
-                className="h-8 w-auto max-w-[130px] sm:max-w-[150px] object-contain cursor-pointer"
-                src="/images/logo.png"
-              />
-            </Link>
-          </div>
-
-          {/* RIGHT: Help and profile */}
-          <div className="mobile-navbar-actions">
-            <Link to="/help" className="mobile-navbar-help" aria-label="Support"><span className="material-symbols-outlined" aria-hidden="true">help</span></Link>
-            <li className="text-medium whitespace-nowrap box-border list-none data-[active=true]:font-semibold relative flex items-center" ref={mobileDropdownRef}>
-              <button
-                className="z-10 aria-expanded:scale-[0.97] aria-expanded:opacity-70 subpixel-antialiased cursor-pointer"
-                data-slot="trigger"
-                onClick={() => {
-                  setIsDropdownOpen(!isDropdownOpen);
-                  setIsMenuOpen(false);
-                }}
-                type="button"
-                tabIndex="0"
-                aria-label="Profile"
-                aria-expanded={isDropdownOpen}
-              >
-                <div className="relative inline-flex shrink-0">
-                  <span
-                    tabIndex="-1"
-                    className="flex relative justify-center items-center box-border overflow-hidden align-middle z-0 outline-solid outline-transparent data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 w-10 h-10 text-tiny bg-default text-default-foreground rounded-medium"
-                  >
-                    <img
-                      className="flex object-cover w-full h-full transition-opacity !duration-500 opacity-100"
-                      alt="Profile"
-                      src="/images/profile_avatar.webp"
-                    />
-                  </span>
-                  <span className="flex z-10 flex-wrap absolute box-border rounded-full whitespace-nowrap place-content-center origin-center items-center select-none font-regular scale-100 opacity-100 subpixel-antialiased text-tiny border-2 border-background text-default-foreground bottom-[10%] right-[10%] translate-x-1/2 translate-y-1/2 p-0 bg-blue-100 color-blue-900">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="lucide lucide-chevron-down"
-                    >
-                      <path d="m6 9 6 6 6-6"></path>
-                    </svg>
-                  </span>
-                </div>
-              </button>
-
-              {isDropdownOpen && (
-                <div className="absolute right-0 top-14 mt-1 w-48 bg-white rounded-large shadow-medium shadow-neutral-sm border border-blue-50 p-3 z-50 flex flex-col gap-1 profile-dropdown-card">
-                  <Link
-                    to="/company-profile"
-                    onClick={() => setIsDropdownOpen(false)}
-                    className="text-[14px] font-medium text-gray-800 hover:text-primary transition-colors px-2.5 py-1.5 text-left block w-full rounded-md hover:bg-blue-50/50"
-                  >
-                    Profile
-                  </Link>
-                  <Link
-                    to="/settings"
-                    onClick={() => setIsDropdownOpen(false)}
-                    className="text-[14px] font-medium text-gray-800 hover:text-primary transition-colors px-2.5 py-1.5 text-left block w-full rounded-md hover:bg-blue-50/50"
-                  >
-                    Settings
-                  </Link>
-                  <div className="h-px bg-gray-100 my-1"></div>
-                  <button
-                    type="button"
-                    onClick={handleLogout}
-                    className="text-[14px] font-medium text-red-600 hover:text-red-700 transition-colors px-2.5 py-1.5 text-left block w-full cursor-pointer rounded-md hover:bg-red-50/50"
-                  >
-                    Logout
-                  </button>
-                </div>
-              )}
-            </li>
           </div>
         </header>
 
@@ -269,17 +198,7 @@ export function Navbar() {
               <span>Home</span>
             </Link>
 
-            {/* 2. Wins */}
-            <Link
-              to="/wins"
-              onClick={() => setIsMenuOpen(false)}
-              className={`flex items-center gap-3 p-2.5 rounded-lg text-sm font-medium transition-colors ${isWins ? "bg-blue-50 text-primary font-semibold" : "text-gray-700 hover:bg-gray-50"}`}
-            >
-              <span className={`material-symbols-outlined text-xl ${isWins ? "material-symbols-fill text-primary" : "text-gray-500"}`}>award_star</span>
-              <span>Wins</span>
-            </Link>
-
-            {/* 3. Announcements */}
+            {/* 2. Announcements (Wins lives in the bottom nav on mobile) */}
             <Link
               to="/announcements"
               onClick={() => setIsMenuOpen(false)}
@@ -292,7 +211,27 @@ export function Navbar() {
               <span className="bg-blue-50 text-primary text-xs font-semibold px-2 py-0.5 rounded-full">New</span>
             </Link>
 
-            {/* 4. Support / Help */}
+            {/* 3. Profile */}
+            <Link
+              to="/company-profile"
+              onClick={() => setIsMenuOpen(false)}
+              className={`flex items-center gap-3 p-2.5 rounded-lg text-sm font-medium transition-colors ${pathname.startsWith('/company-profile') ? "bg-blue-50 text-primary font-semibold" : "text-gray-700 hover:bg-gray-50"}`}
+            >
+              <span className={`material-symbols-outlined text-xl ${pathname.startsWith('/company-profile') ? "material-symbols-fill text-primary" : "text-gray-500"}`}>account_circle</span>
+              <span>Profile</span>
+            </Link>
+
+            {/* 4. Settings */}
+            <Link
+              to="/settings"
+              onClick={() => setIsMenuOpen(false)}
+              className={`flex items-center gap-3 p-2.5 rounded-lg text-sm font-medium transition-colors ${pathname.startsWith('/settings') ? "bg-blue-50 text-primary font-semibold" : "text-gray-700 hover:bg-gray-50"}`}
+            >
+              <span className={`material-symbols-outlined text-xl ${pathname.startsWith('/settings') ? "material-symbols-fill text-primary" : "text-gray-500"}`}>settings</span>
+              <span>Settings</span>
+            </Link>
+
+            {/* 5. Support / Help */}
             <Link
               to="/help"
               onClick={() => setIsMenuOpen(false)}
@@ -303,10 +242,21 @@ export function Navbar() {
             </Link>
 
 
-            {/* 5. Upgrade for More (Visual Red Promotional Banner at the VERY END) */}
+            {/* 6. Upgrade for More */}
             <div className="mt-2 w-full">
               <UpgradeBanner className="!max-w-full w-full" onUpgrade={() => setIsMenuOpen(false)} />
             </div>
+
+            {/* 7. Logout */}
+            <div className="h-px bg-gray-100 my-1"></div>
+            <button
+              type="button"
+              onClick={() => { setIsMenuOpen(false); handleLogout(); }}
+              className="flex items-center gap-3 p-2.5 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50/50 transition-colors cursor-pointer w-full text-left"
+            >
+              <span className="material-symbols-outlined text-xl" aria-hidden="true">logout</span>
+              <span>Logout</span>
+            </button>
           </div>
         )}
       </nav>
@@ -316,8 +266,8 @@ export function Navbar() {
         {[
           { to: '/home', label: 'Home', icon: 'home', active: isHome },
           { to: '/my-posts', label: 'My Posts', icon: 'docs', active: isMyPosts },
+          { to: '/wins', label: 'Wins', icon: 'award_star', active: isWins },
           { to: '/my-merchants', label: 'Merchants', icon: 'favorite', active: isMerchants },
-          { to: '/notifications', label: 'Alerts', icon: 'notifications', active: isNotif, count: unreadCount },
           { to: '/chats', label: 'Chat', icon: 'chat', active: isChats },
         ].map(item => (
           <Link key={item.to} to={item.to} aria-current={item.active ? 'page' : undefined}

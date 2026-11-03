@@ -20,6 +20,8 @@ export function PostDetail() {
   const postId = id || 'home-post-7';
   const post = getPost(postId);
   const isApplied = hasApplied(post.id);
+  // Same image the feed card shows: the post's own image, or the poster's profile image for posts created in the app.
+  const postImage = post.vendorImage || (String(post.id).startsWith('custom-post') ? '/images/profile_avatar.webp' : null);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -79,9 +81,18 @@ export function PostDetail() {
                 </svg>
               </button>
 
+              {/* Mobile only: show the post's image (desktop keeps its original avatar). */}
+              {postImage && (
+                <span
+                  tabIndex="-1"
+                  className="post-detail-avatar post-detail-avatar--image flex relative justify-center items-center box-border overflow-hidden align-middle z-0 text-tiny bg-default text-default-foreground rounded-medium h-12 w-12 shrink-0 shadow-sm"
+                >
+                  <img className="flex object-cover w-full h-full" alt={post.vendorName || ''} src={postImage} />
+                </span>
+              )}
               <span
                 tabIndex="-1"
-                className="flex relative justify-center items-center box-border overflow-hidden align-middle z-0 outline-solid outline-transparent text-tiny bg-[#e4e4e7] text-zinc-700 font-bold rounded-full h-12 w-12 shrink-0"
+                className={`post-detail-avatar${postImage ? ' post-detail-avatar--desktop' : ''} flex relative justify-center items-center box-border overflow-hidden align-middle z-0 outline-solid outline-transparent text-tiny bg-[#e4e4e7] text-zinc-700 font-bold rounded-full h-12 w-12 shrink-0`}
               >
                 <span
                   aria-label={post.vendorName}
