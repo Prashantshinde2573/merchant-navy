@@ -163,11 +163,20 @@ export function Navbar() {
             </Link>
           </div>
 
-          {/* RIGHT: Notifications and menu (profile lives inside the menu) */}
+          {/* RIGHT: Notifications, Profile, and menu */}
           <div className="mobile-navbar-actions">
             <Link to="/notifications" className={`mobile-navbar-help mobile-navbar-notifications ${isNotif ? 'is-active' : ''}`} aria-label={unreadCount ? `Notifications, ${unreadCount} unread` : 'Notifications'} aria-current={isNotif ? 'page' : undefined}>
               <span className={`material-symbols-outlined ${isNotif ? 'material-symbols-fill' : ''}`} aria-hidden="true">notifications</span>
               {Boolean(unreadCount) && <span className="mobile-nav-count" aria-hidden="true">{unreadCount}</span>}
+            </Link>
+            <Link
+              to="/company-profile"
+              className="mobile-navbar-profile"
+              aria-label="Profile"
+              aria-current={pathname.startsWith('/company-profile') ? 'page' : undefined}
+              onClick={() => { setIsMenuOpen(false); setIsDropdownOpen(false); }}
+            >
+              <img src="/images/profile_avatar.webp" alt="" width="32" height="32" />
             </Link>
             <button
               className="flex items-center justify-center w-10 h-10 rounded-lg text-gray-700 hover:bg-blue-25 transition-colors cursor-pointer"
@@ -209,16 +218,6 @@ export function Navbar() {
                 <span>Announcements</span>
               </div>
               <span className="bg-blue-50 text-primary text-xs font-semibold px-2 py-0.5 rounded-full">New</span>
-            </Link>
-
-            {/* 3. Profile */}
-            <Link
-              to="/company-profile"
-              onClick={() => setIsMenuOpen(false)}
-              className={`flex items-center gap-3 p-2.5 rounded-lg text-sm font-medium transition-colors ${pathname.startsWith('/company-profile') ? "bg-blue-50 text-primary font-semibold" : "text-gray-700 hover:bg-gray-50"}`}
-            >
-              <span className={`material-symbols-outlined text-xl ${pathname.startsWith('/company-profile') ? "material-symbols-fill text-primary" : "text-gray-500"}`}>account_circle</span>
-              <span>Profile</span>
             </Link>
 
             {/* 4. Settings */}
@@ -288,7 +287,7 @@ export function Navbar() {
             <div className="flex items-center justify-between pb-3 border-b border-gray-100">
               <div className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-primary text-2xl">campaign</span>
-                <h3 className="font-semibold text-lg text-gray-900">Announcements</h3>
+                <h3 className="ui-section-title font-semibold text-lg text-gray-900">Announcements</h3>
               </div>
               <button
                 type="button"

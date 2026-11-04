@@ -143,7 +143,7 @@ export function Login() {
                     type="submit"
                     tabIndex="0"
                     disabled={loading}
-                    className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal overflow-hidden px-6 min-w-24 h-12 text-medium gap-3 rounded-large bg-primary text-primary-foreground hover:opacity-90 w-full transition cursor-pointer disabled:opacity-60"
+                    className="ui-button z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal overflow-hidden px-6 min-w-24 h-12 text-medium gap-3 rounded-large bg-primary text-primary-foreground hover:opacity-90 w-full transition cursor-pointer disabled:opacity-60"
                   >
                     {loading ? "Sending..." : "Continue"}
                   </button>
@@ -197,7 +197,7 @@ export function Login() {
                     type="submit"
                     tabIndex="0"
                     disabled={loading}
-                    className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal overflow-hidden px-6 min-w-24 h-12 text-medium gap-3 rounded-large bg-primary text-primary-foreground hover:opacity-90 w-full transition cursor-pointer disabled:opacity-60"
+                    className="ui-button z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal overflow-hidden px-6 min-w-24 h-12 text-medium gap-3 rounded-large bg-primary text-primary-foreground hover:opacity-90 w-full transition cursor-pointer disabled:opacity-60"
                   >
                     {loading ? "Verifying..." : "Verify & Continue"}
                   </button>

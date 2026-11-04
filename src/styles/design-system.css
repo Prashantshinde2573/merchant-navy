@@ -1,0 +1,144 @@
+/* Apply is the visual benchmark. Use these role-based tokens rather than page-specific values. */
+:root {
+  --ui-space-xs: 4px;
+  --ui-heading-gap: 6px;
+  --ui-icon-gap: 8px;
+  --ui-section-gap: 16px;
+  --ui-card-padding: 20px;
+  --ui-page-title-size: 24px;
+  --ui-body-size: 15px;
+  --ui-body-line: 24px;
+  --ui-card-radius: 8px;
+  --ui-border: #f0f1f4;
+  --ui-muted: #71717a;
+  --ui-ink: #181e21;
+  --ui-shadow: 0 1px 2px #0000000d;
+  --mobile-heading-description-gap: var(--ui-heading-gap);
+}
+/* Local assets keep the same typography and icons when third-party font requests fail. */
+@font-face { font-family: 'App Inter'; font-style: normal; font-weight: 100 900; font-display: swap; src: url('/fonts/inter-latin.woff2') format('woff2'); }
+body { font-family: 'App Inter', Inter, sans-serif; }
+#root .page-title { line-height: 1.3em !important; font-weight: 600; }
+#root h1.page-title { font-size: var(--ui-page-title-size) !important; margin: 0 !important; }
+#root .mobile-heading-group.mobile-heading-group {
+  display: flex !important; flex-direction: column !important; align-items: stretch;
+  gap: var(--ui-heading-gap) !important;
+}
+#root .mobile-heading-group > * { margin-block: 0 !important; }
+#root .mobile-heading-group > p {
+  font-size: 14px !important; line-height: 22px !important;
+}
+#root .ui-section-title {
+  font-size: 16px !important; line-height: 24px !important; font-weight: 600 !important;
+}
+#root .ui-card, .applied-merchants, .vendor-profile-dialog {
+  border-radius: var(--ui-card-radius) !important; box-shadow: var(--ui-shadow) !important;
+}
+#root .ui-card { border-color: var(--ui-border) !important; }
+#root .ui-card-padding { padding: var(--ui-card-padding) !important; }
+.ui-section-card > div:first-child { padding-bottom: 12px; }
+.ui-section-card:not(#ports-services) > div + div { padding-left: 32px; }
+.ui-section-card :is(h3,h4) { margin: 0; }
+.ui-section-card .prose { font-size: var(--ui-body-size); line-height: var(--ui-body-line); }
+.ui-section-card .prose p { font-size: inherit !important; line-height: inherit !important; }
+#root :is(.post-detail-container,.my-post-detail-container) #ports-services .flex.items-start.gap-3 { display: flex; gap: var(--ui-icon-gap); align-items: flex-start; }
+#root :is(.post-detail-container,.my-post-detail-container) #ports-services .flex.items-start.gap-3 > .flex-1 { display: flex; min-width: 0; }
+#root :is(.post-detail-container,.my-post-detail-container) #ports-services .flex-wrap > div { min-width: 0; max-width: 100%; height: auto; white-space: normal; }
+#root :is(.post-detail-container,.my-post-detail-container) #ports-services .flex-wrap > div > span { white-space: normal; overflow-wrap: anywhere; }
+#root .ui-amount, #root .post-detail-budget > p:first-child {
+  font-size: 18px !important; line-height: 24px !important; font-weight: 600 !important;
+  font-variant-numeric: tabular-nums; letter-spacing: 0; text-align: left;
+}
+.ui-status {
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  min-height: 28px; height: auto !important; padding: 4px 12px !important;
+  border-radius: 4px !important; font-size: 13px !important; line-height: 20px !important; font-weight: 600;
+}
+.ui-status > span { padding-inline: 0 !important; font-size: inherit !important; line-height: inherit; font-weight: inherit; }
+#root .ui-button {
+  min-height: 44px; height: auto; padding: 10px 16px; border-radius: 8px;
+  font-size: 14px; line-height: 20px; font-weight: 500;
+}
+#root .ui-button svg { flex-shrink: 0; }
+/* Forms and company metadata use a label/value rhythm, not paragraph margins. */
+:is(.company-profile-page-wrapper,.profile-settings-page-wrapper) label:not(:has(input)):not([for=logo-upload]):not([for=cover-upload]) { font-size: 13px; line-height: 20px; }
+.vendor-profile-fields dt { font-size: 13px; line-height: 20px; color: var(--ui-muted); }
+.vendor-profile-fields > div { min-width: 0; }
+.vendor-profile-fields > div dd { margin-top: 4px; font-size: 14px; line-height: 22px; overflow-wrap: anywhere; }
+.vendor-profile-section { margin-top: 24px; }
+.vendor-profile-section h3 { gap: 8px; font-size: 16px; line-height: 24px; font-weight: 600; }
+.vendor-profile-documents p { line-height: 20px; }
+#root .settings-card hr { border: 0; height: 1px; background: var(--ui-border); margin-block: 16px; }
+#root .settings-card .settings-card-inner { padding: var(--ui-card-padding) !important; gap: 24px !important; }
+/* Shared list/card identity text has the same weight and metadata spacing. */
+#root :is(.wins-card-header,.applied-identity) :is(h2,h3) { font-size: 15px !important; font-weight: 600 !important; line-height: 1.3em !important; }
+#root .applied-identity p { margin-top: 4px; }
+#root .notifications-page [role=link] { gap: 12px; padding: 16px; }
+#root .notifications-page [role=link] > .flex-1 { min-width: 0; gap: 4px; }
+#root .notifications-page [role=link] p:first-child { font-size: 14px; line-height: 22px; }
+#root .notifications-page [role=link] p:last-child { font-size: 13px; line-height: 18px; }
+#root .notifications-page [role=link] > .size-12 { width: 40px; height: 40px; }
+@media (max-width: 1023px) {
+  :root { --ui-card-padding: 16px; --ui-page-title-size: 20px; --ui-body-size: 14px; --ui-body-line: 22px; }
+  #root .ui-card-padding { padding: var(--ui-card-padding) !important; }
+  #root .ui-section-card { padding: var(--ui-card-padding) !important; }
+  #root .ui-section-card .prose { font-size: var(--ui-body-size); line-height: var(--ui-body-line); }
+  #root .post-overflow-trigger, #root .merchant-card-trigger { min-height: 44px; }
+  #root .applied-row-actions :is(.application-notes-button,.application-invite,.merchant-card-trigger,.post-overflow-trigger) { height: 44px; }
+  #root .wins-card-body { gap: 16px !important; }
+  #root .vendor-profile-fields { padding: 16px; gap: 20px; }
+  #root .my-post-detail-title { font-size: 15px !important; }
+}
+.ui-content-icon { flex-shrink: 0; width: 24px; height: 24px; margin-top: 0 !important; }
+#root :is(.my-post-card-actions,.wins-card-footer) a,
+#root .my-post-card-actions .post-close-button {
+  min-height: 44px; height: auto; padding-block: 10px; border-radius: 8px; font-size: 14px; line-height: 20px; font-weight: 500;
+}
+#root .my-post-summary { font-size: 14px; line-height: 22px; letter-spacing: 0; }
+#root .wins-card-body > p { font-size: 14px; line-height: 22px; }
+#root .wins-card-header > div:first-child { gap: 12px; }
+#root .wins-card-header > div:first-child > span { width: 40px; height: 40px; }
+#root .wins-card-header h3 + p { margin-top: 4px; font-size: 13px; line-height: 18px; }
+#root .chat-page-container [data-slot=avatar], #root .chat-page-container .ui-content-icon { flex-shrink: 0; }
+#root .quotation-detail-header-left .page-title { font-size: 18px; }
+@media(max-width:1023px){
+  #root .quotation-detail-header-left .page-title { font-size: 15px; }
+  #root .quotation-detail-back-btn { width:36px!important; height:36px!important; min-width:36px; border:2px solid #dfe2eb; border-radius:8px; }
+  #root .quotation-detail-header-left { padding-left:46px!important; }
+  #root .quotation-detail-header-actions { padding-left:46px!important; gap:8px; }
+  #root .quotation-detail-header-top { padding-block:18px!important; }
+  #root .wins-card-header .rounded-full { border-radius:4px; }
+  #root .ui-status { font-size:13px!important; }
+}
+#root .ui-card hr { border:0; height:1px; background:var(--ui-border); }
+#root .ui-card .divide-y > *, #root .settings-right-col > * { border-color:var(--ui-border); }
+#root .ui-quoted-price { align-items:flex-start; gap:4px; text-align:left; }
+#root .quotation-metrics span:first-child { font-size:12px; line-height:18px; }
+#root .quotation-metrics span:last-child { font-size:14px; line-height:20px; font-weight:600; }
+#root .settings-right-col > div { gap:16px; }
+#root .settings-right-col p { font-size:14px; line-height:22px; }
+#root .settings-right-col p + p { margin-top:6px; }
+#root .chat-page-container .flex.min-w-0.flex-1.flex-col { gap:4px; }
+#root .chat-page-container .flex.min-w-0.flex-1.flex-col > div:first-child > span:first-child { font-size:15px; line-height:1.3em; font-weight:600; }
+#root .chat-page-container .flex.min-w-0.flex-1.flex-col > div:last-child { font-size:13px; line-height:18px; }
+@media(max-width:1023px){
+  #root .profile-settings-page-wrapper { padding:16px 12px!important; }
+  #root .app-main-layout .home-page { padding-inline:12px!important; }
+  #root .app-main-layout .home-page .w-147 { gap:12px!important; }
+  #root .ui-quoted-price { padding-left:0; }
+  #root .my-merchants-page table td:last-child :is(a,button) { min-height:44px; }
+  #root .my-merchants-page td[data-mobile-label]::before { margin-bottom:4px; }
+}
+#root .app-main-layout .company-profile-page-wrapper .ui-section-title { line-height:24px!important; }
+#root .ui-field-label { display:block; margin-bottom:6px; font-size:13px; line-height:20px; }
+#root .quotation-metrics { border-color:var(--ui-border); }
+#root .quotation-detail-header-left .mobile-heading-group > div > span { border-color:#dfe2eb; border-radius:4px; }
+#root .help-page .text-content3-foreground { font-size:14px; line-height:22px; }
+#root .help-page button > .text-modified-15-semibold { font-size:16px; line-height:24px; }
+#root .announcements-page-wrapper .ui-card-padding > .flex-col { gap:4px; }
+#root .announcements-page-wrapper .ui-card-padding p:first-child { font-size:13px; line-height:18px; }
+#root .announcements-page-wrapper .ui-card-padding p:last-child { font-size:14px; line-height:22px; }
+#root .flex:has(> .ui-card + .ui-card) { gap:var(--ui-section-gap); }
+@media(max-width:1023px){
+  #root .flex:has(> .ui-card + .ui-card) { gap:12px; }
+}

@@ -1,3 +1,5 @@
+import { PortServiceIcon } from '../../components/PortServiceIcon/PortServiceIcon';
+import { ContentIcon } from '../../components/ContentIcon/ContentIcon';
 import React, { useState, useEffect } from 'react';
 import { PostAttachments } from '../../components/PostAttachments/PostAttachments';
 import { useParams, useNavigate, Link, useLocation, useSearchParams } from 'react-router-dom';
@@ -142,7 +144,7 @@ export function MyPostDetail() {
               <div className="flex items-center gap-5 my-post-detail-header-actions">
                 <div className="flex items-center gap-3">
                   {post.isUrgent && (
-                    <div className="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-7 text-small rounded-small text-default-foreground bg-danger-100">
+                    <div className="ui-status relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-7 text-small rounded-small text-default-foreground bg-danger-100">
                       <span className="flex-1 px-2 text-danger-600 font-semibold text-[13px]">
                         Urgent
                       </span>
@@ -296,7 +298,7 @@ export function MyPostDetail() {
                   <div className="flex flex-col relative gap-4 w-full">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="text-base font-semibold text-zinc-900">
+                        <h3 className="ui-section-title text-base font-semibold text-zinc-900">
                           Received Quotations ({quotations.length})
                         </h3>
                         <p className="text-xs text-zinc-500">
@@ -308,7 +310,7 @@ export function MyPostDetail() {
                     {quotations.length > 0 ? (
                       <>
                         {/* Desktop View Table (>= 768px) - 100% untouched */}
-                        <div className="desktop-quotations-table z-0 relative bg-content1 overflow-x-auto rounded-large w-full p-0 shadow-none">
+                        <div className="ui-card desktop-quotations-table z-0 relative bg-content1 overflow-x-auto rounded-large w-full p-0 shadow-none">
                           <table
                             aria-label="Quotations table"
                             role="grid"
@@ -422,20 +424,12 @@ export function MyPostDetail() {
                                       </div>
                                       <div className="flex items-center gap-2">
                                         <div className="flex items-center gap-1">
-                                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-anchor text-content4-foreground" aria-hidden="true">
-                                            <path d="M12 6v16" />
-                                            <path d="m19 13 2-1a9 9 0 0 1-18 0l2 1" />
-                                            <path d="M9 11h6" />
-                                            <circle cx="12" cy="4" r="2" />
-                                          </svg>
+                                          <PortServiceIcon name="anchor" />
                                           <span className="text-content4-foreground text-xs font-medium">{quote.portMatch}</span>
                                         </div>
                                         <div className="shrink-0 bg-divider border-none w-divider h-3 opacity-50" role="separator" data-orientation="vertical" />
                                         <div className="flex items-center gap-1">
-                                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-settings text-content4-foreground" aria-hidden="true">
-                                            <path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" />
-                                            <circle cx="12" cy="12" r="3" />
-                                          </svg>
+                                          <PortServiceIcon name="settings" />
                                           <span className="text-content4-foreground text-xs font-medium">{quote.serviceMatch}</span>
                                         </div>
                                       </div>
@@ -446,7 +440,7 @@ export function MyPostDetail() {
                                   <td role="gridcell" className="px-3 relative align-middle whitespace-normal text-small font-normal text-start py-3.5">
                                     <span className="text-small text-foreground">
                                       <div className="flex flex-col gap-0.5">
-                                        <span className="text-modified-15-semibold text-content1-foreground font-semibold tracking-[-0.1px]">{quote.price}</span>
+                                        <span className="ui-amount text-modified-15-semibold text-content1-foreground font-semibold tracking-[-0.1px]">{quote.price}</span>
                                         <span className="text-[13px] leading-4.5 font-normal text-zinc-500">{quote.validityDate}</span>
                                       </div>
                                     </span>
@@ -569,12 +563,12 @@ export function MyPostDetail() {
                                   </div>
                                   <div className="flex items-center gap-1.5 text-xs text-zinc-600 flex-wrap">
                                     <span className="inline-flex items-center gap-0.5 text-[11px]">
-                                      <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-anchor text-zinc-400 shrink-0" aria-hidden="true"><path d="M12 6v16" /><path d="m19 13 2-1a9 9 0 0 1-18 0l2 1" /><path d="M9 11h6" /><circle cx="12" cy="4" r="2" /></svg>
+                                      <PortServiceIcon name="anchor" />
                                       {quote.portMatch}
                                     </span>
                                     <span className="text-zinc-300">|</span>
                                     <span className="inline-flex items-center gap-0.5 text-[11px]">
-                                      <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-settings text-zinc-400 shrink-0" aria-hidden="true"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" /><circle cx="12" cy="12" r="3" /></svg>
+                                      <PortServiceIcon name="settings" />
                                       {quote.serviceMatch}
                                     </span>
                                   </div>
@@ -583,7 +577,7 @@ export function MyPostDetail() {
                                 {/* Quote & Validity */}
                                 <div className="flex flex-col gap-1 min-w-0 border-l border-slate-200/60 pl-2.5">
                                   <span className="text-[11px] font-medium uppercase tracking-wider text-zinc-400">Quote</span>
-                                  <div className="text-sm font-bold text-zinc-900 truncate">
+                                  <div className="ui-amount text-sm font-bold text-zinc-900 truncate">
                                     {quote.price}
                                   </div>
                                   <div className="text-[11px] text-zinc-500 truncate">
@@ -620,7 +614,7 @@ export function MyPostDetail() {
                     ) : (
                       <div className="p-8 text-center bg-gray-50 rounded-lg border border-gray-100">
                         <span className="material-symbols-outlined text-4xl text-zinc-400 mb-2">request_quote</span>
-                        <h4 className="text-sm font-semibold text-zinc-700">No Quotations Yet</h4>
+                        <h4 className="ui-section-title text-sm font-semibold text-zinc-700">No Quotations Yet</h4>
                         <p className="text-xs text-zinc-500 mt-1">
                           No merchants have submitted quotations for this post yet.
                         </p>
@@ -633,14 +627,14 @@ export function MyPostDetail() {
                 <div className="space-y-4">
                   {/* Attachments Section */}
                   <div
-                    className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-5 my-post-detail-card"
+                    className="ui-section-card ui-card ui-card-padding flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-5 my-post-detail-card"
                     tabIndex="-1"
                     id="attachments"
                   >
                     <div className="flex z-10 w-full justify-start items-center shrink-0 overflow-inherit color-inherit subpixel-antialiased rounded-t-large p-0 pb-3">
                       <div className="flex items-center gap-2">
-                        <span className="material-symbols-outlined text-blue-700">attach_file</span>
-                        <h3 className="text-content2-foreground text-base leading-6 font-semibold">
+                        <ContentIcon name="attach_file" className="text-blue-700" />
+                        <h3 className="ui-section-title text-content2-foreground text-base leading-6 font-semibold">
                           Attachments
                         </h3>
                       </div>
@@ -652,7 +646,7 @@ export function MyPostDetail() {
 
                   {/* Ports & Services Section */}
                   <div
-                    className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-5 my-post-detail-card"
+                    className="ui-section-card ui-card ui-card-padding flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-5 my-post-detail-card"
                     tabIndex="-1"
                     id="ports-services"
                   >
@@ -660,9 +654,9 @@ export function MyPostDetail() {
                       <div className="space-y-3">
                         {/* Port Locations */}
                         <div className="flex items-start gap-3">
-                          <span className="material-symbols-outlined text-zinc-500">anchor</span>
+                          <ContentIcon name="anchor" className="text-zinc-500" />
                           <div className="flex flex-1 flex-col gap-3">
-                            <h4 className="text-content2-foreground text-base leading-6 font-semibold">
+                            <h4 className="ui-section-title text-content2-foreground text-base leading-6 font-semibold">
                               Port Locations
                             </h4>
                             <div className="flex flex-wrap gap-2">
@@ -684,9 +678,9 @@ export function MyPostDetail() {
 
                         {/* Services Required */}
                         <div className="flex items-start gap-3">
-                          <span className="material-symbols-outlined text-zinc-500">settings</span>
+                          <ContentIcon name="settings" className="text-zinc-500" />
                           <div className="flex flex-1 flex-col gap-3">
-                            <h4 className="text-content2-foreground text-base leading-6 font-semibold">
+                            <h4 className="ui-section-title text-content2-foreground text-base leading-6 font-semibold">
                               Services Required
                             </h4>
                             <div className="flex flex-wrap gap-2">
@@ -709,14 +703,14 @@ export function MyPostDetail() {
 
                   {/* Scope of Work Section */}
                   <div
-                    className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-5 my-post-detail-card"
+                    className="ui-section-card ui-card ui-card-padding flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-5 my-post-detail-card"
                     tabIndex="-1"
                     id="scope-of-work"
                   >
                     <div className="flex z-10 w-full justify-start items-center shrink-0 overflow-inherit color-inherit subpixel-antialiased rounded-t-large p-0 pb-3">
                       <div className="flex items-center gap-2">
-                        <span className="material-symbols-outlined text-blue-700">description</span>
-                        <h3 className="text-content2-foreground text-base leading-6 font-semibold">
+                        <ContentIcon name="description" className="text-blue-700" />
+                        <h3 className="ui-section-title text-content2-foreground text-base leading-6 font-semibold">
                           Scope of Work
                         </h3>
                       </div>
@@ -736,14 +730,14 @@ export function MyPostDetail() {
               <div className="sticky top-43 flex flex-col gap-3">
                 {/* Budget & Service Date Card */}
                 <div
-                  className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-4"
+                  className="ui-card ui-card-padding flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-4"
                   tabIndex="-1"
                 >
                   <div className="relative flex w-full flex-auto flex-col place-content-inherit align-items-inherit h-auto break-words text-left overflow-y-auto subpixel-antialiased gap-3 p-0">
                     <div className="flex flex-col gap-0.5">
                       <p className="text-tiny text-zinc-500">Budget</p>
                       {post.budget && (
-                        <p className="text-content2-foreground text-base leading-6 font-semibold">
+                        <p className="ui-amount text-content2-foreground text-base leading-6 font-semibold">
                           {post.budget}
                         </p>
                       )}
@@ -760,7 +754,7 @@ export function MyPostDetail() {
 
                 {/* On This Page Nav */}
                 <div
-                  className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-4"
+                  className="ui-card ui-card-padding flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-4"
                   tabIndex="-1"
                 >
                   <div className="relative flex w-full flex-auto flex-col place-content-inherit align-items-inherit h-auto break-words text-left overflow-y-auto subpixel-antialiased gap-2 p-0">
@@ -825,7 +819,7 @@ export function MyPostDetail() {
 
                 {/* Private Notes Card */}
                 <div
-                  className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-4"
+                  className="ui-card ui-card-padding flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-4"
                   tabIndex="-1"
                 >
                   <div className="relative flex w-full flex-auto flex-col place-content-inherit align-items-inherit h-auto break-words text-left overflow-y-auto subpixel-antialiased gap-2 p-0">

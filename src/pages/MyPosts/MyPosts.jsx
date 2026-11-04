@@ -1,3 +1,4 @@
+import { ContentIcon } from '../../components/ContentIcon/ContentIcon';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { usePosts } from '../../context/PostContext';
@@ -180,28 +181,28 @@ export function MyPosts() {
                 const quotationsCount = post.quotationsCount !== undefined ? post.quotationsCount : postApps.length;
 
                 return (
-                  <div key={post.id} className="flex flex-col relative overflow-visible h-auto text-foreground box-border bg-content1 shadow-medium rounded-large shadow-neutral-sm w-full border border-blue-50">
-                    <div className="relative flex w-full flex-auto flex-col h-auto break-words text-left overflow-visible gap-4 p-7">
+                  <div key={post.id} className="ui-card flex flex-col relative overflow-visible h-auto text-foreground box-border bg-content1 shadow-medium rounded-large shadow-neutral-sm w-full border border-blue-50">
+                    <div className="ui-card-padding relative flex w-full flex-auto flex-col h-auto break-words text-left overflow-visible gap-4 p-7">
                       <div className="flex items-center justify-between">
                         <div>
                           {post.isUrgent && (
-                            <div className="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 text-tiny rounded-full text-default-700 bg-danger-100 h-7">
+                            <div className="ui-status relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 text-tiny rounded-full text-default-700 bg-danger-100 h-7">
                               <span className="flex-1 px-1 text-danger-600 font-semibold text-[13px]">Urgent</span>
                             </div>
                           )}
                         </div>
                         {isAwarded && (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
+                          <span className="ui-status inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
                             Awarded
                           </span>
                         )}
                         {isLive && (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                          <span className="ui-status inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                             Live
                           </span>
                         )}
                         {isDraft && (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-zinc-100 text-zinc-800">
+                          <span className="ui-status inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-zinc-100 text-zinc-800">
                             Draft
                           </span>
                         )}
@@ -215,13 +216,13 @@ export function MyPosts() {
                       <div className="flex flex-col gap-2">
                         {post.ports && post.ports.length > 0 && (
                           <div className="mt-3 flex w-full min-w-0 items-center gap-2">
-                            <span className="material-symbols-outlined mt-0.5 shrink-0 text-sm leading-none text-zinc-500">anchor</span>
+                            <ContentIcon name="anchor" className="mt-0.5 shrink-0 text-sm leading-none text-zinc-500" />
                             <span className="min-w-0 flex-1 text-sm leading-5 break-words text-zinc-500">{post.ports.join(", ")}</span>
                           </div>
                         )}
                         {post.services && post.services.length > 0 && (
                           <div className="mt-3 flex w-full min-w-0 items-center gap-2">
-                            <span className="material-symbols-outlined mt-0.5 shrink-0 text-sm leading-none text-zinc-500">settings</span>
+                            <ContentIcon name="settings" className="mt-0.5 shrink-0 text-sm leading-none text-zinc-500" />
                             <span className="min-w-0 flex-1 text-sm leading-5 break-words text-zinc-500">{post.services.join(", ")}</span>
                           </div>
                         )}

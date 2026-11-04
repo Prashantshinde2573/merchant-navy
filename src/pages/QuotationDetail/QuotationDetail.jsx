@@ -108,7 +108,7 @@ export function QuotationDetail() {
             {/* Actions */}
             <div className="flex items-center gap-3 quotation-detail-header-actions">
               <span
-                className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
+                className={`ui-status inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
                   quotation.status === 'Awarded'
                     ? 'bg-emerald-100 text-emerald-800'
                     : 'bg-blue-100 text-blue-800'
@@ -133,7 +133,7 @@ export function QuotationDetail() {
           {/* Left Column */}
           <div className="w-226 flex-1 space-y-4 quotation-detail-left">
             {/* Merchant Overview Card */}
-            <div className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 shadow-neutral-sm rounded-large border border-blue-50 p-6 bg-white">
+            <div className="ui-card ui-card-padding flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 shadow-neutral-sm rounded-large border border-blue-50 p-6 bg-white">
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div className="flex items-center gap-4">
                   <span className="flex relative justify-center items-center box-border overflow-hidden align-middle z-0 text-tiny bg-default text-default-foreground shadow-neutral-sm shrink-0 rounded-lg h-14 w-14">
@@ -176,9 +176,9 @@ export function QuotationDetail() {
                   </div>
                 </div>
 
-                <div className="flex flex-col items-end gap-1">
+                <div className="ui-quoted-price flex flex-col items-end gap-1">
                   <span className="text-xs text-zinc-500">Quoted Price</span>
-                  <span className="text-2xl font-bold text-zinc-900">{quotation.price}</span>
+                  <span className="ui-amount text-2xl font-bold text-zinc-900">{quotation.price}</span>
                   <span className="text-xs text-zinc-500">Validity: {quotation.validityDate}</span>
                 </div>
               </div>
@@ -201,8 +201,8 @@ export function QuotationDetail() {
             </div>
 
             {/* Scope & Terms Card */}
-            <div className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 shadow-neutral-sm rounded-large border border-blue-50 p-6 bg-white space-y-4">
-              <h4 className="text-base font-semibold text-zinc-900">Quotation Details &amp; Terms</h4>
+            <div className="ui-card ui-card-padding flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 shadow-neutral-sm rounded-large border border-blue-50 p-6 bg-white space-y-4">
+              <h4 className="ui-section-title text-base font-semibold text-zinc-900">Quotation Details &amp; Terms</h4>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1">
@@ -238,9 +238,9 @@ export function QuotationDetail() {
             </div>
 
             {/* Parent Post Reference */}
-            <div className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 shadow-neutral-sm rounded-large border border-blue-50 p-6 bg-white space-y-3">
+            <div className="ui-card ui-card-padding flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 shadow-neutral-sm rounded-large border border-blue-50 p-6 bg-white space-y-3">
               <div className="flex items-center justify-between">
-                <h4 className="text-base font-semibold text-zinc-900">Original Post Information</h4>
+                <h4 className="ui-section-title text-base font-semibold text-zinc-900">Original Post Information</h4>
                 <button
                   onClick={handleBack}
                   className="text-xs text-primary font-semibold hover:underline"
@@ -267,7 +267,7 @@ export function QuotationDetail() {
           {/* Right Sidebar */}
           <div className="hidden w-64 lg:block quotation-detail-sidebar">
             <div className="sticky top-43 flex flex-col gap-3">
-              <div className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 shadow-neutral-sm rounded-large border border-blue-50 p-4 bg-white">
+              <div className="ui-card ui-card-padding flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 shadow-neutral-sm rounded-large border border-blue-50 p-4 bg-white">
                 <div className="flex flex-col gap-3">
                   <div className="flex flex-col gap-0.5">
                     <p className="text-tiny text-zinc-500">Quotation ID</p>

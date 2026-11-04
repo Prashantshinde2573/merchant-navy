@@ -85,3 +85,8 @@
     grid-row: 3;
   }
 }
+
+@media(max-width:1023px){
+  #root .my-post-detail-header-actions .post-edit-button{display:none!important}
+  #root .my-post-detail-header-actions > .flex:first-child{margin-left:46px}
+}

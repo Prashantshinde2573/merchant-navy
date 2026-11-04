@@ -1,0 +1,351 @@
+[
+  {
+    "route": "home",
+    "size": "mobile",
+    "errors": false,
+    "headings": [],
+    "overflow": false,
+    "title": "Bluesea Marine Works Pvt Ltd."
+  },
+  {
+    "route": "my-posts",
+    "size": "mobile",
+    "errors": false,
+    "headings": [],
+    "overflow": false,
+    "title": "Ship - your ask"
+  },
+  {
+    "route": "my-posts/n8zXLc4RjgxncUntWUAPQ",
+    "size": "mobile",
+    "errors": false,
+    "headings": [
+      {
+        "line": "24px",
+        "size": "16px"
+      },
+      {
+        "line": "24px",
+        "size": "16px"
+      },
+      {
+        "line": "24px",
+        "size": "16px"
+      }
+    ],
+    "overflow": false,
+    "title": "Multiple port services required for MV Indravati ("
+  },
+  {
+    "route": "my-posts/n8zXLc4RjgxncUntWUAPQ?tab=applied",
+    "size": "mobile",
+    "errors": false,
+    "headings": [],
+    "overflow": false,
+    "title": "Multiple port services required for MV Indravati ("
+  },
+  {
+    "route": "posts/home-post-1",
+    "size": "mobile",
+    "errors": false,
+    "headings": [
+      {
+        "line": "24px",
+        "size": "16px"
+      },
+      {
+        "line": "24px",
+        "size": "16px"
+      },
+      {
+        "line": "24px",
+        "size": "16px"
+      }
+    ],
+    "overflow": false,
+    "title": "Indra Shipping Co."
+  },
+  {
+    "route": "wins",
+    "size": "mobile",
+    "errors": false,
+    "headings": [
+      {
+        "line": "19.5px",
+        "size": "15px"
+      }
+    ],
+    "overflow": false,
+    "title": "Jobs awarded to your company"
+  },
+  {
+    "route": "my-merchants",
+    "size": "mobile",
+    "errors": false,
+    "headings": [],
+    "overflow": false,
+    "title": "Keep your winners close"
+  },
+  {
+    "route": "notifications",
+    "size": "mobile",
+    "errors": false,
+    "headings": [],
+    "overflow": false,
+    "title": "Your control tower"
+  },
+  {
+    "route": "help",
+    "size": "mobile",
+    "errors": false,
+    "headings": [],
+    "overflow": false,
+    "title": "Frequently Asked Questions"
+  },
+  {
+    "route": "announcements",
+    "size": "mobile",
+    "errors": false,
+    "headings": [],
+    "overflow": false,
+    "title": "All Announcements"
+  },
+  {
+    "route": "company-profile",
+    "size": "mobile",
+    "errors": false,
+    "headings": [
+      {
+        "line": "22px",
+        "size": "16px"
+      },
+      {
+        "line": "22px",
+        "size": "16px"
+      },
+      {
+        "line": "22px",
+        "size": "16px"
+      }
+    ],
+    "overflow": false,
+    "title": "Company Profile • ID #ZFUAV2Q"
+  },
+  {
+    "route": "profile-settings",
+    "size": "mobile",
+    "errors": false,
+    "headings": [
+      {
+        "line": "24px",
+        "size": "16px"
+      }
+    ],
+    "overflow": false,
+    "title": "Settings"
+  },
+  {
+    "route": "chats",
+    "size": "mobile",
+    "errors": false,
+    "headings": [],
+    "overflow": false
+  },
+  {
+    "route": "quotations/quote-1",
+    "size": "mobile",
+    "errors": false,
+    "headings": [
+      {
+        "line": "24px",
+        "size": "16px"
+      },
+      {
+        "line": "24px",
+        "size": "16px"
+      }
+    ],
+    "overflow": false,
+    "title": "Quotation: Indra Shipping Co."
+  },
+  {
+    "route": "home",
+    "size": "desktop",
+    "cards": [
+      {
+        "padding": "20px",
+        "radius": "8px"
+      },
+      {
+        "padding": "20px",
+        "radius": "8px"
+      }
+    ],
+    "errors": false,
+    "overflow": false,
+    "title": "Bluesea Marine Works Pvt Ltd."
+  },
+  {
+    "route": "my-posts",
+    "size": "desktop",
+    "cards": [
+      {
+        "padding": "20px",
+        "radius": "0px"
+      },
+      {
+        "padding": "20px",
+        "radius": "0px"
+      }
+    ],
+    "errors": false,
+    "overflow": false,
+    "title": "Ship - your ask"
+  },
+  {
+    "route": "my-posts/n8zXLc4RjgxncUntWUAPQ",
+    "size": "desktop",
+    "cards": [
+      {
+        "padding": "20px",
+        "radius": "8px"
+      },
+      {
+        "padding": "20px",
+        "radius": "8px"
+      }
+    ],
+    "errors": false,
+    "overflow": false,
+    "title": "Multiple port services required for MV Indrav"
+  },
+  {
+    "route": "my-posts/n8zXLc4RjgxncUntWUAPQ?tab=applied",
+    "size": "desktop",
+    "cards": [
+      {
+        "padding": "20px",
+        "radius": "8px"
+      },
+      {
+        "padding": "20px",
+        "radius": "8px"
+      }
+    ],
+    "errors": false,
+    "overflow": false,
+    "title": "Multiple port services required for MV Indrav"
+  },
+  {
+    "route": "posts/home-post-1",
+    "size": "desktop",
+    "cards": [
+      {
+        "padding": "20px",
+        "radius": "8px"
+      },
+      {
+        "padding": "20px",
+        "radius": "8px"
+      }
+    ],
+    "errors": false,
+    "overflow": false,
+    "title": "Indra Shipping Co."
+  },
+  {
+    "route": "wins",
+    "size": "desktop",
+    "cards": [
+      {
+        "padding": "20px",
+        "radius": "0px"
+      }
+    ],
+    "errors": false,
+    "overflow": false,
+    "title": "Jobs awarded to your company"
+  },
+  {
+    "route": "my-merchants",
+    "size": "desktop",
+    "cards": [
+      {
+        "padding": "20px",
+        "radius": "8px"
+      }
+    ],
+    "errors": false,
+    "overflow": false,
+    "title": "Keep your winners close"
+  },
+  {
+    "route": "notifications",
+    "size": "desktop",
+    "cards": [],
+    "errors": false,
+    "overflow": false,
+    "title": "Your control tower"
+  },
+  {
+    "route": "help",
+    "size": "desktop",
+    "cards": [],
+    "errors": false,
+    "overflow": false,
+    "title": "Frequently Asked Questions"
+  },
+  {
+    "route": "announcements",
+    "size": "desktop",
+    "cards": [
+      {
+        "padding": "20px",
+        "radius": "0px"
+      }
+    ],
+    "errors": false,
+    "overflow": false,
+    "title": "All Announcements"
+  },
+  {
+    "route": "company-profile",
+    "size": "desktop",
+    "cards": [],
+    "errors": false,
+    "overflow": false,
+    "title": "Company Profile • ID #ZFUAV2Q"
+  },
+  {
+    "route": "profile-settings",
+    "size": "desktop",
+    "cards": [],
+    "errors": false,
+    "overflow": false,
+    "title": "Settings"
+  },
+  {
+    "route": "chats",
+    "size": "desktop",
+    "cards": [],
+    "errors": false,
+    "overflow": false
+  },
+  {
+    "route": "quotations/quote-1",
+    "size": "desktop",
+    "cards": [
+      {
+        "padding": "20px",
+        "radius": "8px"
+      },
+      {
+        "padding": "20px",
+        "radius": "8px"
+      }
+    ],
+    "errors": false,
+    "overflow": false,
+    "title": "Quotation: Indra Shipping Co."
+  }
+]

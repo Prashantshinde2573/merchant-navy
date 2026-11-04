@@ -1,3 +1,4 @@
+import { PortServiceIcon } from '../../components/PortServiceIcon/PortServiceIcon';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Wins.css';
@@ -169,7 +170,7 @@ export function Wins() {
             <div className="group flex flex-col relative justify-end w-64 wins-search-box">
               <div className="h-full flex flex-col">
                 <div
-                  className="app-search-box relative w-full inline-flex tap-highlight-transparent flex-row items-center shadow-xs px-3 gap-3 h-10 min-h-10 rounded-large transition-background bg-content1 border border-blue-100 bg-white"
+                  className="ui-card app-search-box relative w-full inline-flex tap-highlight-transparent flex-row items-center shadow-xs px-3 gap-3 h-10 min-h-10 rounded-large transition-background bg-content1 border border-blue-100 bg-white"
                   style={{ cursor: 'text' }}
                 >
                   <div className="inline-flex w-full items-center h-full box-border">
@@ -233,9 +234,9 @@ export function Wins() {
             filteredWins.map((win) => (
               <div
                 key={win.id}
-                className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 shadow-medium rounded-large shadow-neutral-sm w-full border border-blue-50 bg-white"
+                className="ui-card flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 shadow-medium rounded-large shadow-neutral-sm w-full border border-blue-50 bg-white"
               >
-                <div className="relative flex w-full flex-auto flex-col place-content-inherit align-items-inherit h-auto break-words text-left overflow-y-auto subpixel-antialiased gap-4 p-7 wins-card-body">
+                <div className="ui-card-padding relative flex w-full flex-auto flex-col place-content-inherit align-items-inherit h-auto break-words text-left overflow-y-auto subpixel-antialiased gap-4 p-7 wins-card-body">
                   {/* Top row: Company details + Completed date */}
                   <div className="flex flex-wrap items-start justify-between gap-3 wins-card-header">
                     <div className="flex gap-3 items-center">
@@ -298,45 +299,13 @@ export function Wins() {
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-2">
                       <div className="flex size-6 shrink-0 items-center justify-center rounded bg-blue-50">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="lucide lucide-anchor text-primary"
-                          aria-hidden="true"
-                        >
-                          <path d="M12 6v16"></path>
-                          <path d="m19 13 2-1a9 9 0 0 1-18 0l2 1"></path>
-                          <path d="M9 11h6"></path>
-                          <circle cx="12" cy="4" r="2"></circle>
-                        </svg>
+                        <PortServiceIcon name="anchor" />
                       </div>
                       <p className="text-sm leading-5 font-normal text-zinc-700">{win.port}</p>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="flex size-6 shrink-0 items-center justify-center rounded bg-blue-50">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="lucide lucide-settings text-primary"
-                          aria-hidden="true"
-                        >
-                          <path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path>
-                          <circle cx="12" cy="12" r="3"></circle>
-                        </svg>
+                        <PortServiceIcon name="settings" />
                       </div>
                       <p className="text-sm leading-5 font-normal text-zinc-700">{win.services}</p>
                     </div>
@@ -347,7 +316,7 @@ export function Wins() {
 
                   {/* Footer: Price & View Details */}
                   <div className="flex flex-wrap items-center justify-between gap-3 wins-card-footer">
-                    <div className="text-lg leading-7 font-semibold text-[#27272a]">{win.amount}</div>
+                    <div className="ui-amount text-lg leading-7 font-semibold text-[#27272a]">{win.amount}</div>
                     <div className="flex items-center gap-3">
                       <Link
                         className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap subpixel-antialiased overflow-hidden tap-highlight-transparent cursor-pointer border px-4 min-w-20 gap-2 rounded-medium bg-transparent hover:bg-blue-50 text-primary h-10 border-blue-200 text-sm font-medium"
@@ -361,11 +330,11 @@ export function Wins() {
               </div>
             ))
           ) : (
-            <div className="bg-white rounded-large p-12 text-center border border-blue-50 shadow-sm">
+            <div className="wins-empty-card bg-white rounded-large p-12 text-center border border-blue-50 shadow-sm">
               <div className="flex justify-center mb-3 text-zinc-400">
                 <span className="material-symbols-outlined text-5xl">award_star</span>
               </div>
-              <h3 className="text-base font-semibold text-zinc-800 mb-1">No awards found</h3>
+              <h3 className="ui-section-title text-base font-semibold text-zinc-800 mb-1">No awards found</h3>
               <p className="text-sm text-zinc-500">There are no jobs matching your selection.</p>
             </div>
           )}

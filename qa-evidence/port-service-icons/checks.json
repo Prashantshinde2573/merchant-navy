@@ -1,0 +1,416 @@
+[
+  {
+    "width": 320,
+    "route": "home",
+    "icons": [
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "anchor",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      },
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "settings",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "width": 320,
+    "route": "my-posts",
+    "icons": [
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "anchor",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      },
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "settings",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "width": 320,
+    "route": "wins",
+    "icons": [
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "anchor",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      },
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "settings",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "width": 320,
+    "route": "posts/home-post-1",
+    "icons": [
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "anchor",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      },
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "settings",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "width": 320,
+    "route": "my-posts/n8zXLc4RjgxncUntWUAPQ",
+    "icons": [
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "anchor",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      },
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "settings",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "width": 320,
+    "route": "my-posts/n8zXLc4RjgxncUntWUAPQ?tab=applied",
+    "icons": [
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "anchor",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      },
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "settings",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "width": 390,
+    "route": "home",
+    "icons": [
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "anchor",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      },
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "settings",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "width": 390,
+    "route": "my-posts",
+    "icons": [
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "anchor",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      },
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "settings",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "width": 390,
+    "route": "wins",
+    "icons": [
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "anchor",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      },
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "settings",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "width": 390,
+    "route": "posts/home-post-1",
+    "icons": [
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "anchor",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      },
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "settings",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "width": 390,
+    "route": "my-posts/n8zXLc4RjgxncUntWUAPQ",
+    "icons": [
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "anchor",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      },
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "settings",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "width": 390,
+    "route": "my-posts/n8zXLc4RjgxncUntWUAPQ?tab=applied",
+    "icons": [
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "anchor",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      },
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "settings",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "width": 1470,
+    "route": "home",
+    "icons": [
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "anchor",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      },
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "settings",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "width": 1470,
+    "route": "my-posts",
+    "icons": [
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "anchor",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      },
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "settings",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "width": 1470,
+    "route": "wins",
+    "icons": [
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "anchor",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      },
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "settings",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "width": 1470,
+    "route": "posts/home-post-1",
+    "icons": [
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "anchor",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      },
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "settings",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "width": 1470,
+    "route": "my-posts/n8zXLc4RjgxncUntWUAPQ",
+    "icons": [
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "anchor",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      },
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "settings",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "width": 1470,
+    "route": "my-posts/n8zXLc4RjgxncUntWUAPQ?tab=applied",
+    "icons": [
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "anchor",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      },
+      {
+        "color": "rgb(113, 113, 122)",
+        "font": "\"Merchant Homepage Symbols\"",
+        "glyph": "settings",
+        "height": 24,
+        "size": "24px",
+        "width": 24
+      }
+    ],
+    "overflow": false
+  }
+]

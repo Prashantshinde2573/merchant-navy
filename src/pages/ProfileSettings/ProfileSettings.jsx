@@ -56,10 +56,10 @@ export function ProfileSettings() {
           <p className="text-base leading-6 font-normal text-zinc-500">Manage your account preferences</p>
         </div>
         <div className="flex flex-col gap-6 w-full">
-          <div className="settings-card bg-content1 shadow-medium rounded-large transition-transform-background shadow-neutral-sm border border-blue-50" tabIndex="-1">
-            <div className="settings-card-inner relative w-full flex-auto flex flex-col md:flex-row gap-6 p-6 sm:p-8">
+          <div className="ui-card settings-card bg-content1 shadow-medium rounded-large transition-transform-background shadow-neutral-sm border border-blue-50" tabIndex="-1">
+            <div className="ui-card-padding settings-card-inner relative w-full flex-auto flex flex-col md:flex-row gap-6 p-6 sm:p-8">
               <div className="settings-left-col">
-                <h3 className="text-content1-foreground text-xl leading-7 font-semibold text-[#18181b]">Notifications</h3>
+                <h3 className="ui-section-title text-content1-foreground text-xl leading-7 font-semibold text-[#18181b]">Notifications</h3>
                 <p className="mt-1.5 text-sm leading-5 font-normal text-[#696f93]">Manage your notification preferences</p>
               </div>
               <div className="settings-right-col flex flex-col divide-y divide-gray-100">

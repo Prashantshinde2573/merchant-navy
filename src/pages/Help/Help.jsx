@@ -56,7 +56,7 @@ export function Help() {
           className="flex flex-col relative overflow-hidden h-auto text-foreground box-border outline-solid outline-transparent data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 shadow-medium rounded-large transition-transform-background motion-reduce:transition-none shadow-neutral-sm mb-8 border border-blue-50 bg-white"
           tabIndex="-1"
         >
-          <div className="relative flex w-full flex-auto flex-col place-content-inherit align-items-inherit h-auto break-words text-left overflow-y-auto subpixel-antialiased p-6">
+          <div className="ui-card-padding relative flex w-full flex-auto flex-col place-content-inherit align-items-inherit h-auto break-words text-left overflow-y-auto subpixel-antialiased p-6">
             {FAQ_ITEMS.map((item) => {
               const isOpen = openItems.includes(item.id);
               return (
@@ -107,7 +107,7 @@ export function Help() {
           className="flex flex-col relative overflow-hidden h-auto text-foreground box-border outline-solid outline-transparent data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 shadow-medium rounded-large transition-transform-background motion-reduce:transition-none bg-primary-900 border-none"
           tabIndex="-1"
         >
-          <div className="relative flex w-full flex-auto place-content-inherit align-items-inherit h-auto break-words text-left overflow-y-auto subpixel-antialiased flex-row items-center justify-between gap-6 p-8">
+          <div className="ui-card-padding relative flex w-full flex-auto place-content-inherit align-items-inherit h-auto break-words text-left overflow-y-auto subpixel-antialiased flex-row items-center justify-between gap-6 p-8">
             <div className="flex flex-col gap-2">
               <h2 className="font-['Inter'] text-xl leading-7 font-bold text-white">
                 Need help?

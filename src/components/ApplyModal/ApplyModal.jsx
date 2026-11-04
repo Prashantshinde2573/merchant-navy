@@ -60,7 +60,7 @@ export function ApplyModal({ isOpen, onClose, onApply, post }) {
           ref={dialogRef}
           role="dialog"
           tabIndex="-1"
-          className="flex flex-col relative z-50 w-full box-border bg-content1 outline-solid outline-transparent mx-1 my-1 sm:mx-6 sm:my-16 rounded-large shadow-small max-h-[calc(100%_-_4rem)] sm:max-h-[calc(100%_-_8rem)] max-w-[600px] apply-modal-dialog"
+          className="ui-card flex flex-col relative z-50 w-full box-border bg-content1 outline-solid outline-transparent mx-1 my-1 sm:mx-6 sm:my-16 rounded-large shadow-small max-h-[calc(100%_-_4rem)] sm:max-h-[calc(100%_-_8rem)] max-w-[600px] apply-modal-dialog"
           data-open="true"
           data-dismissable="true"
           aria-modal="true"
@@ -113,7 +113,7 @@ export function ApplyModal({ isOpen, onClose, onApply, post }) {
                   </span>
                 </span>
                 <div className="min-w-0 flex-1">
-                  <h3 className="text-base font-semibold text-content1-foreground">{post.vendorName}</h3>
+                  <h3 className="ui-section-title text-base font-semibold text-content1-foreground">{post.vendorName}</h3>
                   <p className="text-zinc-600 mt-1 line-clamp-2 text-sm leading-5">
                     {post.scopeOfWork}
                   </p>
@@ -131,7 +131,7 @@ export function ApplyModal({ isOpen, onClose, onApply, post }) {
               </div>
               <div className="group flex flex-col w-full">
                 <div
-                  className={`relative w-full inline-flex tap-highlight-transparent flex-row items-center shadow-xs px-3 gap-3 border-2 ${
+                  className={`ui-field-surface relative w-full inline-flex tap-highlight-transparent flex-row items-center shadow-xs px-3 gap-3 border-2 ${
                     errorMessage
                       ? 'border-danger-500 bg-danger-50/20'
                       : 'border-zinc-200 hover:border-zinc-400 focus-within:border-primary'
@@ -198,7 +198,7 @@ export function ApplyModal({ isOpen, onClose, onApply, post }) {
             {/* What's Next Progress Indicator */}
             <div className="bg-content2 rounded-lg p-4">
               <p className="mb-3 text-sm font-medium text-content1-foreground">What's next:</p>
-              <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
+              <div className="application-next-steps flex items-center gap-2 flex-wrap sm:flex-nowrap">
                 {/* Step 1: Applied */}
                 <div className="flex items-center gap-1.5">
                   <div className="bg-primary flex h-8 w-8 items-center justify-center rounded-full shrink-0">
@@ -239,7 +239,7 @@ export function ApplyModal({ isOpen, onClose, onApply, post }) {
 
           {/* Footer */}
           <footer className="flex flex-row gap-2 px-6 py-4 justify-end border-divider border-t pt-4">
-            <div className="flex w-full items-center justify-between">
+            <div className="application-footer-actions flex w-full items-center justify-between">
               <button
                 type="button"
                 tabIndex="0"
@@ -266,7 +266,7 @@ export function ApplyModal({ isOpen, onClose, onApply, post }) {
                 </svg>
               </button>
 
-              <div className="flex gap-2">
+              <div className="application-footer-buttons flex gap-2">
                 <button
                   type="button"
                   tabIndex="0"
@@ -279,7 +279,7 @@ export function ApplyModal({ isOpen, onClose, onApply, post }) {
                   type="button"
                   tabIndex="0"
                   onClick={handleSubmit}
-                  className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent cursor-pointer outline-solid outline-transparent px-4 min-w-20 h-10 text-small gap-2 rounded-medium transition-opacity bg-primary text-primary-foreground hover:opacity-hover font-medium"
+                  className="ui-button z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent cursor-pointer outline-solid outline-transparent px-4 min-w-20 h-10 text-small gap-2 rounded-medium transition-opacity bg-primary text-primary-foreground hover:opacity-hover font-medium"
                 >
                   Send Application
                 </button>

@@ -1,6 +1,7 @@
+import { PortServiceIcon } from '../PortServiceIcon/PortServiceIcon';
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Anchor, FileText, Settings, Star, Users, X } from 'lucide-react';
+import { FileText, Star, Users, X } from 'lucide-react';
 import { COMPANY_PROFILES } from '../../data/companyProfiles';
 import { useDialogFocus } from '../../hooks/useDialogFocus';
 import './VendorProfileModal.css';
@@ -46,8 +47,8 @@ export function VendorProfileModal({ companyName, onClose }) {
           {activeTab === 'Company' && <>
             {!profile.fields.length && <p className="vendor-profile-empty">No company information available</p>}
             <dl className="vendor-profile-fields">{profile.fields.map(([label, value]) => <div key={label} className={label === 'Address' ? 'vendor-profile-address' : undefined}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
-            {profile.ports.length > 0 && <div className="vendor-profile-section"><h3><Anchor size={14} aria-hidden="true" />Operating Ports</h3><div className="vendor-profile-chips">{profile.ports.map(port => <span key={port}>{port}</span>)}</div></div>}
-            {profile.services.length > 0 && <div className="vendor-profile-section"><h3><Settings size={14} aria-hidden="true" />Services Offered</h3><div className="vendor-profile-chips">{profile.services.map(service => <span key={service}>{service}</span>)}</div></div>}
+            {profile.ports.length > 0 && <div className="vendor-profile-section"><h3><PortServiceIcon name="anchor" />Operating Ports</h3><div className="vendor-profile-chips">{profile.ports.map(port => <span key={port}>{port}</span>)}</div></div>}
+            {profile.services.length > 0 && <div className="vendor-profile-section"><h3><PortServiceIcon name="settings" />Services Offered</h3><div className="vendor-profile-chips">{profile.services.map(service => <span key={service}>{service}</span>)}</div></div>}
           </>}
           {activeTab === 'Certificates' && (profile.certificates.length ? <div className="vendor-profile-documents">{profile.certificates.map(certificate => <article key={certificate.name} className="vendor-profile-certificate"><span className="vendor-profile-file-icon"><FileText size={20} aria-hidden="true" /></span><div><h4>{certificate.name}</h4><p>Valid until: {certificate.validUntil}<span className="vendor-profile-pdf">PDF</span></p></div></article>)}</div> : <p className="vendor-profile-empty">No certificates available</p>)}
           {activeTab === 'Insurance' && (profile.insurance.length ? <div className="vendor-profile-documents">{profile.insurance.map(insurance => <article key={insurance.name}><h4>{insurance.name}</h4><div className="vendor-insurance-metadata"><p>Provider: {insurance.provider}</p><p>Coverage: {insurance.coverage}</p><p>Expires: {insurance.expires}</p></div></article>)}</div> : <p className="vendor-profile-empty">No insurance information available</p>)}

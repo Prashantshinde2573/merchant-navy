@@ -1,4 +1,6 @@
+import { PortServiceIcon } from '../../components/PortServiceIcon/PortServiceIcon';
 import React, { useState, useEffect } from 'react';
+import { Paperclip, FileText } from 'lucide-react';
 import { PostAttachments } from '../../components/PostAttachments/PostAttachments';
 import { useParams, useNavigate } from 'react-router-dom';
 import { usePosts } from '../../context/PostContext';
@@ -129,7 +131,7 @@ export function PostDetail() {
                 </div>
                 <div className="flex items-center gap-3 post-detail-metadata">
                   {post.isUrgent && (
-                    <div className="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-7 text-small rounded-small text-default-foreground bg-danger-100">
+                    <div className="ui-status relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-7 text-small rounded-small text-default-foreground bg-danger-100">
                       <span className="flex-1 px-2 text-danger-600 font-semibold text-[13px]">Urgent</span>
                     </div>
                   )}
@@ -149,7 +151,7 @@ export function PostDetail() {
                 tabIndex="0"
                 onClick={() => toggleSavedPost(post.id)}
                 aria-label={isBookmarked ? "Unsave post" : "Save post"} aria-pressed={isBookmarked}
-                className={`z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent cursor-pointer outline-solid outline-transparent text-small gap-2 rounded-medium px-0 !gap-0 transition-colors bg-transparent ${
+                className={`post-detail-save-top z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent cursor-pointer outline-solid outline-transparent text-small gap-2 rounded-medium px-0 !gap-0 transition-colors bg-transparent ${
                   isBookmarked ? 'text-primary' : 'text-default-foreground'
                 } hover:bg-default/40 min-w-10 w-10 h-10`}
               >
@@ -248,6 +250,31 @@ export function PostDetail() {
                 <p className="text-[13px] text-zinc-500">{post.dateRange}</p>
               </div>
 
+              <button
+                type="button"
+                tabIndex="0"
+                onClick={() => toggleSavedPost(post.id)}
+                aria-label={isBookmarked ? "Unsave post" : "Save post"} aria-pressed={isBookmarked}
+                className={`post-detail-save-bottom z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent cursor-pointer outline-solid outline-transparent text-small gap-2 rounded-medium px-0 !gap-0 transition-colors bg-transparent ${
+                  isBookmarked ? 'text-primary' : 'text-default-foreground'
+                } hover:bg-default/40 min-w-10 w-10 h-10`}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill={isBookmarked ? 'currentColor' : 'none'}
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-bookmark"
+                  aria-hidden="true"
+                >
+                  <path d="M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z" />
+                </svg>
+              </button>
               {/* Apply / Applied Action Button */}
               {isApplied ? (
                 <button
@@ -262,7 +289,7 @@ export function PostDetail() {
                   type="button"
                   tabIndex="0"
                   onClick={() => setIsApplyOpen(true)}
-                  className="post-detail-apply z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-medium subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent h-12 text-medium gap-3 rounded-small transition-colors bg-primary text-primary-foreground hover:opacity-hover min-w-31 px-4"
+                  className="ui-button post-detail-apply z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-medium subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent h-12 text-medium gap-3 rounded-small transition-colors bg-primary text-primary-foreground hover:opacity-hover min-w-31 px-4"
                 >
                   Apply Now
                 </button>
@@ -279,14 +306,14 @@ export function PostDetail() {
               <div className="space-y-4">
                 {/* Attachments Section */}
                 <div
-                  className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-5"
+                  className="ui-section-card ui-card ui-card-padding flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-5"
                   tabIndex="-1"
                   id="attachments"
                 >
                   <div className="flex z-10 w-full justify-start items-center shrink-0 overflow-inherit color-inherit subpixel-antialiased rounded-t-large p-0 pb-3">
                     <div className="flex items-center gap-2">
-                      <span className="material-symbols-outlined text-blue-700">attach_file</span>
-                      <h3 className="text-content2-foreground text-base leading-6 font-semibold">
+                      <span className="material-symbols-outlined text-blue-700">attach_file</span><Paperclip className="post-card-mobile-icon" size={24} aria-hidden="true" />
+                      <h3 className="ui-section-title text-content2-foreground text-base leading-6 font-semibold">
                         Attachments
                       </h3>
                     </div>
@@ -298,7 +325,7 @@ export function PostDetail() {
 
                 {/* Ports & Services Section */}
                 <div
-                  className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-5"
+                  className="ui-section-card ui-card ui-card-padding flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-5"
                   tabIndex="-1"
                   id="ports-services"
                 >
@@ -306,9 +333,9 @@ export function PostDetail() {
                     <div className="space-y-3">
                       {/* Port Locations */}
                       <div className="flex items-start gap-3">
-                        <span className="material-symbols-outlined text-zinc-500">anchor</span>
+                        <PortServiceIcon name="anchor" />
                         <div className="flex flex-1 flex-col gap-3">
-                          <h4 className="text-content2-foreground text-base leading-6 font-semibold">
+                          <h4 className="ui-section-title text-content2-foreground text-base leading-6 font-semibold">
                             Port Locations
                           </h4>
                           <div className="flex flex-wrap gap-2">
@@ -330,9 +357,9 @@ export function PostDetail() {
 
                       {/* Services Required */}
                       <div className="flex items-start gap-3">
-                        <span className="material-symbols-outlined text-zinc-500">settings</span>
+                        <PortServiceIcon name="settings" />
                         <div className="flex flex-1 flex-col gap-3">
-                          <h4 className="text-content2-foreground text-base leading-6 font-semibold">
+                          <h4 className="ui-section-title text-content2-foreground text-base leading-6 font-semibold">
                             Services Required
                           </h4>
                           <div className="flex flex-wrap gap-2">
@@ -355,14 +382,14 @@ export function PostDetail() {
 
                 {/* Scope of Work Section */}
                 <div
-                  className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-5"
+                  className="ui-section-card ui-card ui-card-padding flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-5"
                   tabIndex="-1"
                   id="scope-of-work"
                 >
                   <div className="flex z-10 w-full justify-start items-center shrink-0 overflow-inherit color-inherit subpixel-antialiased rounded-t-large p-0 pb-3">
                     <div className="flex items-center gap-2">
-                      <span className="material-symbols-outlined text-blue-700">description</span>
-                      <h3 className="text-content2-foreground text-base leading-6 font-semibold">
+                      <span className="material-symbols-outlined text-blue-700">description</span><FileText className="post-card-mobile-icon" size={24} aria-hidden="true" />
+                      <h3 className="ui-section-title text-content2-foreground text-base leading-6 font-semibold">
                         Scope of Work
                       </h3>
                     </div>
@@ -381,7 +408,7 @@ export function PostDetail() {
               <div className="sticky top-43 flex flex-col gap-3">
                 {/* On This Page Nav */}
                 <div
-                  className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-4"
+                  className="ui-card ui-card-padding flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-4"
                   tabIndex="-1"
                 >
                   <div className="relative flex w-full flex-auto flex-col place-content-inherit align-items-inherit h-auto break-words text-left overflow-y-auto subpixel-antialiased p-0">
@@ -426,7 +453,7 @@ export function PostDetail() {
 
                 {/* Posted By Card */}
                 <div
-                  className="flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-4"
+                  className="ui-card ui-card-padding flex flex-col relative overflow-hidden h-auto text-foreground box-border bg-content1 outline-solid outline-transparent shadow-neutral-sm rounded-large border border-blue-50 p-4"
                   tabIndex="-1"
                 >
                   <div className="relative flex w-full flex-auto flex-col place-content-inherit align-items-inherit h-auto break-words text-left overflow-y-auto subpixel-antialiased p-0">

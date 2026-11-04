@@ -1,0 +1,54 @@
+/* Layout refinements remain mobile-only. Icons share the desktop Home assets at all sizes. */
+@media(max-width:1023px){
+  /* Match Apply's 4px identity-to-status rhythm. */
+  #root .my-post-detail-header-top { padding-bottom:4px!important; }
+  #root .my-post-detail-header-actions > .flex:first-child { min-height:28px; padding:0!important; align-items:center; }
+
+  #root .wins-card-footer { flex-direction:row!important; justify-content:flex-start!important; align-items:center!important; flex-wrap:nowrap!important; gap:8px!important; }
+  #root .wins-card-footer .ui-amount { font-size:18px!important; line-height:24px!important; font-weight:600!important; }
+  #root .wins-card-footer > div { flex-shrink:0; }
+
+  .apply-modal-dialog .application-footer-actions { display:grid; grid-template-columns:minmax(0,1fr) 40px auto; align-items:center; gap:8px; }
+  .apply-modal-dialog .application-footer-buttons { display:contents; }
+  .apply-modal-dialog .application-footer-actions > button { grid-column:2; grid-row:1; width:40px; min-width:40px; height:44px; }
+  .apply-modal-dialog .application-footer-buttons > button:first-child { grid-column:1; grid-row:1; justify-self:start; }
+  .apply-modal-dialog .application-footer-buttons > button:last-child { grid-column:3; grid-row:1; }
+  .apply-modal-dialog .application-next-steps { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px 12px; }
+  .apply-modal-dialog .application-next-steps > .bg-divider { display:none; }
+  .apply-modal-dialog .application-next-steps > .flex { min-width:0; gap:6px; }
+}
+
+/* Empty states need explicit padding at every screen size. */
+.wins-empty-card { padding:32px 24px; box-sizing:border-box; }
+@media(max-width:1023px){
+  .port-service-icon.port-service-icon { display:inline-flex!important; align-items:center; justify-content:center; text-align:center; vertical-align:middle; margin-top:0!important; }
+  #root :is(.home-page,.my-posts-page) .flex:has(> .port-service-icon) { align-items:center!important; }
+  #root .wins-card-footer > div:last-child { margin-left:auto; }
+  #root .home-page .home-feed-footer { display:flex; flex-direction:row!important; align-items:center!important; justify-content:space-between!important; flex-wrap:nowrap!important; gap:8px!important; }
+  #root .home-page .home-feed-footer > p { order:0; font-size:16px!important; line-height:24px!important; margin:0; flex:0 0 auto; white-space:nowrap!important; }
+  #root .home-page .home-feed-footer > div { order:1; width:auto; min-width:0; flex:0 0 auto; display:flex; flex-wrap:nowrap; justify-content:flex-end; gap:6px!important; }
+}
+
+@media(max-width:1023px){
+  #root .home-page .home-feed-footer[data-stacked=true] { flex-direction:column!important; align-items:stretch!important; }
+  #root .home-page .home-feed-footer[data-stacked=true] > p { width:100%; text-align:right!important; white-space:normal!important; overflow-wrap:anywhere; }
+  #root .home-page .home-feed-footer[data-stacked=true] > div { width:100%; flex-wrap:wrap; }
+}
+
+@media(max-width:1023px){
+  #root .home-page .home-feed-footer > div > * { margin-inline:0!important; }
+}
+@media(max-width:1023px){
+  #root .home-page .home-feed-footer:not(:has(> p)) { justify-content:flex-end!important; }
+}
+@media(max-width:375px){
+  #root .home-page .home-feed-footer > div { gap:4px!important; }
+}
+
+@media(max-width:1023px){
+  #root .app-main-layout .app-top-nav { padding-left:12px!important; padding-right:12px!important; }
+  .mobile-top-header .mobile-navbar-logo { padding-inline:0!important; }
+  .mobile-navbar-profile { display:inline-flex; align-items:center; justify-content:center; width:40px; min-width:40px; height:44px; flex-shrink:0; border-radius:8px; }
+  .mobile-navbar-profile img { display:block; width:32px; height:32px; border-radius:8px; object-fit:cover; }
+  .vendor-profile-section .vendor-profile-chips { margin-left:32px; min-width:0; }
+}

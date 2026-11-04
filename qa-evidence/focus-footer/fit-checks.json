@@ -1,0 +1,177 @@
+[
+  {
+    "width": 320,
+    "rows": [
+      {
+        "alignment": "right",
+        "overflow": false,
+        "stacked": "true"
+      },
+      {
+        "alignment": "right",
+        "overflow": false,
+        "stacked": "true"
+      },
+      {
+        "alignment": "right",
+        "overflow": false,
+        "stacked": "true"
+      },
+      {
+        "alignment": "right",
+        "overflow": false,
+        "stacked": "true"
+      },
+      {
+        "alignment": "right",
+        "overflow": false,
+        "stacked": "true"
+      },
+      {
+        "alignment": "right",
+        "overflow": false,
+        "stacked": "true"
+      }
+    ]
+  },
+  {
+    "width": 360,
+    "rows": [
+      {
+        "alignment": "right",
+        "overflow": false,
+        "stacked": "true"
+      },
+      {
+        "alignment": "right",
+        "overflow": false,
+        "stacked": "true"
+      },
+      {
+        "alignment": "right",
+        "overflow": false,
+        "stacked": "true"
+      },
+      {
+        "alignment": "right",
+        "overflow": false,
+        "stacked": "true"
+      },
+      {
+        "alignment": "left",
+        "overflow": false,
+        "stacked": "false"
+      },
+      {
+        "alignment": "left",
+        "overflow": false,
+        "stacked": "false"
+      }
+    ]
+  },
+  {
+    "width": 375,
+    "rows": [
+      {
+        "alignment": "right",
+        "overflow": false,
+        "stacked": "true"
+      },
+      {
+        "alignment": "right",
+        "overflow": false,
+        "stacked": "true"
+      },
+      {
+        "alignment": "left",
+        "overflow": false,
+        "stacked": "false"
+      },
+      {
+        "alignment": "left",
+        "overflow": false,
+        "stacked": "false"
+      },
+      {
+        "alignment": "left",
+        "overflow": false,
+        "stacked": "false"
+      },
+      {
+        "alignment": "left",
+        "overflow": false,
+        "stacked": "false"
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "rows": [
+      {
+        "alignment": "left",
+        "overflow": false,
+        "stacked": "false"
+      },
+      {
+        "alignment": "left",
+        "overflow": false,
+        "stacked": "false"
+      },
+      {
+        "alignment": "left",
+        "overflow": false,
+        "stacked": "false"
+      },
+      {
+        "alignment": "left",
+        "overflow": false,
+        "stacked": "false"
+      },
+      {
+        "alignment": "left",
+        "overflow": false,
+        "stacked": "false"
+      },
+      {
+        "alignment": "left",
+        "overflow": false,
+        "stacked": "false"
+      }
+    ]
+  },
+  {
+    "width": 1470,
+    "rows": [
+      {
+        "alignment": "left",
+        "overflow": false,
+        "stacked": "false"
+      },
+      {
+        "alignment": "left",
+        "overflow": false,
+        "stacked": "false"
+      },
+      {
+        "alignment": "left",
+        "overflow": false,
+        "stacked": "false"
+      },
+      {
+        "alignment": "left",
+        "overflow": false,
+        "stacked": "false"
+      },
+      {
+        "alignment": "left",
+        "overflow": false,
+        "stacked": "false"
+      },
+      {
+        "alignment": "left",
+        "overflow": false,
+        "stacked": "false"
+      }
+    ]
+  }
+]

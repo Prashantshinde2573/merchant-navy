@@ -77,11 +77,11 @@ export function Announcements() {
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-xl border border-zinc-100 bg-white shadow-[0px_1px_2px_rgba(0,0,0,0.05)]">
+        <div className="ui-card overflow-hidden rounded-xl border border-zinc-100 bg-white shadow-[0px_1px_2px_rgba(0,0,0,0.05)]">
           {filteredAnnouncements.map((item) => (
             <div
               key={item.id}
-              className="flex items-start justify-between gap-4 px-6 sm:px-8 py-4 transition-colors hover:bg-zinc-50 border-b border-zinc-100 last:border-b-0 cursor-pointer"
+              className="ui-card-padding flex items-start justify-between gap-4 px-6 sm:px-8 py-4 transition-colors hover:bg-zinc-50 border-b border-zinc-100 last:border-b-0 cursor-pointer"
             >
               <div className="flex flex-col gap-1 min-w-0 flex-1">
                 <p className="text-xs leading-4 font-normal text-zinc-600 truncate">

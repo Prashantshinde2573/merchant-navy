@@ -129,3 +129,48 @@ Validation: four normalization/round-trip tests pass; production build and white
 - Verified edit prefill: scope, USD 5555.00–6666.00, 12 services, 25 ports, ASAP; mobile retains its existing stacked layout at 390×844.
 - Removed the desktop rule hiding profile images. View Post now tries available post/company image URLs before initials and handles failed images. Indra image verified loaded and visible on desktop.
 - Validation: production build, four form tests, and diff whitespace check passed. Evidence: qa-evidence/my-posts/desktop-popup-reference-match.jpg and desktop-post-avatar.jpg.
+
+## Mobile detail layout follow-up — 2026-11-04
+- Logo receives 24px total left inset.
+- Detail cards follow desktop DOM order; removed mobile Scope/Attachments reordering.
+- Apply card bodies align beneath heading text; Save moves beside the sticky Apply action only on mobile.
+- My Posts Urgent aligns with title content; Edit Post is hidden only on mobile.
+- Production build and whitespace check passed. Browser verified at 390px: desktop section sequence, wrapped card content aligned with headings, Save beside Apply, Urgent aligned with title, and Edit hidden. Preview recovered after restart approval delay.
+
+## Apply-based consistency pass — 2026-11-04
+- Added a shared role-based style system in `src/styles/design-system.css`; usage and scale are documented in `DESIGN_SYSTEM.md`. Existing layouts, handlers, content, status colors, search controls and form state are retained.
+- Standardized heading/description rhythm, page and section typography, card surfaces/padding, section icon columns, wrapped values, financial amounts, badges, field labels and primary action sizing. Applied to feed, My Posts, details, quotations, Wins, Merchants, profiles, notifications, support, settings, auth and shared forms.
+- Reused `ContentIcon` across section/metadata rows so SVG icon widths do not depend on external fonts.
+- Reviewed 14 route/state views at 390×844 and 1470×900, with screenshots and DOM measurements in `qa-evidence/design-system/`. No horizontal page overflow or error state was observed. Eight representative routes also passed horizontal-overflow checks at 320px and 768px.
+- Interaction checks: My Posts search/empty state, tab filtering, overflow Edit, edit prefill, all six merchant profile tabs, settings switches (restored), Add Post dialog, and Apply dialog. Existing form tests passed (4/4); production build and whitespace checks passed.
+
+## Mobile-only icon, spacing and application follow-up
+- Reused Homepage `ContentIcon` on mobile in remaining legacy Ports/Services locations, including Wins, merchant profiles, custom feed entries and compact quotation match rows. Original desktop icons remain rendered; replacements are hidden above 1023px.
+- View Details status follows the description group with a 4px gap. Wins price and View Details share one vertically centered row with an 8px gap; price matches Apply at 18px/24px, weight 600.
+- Send Application footer: Cancel left; Save and Send on right with an 8px gap. Four next steps form a two-column grid.
+- Verified at 390px and 320px; no footer overflow at 320px. Desktop footer/step layout remains flex and desktop legacy icons remain visible. Production build and whitespace check passed. Screenshots: mobile-application-refined.jpg, mobile-wins-refined.jpg and mobile-details-refined.jpg in qa-evidence/design-system.
+
+## Exact Homepage Ports & Services assets — 2026-11-04
+- Read the live Home reference: Material Symbols Outlined `anchor` / `settings`, 24px, weight 400, FILL 0, GRAD 0, opsz 24, #71717a. Downloaded the exact unmodified font from its stylesheet and served it locally; provenance is beside the asset.
+- Added one `PortServiceIcon` and removed alternative SVGs and responsive duplicate icons across pages, match rows and popups. Kept Home's existing icon markup and spacing while using the identical local font asset. Unrelated navigation Settings icons are unchanged.
+- Verified six routes/states at 320px, 390px and 1470px: every visible Ports/Services glyph has identical 24×24px dimensions, font and colour; no horizontal page overflow. Verified merchant profile and Add Post popup glyph dimensions as well.
+- Evidence and measurements: `qa-evidence/port-service-icons/`. Production build and whitespace check passed.
+
+## Mobile alignment and feed footer follow-up
+- Centered Ports/Services glyphs inside their fixed 24px boxes; centered mobile feed/summary icon rows without moving section icons away from their headings.
+- Wins mobile View Details aligns to the card's right edge.
+- Home feed mobile prices are 16px and always precede their action row; verified every priced card at 320px with no footer overflow.
+- Wins In Progress empty card uses explicit 32px vertical / 24px horizontal padding on mobile and desktop. Desktop Home retains its row-reverse layout and 18px pricing.
+- Build and whitespace checks passed. Evidence saved under qa-evidence/mobile-layout/.
+
+## Focus styling and intrinsic feed-footer correction
+- Removed conflicting solid-outline utility classes from text inputs/areas. Added shared focus styling with a soft outer ring; wrapped inputs have no inner border, outline or shadow. Verified Company Profile, search, application message and desktop Add Post budget fields. Button/checkbox keyboard focus and validation styling are retained.
+- Added `FeedFooter`, which measures price and action widths with ResizeObserver and stacks only when the actual content cannot fit. Mobile price remains 16px; default is one horizontal row, narrow fallback right-aligns the price above the actions. Removed redundant action margins and used compact gaps on smaller phones.
+- Verified all priced feed cards at 320, 360, 375, 390 and 1470px, with no footer overflow. At 390px all prices/actions share one row; at 320px all priced cards use the right-aligned fallback. Desktop retains its original row-reverse layout.
+- Production build, four existing form tests and whitespace checks passed. Evidence and measurements: qa-evidence/focus-footer/.
+
+## Mobile navbar and merchant popup alignment
+- Moved the existing mobile Profile destination into an upfront avatar link immediately before the hamburger; removed its duplicate hamburger item. Settings, support, announcements, logout, notification and desktop Profile behavior remain intact.
+- Mobile navbar left/right insets are exactly 12px. Verified Profile navigation and hamburger open/close at 320px and 390px with no horizontal overflow.
+- Merchant popup Ports/Services chip containers start at the same x-position as their heading text (60px in the inspected mobile popup), using a 32px icon-column inset. Narrow values wrap normally.
+- Desktop Profile trigger stays visible and popup chip inset remains 0px. Production build and whitespace check passed; evidence in qa-evidence/mobile-navbar/.

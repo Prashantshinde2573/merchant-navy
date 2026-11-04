@@ -38,41 +38,41 @@ export function SupportModal({ isOpen, onClose }) {
 
   return (
     <div tabindex="-1">
-      <div 
+      <div
         className="z-[100] bg-overlay/50 bg-black/50 backdrop-blur-xs w-screen h-screen fixed inset-0 transition-opacity"
-        aria-hidden="true" 
+        aria-hidden="true"
         style={{ opacity: 1 }}
         onClick={onClose}
       />
-      <div 
-        className="flex w-screen fixed inset-0 z-[100] overflow-x-auto justify-center items-center sm:items-center p-2 sm:p-4" 
-        data-slot="wrapper" 
+      <div
+        className="flex w-screen fixed inset-0 z-[100] overflow-x-auto justify-center items-center sm:items-center p-2 sm:p-4"
+        data-slot="wrapper"
         style={{ opacity: 1 }}
         onClick={(e) => {
           if (e.target === e.currentTarget) onClose();
         }}
       >
-        <section 
+        <section
           ref={dialogRef}
           aria-label="Submit a Support Request"
-          role="dialog" 
-          tabIndex="-1" 
-          className="flex flex-col relative z-50 w-full box-border bg-content1 bg-white outline-solid outline-transparent mx-1 my-1 sm:mx-6 sm:my-16 max-w-3xl rounded-large shadow-small max-h-[calc(100vh-4rem)] overflow-hidden" 
-          id="_r_1ih_" 
-          data-open="true" 
-          data-dismissable="true" 
-          aria-modal="true" 
+          role="dialog"
+          tabIndex="-1"
+          className="ui-card flex flex-col relative z-50 w-full box-border bg-content1 bg-white outline-solid outline-transparent mx-1 my-1 sm:mx-6 sm:my-16 max-w-3xl rounded-large shadow-small max-h-[calc(100vh-4rem)] overflow-hidden"
+          id="_r_1ih_"
+          data-open="true"
+          data-dismissable="true"
+          aria-modal="true"
           data-placement="center"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Close button */}
-          <button 
-            role="button" 
-            tabIndex="0" 
-            aria-label="Close" 
+          <button
+            role="button"
+            tabIndex="0"
+            aria-label="Close"
             onClick={onClose}
-            className="absolute appearance-none select-none top-3 end-3 p-2 text-foreground-500 text-zinc-400 hover:text-zinc-700 rounded-full hover:bg-default-100 hover:bg-zinc-100 active:bg-default-200 tap-highlight-transparent outline-solid outline-transparent cursor-pointer z-10 transition-colors" 
-            type="button" 
+            className="absolute appearance-none select-none top-3 end-3 p-2 text-foreground-500 text-zinc-400 hover:text-zinc-700 rounded-full hover:bg-default-100 hover:bg-zinc-100 active:bg-default-200 tap-highlight-transparent outline-solid outline-transparent cursor-pointer z-10 transition-colors"
+            type="button"
             data-react-aria-pressable="true"
           >
             <svg aria-hidden="true" className="fill-current" fill="none" focusable="false" height="1.2em" role="presentation" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="1.2em">
@@ -88,7 +88,7 @@ export function SupportModal({ isOpen, onClose }) {
           {/* Body Content */}
           <form onSubmit={handleSubmit} className="flex flex-col overflow-y-auto">
             <div className="flex flex-1 flex-col px-6 overflow-y-auto gap-5 py-6" id="_r_1ij_">
-              
+
               {/* Row 1: Topic & What's the issue? */}
               <div className="grid gap-4 md:grid-cols-2">
                 {/* Topic */}
@@ -160,17 +160,17 @@ export function SupportModal({ isOpen, onClose }) {
                     Describe the Issue
                   </label>
                   <div data-slot="inner-wrapper" className="inline-flex w-full h-full box-border items-start group-data-[has-label=true]:items-start pb-0.5">
-                    <textarea 
-                      data-slot="input" 
-                      className="w-full font-normal bg-transparent !outline-solid placeholder:text-foreground-500 placeholder:text-zinc-400 focus-visible:outline-solid outline-transparent text-small text-zinc-800 text-sm resize-none pt-0" 
+                    <textarea
+                      data-slot="input"
+                      className="w-full font-normal bg-transparent placeholder:text-foreground-500 placeholder:text-zinc-400 text-small text-zinc-800 text-sm resize-none pt-0"
                       required
-                      maxLength="8000" 
-                      placeholder="What happened, where (screen), when (date/time), any error message, expected vs. actual result..." 
-                      tabIndex="0" 
-                      id="react-aria8552086545-_r_1jc_" 
+                      maxLength="8000"
+                      placeholder="What happened, where (screen), when (date/time), any error message, expected vs. actual result..."
+                      tabIndex="0"
+                      id="react-aria8552086545-_r_1jc_"
                       value={description} aria-label="Describe the issue"
                       onChange={(e) => setDescription(e.target.value)}
-                      title="" 
+                      title=""
                       style={{ height: "100px" }}
                     />
                   </div>
@@ -182,16 +182,16 @@ export function SupportModal({ isOpen, onClose }) {
                 <span className="text-xs font-normal text-[#696f93]">
                   Attachments <span className="text-[#959ab3]">(Optional)</span>
                 </span>
-                <input 
+                <input
                   ref={fileInputRef}
-                  accept=".pdf,.jpg,.jpeg,.png,.webp,.doc,.docx,application/pdf,image/jpeg,image/png,image/webp" 
-                  multiple 
-                  className="hidden" 
+                  accept=".pdf,.jpg,.jpeg,.png,.webp,.doc,.docx,application/pdf,image/jpeg,image/png,image/webp"
+                  multiple
+                  className="hidden"
                   type="file"
                   onChange={handleFileChange}
                 />
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   onClick={() => fileInputRef.current?.click()}
                   className="hover:border-primary hover:bg-primary/5 hover:border-blue-400 hover:bg-blue-50/20 flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-[#e5e7eb] bg-white px-8.5 py-10.5 py-8 transition-colors"
                 >
@@ -231,12 +231,12 @@ export function SupportModal({ isOpen, onClose }) {
                         Name
                       </label>
                       <div data-slot="inner-wrapper" className="inline-flex w-full items-center h-full box-border pt-4 pb-0.5">
-                        <input 
-                          data-slot="input" 
-                          className="w-full font-normal bg-transparent !outline-solid placeholder:text-foreground-500 focus-visible:outline-solid outline-transparent text-small text-zinc-800 text-sm is-filled" 
-                          required 
-                          tabIndex="0" 
-                          type="text" 
+                        <input
+                          data-slot="input"
+                          className="w-full font-normal bg-transparent placeholder:text-foreground-500 text-small text-zinc-800 text-sm is-filled"
+                          required
+                          tabIndex="0"
+                          type="text"
                           value={name} aria-label="Name"
                           onChange={(e) => setName(e.target.value)}
                         />
@@ -251,13 +251,13 @@ export function SupportModal({ isOpen, onClose }) {
                         Email
                       </label>
                       <div data-slot="inner-wrapper" className="inline-flex w-full items-center h-full box-border pt-4 pb-0.5">
-                        <input 
-                          data-slot="input" 
-                          data-type="email" 
-                          className="w-full font-normal bg-transparent !outline-solid placeholder:text-foreground-500 focus-visible:outline-solid outline-transparent text-small text-zinc-800 text-sm is-filled" 
-                          required 
-                          tabIndex="0" 
-                          type="email" 
+                        <input
+                          data-slot="input"
+                          data-type="email"
+                          className="w-full font-normal bg-transparent placeholder:text-foreground-500 text-small text-zinc-800 text-sm is-filled"
+                          required
+                          tabIndex="0"
+                          type="email"
                           value={email} aria-label="Email"
                           onChange={(e) => setEmail(e.target.value)}
                         />
@@ -272,11 +272,11 @@ export function SupportModal({ isOpen, onClose }) {
                         Phone (Optional)
                       </label>
                       <div data-slot="inner-wrapper" className="inline-flex w-full items-center h-full box-border pt-4 pb-0.5">
-                        <input 
-                          data-slot="input" 
-                          className="w-full font-normal bg-transparent !outline-solid placeholder:text-foreground-500 focus-visible:outline-solid outline-transparent text-small text-zinc-800 text-sm is-filled" 
-                          tabIndex="0" 
-                          type="text" 
+                        <input
+                          data-slot="input"
+                          className="w-full font-normal bg-transparent placeholder:text-foreground-500 text-small text-zinc-800 text-sm is-filled"
+                          tabIndex="0"
+                          type="text"
                           value={phone} aria-label="Phone"
                           onChange={(e) => setPhone(e.target.value)}
                         />
@@ -290,10 +290,10 @@ export function SupportModal({ isOpen, onClose }) {
 
             {/* Footer */}
             <footer className="flex flex-row gap-2 px-6 py-4 justify-start pt-2 border-t border-gray-100 bg-white">
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 disabled={submitted}
-                data-react-aria-pressable="true" 
+                data-react-aria-pressable="true"
                 className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent px-4 min-w-20 h-10 text-small gap-2 rounded-medium transition-transform-colors-opacity motion-reduce:transition-none data-[hover=true]:opacity-hover w-60 bg-[#1f285d] hover:bg-[#18204a] font-medium text-white text-sm shadow-sm"
               >
                 {submitted ? 'Request Submitted ✓' : 'Submit Request'}

@@ -1,0 +1,82 @@
+[
+  {
+    "width": 320,
+    "route": "home",
+    "overflow": false
+  },
+  {
+    "width": 320,
+    "route": "my-posts",
+    "overflow": false
+  },
+  {
+    "width": 320,
+    "route": "wins",
+    "overflow": false
+  },
+  {
+    "width": 320,
+    "route": "my-merchants",
+    "overflow": false
+  },
+  {
+    "width": 320,
+    "route": "company-profile",
+    "overflow": false
+  },
+  {
+    "width": 320,
+    "route": "profile-settings",
+    "overflow": false
+  },
+  {
+    "width": 320,
+    "route": "quotations/quote-1",
+    "overflow": false
+  },
+  {
+    "width": 320,
+    "route": "posts/home-post-1",
+    "overflow": false
+  },
+  {
+    "width": 768,
+    "route": "home",
+    "overflow": false
+  },
+  {
+    "width": 768,
+    "route": "my-posts",
+    "overflow": false
+  },
+  {
+    "width": 768,
+    "route": "wins",
+    "overflow": false
+  },
+  {
+    "width": 768,
+    "route": "my-merchants",
+    "overflow": false
+  },
+  {
+    "width": 768,
+    "route": "company-profile",
+    "overflow": false
+  },
+  {
+    "width": 768,
+    "route": "profile-settings",
+    "overflow": false
+  },
+  {
+    "width": 768,
+    "route": "quotations/quote-1",
+    "overflow": false
+  },
+  {
+    "width": 768,
+    "route": "posts/home-post-1",
+    "overflow": false
+  }
+]

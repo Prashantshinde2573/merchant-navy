@@ -1,0 +1,21 @@
+/* One quiet outer focus treatment; wrapped fields never draw a second inner ring. */
+:root { --field-focus-border:#9ca5c9; --field-focus-ring:0 0 0 2px #1f285d1a; }
+body :is(input:where(:not([type=checkbox]):not([type=radio]):not([type=file]):not([type=range]):not([type=hidden])),textarea,select):focus {
+  outline:none!important;
+  outline-offset:0!important;
+  border-color:var(--field-focus-border)!important;
+  box-shadow:var(--field-focus-ring)!important;
+}
+body :is([data-slot=input-wrapper],.app-search-box,.ui-field-surface,.service-date-input):focus-within:not([data-invalid=true]):not(:has([aria-invalid=true])):not([class*="border-danger"]) {
+  outline:none!important;
+  border-color:var(--field-focus-border)!important;
+  box-shadow:var(--field-focus-ring)!important;
+}
+body :is([data-slot=input-wrapper],.app-search-box,.ui-field-surface,.service-date-input) :is(input,textarea):focus {
+  border:0!important;
+  outline:none!important;
+  box-shadow:none!important;
+}
+body [contenteditable=true]:focus { outline:none!important; box-shadow:none!important; }
+body .quill:focus-within { border-color:var(--field-focus-border); box-shadow:var(--field-focus-ring); }
+body :is(input,textarea)[aria-invalid=true]:focus { border-color:#f31260!important; }

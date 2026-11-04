@@ -1,3 +1,4 @@
+import { PortServiceIcon } from '../PortServiceIcon/PortServiceIcon';
 import { useDialogFocus } from '../../hooks/useDialogFocus';
 import React, { useState, useRef, useEffect } from "react";
 import { usePosts } from "../../context/PostContext";
@@ -136,7 +137,7 @@ export function PostModal({ isOpen, onClose, onPostCreated, post = null, onPostU
           ref={dialogRef}
           role="dialog"
           tabIndex="-1"
-          className="flex flex-col relative z-50 w-full box-border bg-content1 outline-solid outline-transparent mx-1 my-1 sm:mx-6 rounded-large shadow-small overflow-hidden max-w-300 max-h-[calc(100vh-64px)] my-1 sm:my-8"
+          className="ui-card flex flex-col relative z-50 w-full box-border bg-content1 outline-solid outline-transparent mx-1 my-1 sm:mx-6 rounded-large shadow-small overflow-hidden max-w-300 max-h-[calc(100vh-64px)] my-1 sm:my-8"
           id="_r_19q_"
           data-open="true"
           data-dismissable="true"
@@ -200,7 +201,7 @@ export function PostModal({ isOpen, onClose, onPostCreated, post = null, onPostU
                           <div className="shrink-0">
                             <i className="material-symbols-outlined h-4 w-4 text-base! text-blue-700">layers</i>
                           </div>
-                          <h3 className="text-content1-foreground text-base leading-6 font-semibold">Scope of work</h3>
+                          <h3 className="ui-section-title text-content1-foreground text-base leading-6 font-semibold">Scope of work</h3>
                         </div>
                         <p className="text-modified-13 text-zinc-500">Share the job details. Keep the first 2 lines crisp - they show on the post.</p>
                       </div>
@@ -273,7 +274,7 @@ export function PostModal({ isOpen, onClose, onPostCreated, post = null, onPostU
                             <div className="shrink-0">
                               <i className="material-symbols-outlined h-4 w-4 text-base! text-blue-700">attach_file</i>
                             </div>
-                            <h3 className="text-content1-foreground text-base leading-6 font-semibold">Attachments</h3>
+                            <h3 className="ui-section-title text-content1-foreground text-base leading-6 font-semibold">Attachments</h3>
                           </div>
                         </div>
                         <div className="flex flex-col gap-3">
@@ -309,7 +310,7 @@ export function PostModal({ isOpen, onClose, onPostCreated, post = null, onPostU
                               <div className="shrink-0">
                                 <i className="material-symbols-outlined h-4 w-4 text-base text-blue-700">attach_money</i>
                               </div>
-                              <h3 className="text-content1-foreground text-base leading-6 font-semibold">Budget</h3>
+                              <h3 className="ui-section-title text-content1-foreground text-base leading-6 font-semibold">Budget</h3>
                             </div>
                             <p className="text-modified-13 text-zinc-500">Specify the budget for the project.</p>
                           </div>
@@ -361,7 +362,7 @@ export function PostModal({ isOpen, onClose, onPostCreated, post = null, onPostU
                                     data-slot="input"
                                     data-has-start-content="true"
                                     data-type="number"
-                                    className="w-full bg-transparent !outline-solid focus-visible:outline-solid outline-transparent ps-1.5 text-sm leading-5 font-medium placeholder:text-zinc-500"
+                                    className="w-full bg-transparent ps-1.5 text-sm leading-5 font-medium placeholder:text-zinc-500"
                                     aria-label="MIN"
                                     placeholder="MIN"
                                     type="number" min="0" step="0.01"
@@ -383,7 +384,7 @@ export function PostModal({ isOpen, onClose, onPostCreated, post = null, onPostU
                                     data-slot="input"
                                     data-has-start-content="true"
                                     data-type="number"
-                                    className="w-full bg-transparent !outline-solid focus-visible:outline-solid outline-transparent ps-1.5 text-sm leading-5 font-medium placeholder:text-zinc-500"
+                                    className="w-full bg-transparent ps-1.5 text-sm leading-5 font-medium placeholder:text-zinc-500"
                                     aria-label="MAX"
                                     placeholder="MAX"
                                     type="number" min="0" step="0.01"
@@ -406,9 +407,9 @@ export function PostModal({ isOpen, onClose, onPostCreated, post = null, onPostU
                       <div className="mb-4 flex flex-col gap-0.5">
                         <div className="flex items-center gap-2">
                           <div className="shrink-0">
-                            <i className="material-symbols-outlined h-4 w-4 text-base! text-blue-700">settings</i>
+                            <PortServiceIcon name="settings" />
                           </div>
-                          <h3 className="text-content1-foreground text-base leading-6 font-semibold">Services</h3>
+                          <h3 className="ui-section-title text-content1-foreground text-base leading-6 font-semibold">Services</h3>
                         </div>
                         <p className="text-modified-13 text-zinc-500">Choose services for this request</p>
                       </div>
@@ -436,9 +437,9 @@ export function PostModal({ isOpen, onClose, onPostCreated, post = null, onPostU
                       <div className="mb-4 flex flex-col gap-0.5">
                         <div className="flex items-center gap-2">
                           <div className="shrink-0">
-                            <i className="material-symbols-outlined h-4 w-4 text-base! text-blue-700">anchor</i>
+                            <PortServiceIcon name="anchor" />
                           </div>
-                          <h3 className="text-content1-foreground text-base leading-6 font-semibold">Ports</h3>
+                          <h3 className="ui-section-title text-content1-foreground text-base leading-6 font-semibold">Ports</h3>
                         </div>
                         <p className="text-modified-13 text-zinc-500">Pick ports this request applies to</p>
                       </div>
@@ -465,7 +466,7 @@ export function PostModal({ isOpen, onClose, onPostCreated, post = null, onPostU
                     <div className="bg-content1 shadow-neutral-sm rounded-lg p-4 sm:p-6">
                       <div className="mb-4 flex flex-col gap-0.5">
                         <div className="flex items-center gap-2">
-                          <h3 className="text-content1-foreground text-base leading-6 font-semibold">Needed by</h3>
+                          <h3 className="ui-section-title text-content1-foreground text-base leading-6 font-semibold">Needed by</h3>
                         </div>
                         <p className="text-modified-13 text-zinc-500">Choose a service window (or select ASAP).</p>
                       </div>
@@ -525,7 +526,7 @@ export function PostModal({ isOpen, onClose, onPostCreated, post = null, onPostU
                 tabIndex="0"
                 onClick={handlePublish}
                 data-react-aria-pressable="true"
-                className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-semibold subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent px-4 min-w-24 sm:min-w-28 h-10 text-small gap-1.5 sm:gap-2 rounded-medium transition-transform-colors-opacity motion-reduce:transition-none bg-primary text-primary-foreground hover:opacity-80 shadow-sm"
+                className="ui-button z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-semibold subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent px-4 min-w-24 sm:min-w-28 h-10 text-small gap-1.5 sm:gap-2 rounded-medium transition-transform-colors-opacity motion-reduce:transition-none bg-primary text-primary-foreground hover:opacity-80 shadow-sm"
               >
                 {isEditing ? "Save changes" : "Publish Request"}
               </button>
