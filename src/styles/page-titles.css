@@ -1,0 +1,4 @@
+/* Shared page-title typography at every viewport size. */
+#root .page-title {
+  line-height: 1.3em !important;
+}

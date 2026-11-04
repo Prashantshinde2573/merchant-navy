@@ -1,0 +1,51 @@
+/* A single surface and input treatment for page and dialog search fields. */
+:is(#root, body) .app-search-box {
+  display: flex !important;
+  align-items: center !important;
+  box-sizing: border-box;
+  height: 40px !important;
+  min-height: 40px !important;
+  padding: 0 12px !important;
+  gap: 8px !important;
+  border: 1px solid #e5e9f4 !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  box-shadow: 0 1px 2px #0000000d !important;
+}
+:is(#root, body) .app-search-box > div {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  gap: 8px;
+}
+:is(#root, body) .app-search-box input {
+  appearance: none;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+  font-size: 13px !important;
+  line-height: 20px !important;
+  font-weight: 400;
+  color: #27272a;
+}
+:is(#root, body) .app-search-box input::placeholder { color: #a1a1aa; opacity: 1; }
+:is(#root, body) .app-search-box .lucide-search {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  margin: 0 !important;
+  color: #a1a1aa;
+}
+:is(#root, body) .app-search-box:has(input:focus-visible) {
+  border-color: #9ca5c9 !important;
+  box-shadow: 0 0 0 2px #1f285d1a !important;
+}

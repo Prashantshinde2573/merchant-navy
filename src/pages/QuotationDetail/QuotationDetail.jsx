@@ -26,7 +26,7 @@ export function QuotationDetail() {
   if (!quotation) {
     return (
       <div className="mx-auto max-w-5xl px-6 py-12 text-center">
-        <h2 className="text-xl font-semibold text-zinc-800">Quotation not found</h2>
+        <h2 className="page-title text-xl font-semibold text-zinc-800">Quotation not found</h2>
         <button
           onClick={() => navigate('/my-posts')}
           className="mt-4 px-4 py-2 bg-primary text-white rounded-lg text-sm"
@@ -70,9 +70,9 @@ export function QuotationDetail() {
                 </svg>
               </button>
 
-              <div className="flex max-w-150 flex-1 flex-col gap-0.5">
+              <div className="flex max-w-150 flex-1 flex-col gap-0.5 mobile-heading-group">
                 <div className="flex items-center gap-2">
-                  <h2 className="text-content1-foreground truncate text-lg leading-7 font-semibold">
+                  <h2 className="page-title text-content1-foreground truncate text-lg leading-7 font-semibold">
                     Quotation: {quotation.merchantName}
                   </h2>
                   {quotation.isRecommended && (

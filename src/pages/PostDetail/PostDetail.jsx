@@ -108,9 +108,9 @@ export function PostDetail() {
                 </span>
               </span>
 
-              <div className="post-detail-identity">
+              <div className="post-detail-identity mobile-heading-group">
                 <div className="flex items-center gap-2 post-detail-company-line">
-                  <h2 className="text-lg leading-7 font-semibold text-content1-foreground">{post.vendorName}</h2>
+                  <h2 className="page-title text-lg leading-7 font-semibold text-content1-foreground">{post.vendorName}</h2>
                   {post.isVerified && (
                     <img
                       alt="Verified"

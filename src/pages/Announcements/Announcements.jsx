@@ -24,11 +24,11 @@ export function Announcements() {
     <div className="announcements-page-wrapper bg-blue-25 min-h-[calc(100vh-56px)]">
       <div className="mx-auto w-full max-w-4xl px-6 py-6">
         <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <h1 className="text-2xl leading-8 font-semibold text-[#18181b]">
+          <h1 className="page-title text-2xl leading-8 font-semibold text-[#18181b]">
             All Announcements
           </h1>
           <div className="flex flex-wrap items-center gap-3">
-            <div className="relative flex h-9 w-full sm:w-[220px] items-center rounded-md border border-[#dfe2eb] bg-white px-3 shadow-[0px_1px_2px_rgba(0,0,0,0.05)]">
+            <div className="app-search-box relative flex h-9 w-full sm:w-[220px] items-center rounded-md border border-[#dfe2eb] bg-white px-3 shadow-[0px_1px_2px_rgba(0,0,0,0.05)]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="14"

@@ -125,8 +125,8 @@ export function MyPostDetail() {
                   </svg>
                 </button>
 
-                <div className="flex max-w-150 flex-1 flex-col gap-0.5 my-post-detail-header-text">
-                  <h2 className="text-content1-foreground truncate text-lg leading-7 font-semibold my-post-detail-title">
+                <div className="flex max-w-150 flex-1 flex-col gap-0.5 my-post-detail-header-text mobile-heading-group">
+                  <h2 className="page-title text-content1-foreground truncate text-lg leading-7 font-semibold my-post-detail-title" title={post.title || post.scopeOfWork}>
                     {post.title || post.scopeOfWork}
                   </h2>
                   <p data-expanded={servicesExpanded} className="truncate text-sm leading-5 text-zinc-500 my-post-detail-services-sub">

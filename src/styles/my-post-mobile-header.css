@@ -1,0 +1,87 @@
+/* Rearrange the existing controls only in the mobile View Details header. */
+@media (max-width: 1023px) {
+  #root .my-post-detail-header-inner {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 32px 36px;
+    column-gap: 8px;
+    row-gap: 0;
+    align-items: start;
+  }
+  #root .my-post-detail-header-top {
+    grid-column: 1;
+    grid-row: 1;
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 16px 0 !important;
+  }
+  #root .my-post-detail-header-left {
+    gap: 10px !important;
+    margin: 0 !important;
+  }
+  #root .my-post-detail-back-btn {
+    width: 36px;
+    min-width: 36px;
+    height: 36px;
+    margin: -8px 0 0 !important;
+    border: 2px solid #dfe2eb;
+    border-radius: 8px;
+    color: #11181c;
+    background: transparent;
+  }
+  #root .my-post-detail-header-text { min-width: 0; }
+  #root .my-post-detail-header-inner .my-post-detail-title {
+    display: block !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    -webkit-line-clamp: unset;
+    font-size: 14px !important;
+  }
+  #root .my-post-detail-header-actions,
+  #root .my-post-detail-header-actions > .flex:last-child {
+    display: contents !important;
+  }
+  #root .my-post-detail-header-actions > [role=separator] { display: none !important; }
+  #root .my-post-detail-header-actions > .flex:first-child {
+    grid-column: 1;
+    grid-row: 2;
+    min-height: 36px;
+    margin-bottom: 12px;
+    align-items: center;
+  }
+  #root .my-post-detail-header-actions .post-edit-button {
+    grid-column: 2 / 4;
+    grid-row: 2;
+    justify-self: end;
+    height: 36px;
+    min-width: 96px;
+    margin-bottom: 12px;
+    padding: 0 12px;
+    font-size: 13px;
+  }
+  #root .my-post-detail-header-actions button[aria-label="Share post"] {
+    grid-column: 2;
+    grid-row: 1;
+    margin-top: 10px;
+    width: 32px;
+    height: 32px;
+  }
+  #root .my-post-detail-header-actions .post-actions {
+    grid-column: 3;
+    grid-row: 1;
+    margin-top: 4px;
+  }
+  #root .my-post-detail-header-actions .post-overflow-trigger {
+    width: 36px;
+    min-width: 36px;
+    height: 44px;
+    border: 0;
+    border-radius: 8px;
+    color: #000;
+    background: transparent;
+  }
+  #root .my-post-detail-tab-wrap {
+    grid-column: 1 / -1;
+    grid-row: 3;
+  }
+}

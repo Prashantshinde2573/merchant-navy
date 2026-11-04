@@ -97,3 +97,21 @@ Desktop header changes intended for mobile are scoped below 1024px; desktop uses
 ### Applied mobile card refinement
 
 Grouped merchant identity/rating with selection aligned right, paired match and applied date into two columns, and placed notes, merchant card, Invite, and overflow in one action row with 40px controls. Changes are scoped below 1024px. Verified at 390px and 320px without horizontal overflow; selection enables Invite All, notes open, and the profile menu opens the company dialog. At 1470px the desktop retains table/table-row rendering and its 64px header. Build and whitespace checks pass. Evidence: qa-evidence/my-posts/applied-mobile-refined.jpg.
+
+## Uniform mobile heading spacing — November 4, 2026
+
+Added a shared mobile heading group with a single 6px title/description gap, resetting stacked margins so existing flex gaps cannot double it. Applied to paired page headings on My Posts, Wins, Merchants, Help, Notifications, Settings, Company Profile, owned/public post detail, quotation detail, and the authentication verification heading. The quotation recommendation badge follows the description on mobile so it does not interrupt the heading pair. Pages without descriptions gain no extra spacing.
+
+At 390px, measured exactly 6px on all ten signed-in page types listed above. At 1470px the quotation header retains its original 2px gap and flex title/badge row. All new rules are restricted below 1024px. Build and whitespace checks pass. Evidence: qa-evidence/my-posts/mobile-heading-spacing.jpg.
+
+## Page-title line-height
+
+Applied a shared `.page-title` rule of `line-height: 1.3em` at all viewport sizes, including authentication, main page headings, post/quotation detail titles, and chat request title. Browser checks at 390px and 1470px on My Posts, Wins, Settings, owned/public posts, and quotations all report a computed ratio of 1.3. Production build and whitespace check pass. Evidence: qa-evidence/my-posts/page-title-line-height.jpg.
+
+## Compact mobile My Posts detail header
+
+Mobile title is now a single 14px line with ellipsis; Share and overflow occupy the right side of the same bar. Urgent and Edit Post form the row below. Services remain available underneath the title, including expansion. Verified at 390px and 320px without horizontal overflow; Share and overflow menus work. Desktop retains its 64px header and 18px title. Build and whitespace checks pass. Evidence: qa-evidence/my-posts/mobile-post-header.jpg.
+
+## Search-field consistency
+
+Removed the My Posts toolbar border beneath search; the divider now belongs only to the tabs. All search fields (My Posts, Wins, Merchants, Chats, Announcements, and service/port dialogs) share a 40px white surface, 1px light border, 8px corners, subtle shadow, 12px horizontal padding, 8px icon gap, and borderless inputs. A matching focus ring replaces individual input outlines. Browser measurements confirm identical surfaces on the five main pages and the service dialog, and the My Posts search filter works. Build and whitespace checks pass. Evidence: qa-evidence/my-posts/search-uniform-mobile.jpg.

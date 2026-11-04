@@ -67,8 +67,8 @@ export function Wins() {
     <div className="wins-page-wrapper">
       <div className="mx-auto w-full max-w-5xl px-6 py-5">
         {/* Header section */}
-        <div className="mb-6 wins-header-section">
-          <h1 className="text-content1-foreground mb-2 text-2xl leading-8 font-semibold">
+        <div className="mb-6 wins-header-section mobile-heading-group">
+          <h1 className="page-title text-content1-foreground mb-2 text-2xl leading-8 font-semibold">
             Jobs awarded to your company
           </h1>
           <p className="text-base leading-6 font-normal text-zinc-500">
@@ -169,7 +169,7 @@ export function Wins() {
             <div className="group flex flex-col relative justify-end w-64 wins-search-box">
               <div className="h-full flex flex-col">
                 <div
-                  className="relative w-full inline-flex tap-highlight-transparent flex-row items-center shadow-xs px-3 gap-3 h-10 min-h-10 rounded-large transition-background bg-content1 border border-blue-100 bg-white"
+                  className="app-search-box relative w-full inline-flex tap-highlight-transparent flex-row items-center shadow-xs px-3 gap-3 h-10 min-h-10 rounded-large transition-background bg-content1 border border-blue-100 bg-white"
                   style={{ cursor: 'text' }}
                 >
                   <div className="inline-flex w-full items-center h-full box-border">

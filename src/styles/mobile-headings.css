@@ -1,0 +1,36 @@
+/* One mobile title/description rhythm; desktop retains its existing styling. */
+@media (max-width: 1023px) {
+  :root { --mobile-heading-description-gap: 6px; }
+
+  .app-main-layout .mobile-heading-group.mobile-heading-group,
+  .auth-page .mobile-heading-group.mobile-heading-group {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch;
+    gap: var(--mobile-heading-description-gap) !important;
+  }
+
+  /* Reset margins so existing margins and flex gaps cannot add together. */
+  .app-main-layout .mobile-heading-group.mobile-heading-group :is(h1, h2, p),
+  .app-main-layout .mobile-heading-group.mobile-heading-group > *,
+  .auth-page .mobile-heading-group.mobile-heading-group > * {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+}
+@media (max-width: 1023px) {
+  .app-main-layout .my-posts-page > .mb-6:first-child .mobile-heading-group {
+    gap: var(--mobile-heading-description-gap) !important;
+  }
+
+  /* Keep the recommendation badge after the title/description pair on phones. */
+  .quotation-detail-header-left .mobile-heading-group > div:first-child {
+    display: contents !important;
+  }
+  .quotation-detail-header-left .mobile-heading-group h2 { order: 0; }
+  .quotation-detail-header-left .mobile-heading-group > p { order: 1; }
+  .quotation-detail-header-left .mobile-heading-group > div:first-child > span {
+    order: 2;
+    align-self: flex-start;
+  }
+}

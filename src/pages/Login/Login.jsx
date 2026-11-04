@@ -109,8 +109,8 @@ export function Login() {
 
             {step === 'email' ? (
               <>
-                <div className="space-y-2">
-                  <h1 className="text-content1-foreground text-2xl leading-8 font-semibold">
+                <div className="space-y-2 mobile-heading-group">
+                  <h1 className="page-title text-content1-foreground text-2xl leading-8 font-semibold">
                     Sign in to your account
                   </h1>
                 </div>
@@ -157,8 +157,8 @@ export function Login() {
               </>
             ) : (
               <>
-                <div className="space-y-2">
-                  <h1 className="text-content1-foreground text-2xl leading-8 font-semibold">
+                <div className="space-y-2 mobile-heading-group">
+                  <h1 className="page-title text-content1-foreground text-2xl leading-8 font-semibold">
                     Enter verification code
                   </h1>
                   <p id="otp-instructions" className="text-xs text-neutral-500">

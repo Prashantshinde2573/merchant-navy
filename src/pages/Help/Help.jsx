@@ -42,8 +42,8 @@ export function Help() {
   return (
     <div className="bg-blue-25 min-h-[calc(100vh-56px)]">
       <div className="help-page mobile-page mx-auto w-full max-w-5xl px-6 py-6">
-        <div className="mb-6">
-          <h1 className="text-content1-foreground font-['Inter'] text-2xl leading-8 font-semibold">
+        <div className="mb-6 mobile-heading-group">
+          <h1 className="page-title text-content1-foreground font-['Inter'] text-2xl leading-8 font-semibold">
             Frequently Asked Questions
           </h1>
           <p className="mt-1.5 font-['Inter'] text-base leading-6 font-normal text-zinc-500">

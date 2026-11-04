@@ -65,9 +65,9 @@ export function MyPosts() {
     <>
       <div className="my-posts-page mobile-page mx-auto w-full max-w-5xl px-6 py-6">
         <div className="mb-6">
-          <div className="inline-flex flex-col items-start justify-start gap-1.5">
+          <div className="inline-flex flex-col items-start justify-start gap-1.5 mobile-heading-group">
             <div className="inline-flex items-center justify-start gap-2">
-              <h1 className="text-content1-foreground justify-center font-sans text-2xl leading-8 font-semibold">Ship - your ask</h1>
+              <h1 className="page-title text-content1-foreground justify-center font-sans text-2xl leading-8 font-semibold">Ship - your ask</h1>
             </div>
             <div className="inline-flex items-center justify-start gap-2.5">
               <div className="justify-center font-sans text-base leading-6 font-normal text-zinc-500">Keep your requests moving, from live to awarded.</div>
@@ -76,9 +76,9 @@ export function MyPosts() {
         </div>
 
         <div className="relative mb-6">
-          <div className="flex items-center justify-between border-b border-blue-100">
+          <div className="flex items-center justify-between">
             <div data-slot="base" className="inline-flex w-full">
-              <div data-slot="tabList" className="relative flex h-fit items-center flex-nowrap overflow-x-scroll scrollbar-hide gap-2 bg-transparent p-0 rounded-none" role="tablist" aria-orientation="horizontal">
+              <div data-slot="tabList" className="border-b border-blue-100 relative flex h-fit items-center flex-nowrap overflow-x-scroll scrollbar-hide gap-2 bg-transparent p-0 rounded-none" role="tablist" aria-orientation="horizontal">
                 <button
                   type="button"
                   role="tab"
@@ -157,7 +157,7 @@ export function MyPosts() {
             <div className="absolute top-0 right-0">
               <div className="group flex flex-col relative justify-end w-[220px]">
                 <div className="h-full flex flex-col">
-                  <div className="relative w-full inline-flex flex-row items-center px-3 gap-3 my-posts-search rounded-small h-10 min-h-10 bg-white border border-blue-100 shadow-sm" style={{"cursor": "text"}}>
+                  <div className="relative w-full inline-flex flex-row items-center px-3 gap-3 my-posts-search app-search-box rounded-small h-10 min-h-10 bg-white border border-blue-100 shadow-sm" style={{"cursor": "text"}}>
                     <div className="inline-flex w-full items-center h-full box-border">
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search text-zinc-400"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg>
                       <input className="w-full font-normal bg-transparent outline-none px-1.5 text-[13px]" placeholder="Search..." aria-label="Search posts" type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />

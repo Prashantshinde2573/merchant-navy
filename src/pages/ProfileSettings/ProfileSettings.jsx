@@ -51,8 +51,8 @@ export function ProfileSettings() {
   return (
     <div className="profile-settings-page-wrapper bg-blue-25 min-h-[calc(100vh-56px)] px-6 py-6">
       <div className="settings-content-container">
-        <div className="mb-6 flex flex-col gap-1.5">
-          <h1 className="text-content1-foreground text-2xl leading-8 font-semibold text-[#18181b]">Settings</h1>
+        <div className="mb-6 flex flex-col gap-1.5 mobile-heading-group">
+          <h1 className="page-title text-content1-foreground text-2xl leading-8 font-semibold text-[#18181b]">Settings</h1>
           <p className="text-base leading-6 font-normal text-zinc-500">Manage your account preferences</p>
         </div>
         <div className="flex flex-col gap-6 w-full">
