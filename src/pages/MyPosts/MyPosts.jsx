@@ -174,6 +174,8 @@ export function MyPosts() {
           <div className="flex flex-col gap-3">
             {displayedPosts.length > 0 ? (
               displayedPosts.map((post) => {
+                const ageLabel = post.timeAgo || 'Just now';
+                const agePrefix = ageLabel.match(/^Posted\s+/i)?.[0] || '';
                 const isAwarded = post.status === 'Awarded';
                 const isDraft = post.status === 'Draft';
                 const isLive = post.status === 'Live' || (!post.status && post.id !== 'my-post-1');
@@ -227,12 +229,12 @@ export function MyPosts() {
                           </div>
                         )}
                       </div>
-                      <hr className="shrink-0 bg-divider border-none w-full h-divider my-2 opacity-50" role="separator" />
+                      <hr className="my-post-card-divider shrink-0 bg-divider border-none w-full h-divider my-2 opacity-50" role="separator" />
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4"></div>
                         <div className="flex items-center gap-8">
-                          <div className="flex items-center gap-3">
-                            <span className="text-[13px] leading-4.5 text-zinc-500">{post.timeAgo || "Just now"}</span>
+                          <div role="group" aria-label="Post activity" className="my-post-card-info flex items-center gap-3">
+                            <span className="text-[13px] leading-4.5 text-zinc-500"><span className="my-post-age-prefix">{agePrefix}</span>{ageLabel.slice(agePrefix.length)}</span>
                             <div className="shrink-0 border-none w-divider bg-layout-divider h-3 opacity-50" role="separator"></div>
                             <div className="flex items-center gap-1.5"><span className="material-symbols-outlined text-base text-zinc-500">visibility</span><span className="text-[13px] leading-4.5 text-zinc-500">{post.viewsCount || 1} Views</span></div>
                             <div className="shrink-0 border-none w-divider bg-layout-divider h-3 opacity-50" role="separator"></div>

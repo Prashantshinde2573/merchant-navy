@@ -174,3 +174,21 @@ Validation: four normalization/round-trip tests pass; production build and white
 - Mobile navbar left/right insets are exactly 12px. Verified Profile navigation and hamburger open/close at 320px and 390px with no horizontal overflow.
 - Merchant popup Ports/Services chip containers start at the same x-position as their heading text (60px in the inspected mobile popup), using a 32px icon-column inset. Narrow values wrap normally.
 - Desktop Profile trigger stays visible and popup chip inset remains 0px. Production build and whitespace check passed; evidence in qa-evidence/mobile-navbar/.
+
+## Connected mobile My Posts actions
+- View Details, Mark Close and overflow now share one bordered, rounded action bar with dividers, equal 44px heights and a fixed 44px menu segment. Added an accessible Post actions group label.
+- Verified 320px and 390px: same top alignment, no action wrapping or overflow. View Details navigation, overflow menu and close confirmation work; confirmation was cancelled without changing post state.
+- Desktop remains its original borderless flex group with 12px gaps. Evidence: qa-evidence/mobile-actions/connected-actions.jpg. Build and whitespace checks passed.
+
+## Correction: group post information, restore action buttons
+- Reverted the connected action-bar CSS and group wrapper from the previous request. View Details, Mark Close and overflow are back to their original separate styling and 12px gaps.
+- Mobile timestamp, views and quotation count now share a compact, aligned information container. Mobile timestamp shows the age without the redundant Posted prefix; desktop text and styling remain unchanged.
+- Verified equal metadata baselines and no overflow at 320px; checked the corrected layout at 390px and desktop isolation at 1470px. Build and whitespace checks passed. Evidence: qa-evidence/mobile-metadata/post-information-row.jpg.
+
+### Mobile refinements — Profile, navigation, editor, post metadata (2026-11-04)
+- Profile heading matches measured Apply identity typography: title 15px/19.5px, weight 600; description 13px/19.5px, weight 400, #71717a; 6px gap. Desktop title remains 24px.
+- Profile navigation control reduced to 32px wide beside the unchanged 44px hamburger control; removed excess inter-control space. Navbar outer padding remains 12px.
+- Scope of Work toolbar stays on one horizontal row, with horizontal scrolling when controls exceed available width. At 320px all formatting buttons share the same y-position and the toolbar is 41px high.
+- Post activity row uses 8px gaps and two centered 1px × 12px dividers. Verified 320px viewport: row width and scroll width both 257px, with no overflow. Existing action buttons unchanged.
+- Checked 320px and 390px mobile layouts and 1280px desktop. Evidence: qa-evidence/mobile-refinements/.
+- Validation: npm run build and git diff --check pass.

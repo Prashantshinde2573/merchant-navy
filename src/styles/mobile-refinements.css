@@ -52,3 +52,40 @@
   .mobile-navbar-profile img { display:block; width:32px; height:32px; border-radius:8px; object-fit:cover; }
   .vendor-profile-section .vendor-profile-chips { margin-left:32px; min-width:0; }
 }
+
+/* Compact post metadata; action buttons retain their original separate styling. */
+@media(max-width:1023px){
+  #root .my-posts-page .my-post-card-info {
+    display:flex!important; flex-direction:row!important; align-items:center!important;
+    flex-wrap:nowrap!important; width:100%; min-width:0; gap:6px!important;
+    padding:6px 8px; border-radius:6px; background:#f7f7fb;
+    color:#71717a; font-size:12px; line-height:18px;
+  }
+  #root .my-posts-page .my-post-card-info > [role=separator],
+  #root .my-posts-page .my-post-card-info .my-post-age-prefix { display:none; }
+  #root .my-posts-page .my-post-card-info > span,
+  #root .my-posts-page .my-post-card-info > div:not([role=separator]) { flex:0 0 auto; white-space:nowrap; }
+  #root .my-posts-page .my-post-card-info > div:not([role=separator]) { display:flex; align-items:center; gap:4px!important; }
+  #root .my-posts-page .my-post-card-info span:not(.material-symbols-outlined) { font-size:12px!important; line-height:18px!important; }
+  #root .my-posts-page .my-post-card-info .material-symbols-outlined { width:16px; min-width:16px; height:16px; font-size:16px!important; line-height:16px; text-align:center; }
+}
+
+@media(max-width:1023px){
+  .mobile-navbar-actions .mobile-navbar-profile { width:32px; min-width:32px; margin-right:-4px; }
+  #_r_19q_ .quill .ql-toolbar { display:flex!important; align-items:center; flex-wrap:nowrap!important; overflow-x:auto; white-space:nowrap; scrollbar-width:none; }
+  #_r_19q_ .quill .ql-toolbar::-webkit-scrollbar { display:none; }
+  #_r_19q_ .quill .ql-toolbar .ql-formats { display:inline-flex; align-items:center; flex:0 0 auto; flex-wrap:nowrap!important; width:auto!important; gap:2px; margin:0 4px 0 0; }
+  #_r_19q_ .quill .ql-toolbar .ql-paragraph-style { width:84px; min-width:84px; float:none; margin-right:4px; }
+  #_r_19q_ .quill .ql-toolbar button { flex-shrink:0; }
+  #root .my-posts-page .my-post-card-info { gap:8px!important; }
+  #root .my-posts-page .my-post-card-info > [role=separator] { display:block; width:1px; height:12px; flex:0 0 1px; background:#dfe2eb; opacity:1; }
+}
+
+@media(max-width:1023px){
+  #root .company-profile-heading h1.page-title { font-size:15px!important; line-height:1.3em!important; font-weight:600; text-align:left; }
+  #root .company-profile-heading > p { font-size:13px!important; line-height:19.5px!important; font-weight:400; color:#71717a; text-align:left; }
+}
+
+@media(max-width:1023px){
+  #root .my-posts-page .my-post-card-divider { margin-bottom:4px!important; }
+}
