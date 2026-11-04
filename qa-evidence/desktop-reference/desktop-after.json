@@ -1,0 +1,447 @@
+{
+  "home": [
+    {
+      "cls": "text-modified-18 font-semibold",
+      "color": "rgb(17, 24, 28)",
+      "line": "23.4px",
+      "size": "18px",
+      "text": "Bluesea Marine Works Pvt Ltd.",
+      "weight": "600"
+    }
+  ],
+  "my-posts": [
+    {
+      "cls": "inline-flex items-center justify-start gap-2",
+      "color": "rgb(17, 24, 28)",
+      "line": "24px",
+      "size": "16px",
+      "text": "Ship - your ask",
+      "weight": "400"
+    },
+    {
+      "cls": "page-title text-content1-foreground justify-center font-sans text-2xl leading-8 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "line": "32px",
+      "size": "24px",
+      "text": "Ship - your ask",
+      "weight": "600"
+    },
+    {
+      "cls": "inline-flex items-center justify-start gap-2.5",
+      "color": "rgb(17, 24, 28)",
+      "line": "24px",
+      "size": "16px",
+      "text": "Keep your requests moving, from live to awarded.",
+      "weight": "400"
+    }
+  ],
+  "wins": [
+    {
+      "cls": "page-title text-content1-foreground mb-2 text-2xl leading-8 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "line": "32px",
+      "size": "24px",
+      "text": "Jobs awarded to your company",
+      "weight": "600"
+    },
+    {
+      "cls": "text-base leading-6 font-normal text-zinc-500",
+      "color": "rgb(113, 113, 122)",
+      "line": "24px",
+      "size": "16px",
+      "text": "Deliver. Mark complete. Build reputation.",
+      "weight": "400"
+    },
+    {
+      "cls": "text-base font-semibold text-[#18181b] leading-tight",
+      "color": "rgb(24, 24, 27)",
+      "line": "24px",
+      "size": "16px",
+      "text": "Indra Shipping Co.",
+      "weight": "400"
+    }
+  ],
+  "my-merchants": [
+    {
+      "cls": "page-title text-content1-foreground mb-2 text-2xl leading-8 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "line": "32px",
+      "size": "24px",
+      "text": "Keep your winners close",
+      "weight": "600"
+    },
+    {
+      "cls": "text-base leading-6 font-normal text-zinc-500",
+      "color": "rgb(113, 113, 122)",
+      "line": "24px",
+      "size": "16px",
+      "text": "Merchants you've awarded. Re-engage in a click.",
+      "weight": "400"
+    }
+  ],
+  "notifications": [
+    {
+      "cls": "page-title text-content1-foreground mb-2 text-2xl leading-8 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "line": "32px",
+      "size": "24px",
+      "text": "Your control tower",
+      "weight": "600"
+    },
+    {
+      "cls": "text-base leading-6 font-normal text-zinc-500",
+      "color": "rgb(113, 113, 122)",
+      "line": "24px",
+      "size": "16px",
+      "text": "Invites, updates, decisions - sorted by what needs you now.",
+      "weight": "400"
+    }
+  ],
+  "chats": [],
+  "help": [
+    {
+      "cls": "page-title text-content1-foreground font-['Inter'] text-2xl leading-8 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "line": "32px",
+      "size": "24px",
+      "text": "Frequently Asked Questions",
+      "weight": "600"
+    },
+    {
+      "cls": "mt-1.5 font-['Inter'] text-base leading-6 font-normal text-zinc-500",
+      "color": "rgb(113, 113, 122)",
+      "line": "24px",
+      "size": "16px",
+      "text": "Billing, verification, plans, and more.",
+      "weight": "400"
+    },
+    {
+      "cls": "font-['Inter'] text-xl leading-7 font-bold text-white",
+      "color": "rgb(255, 255, 255)",
+      "line": "28px",
+      "size": "20px",
+      "text": "Need help?",
+      "weight": "700"
+    }
+  ],
+  "announcements": [
+    {
+      "cls": "page-title text-2xl leading-8 font-semibold text-[#18181b]",
+      "color": "rgb(24, 24, 27)",
+      "line": "32px",
+      "size": "24px",
+      "text": "All Announcements",
+      "weight": "600"
+    }
+  ],
+  "announcements/wad5c6MC3puyjcRvLhWvG": [
+    {
+      "cls": "page-title text-2xl leading-8 font-semibold text-[#18181b]",
+      "color": "rgb(24, 24, 27)",
+      "line": "32px",
+      "size": "24px",
+      "text": "All Announcements",
+      "weight": "600"
+    }
+  ],
+  "company-profile": [
+    {
+      "cls": "page-title text-content1-foreground text-2xl leading-8 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "line": "32px",
+      "size": "24px",
+      "text": "Company Profile • ID #ZFUAV2Q",
+      "weight": "600"
+    },
+    {
+      "cls": "text-content2-foreground text-base leading-6 font-normal",
+      "color": "rgb(39, 39, 42)",
+      "line": "24px",
+      "size": "16px",
+      "text": "Manage your company profile and preferences",
+      "weight": "400"
+    },
+    {
+      "cls": "ui-section-title text-content1-foreground text-xl leading-7 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "line": "28px",
+      "size": "20px",
+      "text": "Company Details",
+      "weight": "600"
+    },
+    {
+      "cls": "ui-section-title text-content1-foreground text-xl leading-7 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "line": "28px",
+      "size": "20px",
+      "text": "Ports & Services",
+      "weight": "600"
+    },
+    {
+      "cls": "ui-section-title text-content1-foreground text-xl leading-7 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "line": "28px",
+      "size": "20px",
+      "text": "Certifications",
+      "weight": "600"
+    },
+    {
+      "cls": "ui-section-title text-content1-foreground text-xl leading-7 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "line": "28px",
+      "size": "20px",
+      "text": "Insurance Policies",
+      "weight": "600"
+    },
+    {
+      "cls": "ui-section-title text-content1-foreground text-xl leading-7 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "line": "28px",
+      "size": "20px",
+      "text": "Team Members",
+      "weight": "600"
+    },
+    {
+      "cls": "ui-section-title text-content1-foreground text-xl leading-7 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "line": "28px",
+      "size": "20px",
+      "text": "Gallery",
+      "weight": "600"
+    }
+  ],
+  "settings": [
+    {
+      "cls": "page-title text-content1-foreground text-2xl leading-8 font-semibold text-[#18181b]",
+      "color": "rgb(24, 24, 27)",
+      "line": "32px",
+      "size": "24px",
+      "text": "Settings",
+      "weight": "600"
+    },
+    {
+      "cls": "text-base leading-6 font-normal text-zinc-500",
+      "color": "rgb(113, 113, 122)",
+      "line": "24px",
+      "size": "16px",
+      "text": "Manage your account preferences",
+      "weight": "400"
+    },
+    {
+      "cls": "ui-section-title text-content1-foreground text-xl leading-7 font-semibold text-[#18181b]",
+      "color": "rgb(24, 24, 27)",
+      "line": "28px",
+      "size": "20px",
+      "text": "Notifications",
+      "weight": "600"
+    }
+  ],
+  "posts/home-post-3": [
+    {
+      "cls": "flex items-center gap-2 post-detail-company-line",
+      "color": "rgb(17, 24, 28)",
+      "line": "24px",
+      "size": "16px",
+      "text": "Global Freight Logistics",
+      "weight": "400"
+    },
+    {
+      "cls": "page-title text-lg leading-7 font-semibold text-content1-foreground",
+      "color": "rgb(24, 24, 27)",
+      "line": "28px",
+      "size": "18px",
+      "text": "Global Freight Logistics",
+      "weight": "600"
+    },
+    {
+      "cls": "flex items-center gap-3 post-detail-metadata",
+      "color": "rgb(17, 24, 28)",
+      "line": "20px",
+      "size": "16px",
+      "text": "1 week ago",
+      "weight": "400"
+    },
+    {
+      "cls": "ui-section-title text-content2-foreground text-base leading-6 font-semibold",
+      "color": "rgb(39, 39, 42)",
+      "line": "24px",
+      "size": "16px",
+      "text": "Attachments",
+      "weight": "600"
+    },
+    {
+      "cls": "ui-section-title text-content2-foreground text-base leading-6 font-semibold",
+      "color": "rgb(39, 39, 42)",
+      "line": "24px",
+      "size": "16px",
+      "text": "Port Locations",
+      "weight": "600"
+    },
+    {
+      "cls": "ui-section-title text-content2-foreground text-base leading-6 font-semibold",
+      "color": "rgb(39, 39, 42)",
+      "line": "24px",
+      "size": "16px",
+      "text": "Services Required",
+      "weight": "600"
+    },
+    {
+      "cls": "ui-section-title text-content2-foreground text-base leading-6 font-semibold",
+      "color": "rgb(39, 39, 42)",
+      "line": "24px",
+      "size": "16px",
+      "text": "Scope of Work",
+      "weight": "600"
+    },
+    {
+      "cls": "text-tiny mb-2 text-zinc-500",
+      "color": "rgb(113, 113, 122)",
+      "line": "16px",
+      "size": "12px",
+      "text": "On this page",
+      "weight": "400"
+    }
+  ],
+  "my-posts/n8zXLc4RjgxncUntWUAPQ": [
+    {
+      "cls": "page-title text-content1-foreground truncate text-lg leading-7 font-semibold my-post-detail-title",
+      "color": "rgb(24, 24, 27)",
+      "line": "28px",
+      "size": "18px",
+      "text": "Multiple port services required for MV Indravati (45,000 DWT bulk carrier) arriving Visakh",
+      "weight": "600"
+    },
+    {
+      "cls": "truncate text-sm leading-5 text-zinc-500 my-post-detail-services-sub",
+      "color": "rgb(113, 113, 122)",
+      "line": "22px",
+      "size": "14px",
+      "text": "Services: Canal Transit Agency Support, Cash to Master (CTM) Coordination, Courier / Mail ",
+      "weight": "400"
+    },
+    {
+      "cls": "ui-section-title text-content2-foreground text-base leading-6 font-semibold",
+      "color": "rgb(39, 39, 42)",
+      "line": "24px",
+      "size": "16px",
+      "text": "Attachments",
+      "weight": "600"
+    },
+    {
+      "cls": "ui-section-title text-content2-foreground text-base leading-6 font-semibold",
+      "color": "rgb(39, 39, 42)",
+      "line": "24px",
+      "size": "16px",
+      "text": "Port Locations",
+      "weight": "600"
+    },
+    {
+      "cls": "ui-section-title text-content2-foreground text-base leading-6 font-semibold",
+      "color": "rgb(39, 39, 42)",
+      "line": "24px",
+      "size": "16px",
+      "text": "Services Required",
+      "weight": "600"
+    },
+    {
+      "cls": "ui-section-title text-content2-foreground text-base leading-6 font-semibold",
+      "color": "rgb(39, 39, 42)",
+      "line": "24px",
+      "size": "16px",
+      "text": "Scope of Work",
+      "weight": "600"
+    },
+    {
+      "cls": "text-tiny text-zinc-500",
+      "color": "rgb(113, 113, 122)",
+      "line": "16px",
+      "size": "12px",
+      "text": "On this page",
+      "weight": "400"
+    }
+  ],
+  "my-posts/n8zXLc4RjgxncUntWUAPQ?tab=applied": [
+    {
+      "cls": "page-title text-content1-foreground truncate text-lg leading-7 font-semibold my-post-detail-title",
+      "color": "rgb(24, 24, 27)",
+      "line": "28px",
+      "size": "18px",
+      "text": "Multiple port services required for MV Indravati (45,000 DWT bulk carrier) arriving Visakh",
+      "weight": "600"
+    },
+    {
+      "cls": "truncate text-sm leading-5 text-zinc-500 my-post-detail-services-sub",
+      "color": "rgb(113, 113, 122)",
+      "line": "22px",
+      "size": "14px",
+      "text": "Services: Canal Transit Agency Support, Cash to Master (CTM) Coordination, Courier / Mail ",
+      "weight": "400"
+    },
+    {
+      "cls": "",
+      "color": "rgb(24, 31, 35)",
+      "line": "20px",
+      "size": "15px",
+      "text": "Indra Shipping Co.",
+      "weight": "500"
+    },
+    {
+      "cls": "text-tiny text-zinc-500",
+      "color": "rgb(113, 113, 122)",
+      "line": "16px",
+      "size": "12px",
+      "text": "On this page",
+      "weight": "400"
+    }
+  ],
+  "quotations/quote-1": [
+    {
+      "cls": "flex items-center gap-2",
+      "color": "rgb(17, 24, 28)",
+      "line": "24px",
+      "size": "16px",
+      "text": "Quotation: Indra Shipping Co.Recommended by Merchant Navy",
+      "weight": "400"
+    },
+    {
+      "cls": "page-title text-content1-foreground truncate text-lg leading-7 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "line": "28px",
+      "size": "18px",
+      "text": "Quotation: Indra Shipping Co.",
+      "weight": "600"
+    },
+    {
+      "cls": "truncate text-sm leading-5 text-zinc-500",
+      "color": "rgb(113, 113, 122)",
+      "line": "20px",
+      "size": "14px",
+      "text": "For Post: Multiple port services required for MV Indravati (45,000 DWT bulk carrier) arriv",
+      "weight": "400"
+    },
+    {
+      "cls": "text-lg font-bold text-zinc-900 leading-tight",
+      "color": "rgb(24, 24, 27)",
+      "line": "22.5px",
+      "size": "18px",
+      "text": "Indra Shipping Co.",
+      "weight": "700"
+    },
+    {
+      "cls": "ui-section-title text-base font-semibold text-zinc-900",
+      "color": "rgb(24, 24, 27)",
+      "line": "24px",
+      "size": "16px",
+      "text": "Quotation Details & Terms",
+      "weight": "600"
+    },
+    {
+      "cls": "ui-section-title text-base font-semibold text-zinc-900",
+      "color": "rgb(24, 24, 27)",
+      "line": "24px",
+      "size": "16px",
+      "text": "Original Post Information",
+      "weight": "600"
+    }
+  ]
+}

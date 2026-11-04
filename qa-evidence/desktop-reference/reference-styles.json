@@ -1,0 +1,367 @@
+{
+  "my-posts": [],
+  "wins": [
+    {
+      "cls": "text-content1-foreground mb-2 text-2xl leading-8 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "gap": "normal",
+      "line": "32px",
+      "size": "24px",
+      "text": "Jobs awarded to your company",
+      "weight": "600"
+    },
+    {
+      "cls": "text-base leading-6 font-normal text-zinc-500",
+      "color": "rgb(113, 113, 122)",
+      "gap": "normal",
+      "line": "24px",
+      "size": "16px",
+      "text": "Deliver. Mark complete. Build reputation.",
+      "weight": "400"
+    },
+    {
+      "cls": "text-modified-16-semibold-20lh text-[#18181b]",
+      "color": "rgb(24, 24, 27)",
+      "gap": "4px",
+      "line": "24px",
+      "size": "16px",
+      "text": "Indra Shipping Co.",
+      "weight": "400"
+    },
+    {
+      "cls": "text-success-600 shrink-0 text-sm leading-5 font-medium",
+      "color": "rgb(18, 161, 80)",
+      "gap": "12px",
+      "line": "20px",
+      "size": "14px",
+      "text": "Completed on 28 Apr 2026",
+      "weight": "500"
+    }
+  ],
+  "my-merchants": [
+    {
+      "cls": "text-content1-foreground mb-2 text-2xl leading-8 font-semibold",
+      "line": "32px",
+      "size": "24px",
+      "text": "Keep your winners close",
+      "weight": "600"
+    },
+    {
+      "cls": "text-base leading-6 font-normal text-zinc-500",
+      "line": "24px",
+      "size": "16px",
+      "text": "Merchants you've awarded. Re-engage in a click.",
+      "weight": "400"
+    },
+    {
+      "cls": "group/th px-3 h-10 align-middle whitespace-nowrap first:rounded-s-lg last:rounded-e-lg data-[sortable=true]:cursor-pointer data-[hover=true]:text-foreground-400 outline-solid outline-transparent data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 bg-blue-25 text-zinc-500 text-xs leading-4 font-medium uppercase text-left",
+      "line": "16px",
+      "size": "12px",
+      "text": "VENDOR NAME",
+      "weight": "500"
+    },
+    {
+      "cls": "group/th px-3 h-10 align-middle whitespace-nowrap first:rounded-s-lg last:rounded-e-lg data-[sortable=true]:cursor-pointer data-[hover=true]:text-foreground-400 outline-solid outline-transparent data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 bg-blue-25 text-zinc-500 text-xs leading-4 font-medium uppercase text-left",
+      "line": "16px",
+      "size": "12px",
+      "text": "SERVICES",
+      "weight": "500"
+    },
+    {
+      "cls": "group/th px-3 h-10 align-middle whitespace-nowrap first:rounded-s-lg last:rounded-e-lg data-[sortable=true]:cursor-pointer data-[hover=true]:text-foreground-400 outline-solid outline-transparent data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 bg-blue-25 text-zinc-500 text-xs leading-4 font-medium uppercase text-left",
+      "line": "16px",
+      "size": "12px",
+      "text": "PORTS",
+      "weight": "500"
+    },
+    {
+      "cls": "group/th px-3 h-10 align-middle whitespace-nowrap first:rounded-s-lg last:rounded-e-lg data-[sortable=true]:cursor-pointer data-[hover=true]:text-foreground-400 outline-solid outline-transparent data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 bg-blue-25 text-zinc-500 text-xs leading-4 font-medium uppercase text-left",
+      "line": "16px",
+      "size": "12px",
+      "text": "AWARDED",
+      "weight": "500"
+    },
+    {
+      "cls": "group/th px-3 h-10 align-middle whitespace-nowrap first:rounded-s-lg last:rounded-e-lg data-[sortable=true]:cursor-pointer data-[hover=true]:text-foreground-400 outline-solid outline-transparent data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 bg-blue-25 text-zinc-500 text-xs leading-4 font-medium uppercase text-left",
+      "line": "16px",
+      "size": "12px",
+      "text": "ACTIONS",
+      "weight": "500"
+    },
+    {
+      "cls": "px-3 relative align-middle whitespace-normal text-small font-normal [&>*]:z-1 [&>*]:relative outline-solid outline-transparent data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 before:pointer-events-none before:content-[''] before:absolute before:z-0 before:inset-0 before:opacity-0 data-[selected=true]:before:opacity-100 group-data-[disabled=true]/tr:text-foreground-300 group-data-[disabled=true]/tr:cursor-not-allowed before:bg-default/60 data-[selected=true]:text-default-foreground first:before:rounded-s-lg last:before:rounded-e-lg text-start py-4",
+      "line": "20px",
+      "size": "14px",
+      "text": "Indra Shipping Co.5.00 (2 reviews)",
+      "weight": "400"
+    },
+    {
+      "cls": "px-3 relative align-middle whitespace-normal text-small font-normal [&>*]:z-1 [&>*]:relative outline-solid outline-transparent data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 before:pointer-events-none before:content-[''] before:absolute before:z-0 before:inset-0 before:opacity-0 data-[selected=true]:before:opacity-100 group-data-[disabled=true]/tr:text-foreground-300 group-data-[disabled=true]/tr:cursor-not-allowed before:bg-default/60 data-[selected=true]:text-default-foreground first:before:rounded-s-lg last:before:rounded-e-lg text-start py-4",
+      "line": "20px",
+      "size": "14px",
+      "text": "Canal Transit Agency Support, Cash to Master (CTM) Coordination, Courier / Mail & Documents Handling, +216",
+      "weight": "400"
+    },
+    {
+      "cls": "px-3 relative align-middle whitespace-normal text-small font-normal [&>*]:z-1 [&>*]:relative outline-solid outline-transparent data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 before:pointer-events-none before:content-[''] before:absolute before:z-0 before:inset-0 before:opacity-0 data-[selected=true]:before:opacity-100 group-data-[disabled=true]/tr:text-foreground-300 group-data-[disabled=true]/tr:cursor-not-allowed before:bg-default/60 data-[selected=true]:text-default-foreground first:before:rounded-s-lg last:before:rounded-e-lg text-start py-4",
+      "line": "20px",
+      "size": "14px",
+      "text": "Dubai Port, Abu Dhabi Port, Chennai, +3",
+      "weight": "400"
+    },
+    {
+      "cls": "px-3 relative align-middle whitespace-normal text-small font-normal [&>*]:z-1 [&>*]:relative outline-solid outline-transparent data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 before:pointer-events-none before:content-[''] before:absolute before:z-0 before:inset-0 before:opacity-0 data-[selected=true]:before:opacity-100 group-data-[disabled=true]/tr:text-foreground-300 group-data-[disabled=true]/tr:cursor-not-allowed before:bg-default/60 data-[selected=true]:text-default-foreground first:before:rounded-s-lg last:before:rounded-e-lg text-start py-4",
+      "line": "20px",
+      "size": "14px",
+      "text": "1",
+      "weight": "400"
+    },
+    {
+      "cls": "px-3 relative align-middle whitespace-normal text-small font-normal [&>*]:z-1 [&>*]:relative outline-solid outline-transparent data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 before:pointer-events-none before:content-[''] before:absolute before:z-0 before:inset-0 before:opacity-0 data-[selected=true]:before:opacity-100 group-data-[disabled=true]/tr:text-foreground-300 group-data-[disabled=true]/tr:cursor-not-allowed before:bg-default/60 data-[selected=true]:text-default-foreground first:before:rounded-s-lg last:before:rounded-e-lg text-start py-4",
+      "line": "20px",
+      "size": "14px",
+      "text": "Chat",
+      "weight": "400"
+    }
+  ],
+  "notifications": [
+    {
+      "cls": "text-content1-foreground mb-2 text-2xl leading-8 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "gap": "normal",
+      "line": "32px",
+      "size": "24px",
+      "text": "Your control tower",
+      "weight": "600"
+    },
+    {
+      "cls": "text-base leading-6 font-normal text-zinc-500",
+      "color": "rgb(113, 113, 122)",
+      "gap": "normal",
+      "line": "24px",
+      "size": "16px",
+      "text": "Invites, updates, decisions - sorted by what needs you now.",
+      "weight": "400"
+    }
+  ],
+  "help": [
+    {
+      "cls": "text-content1-foreground font-['Inter'] text-2xl leading-8 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "gap": "normal",
+      "line": "32px",
+      "size": "24px",
+      "text": "Frequently Asked Questions",
+      "weight": "600"
+    },
+    {
+      "cls": "mt-1.5 font-['Inter'] text-base leading-6 font-normal text-zinc-500",
+      "color": "rgb(113, 113, 122)",
+      "gap": "normal",
+      "line": "24px",
+      "size": "16px",
+      "text": "Billing, verification, plans, and more.",
+      "weight": "400"
+    },
+    {
+      "cls": "font-['Inter'] text-xl leading-7 font-bold text-white",
+      "color": "rgb(255, 255, 255)",
+      "gap": "8px",
+      "line": "28px",
+      "size": "20px",
+      "text": "Need help?",
+      "weight": "700"
+    }
+  ],
+  "announcements": [
+    {
+      "cls": "text-2xl leading-8 font-semibold text-[#18181b]",
+      "color": "rgb(24, 24, 27)",
+      "line": "32px",
+      "size": "24px",
+      "text": "All Announcements",
+      "weight": "600"
+    }
+  ],
+  "chats": [],
+  "profile": [
+    {
+      "cls": "text-content1-foreground text-2xl leading-8 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "gap": "6px",
+      "line": "32px",
+      "size": "24px",
+      "text": "Company Profile • ID #ZFUAV2Q",
+      "weight": "600"
+    },
+    {
+      "cls": "text-content2-foreground text-base leading-6 font-normal",
+      "color": "rgb(39, 39, 42)",
+      "gap": "6px",
+      "line": "24px",
+      "size": "16px",
+      "text": "Manage your company profile and preferences",
+      "weight": "400"
+    },
+    {
+      "cls": "text-content1-foreground text-xl leading-7 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "gap": "normal",
+      "line": "28px",
+      "size": "20px",
+      "text": "Company Details",
+      "weight": "600"
+    },
+    {
+      "cls": "mt-1.5 text-sm leading-5 font-normal text-[#696f93]",
+      "color": "rgb(105, 111, 147)",
+      "gap": "normal",
+      "line": "20px",
+      "size": "14px",
+      "text": "Update your company branding and contact information to keep your profile current.",
+      "weight": "400"
+    },
+    {
+      "cls": "text-content1-foreground text-xl leading-7 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "gap": "normal",
+      "line": "28px",
+      "size": "20px",
+      "text": "Ports & Services",
+      "weight": "600"
+    },
+    {
+      "cls": "mt-1.5 text-sm leading-5 font-normal text-[#696f93]",
+      "color": "rgb(105, 111, 147)",
+      "gap": "normal",
+      "line": "20px",
+      "size": "14px",
+      "text": "Update the ports you operate in and the services you offer to keep your profile discoverable.",
+      "weight": "400"
+    },
+    {
+      "cls": "text-content1-foreground text-xl leading-7 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "gap": "normal",
+      "line": "28px",
+      "size": "20px",
+      "text": "Certifications",
+      "weight": "600"
+    },
+    {
+      "cls": "mt-1.5 text-sm leading-5 font-normal text-[#696f93]",
+      "color": "rgb(105, 111, 147)",
+      "gap": "normal",
+      "line": "20px",
+      "size": "14px",
+      "text": "Manage your certifications and link them to your offered services to showcase your compliance.",
+      "weight": "400"
+    },
+    {
+      "cls": "text-content1-foreground text-xl leading-7 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "gap": "6px",
+      "line": "28px",
+      "size": "20px",
+      "text": "Insurance Policies",
+      "weight": "600"
+    },
+    {
+      "cls": "text-sm leading-5 font-normal text-blue-600",
+      "color": "rgb(105, 111, 147)",
+      "gap": "6px",
+      "line": "20px",
+      "size": "14px",
+      "text": "Manage your insurance policies and upload proof of coverage to maintain compliance.",
+      "weight": "400"
+    },
+    {
+      "cls": "text-content1-foreground text-xl leading-7 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "gap": "6px",
+      "line": "28px",
+      "size": "20px",
+      "text": "Team Members",
+      "weight": "600"
+    },
+    {
+      "cls": "text-sm leading-5 font-normal text-blue-600",
+      "color": "rgb(105, 111, 147)",
+      "gap": "6px",
+      "line": "20px",
+      "size": "14px",
+      "text": "Manage your team members and their roles within the organization.",
+      "weight": "400"
+    },
+    {
+      "cls": "text-content1-foreground text-xl leading-7 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "gap": "6px",
+      "line": "28px",
+      "size": "20px",
+      "text": "Gallery",
+      "weight": "600"
+    },
+    {
+      "cls": "text-sm leading-5 font-normal text-blue-600",
+      "color": "rgb(105, 111, 147)",
+      "gap": "6px",
+      "line": "20px",
+      "size": "14px",
+      "text": "Browse and manage your company's photo gallery to showcase your operations and facilities.",
+      "weight": "400"
+    }
+  ],
+  "settings": [
+    {
+      "cls": "text-content1-foreground text-2xl leading-8 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "line": "32px",
+      "size": "24px",
+      "text": "Settings",
+      "weight": "600"
+    },
+    {
+      "cls": "text-base leading-6 font-normal text-zinc-500",
+      "color": "rgb(113, 113, 122)",
+      "line": "24px",
+      "size": "16px",
+      "text": "Manage your account preferences",
+      "weight": "400"
+    },
+    {
+      "cls": "text-content1-foreground text-xl leading-7 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "line": "28px",
+      "size": "20px",
+      "text": "Notifications",
+      "weight": "600"
+    },
+    {
+      "cls": "mt-1.5 text-sm leading-5 font-normal text-[#696f93]",
+      "color": "rgb(105, 111, 147)",
+      "line": "20px",
+      "size": "14px",
+      "text": "Manage your notification preferences",
+      "weight": "400"
+    }
+  ],
+  "applied": [
+    {
+      "cls": "text-content1-foreground truncate text-lg leading-7 font-semibold",
+      "color": "rgb(24, 24, 27)",
+      "line": "28px",
+      "size": "18px",
+      "text": "Multiple port services required for MV Indravati (45,000 DWT bulk carrier) arriving Visakhapatnam. Vendors with VPT authorisation ",
+      "weight": "600"
+    },
+    {
+      "cls": "text-modified-15-medium text-content1-foreground max-w-41 overflow-hidden text-ellipsis whitespace-nowrap font-medium",
+      "color": "rgb(24, 24, 27)",
+      "line": "20px",
+      "size": "15px",
+      "text": "Indra Shipping Co.",
+      "weight": "500"
+    }
+  ]
+}

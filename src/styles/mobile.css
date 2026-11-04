@@ -553,3 +553,19 @@
   [role=dialog] [data-slot=input-wrapper] > [data-slot=label] { flex-shrink: 0; line-height: 16px; }
   [role=dialog] [data-slot=input-wrapper] > [data-slot=inner-wrapper] { height: auto; }
 }
+
+/* My Posts (mobile/tablet only): tabs match the "Jobs awarded to your company" (Wins) tabs —
+   no divider under the tab row, 14px semibold labels in every state; active = navy with the red
+   underline, inactive = #696f93 (colours, sizes and counts were already identical).
+   Page description below the title: same styling as the Wins description (Inter 14/22, 400, #71717a). */
+@media (max-width: 1023px) {
+  #root .my-posts-page [role=tablist] { border-bottom-width: 0 !important; }
+  #root .my-posts-page [role=tab] .text-sm { font-size: 14px !important; line-height: 20px !important; font-weight: 600 !important; }
+  #root .my-posts-page .mobile-heading-group > div:last-child > div { font-family: Inter, "Inter Fallback" !important; font-size: 14px !important; line-height: 22px !important; font-weight: 400 !important; color: #71717a !important; letter-spacing: normal !important; }
+}
+
+/* My Posts empty state ("No posts in this category") on empty tabs: the card's p-12 class is not
+   in the compiled CSS, so it had no inner padding. 32px top and bottom. Mobile/tablet only. */
+@media (max-width: 1023px) {
+  #root .my-posts-page .flex.flex-col.items-center.justify-center.p-12.text-center { padding-top: 32px !important; padding-bottom: 32px !important; }
+}

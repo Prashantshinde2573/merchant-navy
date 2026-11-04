@@ -1,0 +1,94 @@
+/* Merchant Navy desktop reference. The mobile design is locked: every rule is
+   deliberately contained in this desktop breakpoint. */
+@media (min-width: 1024px) {
+  /* Page headers: reference 24/32 semibold, supporting copy 16/24 regular. */
+  #root h1.page-title { font-size:24px!important; line-height:32px!important; font-weight:600; }
+  #root :is(.my-posts-page,.wins-page-wrapper,.my-merchants-page,.notifications-page,.help-page,.company-profile-page-wrapper,.profile-settings-page-wrapper) .mobile-heading-group > p,
+  #root .my-posts-page .mobile-heading-group > div:last-child > div {
+    font-size:16px!important; line-height:24px!important; font-weight:400!important;
+  }
+  #root :is(.my-posts-page,.wins-page-wrapper,.my-merchants-page,.notifications-page,.help-page,.profile-settings-page-wrapper) .mobile-heading-group > p,
+  #root .my-posts-page .mobile-heading-group > div:last-child > div { color:#71717a; }
+  #root .company-profile-heading > p { color:#27272a; }
+  #root :is(.my-posts-page,.wins-page-wrapper,.my-merchants-page,.notifications-page,.help-page,.company-profile-page-wrapper,.profile-settings-page-wrapper) .mobile-heading-group { gap:6px!important; }
+
+  /* Restore the reference card geometry, retaining the existing page widths. */
+  #root .ui-card:not(.app-search-box), #root .applied-merchants { border-radius:16px!important; }
+  #root .ui-card-padding.p-7 { padding:28px!important; }
+  #root .ui-card-padding.p-8 { padding:32px!important; }
+  #root .ui-card-padding.p-6 { padding:24px!important; }
+  #root .ui-card-padding.p-5 { padding:20px!important; }
+  #root .ui-card-padding.p-4 { padding:16px!important; }
+
+  /* My Posts: source card density, summary typography, and 40px actions. */
+  #root .my-posts-page .my-post-summary { font-size:15px; line-height:21px; letter-spacing:-.1px; }
+  #root .my-posts-page .ui-status { border-radius:999px!important; min-height:28px; padding:4px 8px!important; }
+  #root .my-posts-page .my-post-card-actions > a,
+  #root .my-posts-page .my-post-card-actions .post-close-button { height:40px; min-height:40px; padding-block:8px; font-weight:400; }
+  #root .my-posts-page [data-slot=tabList] { width:100%; }
+
+  /* Wins: the completion date uses the reference success color. */
+  #root .wins-card-header > p { color:#12a150; font-size:14px; line-height:20px; font-weight:500; }
+  #root .wins-card-header > div:first-child > span { width:48px; height:48px; }
+  #root .wins-card-header h3 { font-size:16px!important; line-height:24px!important; font-weight:400!important; }
+  #root .wins-card-header h3 + p { margin-top:0; font-size:12px; line-height:16px; }
+  #root .wins-card-footer a { height:40px; min-height:40px; padding-block:8px; font-weight:400; }
+
+  /* Company Profile and Settings have larger section headings in the source. */
+  #root .app-main-layout :is(.company-profile-page-wrapper,.profile-settings-page-wrapper) .ui-section-title { font-size:20px!important; line-height:28px!important; font-weight:600!important; }
+  #root .company-profile-page-wrapper .mobile-heading-group:not(.company-profile-heading) > p { font-size:14px!important; line-height:20px!important; color:#696f93; }
+  #root .settings-card .settings-card-inner { padding:32px!important; gap:32px!important; }
+  #root .settings-left-col > p { font-size:14px; line-height:20px; color:#696f93; }
+  #root .settings-right-col > div { gap:0; }
+  #root .settings-right-col p { font-size:14px; line-height:20px; }
+  #root .settings-right-col p + p { margin-top:4px; }
+
+  /* Notifications retain the reference 48px icon and original list rhythm. */
+  #root .notifications-page [role=link] { gap:16px; padding:12px 16px; }
+  #root .notifications-page [role=link] > .size-12 { width:48px; height:48px; }
+  #root .notifications-page [role=link] > .flex-1 { gap:2px; }
+  #root .notifications-page [role=link] p:first-child { font-size:15px; line-height:22px; }
+
+  /* Help and Announcements: restore the source's body copy and card spacing. */
+  #root .help-page .text-content3-foreground { font-size:14px; line-height:20px; }
+  #root .help-page button > .text-modified-15-semibold { font-size:15px; line-height:22px; }
+  #root .announcements-page-wrapper .ui-card-padding > .flex-col { gap:8px; }
+  #root .announcements-page-wrapper .ui-card-padding p:last-child { font-size:14px; line-height:20px; }
+
+  /* Detail headers use 18/28 titles and 14/20 supporting text. */
+  #root :is(.post-detail-container,.my-post-detail-container,.quotation-detail-container) .page-title { font-size:18px!important; line-height:28px!important; }
+  #root .my-post-detail-services-sub,
+  #root .quotation-detail-header-left .mobile-heading-group > p { font-size:14px!important; line-height:20px!important; font-weight:400; }
+  #root .applied-identity :is(h2,h3) { font-size:15px!important; line-height:20px!important; font-weight:500!important; }
+  #root .ui-section-card > div:first-child { padding-bottom:12px; }
+  #root .ui-section-card:not(#ports-services) > div + div { padding-left:0; }
+  #root .ui-section-card .prose { font-size:15px; line-height:22px; }
+  #root :is(.post-detail-container,.my-post-detail-container) .ui-section-card { padding:20px; }
+
+  /* Apply uses the source's single desktop header; the sticky bottom action
+     footer remains untouched below 1024px. */
+  #root .app-main-layout.is-post-detail .post-detail-header-wrap .post-detail-header { min-height:92px; height:92px; padding:20px 24px!important; }
+  #root .app-main-layout.is-post-detail .post-detail-header-left { max-width:calc(100% - 420px); }
+  #root .post-detail-container .post-detail-identity { gap:0!important; }
+  #root .post-detail-container .post-detail-metadata { line-height:20px; }
+  #root .post-detail-apply-footer {
+    top:56px; bottom:auto; left:auto; right:max(136px,calc((100% - 1200px)/2 + 136px));
+    width:auto; height:92px; padding:0; border:0; background:transparent; box-shadow:none; z-index:41;
+    display:flex; align-items:center; pointer-events:none;
+  }
+  #root .post-detail-apply-footer-inner { gap:24px; pointer-events:auto; }
+  #root .post-detail-apply-footer .post-detail-budget { gap:2px; }
+  #root .post-detail-apply-footer .post-detail-budget > p:first-child { font-size:18px!important; line-height:28px!important; }
+  #root .post-detail-apply-footer .post-detail-apply { height:48px; min-width:124px; }
+  #root .post-detail-container { padding-bottom:0; }
+  #root .applied-match-detail .port-service-icon { width:14px!important; min-width:14px!important; height:14px!important; font-size:14px!important; line-height:14px!important; }
+
+  #root :is(.post-detail-container,.my-post-detail-container) #ports-services .flex-wrap > div { min-height:28px; padding-block:4px; border-radius:4px; }
+
+}
+
+/* At compact desktop widths, keep back controls inside the viewport. */
+@media (min-width:1024px) and (max-width:1399px) {
+  #root :is(.post-detail-back-btn,.my-post-detail-back-btn,.quotation-detail-back-btn) { position:static!important; flex-shrink:0; align-self:center; }
+  #root .my-post-detail-header-left { align-items:center; }
+}
