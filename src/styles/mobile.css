@@ -449,11 +449,10 @@
   .post-detail-container #scope-of-work .prose p { text-align: left; }
 }
 
-/* Post image in the post header: mobile/tablet only. Desktop keeps the original avatar. */
-.post-detail-avatar--image { display: none !important; }
+/* Profile images are available in the post header at every viewport. */
+.post-detail-avatar--image { display: flex !important; }
 @media (max-width: 1023px) {
   .post-detail-avatar--image { display: flex !important; }
-  .post-detail-avatar--desktop { display: none !important; }
 }
 
 /* ------------------------------------------------------------------

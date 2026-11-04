@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { PostAttachments } from '../../components/PostAttachments/PostAttachments';
 import { useParams, useNavigate, Link, useLocation, useSearchParams } from 'react-router-dom';
 import { usePosts } from '../../context/PostContext';
 import { DEFAULT_MY_POST, POSTS_DATA } from '../../data/postsData';
@@ -645,7 +646,7 @@ export function MyPostDetail() {
                       </div>
                     </div>
                     <div className="relative flex w-full flex-auto flex-col place-content-inherit align-items-inherit h-auto break-words text-left overflow-y-auto subpixel-antialiased p-0">
-                      <p className="text-sm leading-5 text-zinc-500">No attachments available</p>
+                      <PostAttachments attachments={post.attachments || post.files || []} />
                     </div>
                   </div>
 

@@ -67,6 +67,9 @@ export function PostProvider({ children }) {
       ownerId: currentUser,
       timeAgo: 'Just now',
       budget: postData.budget || 'Open for quotations',
+      currency: postData.currency || 'USD', minBudget: postData.minBudget ?? '', maxBudget: postData.maxBudget ?? '',
+      scopeHtml: postData.scopeHtml || '', isAsap: Boolean(postData.isAsap),
+      serviceDates: postData.serviceDates, serviceDate: postData.serviceDate, timeline: postData.timeline,
       dateRange: postData.isAsap || postData.urgent ? 'ASAP' : (postData.serviceDates || postData.timeline || 'ASAP'),
       isUrgent: !!postData.isAsap || !!postData.urgent,
       viewsCount: 0,
@@ -194,7 +197,7 @@ export function PostProvider({ children }) {
   return (
     <PostContext.Provider
       value={{
-        customPosts,
+        customPosts: customPosts.map(post => ({ ...post, ...postChanges[post.id] })).filter(post => !post.deleted),
         updatePost,
         postChanges,
         createPost,

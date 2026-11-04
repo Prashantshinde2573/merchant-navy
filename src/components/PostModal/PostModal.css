@@ -82,3 +82,28 @@
   #_r_19q_ .quill .ql-formats { flex-wrap: wrap; gap: 2px; width: 100%; }
 }
 #_r_19q_ .ql-paragraph-style { float: left; }
+.post-attachment-list{display:grid;gap:6px;margin-top:8px;text-align:left;font-size:12px;line-height:18px;max-width:100%}.post-attachment-list li{display:flex;align-items:center;gap:12px;justify-content:space-between}.post-attachment-list li span{overflow-wrap:anywhere;min-width:0}.post-attachment-list button{color:#1f285d;font-weight:500;flex-shrink:0}
+/* The shared form must stay inside the viewport even with a long existing scope. */
+#_r_19q_{display:flex;flex-direction:column;min-height:0;max-height:calc(100dvh - 64px);overflow:hidden}
+#_r_19q_ > .modal-header-container,#_r_19q_ > footer{flex-shrink:0}
+#_r_19q_ #_r_19s_{flex:1 1 auto;min-height:0;max-height:none!important;overflow-y:auto;overscroll-behavior:contain}
+#_r_19q_ .ql-editor{overflow-y:auto;max-height:240px}
+@media(min-width:1024px){#_r_19q_ .ql-editor{height:180px}}
+#_r_19q_ .post-asap-thumb{margin-inline:0!important;flex-shrink:0;transform:translateX(0)}
+#_r_19q_ .post-asap-switch[data-selected=true] .post-asap-thumb{transform:translateX(20px)}
+.post-form-error{margin-bottom:16px;padding:10px 12px;border:1px solid #fecdd3;border-radius:8px;background:#fff1f2;color:#be123c;font-size:13px;line-height:20px}
+.post-selection-chips{display:none}
+/* Desktop-only alignment with the Home reference, shared by Add and Edit. */
+@media(min-width:1024px){
+  #_r_19q_{width:1200px;max-width:calc(100vw - 48px)}
+  #_r_19q_ .modal-header-container h2{font-size:20px!important;line-height:28px!important;font-weight:600;letter-spacing:0}
+  #_r_19q_ .modal-header-container > div > button{display:none!important}
+  #_r_19q_ .modal-close-btn{display:inline-flex!important;width:40px;min-width:40px;height:32px;min-height:32px;border-radius:12px;background:#f0f1f4;top:16px!important;right:24px!important}
+  #_r_19q_ .post-compose-columns{display:grid!important;grid-template-columns:minmax(0,1fr) 400px;gap:24px!important}
+  #_r_19q_ .post-selection-trigger{min-height:44px;border:2px solid #e4e4e7;border-radius:12px;line-height:20px}
+  #_r_19q_ .post-selection-trigger > svg{display:none}
+  #_r_19q_ .post-selection-trigger[data-has-selection=true] .post-selection-summary{display:none}
+  #_r_19q_ .post-selection-chips{display:flex;flex-wrap:wrap;gap:4px;min-width:0}
+  #_r_19q_ .post-selection-chips > span{font-size:12px;line-height:16px;padding:4px 8px;border-radius:999px;background:#f0f1f4;color:#3f3f46;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #_r_19q_ .service-date-input{padding-block:8px}
+}

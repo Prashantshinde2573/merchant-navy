@@ -355,5 +355,7 @@ export const DEFAULT_MY_POST = POSTS_DATA['my-post-1'];
 POSTS_DATA['n8zXLc4RjgxncUntWUAPQ'] = {
   ...POSTS_DATA['my-post-1'], id: 'n8zXLc4RjgxncUntWUAPQ',
   postIdCode: '#n8zXLc4RjgxncUntWUAPQ', status: 'Live', viewsCount: 3,
+  currency: 'USD', minBudget: '5555.00', maxBudget: '6666.00', budget: '$5555.00 - $6666.00',
+  ports: ['Chennai', 'Cochin', 'Dahej', 'Deendayal Port', 'Dhamra', 'Ennore', 'Gangavaram', 'Gopalpur', 'Haldia', 'Hazira', 'Jawaharlal Nehru Port', 'Kakinada', 'Karaikal', 'Kolkata', 'Krishnapatnam', 'Mangalore', 'Marmagao', 'Mumbai', 'Mundra', 'New Tuticorin', 'Paradip', 'Pipavav', 'Sikka', 'Visakhapatnam', 'Vizhinjam'],
   services: [...POSTS_DATA['home-post-1'].services], appliedCount: 1
 };

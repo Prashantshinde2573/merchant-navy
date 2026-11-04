@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { PostAttachments } from '../../components/PostAttachments/PostAttachments';
 import { useParams, useNavigate } from 'react-router-dom';
 import { usePosts } from '../../context/PostContext';
 import { ApplyModal } from '../../components/ApplyModal/ApplyModal';
 import { ReportModal } from '../../components/ReportModal/ReportModal';
+import { COMPANY_PROFILES } from '../../data/companyProfiles';
 import { avatarToneClass } from '../../utils/avatarTone';
 
 import { useSavedPosts } from '../../hooks/useSavedPosts';
@@ -25,8 +27,11 @@ export function PostDetail() {
   const post = getPost(postId);
   const isApplied = hasApplied(post.id);
   const isBookmarked = savedIds.includes(post.id);
-  // Same image the feed card shows: the post's own image, or the poster's profile image for posts created in the app.
-  const postImage = post.vendorImage || (String(post.id).startsWith('custom-post') ? '/images/profile_avatar.webp' : null);
+  const [failedImages, setFailedImages] = useState([]);
+  const imageCandidates = [post.vendorImage, post.vendorAvatarUrl, post.profileImage, COMPANY_PROFILES[post.vendorName]?.avatar,
+    String(post.id).startsWith('custom-post') ? '/images/profile_avatar.webp' : null]
+    .filter(value => typeof value === 'string' && value.trim()).map(value => value.trim());
+  const postImage = imageCandidates.find(url => !failedImages.includes(url));
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -86,27 +91,26 @@ export function PostDetail() {
                 </svg>
               </button>
 
-              {/* Mobile only: show the post's image (desktop keeps its original avatar). */}
-              {postImage && (
+              {/* Use the available profile image at every viewport; initials are the final fallback. */}
+              {postImage ? (
                 <span
                   tabIndex="-1"
                   className="post-detail-avatar post-detail-avatar--image flex relative justify-center items-center box-border overflow-hidden align-middle z-0 text-tiny bg-default text-default-foreground rounded-medium h-12 w-12 shrink-0 shadow-sm"
                 >
-                  <img className="flex object-cover w-full h-full" alt={post.vendorName || ''} src={postImage} />
+                  <img className="flex object-cover w-full h-full" alt={post.vendorName || ''} src={postImage} onError={() => setFailedImages(previous => [...previous, postImage])} />
                 </span>
-              )}
-              <span
+              ) : <span
                 tabIndex="-1"
-                className={`post-detail-avatar ${avatarToneClass(post.vendorName)}${postImage ? ' post-detail-avatar--desktop' : ''} flex relative justify-center items-center box-border overflow-hidden align-middle z-0 outline-solid outline-transparent text-tiny bg-[#e4e4e7] text-zinc-700 font-bold rounded-full h-12 w-12 shrink-0`}
+                className={`post-detail-avatar ${avatarToneClass(post.vendorName)} flex relative justify-center items-center box-border overflow-hidden align-middle z-0 outline-solid outline-transparent text-tiny bg-[#e4e4e7] text-zinc-700 font-bold rounded-full h-12 w-12 shrink-0`}
               >
                 <span
                   aria-label={post.vendorName}
                   className="font-bold text-center text-inherit text-base"
                   role="img"
                 >
-                  {post.vendorAvatar || post.vendorName?.charAt(0) || 'V'}
+                  {post.vendorAvatar || post.vendorName?.split(' ').slice(0, 2).map(word => word[0]).join('') || 'V'}
                 </span>
-              </span>
+              </span>}
 
               <div className="post-detail-identity mobile-heading-group">
                 <div className="flex items-center gap-2 post-detail-company-line">
@@ -288,7 +292,7 @@ export function PostDetail() {
                     </div>
                   </div>
                   <div className="relative flex w-full flex-auto flex-col place-content-inherit align-items-inherit h-auto break-words text-left overflow-y-auto subpixel-antialiased p-0">
-                    <p className="text-sm leading-5 text-zinc-500">No attachments available</p>
+                    <PostAttachments attachments={post.attachments || post.files || []} />
                   </div>
                 </div>
 

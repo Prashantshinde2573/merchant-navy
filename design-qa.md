@@ -115,3 +115,17 @@ Mobile title is now a single 14px line with ellipsis; Share and overflow occupy 
 ## Search-field consistency
 
 Removed the My Posts toolbar border beneath search; the divider now belongs only to the tabs. All search fields (My Posts, Wins, Merchants, Chats, Announcements, and service/port dialogs) share a 40px white surface, 1px light border, 8px corners, subtle shadow, 12px horizontal padding, 8px icon gap, and borderless inputs. A matching focus ring replaces individual input outlines. Browser measurements confirm identical surfaces on the five main pages and the service dialog, and the My Posts search filter works. Build and whitespace checks pass. Evidence: qa-evidence/my-posts/search-uniform-mobile.jpg.
+
+## Shared Add/Edit Post form
+
+Removed the separate two-field edit dialog. Both the detail Edit Post button and the My Posts overflow item now open the existing PostModal in edit mode, with scope/rich text, currency, budget bounds, attachments, services, ports, ASAP, and dates hydrated from the selected post. Save changes calls updatePost for the original ID and preserves unrelated owner/status/application data. New requests still call createPost. Structured form fields and display aliases are saved together; custom feed entries also reflect edits. The supplied reference fixture now includes its verified USD 5555–6666 budget and 25 selected ports.
+
+The same shared form handles validation, attachment metadata, currency/selection/date interactions, scrolling, and responsive layout. Long scopes scroll inside the editor and modal instead of pushing the header/footer outside the viewport. Inline validation replaces blocking browser alerts. No reference posts were changed and no private document downloads were added.
+
+Validation: four normalization/round-trip tests pass; production build and whitespace check pass. Browser checks at 1470×900 and 390×844 confirm pre-filled content, 12 selected services, 25 selected ports, ASAP, required-scope validation, and fresh empty Add mode. A budget edit persisted after reopening on the same post URL; the My Posts count stayed at 2. Restored the original budget afterward. Verified both detail-button and list-overflow entry points reuse the full form. Evidence: edit-shared-modal-desktop.jpg and edit-shared-modal-mobile.jpg in qa-evidence/my-posts/.
+
+## Desktop popup and avatar follow-up — 2026-11-04
+- Compared live Home Add Post at 1470×900 with the shared local Add/Edit form. Matched the 1200px modal, 728/400px columns, 24px spacing, desktop header typography, close button, selection fields, and date field spacing.
+- Verified edit prefill: scope, USD 5555.00–6666.00, 12 services, 25 ports, ASAP; mobile retains its existing stacked layout at 390×844.
+- Removed the desktop rule hiding profile images. View Post now tries available post/company image URLs before initials and handles failed images. Indra image verified loaded and visible on desktop.
+- Validation: production build, four form tests, and diff whitespace check passed. Evidence: qa-evidence/my-posts/desktop-popup-reference-match.jpg and desktop-post-avatar.jpg.

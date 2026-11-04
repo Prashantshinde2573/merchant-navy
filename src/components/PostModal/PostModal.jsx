@@ -6,16 +6,11 @@ import { DateRangePicker, formatServiceDate } from "../DateRangePicker/DateRange
 import { TreeSelectionModal } from "../TreeSelectionModal/TreeSelectionModal";
 import { SERVICE_GROUPS, PORT_GROUPS } from "../../data/selectionOptions";
 
-const CURRENCY_SYMBOLS = {
-  USD: "$",
-  INR: "₹",
-  AED: "AED ",
-  EUR: "€",
-  GBP: "£"
-};
+import { CURRENCY_SYMBOLS, getPostFormValues, buildPostFormPayload, sanitizeScopeHtml } from '../../utils/postForm';
 
-export function PostModal({ isOpen, onClose, onPostCreated }) {
-  const { createPost } = usePosts();
+export function PostModal({ isOpen, onClose, onPostCreated, post = null, onPostUpdated }) {
+  const { createPost, updatePost } = usePosts();
+  const isEditing = Boolean(post?.id);
   const [scopeOfWork, setScopeOfWork] = useState("");
   const [currency, setCurrency] = useState("USD");
   const [isCurrencyOpen, setIsCurrencyOpen] = useState(false);
@@ -28,6 +23,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
   const [selectedPorts, setSelectedPorts] = useState([]);
   const [isPortsOpen, setIsPortsOpen] = useState(false);
   const [files, setFiles] = useState([]);
+  const [error, setError] = useState("");
 
   const fileInputRef = useRef(null);
   const editorRef = useRef(null);
@@ -35,8 +31,21 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
   const editorSelectionRef = useRef(null);
 
   useEffect(() => {
-    if (isOpen && editorRef.current) editorRef.current.innerHTML = editorHtmlRef.current;
-  }, [isOpen]);
+    if (!isOpen) return;
+    const values = getPostFormValues(post);
+    setError("");
+    setScopeOfWork(values.scopeOfWork); setCurrency(values.currency);
+    setMinBudget(values.minBudget); setMaxBudget(values.maxBudget);
+    setIsAsap(values.isAsap); setServiceDates(values.serviceDates);
+    setSelectedServices(values.services); setSelectedPorts(values.ports); setFiles(values.files);
+    setIsCurrencyOpen(false); setIsServicesOpen(false); setIsPortsOpen(false);
+    editorSelectionRef.current = null;
+    if (editorRef.current) {
+      if (values.scopeHtml) editorRef.current.innerHTML = sanitizeScopeHtml(values.scopeHtml);
+      else editorRef.current.innerText = values.scopeOfWork;
+      editorHtmlRef.current = editorRef.current.innerHTML;
+    }
+  }, [isOpen, post?.id]);
 
   const rememberEditor = () => {
     if (!editorRef.current) return;
@@ -62,8 +71,10 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
 
   const handleFileUpload = (e) => {
     if (e.target.files) {
-      const newFiles = Array.from(e.target.files).slice(0, 3);
-      setFiles(newFiles);
+      const newFiles = Array.from(e.target.files);
+      if (newFiles.some(file => file.size > 15 * 1024 * 1024)) { setError("Each attachment must be 15 MB or smaller."); return; }
+      setFiles(previous => [...previous, ...newFiles].slice(0, 3));
+      e.target.value = "";
     }
   };
 
@@ -81,62 +92,29 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
     rememberEditor();
   };
 
-  const handlePublish = (e) => {
-    if (e) e.preventDefault();
-    const content = editorRef.current ? editorRef.current.innerText.trim() : scopeOfWork;
-    if (!content) {
-      alert("Please enter the Scope of Work details.");
-      return;
+  const savePost = (event, draft = false) => {
+    event?.preventDefault();
+    setError("");
+    const content = editorRef.current ? editorRef.current.innerText.trim() : scopeOfWork.trim();
+    if (!draft && !content) {
+      setError("Please enter the Scope of Work details.");
+      editorRef.current?.focus(); return;
     }
-
-    const postPayload = {
-      scopeOfWork: content,
-      details: content,
-      title: content.split("\n")[0] || "Requirement",
-      services: selectedServices,
-      ports: selectedPorts,
-      budget: minBudget && maxBudget ? `${CURRENCY_SYMBOLS[currency]}${minBudget} - ${CURRENCY_SYMBOLS[currency]}${maxBudget}` : "Open for quotations",
-      serviceDates: isAsap ? "ASAP" : serviceDates,
-      timeline: isAsap ? "ASAP" : serviceDates,
-      isAsap: isAsap,
-      urgent: isAsap,
-      files: files.map(f => f.name || f),
-      status: "Live"
-    };
-
-    const created = createPost(postPayload);
-    if (onPostCreated) {
-      onPostCreated(created);
+    if ((minBudget && Number(minBudget) < 0) || (maxBudget && Number(maxBudget) < 0) || (minBudget && maxBudget && Number(maxBudget) < Number(minBudget))) {
+      setError('Please enter a valid budget range. Maximum must be at least the minimum.'); return;
     }
-
-    alert("Requirement published successfully!");
+    const payload = buildPostFormPayload({ scopeOfWork: content, scopeHtml: editorRef.current?.innerHTML || '', currency, minBudget, maxBudget, isAsap, serviceDates, services: selectedServices, ports: selectedPorts, files }, { post, draft });
+    if (isEditing) {
+      updatePost(post.id, payload);
+      onPostUpdated?.({ ...post, ...payload });
+    } else {
+      const created = createPost(payload);
+      onPostCreated?.(created);
+    }
     onClose();
   };
-
-  const handleSaveDraft = (e) => {
-    if (e) e.preventDefault();
-    const content = editorRef.current ? editorRef.current.innerText.trim() : scopeOfWork;
-    const postPayload = {
-      scopeOfWork: content || "Draft requirement",
-      details: content || "Draft requirement",
-      title: content ? content.split("\n")[0] : "Draft Requirement",
-      services: selectedServices,
-      ports: selectedPorts,
-      budget: minBudget && maxBudget ? `${CURRENCY_SYMBOLS[currency]}${minBudget} - ${CURRENCY_SYMBOLS[currency]}${maxBudget}` : "Open for quotations",
-      serviceDates: isAsap ? "ASAP" : serviceDates,
-      timeline: isAsap ? "ASAP" : serviceDates,
-      isAsap: isAsap,
-      urgent: isAsap,
-      files: files.map(f => f.name || f),
-      status: "Draft"
-    };
-    const created = createPost(postPayload);
-    if (onPostCreated) {
-      onPostCreated(created);
-    }
-    alert("Draft saved successfully!");
-    onClose();
-  };
+  const handlePublish = event => savePost(event);
+  const handleSaveDraft = event => savePost(event, true);
 
   return (
     <div tabIndex="-1">
@@ -177,7 +155,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
           <div className="modal-header-container py-3 sm:py-4 px-4 sm:px-6 flex-initial border-default-100 shadow-neutral-sm flex flex-col sm:flex-row sm:items-center sm:justify-between border-b gap-3 sm:gap-4 bg-content1 shrink-0" id="_r_19r_">
             <div className="flex items-center justify-between w-full sm:w-auto">
               <h2 className="text-content1-foreground text-[18px] sm:text-xl font-semibold leading-tight sm:leading-7 tracking-tight">
-                Post Your Requirements
+                {isEditing ? "Edit your request" : "Post Your Requirements"}
               </h2>
               {/* Mobile-only Close X aligned with heading */}
               <button
@@ -210,8 +188,9 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
 
           {/* Modal Content Body */}
           <div className="flex flex-1 min-h-0 flex-col bg-blue-25 p-4 sm:p-6 max-h-[calc(90vh-140px)] overflow-y-auto" id="_r_19s_">
+              {error && <p role="alert" className="post-form-error">{error}</p>}
               <form className="space-y-6" onSubmit={handlePublish}>
-                <div className="flex flex-col gap-6 md:flex-row">
+                <div className="post-compose-columns flex flex-col gap-6 md:flex-row">
                   {/* Left Column */}
                   <div className="flex flex-1 flex-col gap-3">
                     {/* Scope of work */}
@@ -316,6 +295,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                                 onChange={handleFileUpload}
                               />
                               <p className="text-tiny text-blue-600">Upto 3 files • 15 MB each</p>
+                              {files.length > 0 && <ul className="post-attachment-list">{files.map((file, index) => <li key={`${typeof file === 'string' ? file : file.name}-${index}`}><span>{typeof file === 'string' ? file : file.name || file.fileName || 'Attachment'}</span><button type="button" aria-label={`Remove attachment ${index + 1}`} onClick={event => { event.stopPropagation(); setFiles(previous => previous.filter((_, i) => i !== index)); }}>Remove</button></li>)}</ul>}
                             </div>
                           </div>
                         </div>
@@ -384,7 +364,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                                     className="w-full bg-transparent !outline-solid focus-visible:outline-solid outline-transparent ps-1.5 text-sm leading-5 font-medium placeholder:text-zinc-500"
                                     aria-label="MIN"
                                     placeholder="MIN"
-                                    type="number"
+                                    type="number" min="0" step="0.01"
                                     value={minBudget}
                                     onChange={(e) => setMinBudget(e.target.value)}
                                   />
@@ -406,7 +386,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                                     className="w-full bg-transparent !outline-solid focus-visible:outline-solid outline-transparent ps-1.5 text-sm leading-5 font-medium placeholder:text-zinc-500"
                                     aria-label="MAX"
                                     placeholder="MAX"
-                                    type="number"
+                                    type="number" min="0" step="0.01"
                                     value={maxBudget}
                                     onChange={(e) => setMaxBudget(e.target.value)}
                                   />
@@ -439,11 +419,12 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                         aria-expanded={isServicesOpen}
                         onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setIsServicesOpen(!isServicesOpen); } }}
                         onClick={() => setIsServicesOpen(!isServicesOpen)}
-                        className="border-default-200 hover:border-default-400 rounded-medium min-h-10 cursor-pointer border-2 bg-white px-3 py-2 transition-colors flex items-center justify-between"
+                        data-has-selection={selectedServices.length > 0} className="post-selection-trigger border-default-200 hover:border-default-400 rounded-medium min-h-10 cursor-pointer border-2 bg-white px-3 py-2 transition-colors flex items-center justify-between"
                       >
-                        <span className="text-foreground-400 text-sm truncate">
+                        <span className="post-selection-summary text-foreground-400 text-sm truncate">
                           {selectedServices.length > 0 ? selectedServices.join(", ") : "Select services"}
                         </span>
+                        {selectedServices.length > 0 && <span className="post-selection-chips">{selectedServices.slice(0, 3).map(item => <span key={item}>{item}</span>)}{selectedServices.length > 3 && <span>+{selectedServices.length - 3} more</span>}</span>}
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400"><path d="m6 9 6 6 6-6"></path></svg>
                       </div>
 
@@ -468,11 +449,12 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                         aria-expanded={isPortsOpen}
                         onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setIsPortsOpen(!isPortsOpen); } }}
                         onClick={() => setIsPortsOpen(!isPortsOpen)}
-                        className="border-default-200 hover:border-default-400 rounded-medium min-h-10 cursor-pointer border-2 bg-white px-3 py-2 transition-colors flex items-center justify-between"
+                        data-has-selection={selectedPorts.length > 0} className="post-selection-trigger border-default-200 hover:border-default-400 rounded-medium min-h-10 cursor-pointer border-2 bg-white px-3 py-2 transition-colors flex items-center justify-between"
                       >
-                        <span className="text-foreground-400 text-sm truncate">
+                        <span className="post-selection-summary text-foreground-400 text-sm truncate">
                           {selectedPorts.length > 0 ? selectedPorts.join(", ") : "Select ports"}
                         </span>
+                        {selectedPorts.length > 0 && <span className="post-selection-chips">{selectedPorts.slice(0, 3).map(item => <span key={item}>{item}</span>)}{selectedPorts.length > 3 && <span>+{selectedPorts.length - 3} more</span>}</span>}
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400"><path d="m6 9 6 6 6-6"></path></svg>
                       </div>
 
@@ -489,7 +471,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                       </div>
 
                       {/* ASAP Switch */}
-                      <label className="group relative max-w-fit inline-flex items-center justify-start cursor-pointer touch-none tap-highlight-transparent select-none mb-3" data-selected={isAsap}>
+                      <label className="post-asap-switch group relative max-w-fit inline-flex items-center justify-start cursor-pointer touch-none tap-highlight-transparent select-none mb-3" data-selected={isAsap}>
                         <input
                           aria-label="ASAP"
                           role="switch"
@@ -503,7 +485,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                           className={`px-1 relative inline-flex items-center justify-start shrink-0 overflow-hidden rounded-full w-12 h-7 transition-background ${isAsap ? "bg-primary" : "bg-default-200"}`}
                         >
                           <span
-                            className={`z-10 flex items-center justify-center bg-white shadow-small rounded-full w-5 h-5 text-small transition-all ${isAsap ? "ms-5" : "ms-0"}`}
+                            className={`post-asap-thumb z-10 flex items-center justify-center bg-white shadow-small rounded-full w-5 h-5 text-small transition-all ${isAsap ? "ms-5" : "ms-0"}`}
                           ></span>
                         </span>
                         <span className="relative text-foreground select-none ms-2 text-medium font-medium">ASAP</span>
@@ -529,7 +511,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
               Cancel
             </button>
             <div className="flex items-center gap-2 sm:gap-2">
-              <button
+              {!isEditing && <button
                 type="button"
                 tabIndex="0"
                 onClick={handleSaveDraft}
@@ -537,7 +519,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                 className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent px-3.5 sm:px-4 min-w-20 h-10 text-small gap-1.5 sm:gap-2 rounded-medium transition-transform-colors-opacity motion-reduce:transition-none bg-default text-default-foreground hover:opacity-80"
               >
                 Save Draft
-              </button>
+              </button>}
               <button
                 type="button"
                 tabIndex="0"
@@ -545,7 +527,7 @@ export function PostModal({ isOpen, onClose, onPostCreated }) {
                 data-react-aria-pressable="true"
                 className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-semibold subpixel-antialiased overflow-hidden tap-highlight-transparent transform-gpu data-[pressed=true]:scale-[0.97] cursor-pointer outline-solid outline-transparent px-4 min-w-24 sm:min-w-28 h-10 text-small gap-1.5 sm:gap-2 rounded-medium transition-transform-colors-opacity motion-reduce:transition-none bg-primary text-primary-foreground hover:opacity-80 shadow-sm"
               >
-                Publish Request
+                {isEditing ? "Save changes" : "Publish Request"}
               </button>
             </div>
           </footer>
