@@ -192,3 +192,17 @@ Validation: four normalization/round-trip tests pass; production build and white
 - Post activity row uses 8px gaps and two centered 1px × 12px dividers. Verified 320px viewport: row width and scroll width both 257px, with no overflow. Existing action buttons unchanged.
 - Checked 320px and 390px mobile layouts and 1280px desktop. Evidence: qa-evidence/mobile-refinements/.
 - Validation: npm run build and git diff --check pass.
+
+### Mobile Home and activity row follow-up (2026-11-04)
+- Latest scope: mobile only; no further desktop design edits were made after that request.
+- My Posts activity background is white with space-between distribution, existing dividers retained, no overflow at 320px (257px row/scroll width). Removed the empty footer placeholder on mobile and reduced divider bottom margin to zero; gap above the activity group is 12px.
+- Home Create Post avatar and input container both measure 40px high and share the same top position (85px at 320px viewport).
+- Sort By trigger measures 16px high instead of 44px; sorting options remain available and the Create Post control opens the shared editor.
+- Desktop check: Create Post input remains 48px high. All latest selectors are inside max-width:1023px.
+- Validation: production build and git diff --check pass. Screenshots: qa-evidence/mobile-home-activity/.
+- Final result for this mobile follow-up: passed.
+
+### Desktop reference work preceding the mobile follow-up
+- Added a dedicated min-width:1024px stylesheet for reference typography, card geometry, detail headers and completion status color (#12a150).
+- Captured 15 local desktop routes and source screenshots in qa-evidence/desktop-reference/. Verified 15 mobile route style/layout snapshots unchanged by that desktop stylesheet before the subsequent mobile request.
+- Full desktop visual QA is incomplete: some initial source captures contain loading states and require recapture. Stopped further desktop edits when the user requested mobile-only changes. Do not treat the entire desktop reference pass as fully verified.

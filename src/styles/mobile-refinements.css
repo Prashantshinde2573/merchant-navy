@@ -89,3 +89,17 @@
 @media(max-width:1023px){
   #root .my-posts-page .my-post-card-divider { margin-bottom:4px!important; }
 }
+
+/* Mobile-only follow-up: white activity row and compact Home controls. */
+@media(max-width:1023px){
+  #root .my-posts-page .my-post-card-info {
+    background:#fff; border-radius:0; padding-inline:0;
+    justify-content:space-between!important;
+  }
+  #root .my-posts-page .my-post-card-divider { margin-bottom:0!important; }
+  #root .my-posts-page .my-post-card-divider + div > div:empty { display:none; }
+  #root .home-page .ui-card > div:has(input[aria-label="Post your requirements..."]) { align-items:center!important; }
+  #root .home-page [data-slot=input-wrapper]:has(input[aria-label="Post your requirements..."]) { height:40px!important; min-height:40px!important; }
+  #root .home-page .feed-sort-trigger { height:auto; min-height:0; padding-block:0; line-height:16px; }
+  #root .home-page .feed-sort-trigger .material-symbols-outlined { line-height:16px; }
+}
