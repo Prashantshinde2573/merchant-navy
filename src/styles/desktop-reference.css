@@ -92,3 +92,9 @@
   #root :is(.post-detail-back-btn,.my-post-detail-back-btn,.quotation-detail-back-btn) { position:static!important; flex-shrink:0; align-self:center; }
   #root .my-post-detail-header-left { align-items:center; }
 }
+
+/* My Posts tabs: compact horizontal spacing like the Wins tabs (tabs size to their content —
+   12px side padding, 8px between tabs — instead of stretching across the full row). Desktop only. */
+@media (min-width: 1024px) {
+  #root .my-posts-page [role=tablist] > [role=tab] { width: auto !important; flex: 0 0 auto !important; }
+}
