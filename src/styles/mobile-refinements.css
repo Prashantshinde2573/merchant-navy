@@ -82,8 +82,8 @@
 }
 
 @media(max-width:1023px){
-  #root .company-profile-heading h1.page-title { font-size:15px!important; line-height:1.3em!important; font-weight:600; text-align:left; }
-  #root .company-profile-heading > p { font-size:13px!important; line-height:19.5px!important; font-weight:400; color:#71717a; text-align:left; }
+  #root .company-profile-heading h1.page-title { font-size:var(--ui-page-title-size)!important; line-height:1.3em!important; font-weight:600; text-align:left; }
+  #root .company-profile-heading > p { font-size:13px!important; line-height:19px!important; font-weight:400; color:#71717a; text-align:left; }
 }
 
 @media(max-width:1023px){
