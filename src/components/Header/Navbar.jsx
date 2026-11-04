@@ -163,20 +163,11 @@ export function Navbar() {
             </Link>
           </div>
 
-          {/* RIGHT: Notifications, Profile, and menu */}
+          {/* RIGHT: Notifications and menu */}
           <div className="mobile-navbar-actions">
             <Link to="/notifications" className={`mobile-navbar-help mobile-navbar-notifications ${isNotif ? 'is-active' : ''}`} aria-label={unreadCount ? `Notifications, ${unreadCount} unread` : 'Notifications'} aria-current={isNotif ? 'page' : undefined}>
               <span className={`material-symbols-outlined ${isNotif ? 'material-symbols-fill' : ''}`} aria-hidden="true">notifications</span>
               {Boolean(unreadCount) && <span className="mobile-nav-count" aria-hidden="true">{unreadCount}</span>}
-            </Link>
-            <Link
-              to="/company-profile"
-              className="mobile-navbar-profile"
-              aria-label="Profile"
-              aria-current={pathname.startsWith('/company-profile') ? 'page' : undefined}
-              onClick={() => { setIsMenuOpen(false); setIsDropdownOpen(false); }}
-            >
-              <img src="/images/profile_avatar.webp" alt="" width="32" height="32" />
             </Link>
             <button
               className="flex items-center justify-center w-10 h-10 rounded-lg text-gray-700 hover:bg-blue-25 transition-colors cursor-pointer"
@@ -218,6 +209,17 @@ export function Navbar() {
                 <span>Announcements</span>
               </div>
               <span className="bg-blue-50 text-primary text-xs font-semibold px-2 py-0.5 rounded-full">New</span>
+            </Link>
+
+            {/* 3. Profile */}
+            <Link
+              to="/company-profile"
+              onClick={() => { setIsMenuOpen(false); setIsDropdownOpen(false); }}
+              aria-current={pathname.startsWith('/company-profile') ? 'page' : undefined}
+              className={`flex items-center gap-3 p-2.5 rounded-lg text-sm font-medium transition-colors ${pathname.startsWith('/company-profile') ? "bg-blue-50 text-primary font-semibold" : "text-gray-700 hover:bg-gray-50"}`}
+            >
+              <span className="material-symbols-outlined text-xl text-gray-500" aria-hidden="true">person</span>
+              <span>Profile</span>
             </Link>
 
             {/* 4. Settings */}
