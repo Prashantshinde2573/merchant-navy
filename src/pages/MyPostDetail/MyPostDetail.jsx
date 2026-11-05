@@ -12,13 +12,14 @@ import { PostActions } from '../../components/PostActions/PostActions';
 import { MerchantRowActions } from '../../components/MerchantRowActions/MerchantRowActions';
 import { ShareModal } from '../../components/ShareModal/ShareModal';
 import './MyPostDetail.css';
+import {WorkflowDialog} from '../../components/Workflow/WorkflowDialog';
 
 export function MyPostDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
-  const { getPost, getApplicationsForPost } = usePosts();
+  const { getPost, getApplicationsForPost, workflow, applicationRow } = usePosts();
   
   const initialTab = searchParams.get('tab') || location.state?.tab || 'scope';
   const [activeTab, setActiveTab] = useState(initialTab);
@@ -36,30 +37,10 @@ export function MyPostDetail() {
   const postId = id || 'my-post-1';
   useEffect(() => { setPrivateNote(localStorage.getItem(`merchant_navy_note_${postId}`) || ''); }, [postId]);
   const post = getPost(postId) || POSTS_DATA[postId] || DEFAULT_MY_POST;
-  const staticQuotations = postId === 'n8zXLc4RjgxncUntWUAPQ' ? [] : getQuotationsForPost(post?.id || postId) || [];
-  const dynamicApplications = (getApplicationsForPost ? getApplicationsForPost(post?.id || postId) : []).map(app => ({
-    id: app.id,
-    postId: app.postId,
-    merchantName: app.applicantName || 'Applicant',
-    avatar: '/images/profile_avatar.webp',
-    rating: '5.00',
-    reviewCount: '1 review',
-    matchPercent: 95,
-    portMatch: '1/1',
-    serviceMatch: '1/1',
-    price: post?.budget || '$500.00',
-    validityDate: 'Recent',
-    status: app.status || 'Submitted',
-    isAwarded: false,
-    statusColor: 'bg-blue-600 text-white',
-    isRecommended: false,
-    deliveryTime: 'As agreed',
-    paymentTerms: 'Standard',
-    scopeSummary: app.message || 'Application submitted for this requirement.',
-    certifications: ['Verified Member'],
-    chatId: 'c-1'
-  }));
-  const quotations = [...dynamicApplications, ...staticQuotations];
+  const staticQuotations = postId === 'n8zXLc4RjgxncUntWUAPQ' || postId.startsWith('custom-post-') ? [] : getQuotationsForPost(post?.id || postId) || [];
+  const dynamicApplications = getApplicationsForPost(post?.id || postId).map(applicationRow);
+  const quotations = [...dynamicApplications.filter(app=>app.quote), ...staticQuotations];
+  const [awardTarget,setAwardTarget]=useState(null),[workflowError,setWorkflowError]=useState('');
   const referenceApplications = ['my-post-1', 'n8zXLc4RjgxncUntWUAPQ'].includes(postId) ? [{
     id: `reference-application-${postId}`, merchantName: 'Indra Shipping Co.', avatar: '/images/indra_avatar.jpg',
     rating: '5.00', reviewCount: '2 reviews', matchPercent: postId === 'my-post-1' ? 100 : 58,
@@ -67,13 +48,16 @@ export function MyPostDetail() {
     appliedDate: postId === 'my-post-1' ? 'Aug 31, 2026' : 'Nov 3, 2026',
     scopeSummary: 'This is exactly what I do, lets connect.', status: 'Applied'
   }] : [];
-  const applications = [...dynamicApplications, ...referenceApplications];
+  const applications = [...dynamicApplications, ...referenceApplications.filter(row=>!dynamicApplications.some(app=>app.id===row.id))];
   const [invitations, setInvitations] = useState(() => { try { return JSON.parse(localStorage.getItem('merchant_navy_invitations') || '{}'); } catch { return {}; } });
-  const invited = invitations[postId] || [];
-  const inviteApplications = ids => setInvitations(previous => {
+  const invited = [...(invitations[postId] || []),...dynamicApplications.filter(app=>app.threadId).map(app=>app.id)];
+  const inviteApplications = (ids,message,attachment) => {
+    ids.forEach(id=>workflow.dispatch('invite',{id,message,...attachment,post,reference:referenceApplications.find(row=>row.id===id)}));
+    return setInvitations(previous => {
     const next = { ...previous, [postId]: [...new Set([...(previous[postId] || []), ...ids])] };
     localStorage.setItem('merchant_navy_invitations', JSON.stringify(next)); return next;
   });
+  };
 
 
   const scrollToSection = (sectionId) => {
@@ -95,6 +79,7 @@ export function MyPostDetail() {
 
   return (
     <>
+      {awardTarget && <WorkflowDialog title="Confirm Award" onClose={()=>setAwardTarget(null)}><p>Are you sure you want to award {awardTarget.merchantName}?</p><p>Quote Amount: {awardTarget.price}</p>{workflowError && <p role="alert">{workflowError}</p>}<footer><button onClick={()=>setAwardTarget(null)}>Cancel</button><button className="primary" onClick={()=>{try{workflow.dispatch('award',{id:awardTarget.id});setAwardTarget(null);}catch(error){setWorkflowError(error.message);}}}>Confirm Award</button></footer></WorkflowDialog>}
       {shareOpen && <ShareModal post={{ description: post.scopeOfWork || post.title, url: window.location.href }} onClose={() => setShareOpen(false)} />}
       <div className={`relative min-h-[calc(100vh-56px)] my-post-detail-container${['applied', 'discussion'].includes(activeTab) ? ' is-applications-view' : ''}`}>
         {/* Sticky Sub-Header */}
@@ -191,95 +176,17 @@ export function MyPostDetail() {
                 </div>
               </div>
 
-            {/* Tab Navigation List */}
-            <div data-slot="base" className="inline-flex my-post-detail-tab-wrap">
-              <div
-                data-slot="tabList"
-                className="flex h-fit items-center flex-nowrap overflow-x-scroll scrollbar-hide gap-6 w-full relative rounded-none p-0 border-none bg-transparent"
-                role="tablist"
-                aria-orientation="horizontal"
-              >
-                {/* Scope Tab */}
-                <button
-                  type="button"
-                  role="tab"
-                  onClick={() => handleTabChange('scope')}
-                  aria-selected={activeTab === 'scope'}
-                  data-selected={activeTab === 'scope'}
-                  className="z-0 py-1 flex group relative justify-center items-center cursor-pointer transition-opacity tap-highlight-transparent outline-solid outline-transparent h-8 text-small rounded-none pb-3 pt-1 px-3 border-b-2 border-transparent data-[selected=true]:border-red-500"
-                >
-                  <div className="relative z-10 whitespace-nowrap transition-colors text-default-500 group-data-[selected=true]:text-primary">
-                    <div className="flex items-center gap-1.5">
-                      <span className={`text-sm leading-5 ${activeTab === 'scope' ? 'text-primary font-semibold' : 'text-blue-600 font-normal'}`}>
-                        Scope
-                      </span>
-                    </div>
-                  </div>
-                </button>
-
-                {/* Applied Tab */}
-                <button
-                  type="button"
-                  role="tab"
-                  onClick={() => handleTabChange('applied')}
-                  aria-selected={activeTab === 'applied'}
-                  data-selected={activeTab === 'applied'}
-                  className="z-0 py-1 flex group relative justify-center items-center cursor-pointer transition-opacity tap-highlight-transparent outline-solid outline-transparent h-8 text-small rounded-none pb-3 pt-1 px-3 border-b-2 border-transparent data-[selected=true]:border-red-500"
-                >
-                  <div className="relative z-10 whitespace-nowrap transition-colors text-default-500 group-data-[selected=true]:text-primary">
-                    <div className="flex items-center gap-1.5">
-                      <span className={`text-sm leading-5 ${activeTab === 'applied' ? 'text-primary font-semibold' : 'text-blue-600 font-normal'}`}>
-                        Applied
-                      </span>
-                      <div className="relative max-w-fit inline-flex items-center justify-between box-border whitespace-nowrap text-tiny rounded-full text-default-700 h-4 min-w-4 px-1 tab-count bg-zinc-50 border border-zinc-100">
-                        <span className="flex-1 font-normal px-1 text-tiny text-default-foreground leading-4">
-                          {applications.length}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </button>
-
-                {/* In Discussion Tab */}
-                <button
-                  type="button"
-                  role="tab"
-                  onClick={() => handleTabChange('discussion')}
-                  aria-selected={activeTab === 'discussion'}
-                  data-selected={activeTab === 'discussion'}
-                  className="z-0 py-1 flex group relative justify-center items-center cursor-pointer transition-opacity tap-highlight-transparent outline-solid outline-transparent h-8 text-small rounded-none pb-3 pt-1 px-3 border-b-2 border-transparent data-[selected=true]:border-red-500"
-                >
-                  <div className="relative z-10 whitespace-nowrap transition-colors text-default-500 group-data-[selected=true]:text-primary">
-                    <div className="flex items-center gap-1.5">
-                      <span className={`text-sm leading-5 ${activeTab === 'discussion' ? 'text-primary font-semibold' : 'text-blue-600 font-normal'}`}>
-                        In Discussion
-                      </span>
-                    </div>
-                  </div>
-                </button>
-
-                {/* Quotation Tab */}
-                <button
-                  type="button"
-                  role="tab"
-                  onClick={() => handleTabChange('quotation')}
-                  aria-selected={activeTab === 'quotation'}
-                  data-selected={activeTab === 'quotation'}
-                  className="z-0 py-1 flex group relative justify-center items-center cursor-pointer transition-opacity tap-highlight-transparent outline-solid outline-transparent h-8 text-small rounded-none pb-3 pt-1 px-3 border-b-2 border-transparent data-[selected=true]:border-red-500"
-                >
-                  <div className="relative z-10 whitespace-nowrap transition-colors text-default-500 group-data-[selected=true]:text-primary">
-                    <div className="flex items-center gap-1.5">
-                      <span className={`text-sm leading-5 ${activeTab === 'quotation' ? 'text-primary font-semibold' : 'text-blue-600 font-normal'}`}>
-                        Quotation
-                      </span>
-                      <div className="relative max-w-fit inline-flex items-center justify-between box-border whitespace-nowrap text-tiny rounded-full text-default-700 h-4 min-w-4 px-1 tab-count bg-zinc-50 border border-zinc-100">
-                        <span className="flex-1 font-normal px-1 text-tiny text-default-foreground leading-4">
-                          {quotations.length || ''}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </button>
+            {/* Use the same tab structure and utility classes as Wins. */}
+            <div data-slot="base" className="inline-flex w-auto my-post-detail-tab-wrap">
+              <div data-slot="tabList" className="relative flex h-fit items-center flex-nowrap overflow-x-scroll scrollbar-hide gap-2 bg-transparent p-0 rounded-none" role="tablist" aria-orientation="horizontal">
+                {[['scope','Scope',null],['applied','Applied',applications.length],['discussion','In Discussion',null],['quotation','Quotation',quotations.length]].map(([key,label,count])=>(
+                  <button key={key} data-key={key} data-selected={activeTab===key} data-slot="tab" tabIndex={activeTab===key?0:-1} role="tab" aria-selected={activeTab===key} onClick={()=>handleTabChange(key)} type="button" className={`z-0 flex group relative justify-center items-center cursor-pointer transition-opacity tap-highlight-transparent text-small rounded-none px-3 py-3 h-auto border-b-2 ${activeTab===key?'border-red-500 text-primary font-semibold':'border-transparent text-blue-600 font-normal hover:opacity-80'}`}>
+                    <div className="relative z-10 whitespace-nowrap transition-colors" data-slot="tabContent"><div className="flex items-center gap-1.5">
+                      <span className={`text-sm leading-5 ${key==='quotation'?'font-medium':'font-semibold'}`}>{label}</span>
+                      {count>0&&<span className="detail-tab-count text-tiny flex h-4 min-w-4 items-center justify-center rounded-full border border-zinc-100 bg-red-50 px-1 text-red-600 text-[11px] font-semibold">{count}</span>}
+                    </div></div>
+                  </button>
+                ))}
               </div>
             </div>
           </div>
@@ -449,6 +356,7 @@ export function MyPostDetail() {
                                   {/* Actions */}
                                   <td role="gridcell" className="px-3 relative align-middle whitespace-normal text-small font-normal text-start py-3.5">
                                     <div className="flex items-center gap-2">
+                                      {quote.quote && !quote.isAwarded && post.ownerId && quote.status==='quoted' && <button type="button" className="application-invite" onClick={()=>{setWorkflowError('');setAwardTarget(quote);}}>Award</button>}
                                       {quote.isAwarded && (
                                         <button
                                           type="button"
@@ -459,7 +367,7 @@ export function MyPostDetail() {
                                         </button>
                                       )}
                                       <Link
-                                        to="/chats"
+                                        to={quote.threadId ? `/chats/${quote.threadId}` : "/chats"}
                                         className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap subpixel-antialiased overflow-hidden tap-highlight-transparent border border-blue-200 min-w-16 text-tiny rounded-small h-8 px-3 font-medium text-[#1f285d] hover:bg-blue-50 transition-colors"
                                       >
                                         Open Thread
@@ -480,7 +388,6 @@ export function MyPostDetail() {
                               key={quote.id}
                               className={`bg-white border ${quote.isRecommended ? 'border-blue-200 recommended-quotation-row' : 'border-blue-100/90'} rounded-xl p-4 shadow-sm flex flex-col gap-3 w-full box-border relative overflow-hidden`}
                             >
-                              <MerchantRowActions companyName={quote.merchantName} />
                               {/* Left Blue Accent Bar for Recommended */}
                               {quote.isRecommended && (
                                 <div className="recommended-row-accent" aria-hidden="true" />
@@ -589,7 +496,8 @@ export function MyPostDetail() {
                               {/* Action Row */}
                               <div className="flex items-center justify-between gap-2 pt-1">
                                 <div className="flex items-center gap-2 flex-wrap">
-                                  {quote.isAwarded && (
+                                  {quote.quote && !quote.isAwarded && post.ownerId && quote.status==='quoted' && <button type="button" className="application-invite" onClick={()=>{setWorkflowError('');setAwardTarget(quote);}}>Award</button>}
+                                      {quote.isAwarded && (
                                     <button
                                       type="button"
                                       disabled
@@ -599,7 +507,7 @@ export function MyPostDetail() {
                                     </button>
                                   )}
                                   <Link
-                                    to="/chats"
+                                    to={quote.threadId ? `/chats/${quote.threadId}` : "/chats"}
                                     className="inline-flex items-center justify-center h-8 px-3 text-xs font-medium rounded-md border border-blue-200 text-[#1f285d] hover:bg-blue-50 transition-colors"
                                   >
                                     Open Thread
@@ -612,9 +520,9 @@ export function MyPostDetail() {
                         </div>
                       </>
                     ) : (
-                      <div className="p-8 text-center bg-gray-50 rounded-lg border border-gray-100">
+                      <div className="quotation-empty-state p-8 text-center bg-gray-50 rounded-lg border border-gray-100">
                         <span className="material-symbols-outlined text-4xl text-zinc-400 mb-2">request_quote</span>
-                        <h4 className="ui-section-title text-sm font-semibold text-zinc-700">No Quotations Yet</h4>
+                        <h4 className="text-sm font-semibold text-zinc-700">No Quotations Yet</h4>
                         <p className="text-xs text-zinc-500 mt-1">
                           No merchants have submitted quotations for this post yet.
                         </p>

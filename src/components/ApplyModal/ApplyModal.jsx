@@ -34,8 +34,7 @@ export function ApplyModal({ isOpen, onClose, onApply, post }) {
       return;
     }
     setErrorMessage('');
-    onApply(message);
-    onClose();
+    try { onApply({message,fileName}); onClose(); } catch(error) { setErrorMessage(error.message); }
   };
 
   return (

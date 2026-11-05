@@ -1,6 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { POSTS_DATA, DEFAULT_POST, DEFAULT_MY_POST } from '../data/postsData';
 import { useAuth } from './AuthContext';
+import { useCompanyWorkflow } from '../hooks/useCompanyWorkflow';
+import { COMPANY_EMAIL, APPLICANT_EMAIL, demoCompany, ownerOfPost, compactBudget, quotePrice, workflowDate } from '../utils/companyWorkflow';
+import { COMPANY_PROFILES } from '../data/companyProfiles';
 
 const PostContext = createContext();
 
@@ -24,15 +27,15 @@ export function PostProvider({ children }) {
     }
   });
 
-  const [applications, setApplications] = useState(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_APPLICATIONS);
-      return saved ? JSON.parse(saved) : [];
-    } catch (e) {
-      console.error('Failed to load applications from localStorage:', e);
-      return [];
-    }
-  });
+  const workflow = useCompanyWorkflow(currentUser);
+  const applications = workflow.applications;
+  useEffect(() => {
+    const sync = event => {
+      if(event.key===STORAGE_CUSTOM_POSTS) { try {setCustomPosts(JSON.parse(event.newValue||'[]'));} catch {} }
+      if(event.key==='merchant_navy_post_changes') { try {setPostChanges(JSON.parse(event.newValue||'{}'));} catch {} }
+    };
+    window.addEventListener('storage',sync);return()=>window.removeEventListener('storage',sync);
+  },[]);
 
   const [reports, setReports] = useState(() => {
     try {
@@ -61,12 +64,13 @@ export function PostProvider({ children }) {
     const newPost = {
       id: uniqueId,
       postIdCode: `#${randomCode}`,
-      vendorName: currentUser === 'shivhare.yuvraj@gmail.com' ? 'Bluesea Marine Works Pvt Ltd.' : (currentUser?.split('@')[0] || 'My Company'),
-      vendorAvatar: 'BM',
+      vendorName: demoCompany(currentUser).name,
+      vendorAvatar: demoCompany(currentUser).initials,
+      vendorImage: demoCompany(currentUser).avatar,
       isVerified: true,
       ownerId: currentUser,
       timeAgo: 'Just now',
-      budget: postData.budget || 'Open for quotations',
+      budget: compactBudget(postData.minBudget,postData.maxBudget,postData.currency),
       currency: postData.currency || 'USD', minBudget: postData.minBudget ?? '', maxBudget: postData.maxBudget ?? '',
       scopeHtml: postData.scopeHtml || '', isAsap: Boolean(postData.isAsap),
       serviceDates: postData.serviceDates, serviceDate: postData.serviceDate, timeline: postData.timeline,
@@ -97,33 +101,8 @@ export function PostProvider({ children }) {
 
   // Apply to Post
   const applyToPost = (postId, applicationData) => {
-    const message = typeof applicationData === 'string' ? applicationData : (applicationData?.message || '');
-    const fileName = applicationData?.fileName || '';
-
-    setApplications((prev) => {
-      // Prevent duplicate
-      const alreadyExists = prev.some(a => a.postId === postId && a.applicantId === currentUser);
-      if (alreadyExists) return prev;
-
-      const newApp = {
-        id: 'app-' + Date.now(),
-        postId,
-        applicantId: currentUser,
-        applicantName: currentUser === 'shivhare.yuvraj@gmail.com' ? 'Bluesea Marine Works Pvt Ltd.' : (currentUser?.split('@')[0] || 'Applicant'),
-        message,
-        fileName,
-        status: 'Applied',
-        appliedAt: new Date().toISOString()
-      };
-
-      const updated = [newApp, ...prev];
-      try {
-        localStorage.setItem(STORAGE_APPLICATIONS, JSON.stringify(updated));
-      } catch (e) {
-        console.error('Failed to save applications:', e);
-      }
-      return updated;
-    });
+    const message = typeof applicationData === 'string' ? applicationData : applicationData?.message;
+    workflow.dispatch('apply',{post:getPost(postId),message,fileName:applicationData?.fileName});
   };
 
   // Check if current user has applied to a post
@@ -159,16 +138,20 @@ export function PostProvider({ children }) {
     });
   };
 
+  const decoratePost = post => {
+    const award=applications.find(app=>app.postId===post.id&&['awarded','completed'].includes(app.status));
+    return {...post,...(post.minBudget!==undefined||post.maxBudget!==undefined?{budget:compactBudget(post.minBudget,post.maxBudget,post.currency)}:{}),ownerId:ownerOfPost(post),...(award?{status:award.status==='awarded'?'Awarded':award.review?'History':'Rate Now'}:{})};
+  };
   // Get specific post by ID
   const getPost = (postId) => {
     if (!postId) return DEFAULT_POST;
 
     // 1. Check custom created posts
     const custom = customPosts.find(p => p.id === postId || p.postIdCode === postId || p.postIdCode === `#${postId}`);
-    if (custom) return { ...custom, ...postChanges[custom.id] };
+    if (custom) return decoratePost({ ...custom, ...postChanges[custom.id] });
 
     // 2. Check static POSTS_DATA
-    if (POSTS_DATA[postId]) return { ...POSTS_DATA[postId], ...postChanges[postId] };
+    if (POSTS_DATA[postId]) return decoratePost({ ...POSTS_DATA[postId], ...postChanges[postId] });
 
     // 3. Check fallback
     return {
@@ -184,21 +167,32 @@ export function PostProvider({ children }) {
 
     // If logged in as default user, include the initial default my post
     if (currentUser === 'shivhare.yuvraj@gmail.com') {
-      return [...userCustomPosts, { ...DEFAULT_MY_POST, status: 'Live' }, POSTS_DATA['n8zXLc4RjgxncUntWUAPQ']].map(post => ({ ...post, ...postChanges[post.id] })).filter(post => !post.deleted);
+      return [...userCustomPosts, { ...DEFAULT_MY_POST, status: 'Live' }, POSTS_DATA['n8zXLc4RjgxncUntWUAPQ']].map(post => decoratePost({ ...post, ...postChanges[post.id] })).filter(post => !post.deleted);
     }
-    return userCustomPosts.map(post => ({ ...post, ...postChanges[post.id] })).filter(post => !post.deleted);
+    const fixtures=currentUser===COMPANY_EMAIL ? [...new Map(Object.values(POSTS_DATA).filter(post=>post.vendorName==='Indra Shipping Co.'&&post.id.startsWith('home-post')).map(post=>[post.id,post])).values()] : [];
+    return [...userCustomPosts,...fixtures].map(post => decoratePost({ ...post, ...postChanges[post.id] })).filter(post => !post.deleted);
   };
 
   // Get applications received for a post
   const getApplicationsForPost = (postId) => {
-    return applications.filter(a => a.postId === postId);
+    return applications.filter(a => a.postId === postId && (!a.ownerId || a.ownerId === currentUser));
   };
 
+  const applicationRow = app => {
+    const company=demoCompany(app.applicantId),profile=COMPANY_PROFILES[company.name],post=getPost(app.postId);
+    const ports=post.ports||[],services=post.services||[];
+    const portsMatched=ports.filter(p=>profile?.ports?.includes(p)).length,servicesMatched=services.filter(s=>profile?.services?.includes(s)).length;
+    const total=ports.length+services.length;
+    return {...app,merchantName:company.name,avatar:company.avatar,rating:profile?.rating||'—',reviewCount:`${profile?.reviews?.length||0} reviews`,matchPercent:total?Math.round((portsMatched+servicesMatched)/total*100):0,portMatch:`${portsMatched}/${ports.length}`,serviceMatch:`${servicesMatched}/${services.length}`,price:quotePrice(app.quote),validityDate:workflowDate(app.quote?.validUntil),appliedDate:workflowDate(app.appliedAt),scopeSummary:app.quote?.details||app.message,isAwarded:['awarded','completed'].includes(app.status),chatId:app.threadId,certifications:[],deliveryTime:'',paymentTerms:''};
+  };
   return (
     <PostContext.Provider
       value={{
-        customPosts: customPosts.map(post => ({ ...post, ...postChanges[post.id] })).filter(post => !post.deleted),
+        customPosts: customPosts.map(post => decoratePost({ ...post, ...postChanges[post.id] })).filter(post => !post.deleted),
         updatePost,
+        workflow,
+        applicationRow,
+        getWorkflowQuotation:id=>{const app=applications.find(app=>app.id===id&&app.quote&&(app.ownerId===currentUser||app.applicantId===currentUser));return app?applicationRow(app):null;},
         postChanges,
         createPost,
         applications,

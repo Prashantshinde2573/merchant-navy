@@ -23,3 +23,6 @@
 }
 
 
+
+/* Keep navigation menus above page stacking contexts and below modal dialogs. */
+#root .app-top-nav { z-index: 100; }

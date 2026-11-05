@@ -29,9 +29,9 @@ export function AuthProvider({ children }) {
     const trimmedOtp = otp.trim();
     if (trimmedOtp === DEMO_OTP) {
       setIsAuthenticated(true);
-      setCurrentUser(email || DEMO_EMAIL);
+      setCurrentUser((email || DEMO_EMAIL).trim().toLowerCase());
       localStorage.setItem('isAuthenticated', 'true');
-      localStorage.setItem('currentUser', email || DEMO_EMAIL);
+      localStorage.setItem('currentUser', (email || DEMO_EMAIL).trim().toLowerCase());
       return { success: true };
     }
     return { success: false, message: 'Invalid verification code. Please check the code and try again.' };

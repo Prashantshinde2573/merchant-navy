@@ -2,8 +2,11 @@ import { PortServiceIcon } from '../../components/PortServiceIcon/PortServiceIco
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Wins.css';
+import {usePosts} from '../../context/PostContext';
+import {useAuth} from '../../context/AuthContext';
+import {APPLICANT_EMAIL,demoCompany,workflowDate,quotePrice} from '../../utils/companyWorkflow';
 
-const WINS_ITEMS = [
+const REFERENCE_WINS = [
   {
     id: 'win-1',
     companyName: 'Indra Shipping Co.',
@@ -18,11 +21,16 @@ const WINS_ITEMS = [
     communication: 5,
     port: 'Visakhapatnam',
     services: 'Freshwater Supply, Fuel Supply (VLSFO/HSFO), Crew Transport (Local), Garbage Collection & Disposal (MARPOL), Ship Chandlery (General)',
-    amount: '$ 2,700'
+    amount: '$2.7K'
   }
 ];
 
 export function Wins() {
+  const {currentUser}=useAuth();
+  const {workflow,getPost}=usePosts();
+  const [workflowError,setWorkflowError]=useState('');
+  const liveWins=workflow.applications.filter(app=>app.applicantId===currentUser&&['awarded','completed'].includes(app.status)).map(app=>{const post=getPost(app.postId),owner=demoCompany(app.ownerId);return {id:app.id,companyName:owner.name,avatarUrl:owner.avatar,awardedDate:workflowDate(app.awardedAt),completedDate:workflowDate(app.completedAt),status:app.status==='awarded'?'in-progress':'completed',title:post.scopeOfWork||post.title,serviceRequestId:app.postId,serviceQuality:app.review?.quality||0,timeliness:app.review?.timeliness||0,communication:app.review?.communication||0,port:post.ports?.join(', ')||'',services:post.services?.join(', ')||'',amount:quotePrice(app.quote),review:app.review};});
+  const WINS_ITEMS=[...liveWins,...(currentUser===APPLICANT_EMAIL?REFERENCE_WINS:[])];
   const [activeTab, setActiveTab] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -66,7 +74,7 @@ export function Wins() {
 
   return (
     <div className="wins-page-wrapper">
-      <div className="mx-auto w-full max-w-5xl px-6 py-5">
+      <div className="mx-auto w-full max-w-5xl px-6 py-5">{workflowError && <p role="alert">{workflowError}</p>}
         {/* Header section */}
         <div className="mb-6 wins-header-section mobile-heading-group">
           <h1 className="page-title text-content1-foreground mb-2 text-2xl leading-8 font-semibold">
@@ -106,7 +114,7 @@ export function Wins() {
                   <div className="flex items-center gap-1.5">
                     <span className="text-sm leading-5 font-semibold">All</span>
                     <span className="text-tiny flex h-4 min-w-4 items-center justify-center rounded-full border border-zinc-100 bg-red-50 px-1 text-red-600 text-[11px] font-semibold">
-                      1
+                      {WINS_ITEMS.length}
                     </span>
                   </div>
                 </div>
@@ -131,7 +139,7 @@ export function Wins() {
                   <div className="flex items-center gap-1.5">
                     <span className="text-sm leading-5 font-semibold">In Progress</span>
                     <span className="text-tiny flex h-4 min-w-4 items-center justify-center rounded-full border border-zinc-100 bg-red-50 px-1 text-red-600 text-[11px] font-semibold">
-                      0
+                      {WINS_ITEMS.filter(win=>win.status==='in-progress').length}
                     </span>
                   </div>
                 </div>
@@ -156,7 +164,7 @@ export function Wins() {
                   <div className="flex items-center gap-1.5">
                     <span className="text-sm leading-5 font-medium">Completed</span>
                     <span className="text-tiny flex h-4 min-w-4 items-center justify-center rounded-full border border-zinc-100 bg-red-50 px-1 text-red-600 text-[11px] font-semibold">
-                      1
+                      {WINS_ITEMS.filter(win=>win.status==='completed').length}
                     </span>
                   </div>
                 </div>
@@ -262,7 +270,7 @@ export function Wins() {
                       </div>
                     </div>
                     <p className="text-emerald-600 shrink-0 text-sm leading-5 font-medium">
-                      Completed on {win.completedDate}
+                      {win.completedDate ? `Completed on ${win.completedDate}` : 'In Progress'}
                     </p>
                   </div>
 
@@ -295,6 +303,7 @@ export function Wins() {
                     </div>
                   </div>
 
+                  {win.review?.feedback && <p className="text-sm leading-5 text-zinc-500">{win.review.feedback}</p>}
                   {/* Port & Services */}
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-2">
@@ -324,6 +333,7 @@ export function Wins() {
                       >
                         View Details
                       </Link>
+                      {win.status==='in-progress' && <button type="button" className="post-edit-button" onClick={()=>{try{workflow.dispatch('complete',{id:win.id});setWorkflowError('');}catch(error){setWorkflowError(error.message);}}}>Mark Complete</button>}
                     </div>
                   </div>
                 </div>

@@ -4,6 +4,7 @@ import { useNotifications } from '../../context/NotificationContext';
 import { useAuth } from '../../context/AuthContext';
 import { UpgradeBanner } from '../UpgradeBanner/UpgradeBanner';
 import './Navbar.css';
+import {demoCompany} from '../../utils/companyWorkflow';
 
 export function Navbar() {
   const location = useLocation();
@@ -110,7 +111,7 @@ export function Navbar() {
               <div className="z-10 aria-expanded:scale-[0.97] aria-expanded:opacity-70 subpixel-antialiased cursor-pointer" data-slot="trigger" role="button" aria-label="Profile" aria-haspopup="menu" aria-expanded={isDropdownOpen} onKeyDown={event => { if (["Enter", " "].includes(event.key)) { event.preventDefault(); setIsDropdownOpen(previous => !previous); } }} onClick={() => setIsDropdownOpen(!isDropdownOpen)} tabIndex="0">
                 <div className="relative inline-flex shrink-0">
                   <span tabIndex="-1" className="flex relative justify-center items-center box-border overflow-hidden align-middle z-0 outline-solid outline-transparent data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 w-10 h-10 text-tiny bg-default text-default-foreground rounded-medium">
-                    <img className="flex object-cover w-full h-full transition-opacity !duration-500 opacity-100" alt="Profile" src="/images/profile_avatar.webp" />
+                    <img className="flex object-cover w-full h-full transition-opacity !duration-500 opacity-100" alt="Profile" src={demoCompany(currentUser).avatar} />
                   </span>
                   <span className="flex z-10 flex-wrap absolute box-border rounded-full whitespace-nowrap place-content-center origin-center items-center select-none font-regular scale-100 opacity-100 subpixel-antialiased text-tiny border-2 border-background text-default-foreground bottom-[10%] right-[10%] translate-x-1/2 translate-y-1/2 p-0 bg-blue-100 color-blue-900">
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>

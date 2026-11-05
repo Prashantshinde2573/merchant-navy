@@ -36,7 +36,7 @@ test('round-trips all editable fields while retaining the existing post identity
   assert.equal(updated.viewsCount, 7);
   assert.equal(updated.status, 'Awarded');
   assert.equal(updated.title, 'Updated scope');
-  assert.equal(updated.budget, '€100.50 - €200');
+  assert.equal(updated.budget, '€100.5 - 200');
   assert.equal(updated.dateRange, values.serviceDates);
   assert.equal(updated.serviceDate, values.serviceDates);
   assert.equal(updated.isUrgent, false);

@@ -1,3 +1,4 @@
+import {compactBudget} from './companyWorkflow.js';
 export const CURRENCY_SYMBOLS = { USD: '$', INR: '₹', AED: 'AED ', EUR: '€', GBP: '£' };
 
 const formatDate = date => `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
@@ -44,7 +45,7 @@ export function buildPostFormPayload(values, { post, draft = false } = {}) {
     scopeHtml: values.scopeHtml || '', title: content.split('\n')[0] || 'Draft Requirement',
     services: [...values.services], ports: [...values.ports],
     currency: values.currency, minBudget: values.minBudget, maxBudget: values.maxBudget,
-    budget: values.minBudget && values.maxBudget ? `${CURRENCY_SYMBOLS[values.currency]}${values.minBudget} - ${CURRENCY_SYMBOLS[values.currency]}${values.maxBudget}` : 'Open for quotations',
+    budget: compactBudget(values.minBudget,values.maxBudget,values.currency),
     serviceDates: values.serviceDates, dateRange: dates, serviceDate: dates, timeline: dates,
     isAsap: values.isAsap, urgent: values.isAsap, isUrgent: values.isAsap,
     files, attachments: files,

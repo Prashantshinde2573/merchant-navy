@@ -3,15 +3,17 @@ import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
 import { getQuotationById } from '../../data/quotationsData';
 import { POSTS_DATA, DEFAULT_MY_POST } from '../../data/postsData';
 import './QuotationDetail.css';
+import {usePosts} from '../../context/PostContext';
 
 export function QuotationDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const quotation = getQuotationById(id);
+  const {getWorkflowQuotation,getPost}=usePosts();
+  const quotation = getWorkflowQuotation(id)||getQuotationById(id);
   const parentPostId = location.state?.fromPostId || quotation?.postId || 'my-post-1';
-  const post = POSTS_DATA[parentPostId] || DEFAULT_MY_POST;
+  const post = getPost(parentPostId) || POSTS_DATA[parentPostId] || DEFAULT_MY_POST;
 
   const handleBack = () => {
     if (location.state?.fromPostId) {
@@ -117,7 +119,7 @@ export function QuotationDetail() {
                 {quotation.status}
               </span>
               <Link
-                to="/chats"
+                to={quotation.threadId ? `/chats/${quotation.threadId}` : "/chats"}
                 className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap subpixel-antialiased overflow-hidden tap-highlight-transparent border-medium min-w-16 gap-2 rounded-small text-primary h-9 border-blue-200 px-4 text-sm font-medium hover:bg-blue-50 transition-colors"
               >
                 Open Thread
@@ -281,7 +283,7 @@ export function QuotationDetail() {
                   <hr className="shrink-0 border-none w-full h-divider bg-blue-200 opacity-50" role="separator" />
                   <div className="flex flex-col gap-2 pt-1">
                     <Link
-                      to="/chats"
+                      to={quotation.threadId ? `/chats/${quotation.threadId}` : "/chats"}
                       className="w-full py-2 bg-primary hover:bg-blue-800 text-white rounded-lg text-sm font-semibold text-center transition-colors shadow-xs"
                     >
                       Message Merchant
