@@ -108,3 +108,31 @@
   /* 16px text in fields so mobile browsers don't zoom in on focus. */
   .chat-inline-quote :is(input,select) { font-size:16px; }
 }
+
+/* ---------------------------------------------------------------
+   Mobile/tablet only (< 1024px): give the conversation more room.
+   Desktop (>= 1024px) is not affected by anything below.
+   --------------------------------------------------------------- */
+@media (max-width:1023px) {
+  /* Header logo uses the same 8px corners as every other company logo. */
+  .chat-page-container .chat-header-avatar,
+  .chat-page-container .chat-header-avatar > span { border-radius:8px !important; }
+
+  /* The composer area may never take more than ~60% of the chat, so messages stay visible and scrollable. */
+  .chat-composer-area { max-height:60%; overflow-y:auto; overscroll-behavior:contain; }
+
+  /* Compact quote card: title + fields (the hint lives in the message box placeholder). */
+  .chat-inline-quote { gap:8px 12px; padding:12px 16px; }
+  .chat-inline-quote-intro p { display:none; }
+  .chat-inline-quote > label { gap:4px; }
+
+  /* Formatting toolbar appears only while writing; the Request Quote toggle stays visible. */
+  .chat-composer-card:not(:focus-within) .ql-toolbar:not(:has(.chat-request-quote-toggle)) { display:none; }
+  .chat-composer-card:not(:focus-within) .ql-toolbar .ql-formats { display:none; }
+  .chat-composer-card:not(:focus-within) .ql-toolbar::after { display:none; }
+  .chat-composer-card:not(:focus-within) .chat-request-quote-toggle { margin:0; }
+  .chat-composer-card:not(:focus-within) .ql-toolbar:has(.chat-request-quote-toggle) { min-height:0; padding:8px; }
+  .chat-composer-card:not(:focus-within) .ql-editor { min-height:44px; }
+  /* Placeholder stays on one line so it never runs into the Send row. */
+  .chat-page-container .ql-editor.ql-blank::before { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+}
