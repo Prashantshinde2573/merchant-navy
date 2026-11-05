@@ -10,7 +10,7 @@ export function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { currentUser, logout } = useAuth();
-  const { unreadCount } = useNotifications();
+  const { unreadCount, chatUnreadCount } = useNotifications();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showAnnouncementsModal, setShowAnnouncementsModal] = useState(false);
@@ -98,7 +98,7 @@ export function Navbar() {
                 </div>
               </Link>
               <Link to="/chats" className={`text-medium whitespace-nowrap box-border list-none data-[active=true]:font-semibold h-11 rounded-lg px-3 py-2.5 flex items-center ${isChats ? "text-primary bg-blue-50 font-semibold" : "hover:bg-blue-25 font-medium text-blue-600"}`} title="Chats" data-active={isChats}>
-                <span className={`material-symbols-outlined text-4.5 ${isChats ? "material-symbols-fill" : ""}`}>chat</span>
+                <span className="chat-unread-icon"><span className={`material-symbols-outlined text-4.5 ${isChats ? "material-symbols-fill" : ""}`}>chat</span>{chatUnreadCount>0 && <span className="chat-unread-count" aria-label={`${chatUnreadCount} unread messages`}>{chatUnreadCount}</span>}</span>
               </Link>
               <Link to="/help" className={`text-medium whitespace-nowrap box-border list-none data-[active=true]:font-semibold h-11 rounded-lg px-3 py-2.5 flex items-center ${isHelp ? "text-primary bg-blue-50 font-semibold" : "hover:bg-blue-25 font-medium text-blue-600"}`} title="Support" data-active={isHelp}>
                 <span className={`material-symbols-outlined text-4.5 ${isHelp ? "material-symbols-fill" : ""}`}>help</span>
@@ -270,7 +270,7 @@ export function Navbar() {
           { to: '/my-posts', label: 'My Posts', icon: 'docs', active: isMyPosts },
           { to: '/wins', label: 'Wins', icon: 'award_star', active: isWins },
           { to: '/my-merchants', label: 'Merchants', icon: 'favorite', active: isMerchants },
-          { to: '/chats', label: 'Chat', icon: 'chat', active: isChats },
+          { to: '/chats', label: 'Chat', icon: 'chat', active: isChats, count: chatUnreadCount },
         ].map(item => (
           <Link key={item.to} to={item.to} aria-current={item.active ? 'page' : undefined}
             className={`mobile-nav-item ${item.active ? 'is-active' : ''}`}>

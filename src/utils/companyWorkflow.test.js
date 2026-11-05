@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {transitionApplications as transition,COMPANY_EMAIL as owner,APPLICANT_EMAIL as applicant,compactBudget,quotePrice,compactMoneyText} from './companyWorkflow.js';
+import {transitionApplications as transition,COMPANY_EMAIL as owner,APPLICANT_EMAIL as applicant,compactBudget,quotePrice,compactMoneyText,unreadThreadMessages,quoteRequestMessage} from './companyWorkflow.js';
 const post={id:'workflow-test-post',ownerId:owner,status:'Live',ports:['Chennai'],services:['Canal Transit Agency Support']};
 const now='2026-11-05T09:30:00.000Z';
 const quote={amount:'1500',currency:'USD',validUntil:'2026-12-05',details:'Mock quotation'};
@@ -72,3 +72,23 @@ test('invitation preserves mock attachment and formatting and rejects oversized 
  assert.equal(quotePrice({amount:275000,currency:'INR'}),'₹275K');
  assert.equal(compactMoneyText('₹270,000.00 · Valid until tomorrow'),'₹270K · Valid until tomorrow');
  });
+
+test('invites and chat messages maintain participant-specific unread counts',()=>{
+ let records=transition(apply(),'invite',owner,{id:'test-application',message:'Please discuss.'},now);
+ assert.equal(unreadThreadMessages(records[0],owner),0);assert.equal(unreadThreadMessages(records[0],applicant),1);
+ records=transition(roundTrip(records),'markThreadRead',applicant,{id:'test-application'},now);
+ assert.equal(unreadThreadMessages(records[0],applicant),0);
+ records=transition(records,'message',applicant,{id:'test-application',message:'Available to help.'},now);
+ assert.equal(unreadThreadMessages(records[0],owner),1);assert.equal(unreadThreadMessages(records[0],applicant),0);
+ records=transition(records,'markThreadRead',owner,{id:'test-application'},now);
+ assert.equal(unreadThreadMessages(records[0],owner),0);
+});
+test('quote request is editable before Send and persists the sent message',()=>{
+ const draft=quoteRequestMessage('Bluesea Marine Works Pvt Ltd.');
+ let records=transition(apply(),'invite',owner,{id:'test-application',message:'Discuss.'},now);
+ assert.equal(records[0].status,'discussion');assert.match(draft,/Hi Bluesea/);
+ const edited=draft+'\nPlease include documentation.';
+ records=transition(records,'requestQuote',owner,{id:'test-application',message:edited},now);
+ assert.equal(records[0].status,'quotation_requested');assert.equal(records[0].messages.at(-1).body,edited);
+ assert.equal(records[0].messages.at(-1).type,'quote_requested');
+});

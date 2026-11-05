@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
+import {readDemoSession,saveDemoSession,clearDemoSession} from '../utils/demoSession';
 
 const AuthContext = createContext(null);
 
@@ -7,10 +8,10 @@ export const DEMO_OTP = '123456';
 
 export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return localStorage.getItem('isAuthenticated') === 'true';
+    return readDemoSession(sessionStorage).isAuthenticated;
   });
   const [currentUser, setCurrentUser] = useState(() => {
-    return localStorage.getItem('currentUser') || DEMO_EMAIL;
+    return readDemoSession(sessionStorage).currentUser;
   });
 
   const sendOtp = (email) => {
@@ -30,8 +31,7 @@ export function AuthProvider({ children }) {
     if (trimmedOtp === DEMO_OTP) {
       setIsAuthenticated(true);
       setCurrentUser((email || DEMO_EMAIL).trim().toLowerCase());
-      localStorage.setItem('isAuthenticated', 'true');
-      localStorage.setItem('currentUser', (email || DEMO_EMAIL).trim().toLowerCase());
+      saveDemoSession(sessionStorage,email||DEMO_EMAIL);
       return { success: true };
     }
     return { success: false, message: 'Invalid verification code. Please check the code and try again.' };
@@ -39,8 +39,7 @@ export function AuthProvider({ children }) {
 
   const logout = () => {
     setIsAuthenticated(false);
-    localStorage.removeItem('isAuthenticated');
-    localStorage.removeItem('currentUser');
+    clearDemoSession(sessionStorage);
   };
 
   return (

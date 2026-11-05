@@ -6,6 +6,8 @@ export const demoCompany = email => email === COMPANY_EMAIL
     ? { name: 'Bluesea Marine Works Pvt Ltd.', avatar: '/images/profile_avatar.webp', initials: 'BM' }
     : { name: email?.split('@')[0] || 'Merchant', avatar: '/images/profile_avatar.webp', initials: 'M' };
 export const ownerOfPost = post => post?.ownerId || (post?.vendorName === 'Indra Shipping Co.' ? COMPANY_EMAIL : post?.vendorName === 'Bluesea Marine Works Pvt Ltd.' || post?.id === 'my-post-1' ? APPLICANT_EMAIL : post?.vendorName ? `demo:${post.vendorName}` : null);
+export const unreadThreadMessages = (app,actor) => app?.threadId && [app.ownerId,app.applicantId].includes(actor) ? (app.messages||[]).filter(message=>message.senderId!==actor&&!(message.readBy||[]).includes(actor)).length : 0;
+export const quoteRequestMessage = name => `Hi ${name},\n\nThank you for your interest. We kindly request you to share your formal quotation at your earliest convenience.\n\nLooking forward to your response.`;
 export const compactBudget = (min, max, currency = 'USD') => {
   const values = [min,max].filter(value => value !== '' && value != null);
   if (!values.length) return '';
@@ -40,7 +42,7 @@ export function transitionApplications(records, action, actor, payload = {}, now
   const isOwner=app.ownerId===actor, isApplicant=app.applicantId===actor;
   if (!isOwner && !isApplicant) throw new Error('This application belongs to another company.');
   let changes={};
-  const message=(body,type='text')=>({id:`message-${id}-${now}-${app.messages?.length||0}`,senderId:actor,body,type,createdAt:now});
+  const message=(body,type='text')=>({id:`message-${id}-${now}-${app.messages?.length||0}`,senderId:actor,body,type,createdAt:now,readBy:[actor]});
   switch(action) {
     case 'invite':
       if(!isOwner) throw new Error('Only the request owner can invite an applicant.');
@@ -49,6 +51,9 @@ export function transitionApplications(records, action, actor, payload = {}, now
       if((payload.message||'').length>1500) throw new Error('Invitation message must be 1,500 characters or fewer.');
       if(payload.fileSize>20*1024*1024 || (payload.fileName && !(payload.fileType==='application/pdf'||payload.fileType?.startsWith('image/')))) throw new Error('Choose one PDF or image up to 20 MB.');
       changes={invitation:{messageHtml:payload.messageHtml||'',fileName:payload.fileName||'',fileType:payload.fileType||'',fileSize:payload.fileSize||0},status:'discussion',threadId:`thread-${id}`,discussionAt:now,messages:[...(app.messages||[]),message(`${payload.message?.trim()||'Thank you for your application. Let’s discuss this requirement.'}${payload.fileName?`\nAttachment: ${payload.fileName}`:''}`)],events:[...(app.events||[]),event(app.applicantId,'invites','Invited to Discussion',`${demoCompany(actor).name} invited you to discuss this request.`)]};break;
+    case 'markThreadRead':
+      if(!unreadThreadMessages(app,actor)) return records;
+      changes={messages:(app.messages||[]).map(item=>item.senderId!==actor?{...item,readBy:[...new Set([...(item.readBy||[]),actor])]}:item)};break;
     case 'message':
       if(!app.threadId) throw new Error('Discussion starts after the owner sends an invitation.');
       if(!payload.message?.trim()) throw new Error('Please enter a message.');
@@ -56,8 +61,8 @@ export function transitionApplications(records, action, actor, payload = {}, now
     case 'requestQuote':
       if(!isOwner) throw new Error('Only the request owner can request a quotation.');
       if(!['discussion','quotation_requested'].includes(app.status)) throw new Error('Start a discussion before requesting a quotation.');
-      if(app.status==='quotation_requested') return records;
-      changes={status:'quotation_requested',messages:[...(app.messages||[]),message('Please share your formal quotation, amount and validity.','quote_requested')],events:[...(app.events||[]),event(app.applicantId,'action','Quotation Requested',`${demoCompany(actor).name} requested your quotation.`)]};break;
+      if(app.status==='quotation_requested'){if(!payload.message?.trim())return records;changes={messages:[...(app.messages||[]),message(payload.message.trim(),'quote_requested')]};break;}
+      changes={status:'quotation_requested',messages:[...(app.messages||[]),message(payload.message?.trim()||quoteRequestMessage(demoCompany(app.applicantId).name),'quote_requested')],events:[...(app.events||[]),event(app.applicantId,'action','Quotation Requested',`${demoCompany(actor).name} requested your quotation.`)]};break;
     case 'quote': {
       if(!isApplicant) throw new Error('Only the applying merchant can submit this quotation.');
       if(!['quotation_requested','quoted'].includes(app.status)) throw new Error('The request owner must request a quotation first.');

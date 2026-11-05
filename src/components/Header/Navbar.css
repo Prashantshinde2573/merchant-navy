@@ -26,3 +26,6 @@
 
 /* Keep navigation menus above page stacking contexts and below modal dialogs. */
 #root .app-top-nav { z-index: 100; }
+
+.chat-unread-icon { position:relative;display:inline-flex; }
+.chat-unread-count { position:absolute;z-index:10;right:-9px;top:-8px;display:flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:999px;background:#ef4444;color:white;font-size:10px;font-weight:700;line-height:1; }
