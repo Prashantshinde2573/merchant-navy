@@ -17,14 +17,17 @@ function handleTabNavigation(event) {
 
 // Post detail is a focused view on mobile/tablet: the app bars give way to the post's own header and action bar.
 const POST_DETAIL_ROUTE = /^\/(posts|post|service-requests|my-posts)\/[^/]+\/?$/;
+// An open chat thread is also a focused view on phones: the conversation gets the full screen.
+const CHAT_THREAD_ROUTE = /^\/chats\/[^/]+\/?$/;
 
 export function AppLayout() {
   const { pathname } = useLocation();
   const isPostDetail = POST_DETAIL_ROUTE.test(pathname);
+  const isChatThread = CHAT_THREAD_ROUTE.test(pathname);
   return (
     <div data-overlay-container="true">
       <div data-overlay-container="true">
-        <main onKeyDown={handleTabNavigation} className={`bg-blue-25 min-h-screen app-main-layout md:pb-0${isPostDetail ? ' is-post-detail' : ''}`}>
+        <main onKeyDown={handleTabNavigation} className={`bg-blue-25 min-h-screen app-main-layout md:pb-0${isPostDetail ? ' is-post-detail' : ''}${isChatThread ? ' is-chat-thread' : ''}`}>
           <Navbar />
           <Outlet />
         </main>

@@ -105,8 +105,6 @@
 }
 @media (max-width:1023px) {
   .chat-workflow-message-heading { flex-direction:column; align-items:flex-start; gap:0; }
-  /* 16px text in fields so mobile browsers don't zoom in on focus. */
-  .chat-inline-quote :is(input,select) { font-size:16px; }
 }
 
 /* ---------------------------------------------------------------
@@ -135,4 +133,27 @@
   .chat-composer-card:not(:focus-within) .ql-editor { min-height:44px; }
   /* Placeholder stays on one line so it never runs into the Send row. */
   .chat-page-container .ql-editor.ql-blank::before { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+}
+
+/* ---------------------------------------------------------------
+   Phones only (< 768px): an open chat is a full-screen view.
+   The app's top navbar and bottom nav are hidden (like post detail);
+   the chat header's back arrow returns to the conversation list.
+   --------------------------------------------------------------- */
+@media (max-width:767px) {
+  .app-main-layout.is-chat-thread { --mobile-header-height:0px; --mobile-nav-height:0px; padding-bottom:0 !important; }
+  .app-main-layout.is-chat-thread .app-top-nav,
+  .app-main-layout.is-chat-thread .mobile-bottom-nav { display:none !important; }
+  .app-main-layout.is-chat-thread .chat-page-container > div:last-child > div > div:first-child { padding-top:calc(12px + env(safe-area-inset-top, 0px)); }
+  .app-main-layout.is-chat-thread .chat-composer-wrap { padding-bottom:calc(12px + env(safe-area-inset-bottom, 0px)); }
+}
+
+/* Mobile/tablet (< 1024px): smaller quote amount and date fields. */
+@media (max-width:1023px) {
+  .chat-inline-quote > label { font-size:13px; line-height:18px; }
+  /* Text stays 16px (app-wide mobile rule that prevents iOS zoom on focus); the boxes are tighter. */
+  .chat-page-container .chat-inline-quote > label > input { height:36px; min-height:36px; padding:0 10px; }
+  .chat-quote-amount { height:36px; }
+  .chat-quote-amount select { flex-basis:72px; width:72px; height:34px; min-height:34px; padding:0 4px 0 10px; }
+  .chat-quote-amount input { height:34px; min-height:34px; }
 }
