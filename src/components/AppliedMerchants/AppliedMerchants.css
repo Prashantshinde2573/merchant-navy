@@ -62,3 +62,11 @@
 .applied-merchants th.applied-checkbox,.applied-merchants td.applied-checkbox{width:38px}
 .applied-identity{gap:12px}.applied-identity img{flex-shrink:0}
 }
+
+.application-list-empty { display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:72px 0;text-align:center;color:#71717a; }
+.application-list-empty > svg { color:#d4d4d8; }
+.application-list-empty > p:first-of-type { font-size:18px;line-height:28px; }
+.application-list-empty > p:last-of-type { font-size:14px;line-height:22px;color:#a1a1aa; }
+@media(max-width:1023px) {
+  #root .is-empty-applications .my-post-detail-sidebar { display:none !important; }
+}

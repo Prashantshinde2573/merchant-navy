@@ -63,6 +63,7 @@ export function PostProvider({ children }) {
 
     const newPost = {
       id: uniqueId,
+      compactCardItems: true,
       postIdCode: `#${randomCode}`,
       vendorName: demoCompany(currentUser).name,
       vendorAvatar: demoCompany(currentUser).initials,

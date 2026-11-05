@@ -96,13 +96,13 @@ export function Home() {
       {post.ports && post.ports.length > 0 && (
         <div className="mt-3 flex w-full min-w-0 items-center gap-2">
           <span className="port-service-icon material-symbols-outlined mt-0.5 shrink-0 text-sm leading-none text-zinc-500" aria-hidden="true">anchor</span>
-          <span className="min-w-0 flex-1 text-sm leading-5 break-words text-zinc-500">{post.ports.join(", ")}</span>
+          <span className="min-w-0 flex-1 text-sm leading-5 break-words text-zinc-500">{(post.compactCardItems ? post.ports.slice(0, 2) : post.ports).join(", ")}{post.compactCardItems && post.ports.length > 2 && <> <span className="text-primary font-medium">+{post.ports.length - 2} more</span></>}</span>
         </div>
       )}
       {post.services && post.services.length > 0 && (
         <div className="mt-3 flex w-full min-w-0 items-center gap-2">
           <span className="port-service-icon material-symbols-outlined mt-0.5 shrink-0 text-sm leading-none text-zinc-500" aria-hidden="true">settings</span>
-          <span className="min-w-0 flex-1 text-sm leading-5 break-words text-zinc-500">{post.services.join(", ")}</span>
+          <span className="min-w-0 flex-1 text-sm leading-5 break-words text-zinc-500">{(post.compactCardItems ? post.services.slice(0, 2) : post.services).join(", ")}{post.compactCardItems && post.services.length > 2 && <> <span className="text-primary font-medium">+{post.services.length - 2} more</span></>}</span>
         </div>
       )}
       <hr className="shrink-0 bg-divider border-none w-full h-divider border-layout-divider my-3" role="separator" />

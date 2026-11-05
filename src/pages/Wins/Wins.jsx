@@ -340,13 +340,7 @@ export function Wins() {
               </div>
             ))
           ) : (
-            <div className="wins-empty-card bg-white rounded-large p-12 text-center border border-blue-50 shadow-sm">
-              <div className="flex justify-center mb-3 text-zinc-400">
-                <span className="material-symbols-outlined text-5xl">award_star</span>
-              </div>
-              <h3 className="ui-section-title text-base font-semibold text-zinc-800 mb-1">No awards found</h3>
-              <p className="text-sm text-zinc-500">There are no jobs matching your selection.</p>
-            </div>
+            <p className="wins-empty-state">No jobs found.</p>
           )}
         </div>
       </div>

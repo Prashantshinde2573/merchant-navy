@@ -257,11 +257,9 @@ export function MyPosts() {
                 );
               })
             ) : (
-              <div className="flex flex-col items-center justify-center p-12 text-center bg-white rounded-xl border border-blue-50">
-                <span className="material-symbols-outlined text-4xl text-zinc-300 mb-2">inbox</span>
-                <h2 className="text-base font-semibold text-content1-foreground">{searchQuery ? 'No matching posts' : 'No posts in this category'}</h2>
-                <p className="text-zinc-500 text-sm mt-2">{searchQuery ? 'Try a different keyword, service or port.' : 'Your posts will appear here when their status changes.'}</p>
-                {(searchQuery || activeTab !== 'all') && <button type="button" className="my-posts-reset" onClick={() => { setSearchQuery(''); setActiveTab('all'); }}>Show all posts</button>}
+              <div className="my-posts-empty-state">
+                <h2>{activeTab==='rate-now'?'No jobs to rate':'No posts found'}</h2>
+                <p>{searchQuery ? (activeTab==='rate-now'?'Try adjusting your search':'Try adjusting your search query') : activeTab==='rate-now' ? 'Completed or awarded jobs will appear here for you to rate the vendor.' : activeTab==='drafts' ? 'No drafts posts available' : activeTab==='all' ? 'No posts available' : `No ${activeTab} posts available`}</p>
               </div>
             )}
           </div>

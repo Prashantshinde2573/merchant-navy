@@ -54,3 +54,8 @@
   }
 }
 
+
+/* Empty categories use the live site's text-only state. */
+.my-posts-empty-state { display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:400px;text-align:center;gap:6px; }
+.my-posts-empty-state h2 { font-size:18px;line-height:28px;font-weight:500; }
+.my-posts-empty-state p { font-size:14px;line-height:22px;color:#71717a; }

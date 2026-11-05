@@ -60,6 +60,8 @@ export function MyPostDetail() {
   };
 
 
+  const emptyApplicationsTab = activeTab === 'applied' ? !applications.length : activeTab === 'discussion' ? !applications.some(row=>invited.includes(row.id)||/discussion|invited/i.test(row.status)) : false;
+
   const scrollToSection = (sectionId) => {
     setActiveSection(sectionId);
     const element = document.getElementById(sectionId);
@@ -81,7 +83,7 @@ export function MyPostDetail() {
     <>
       {awardTarget && <WorkflowDialog title="Confirm Award" onClose={()=>setAwardTarget(null)}><p>Are you sure you want to award {awardTarget.merchantName}?</p><p>Quote Amount: {awardTarget.price}</p>{workflowError && <p role="alert">{workflowError}</p>}<footer><button onClick={()=>setAwardTarget(null)}>Cancel</button><button className="primary" onClick={()=>{try{workflow.dispatch('award',{id:awardTarget.id});setAwardTarget(null);}catch(error){setWorkflowError(error.message);}}}>Confirm Award</button></footer></WorkflowDialog>}
       {shareOpen && <ShareModal post={{ description: post.scopeOfWork || post.title, url: window.location.href }} onClose={() => setShareOpen(false)} />}
-      <div className={`relative min-h-[calc(100vh-56px)] my-post-detail-container${['applied', 'discussion'].includes(activeTab) ? ' is-applications-view' : ''}`}>
+      <div className={`relative min-h-[calc(100vh-56px)] my-post-detail-container${['applied', 'discussion'].includes(activeTab) ? ' is-applications-view' : ''}${emptyApplicationsTab ? ' is-empty-applications' : ''}`}>
         {/* Sticky Sub-Header */}
         <div className="border-default-100 bg-white sticky top-14 z-40 border-b shadow-sm my-post-detail-header-wrap">
           <div className="mx-auto max-w-300 px-6 my-post-detail-header-inner">
