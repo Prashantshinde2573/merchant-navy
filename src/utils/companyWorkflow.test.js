@@ -92,3 +92,15 @@ test('quote request is editable before Send and persists the sent message',()=>{
  assert.equal(records[0].status,'quotation_requested');assert.equal(records[0].messages.at(-1).body,edited);
  assert.equal(records[0].messages.at(-1).type,'quote_requested');
 });
+
+test('inline quote can be sent without message text and retains each quote card on update',()=>{
+ let records=toQuote();
+ records=transition(records,'quote',applicant,{id:'test-application',amount:300,currency:'USD',validUntil:'2026-12-05',details:''},now);
+ records=roundTrip(records);
+ const first=records[0].messages.find(message=>message.type==='quote');
+ assert.equal(first.quote.amount,300);assert.equal(first.quote.details,'');
+ records=transition(records,'quote',applicant,{id:'test-application',amount:350,currency:'USD',validUntil:'2026-12-06',details:'Updated scope'},now);
+ const cards=records[0].messages.filter(message=>message.type==='quote');
+ assert.equal(cards.length,2);assert.equal(cards[0].quote.amount,300);assert.equal(cards[1].quote.amount,350);
+ assert.equal(records[0].quote.amount,350);
+});

@@ -71,7 +71,7 @@ export function transitionApplications(records, action, actor, payload = {}, now
       if(!['USD','INR','EUR','GBP','AED'].includes(payload.currency)) throw new Error('Choose a valid currency.');
       if(!/^\d{4}-\d{2}-\d{2}$/.test(payload.validUntil||'') || Number.isNaN(Date.parse(payload.validUntil)) || payload.validUntil<now.slice(0,10)) throw new Error('Choose a valid quotation expiry date.');
       const quote={amount,currency:payload.currency,validUntil:payload.validUntil,details:payload.details?.trim()||'',submittedAt:now};
-      changes={status:'quoted',quote,messages:[...(app.messages||[]),message(`${quotePrice(quote)} · Valid until ${workflowDate(quote.validUntil)}${quote.details?`\n${quote.details}`:''}`,'quote')],events:[...(app.events||[]),event(app.ownerId,'action','Quotation Received',`${demoCompany(actor).name} submitted a quotation.`)]};break;
+      changes={status:'quoted',quote,messages:[...(app.messages||[]),{...message(`${quotePrice(quote)} · Valid until ${workflowDate(quote.validUntil)}${quote.details?`\n${quote.details}`:''}`,'quote'),quote:{...quote}}],events:[...(app.events||[]),event(app.ownerId,'action','Quotation Received',`${demoCompany(actor).name} submitted a quotation.`)]};break;
     }
     case 'award':
       if(!isOwner) throw new Error('Only the request owner can award a quotation.');

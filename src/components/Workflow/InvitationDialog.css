@@ -14,3 +14,9 @@
   .invitation-workflow-dialog header h2 { font-size:20px;line-height:28px; }
   .invitation-workflow-dialog footer { flex-wrap:wrap; }
 }
+
+/* The dialog body scrolls independently; actions remain visible at its bottom. */
+.invitation-workflow-dialog { display:flex;flex-direction:column;overflow:hidden; }
+.invitation-workflow-dialog header { flex-shrink:0; }
+.invitation-scroll-body { flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:2px; }
+.invitation-workflow-dialog footer { flex-shrink:0;position:sticky;bottom:0;z-index:1;background:white;margin-top:0;padding-top:24px; }
