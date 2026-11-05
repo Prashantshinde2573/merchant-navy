@@ -25,37 +25,86 @@
 .quotation-workflow-dialog footer button { min-height:40px;font-size:14px;font-weight:500; }
 
 .chat-page-container button[data-quote-request="true"] { background:#1f285d; }
-/* Quote controls stay in the existing composer, as in the supplied chat reference. */
-.chat-page-container .ql-toolbar { position:relative; }
-.chat-page-container .ql-toolbar:has(.chat-request-quote-toggle) { padding-right:164px;min-height:40px; }
-.chat-request-quote-toggle { position:absolute;right:8px;top:7px;display:inline-flex;align-items:center;gap:8px;padding:3px 8px;border:1px solid #dce1f0;border-radius:8px;color:#1f285d;font-size:12px;line-height:20px;cursor:pointer; }
-.chat-request-quote-toggle input { width:14px;height:14px;accent-color:#1f285d;margin:0; }
-.chat-inline-quote { display:flex;align-items:center;gap:20px;padding:16px;background:#f6f7ff;border-bottom:1px solid #dce1f0; }
-.chat-inline-quote-intro { flex:1;min-width:0;font-size:14px;line-height:22px; }
-.chat-inline-quote-intro strong { font-weight:600; }
-.chat-inline-quote-intro p { color:#71717a;font-size:13px; }
-.chat-inline-quote > label { display:flex;flex-direction:column;gap:6px;font-size:14px;line-height:20px;width:180px;flex-shrink:0; }
-.chat-inline-quote input,.chat-inline-quote select { background:white;border:1px solid #f0f1f4;border-radius:8px;padding:8px 10px;min-width:0;min-height:40px;font:inherit;box-sizing:border-box; }
-.chat-quote-amount { display:flex;background:white;border-radius:8px; }
-.chat-quote-amount select { width:78px;border:0; }
-.chat-quote-amount input { width:100%;border:0; }
-.chat-workflow-message { display:flex;gap:12px;padding:20px 8px;border-bottom:1px solid #f0f1f4;font-size:14px;line-height:22px; }
-.chat-workflow-message > img { width:40px;height:40px;border-radius:8px;object-fit:cover;flex-shrink:0; }
-.chat-workflow-message-content { flex:1;min-width:0; }
-.chat-workflow-message-heading { display:flex;justify-content:space-between;gap:12px;margin-bottom:4px; }
-.chat-workflow-message time { font-size:12px;color:#71717a;white-space:nowrap; }
-.chat-workflow-message p { color:#71717a;white-space:pre-wrap;overflow-wrap:anywhere; }
-.chat-quote-message { display:flex;flex-direction:column;gap:6px;width:fit-content;max-width:100%;border:1px solid #dce1f0;border-radius:8px;background:#fafaff;padding:12px;margin-top:4px; }
-.chat-quote-message > span:last-child { font-size:13px;color:#71717a; }
-.chat-quote-request-message summary { color:#71717a;cursor:pointer;overflow-wrap:anywhere; }
-@media(max-width:1023px) {
- .chat-inline-quote { flex-wrap:wrap;gap:12px;padding:12px; }
- .chat-inline-quote-intro { flex-basis:100%; }
- .chat-inline-quote > label { flex:1;width:calc(50% - 6px);min-width:0; }
- .chat-workflow-message-heading { flex-direction:column;gap:0; }
- .chat-page-container .ql-toolbar:has(.chat-request-quote-toggle) { padding-right:8px;padding-bottom:40px; }
- .chat-request-quote-toggle { top:auto;bottom:6px; }
-}
 
-.chat-quote-amount select { flex:0 0 78px; }
-.chat-quote-amount input { flex:1;min-width:0;width:0; }
+/* ---------------------------------------------------------------
+   Quote flow (chat composer, quote form, quote messages).
+   Typography/spacing follow Home, My Posts and Wins: titles 16/24 semibold,
+   supporting text 14/22 #71717a, labels 14/20 medium, 40px fields and buttons,
+   8px card radius, 4px chip radius, 4px spacing grid.
+   Layout responds to the chat pane's own width (container queries).
+   --------------------------------------------------------------- */
+.chat-composer-area { border-top:0 !important; container-type:inline-size; }
+.chat-composer-wrap { padding-top:8px; }
+/* One rounded composer surface: no square outer frame, no inner focus ring. */
+.chat-page-container .quill:focus-within { border-color:transparent; box-shadow:none; }
+.chat-composer-card { transition:border-color .15s, box-shadow .15s; }
+.chat-composer-card:focus-within { border-color:#9ca5c9 !important; box-shadow:0 0 0 2px #1f285d1a; }
+.chat-composer-card button[data-chat-award] { height:40px; padding:0 16px; border-radius:8px; font-size:14px; line-height:20px; font-weight:500; }
+
+/* Request Quote toggle: sits in the editor toolbar (right side on wide panes). */
+.chat-page-container .ql-toolbar { position:relative; }
+.chat-page-container .ql-toolbar:has(.chat-request-quote-toggle) { padding-right:164px; min-height:40px; }
+.chat-request-quote-toggle { position:absolute; right:8px; top:50%; transform:translateY(-50%); display:inline-flex; align-items:center; gap:8px; height:32px; padding:0 10px; border:1px solid #dfe2eb; border-radius:8px; background:#fff; color:#1f285d; font-size:13px; line-height:18px; font-weight:500; white-space:nowrap; cursor:pointer; }
+.chat-request-quote-toggle input { width:16px; height:16px; accent-color:#1f285d; margin:0; }
+
+/* Quote form (merchant replying to a quotation request): a card like the rest of the app. */
+.chat-inline-quote { display:grid; grid-template-columns:minmax(0,1fr) 220px 180px; align-items:end; gap:12px 16px; margin:8px 12px 0; padding:16px; background:#fff; border:1px solid #f0f1f4; border-radius:8px; box-shadow:0 1px 2px 0 #0000000d; }
+@media (min-width:768px) { .chat-inline-quote { margin:8px 16px 0; } }
+.chat-inline-quote-intro { min-width:0; }
+.chat-inline-quote-intro strong { display:block; color:#27272a; font-size:16px; line-height:24px; font-weight:600; }
+.chat-inline-quote-intro p { margin-top:2px; color:#71717a; font-size:14px; line-height:22px; }
+.chat-inline-quote > label { display:flex; flex-direction:column; gap:6px; min-width:0; width:auto; color:#27272a; font-size:14px; line-height:20px; font-weight:500; }
+.chat-inline-quote input, .chat-inline-quote select { box-sizing:border-box; height:40px; min-height:40px; min-width:0; padding:0 12px; border:1px solid #dfe2eb; border-radius:8px; background:#fff; color:#18181b; font:inherit; font-weight:400; }
+.chat-quote-amount { display:flex; height:40px; border:1px solid #dfe2eb; border-radius:8px; background:#fff; overflow:hidden; }
+.chat-quote-amount select { flex:0 0 84px; width:84px; height:38px; min-height:38px; border:0; border-right:1px solid #f0f1f4; border-radius:0; padding:0 8px 0 12px; }
+.chat-quote-amount input { flex:1; width:0; height:38px; min-height:38px; border:0; border-radius:0; }
+.chat-quote-amount:focus-within { border-color:#9ca5c9; box-shadow:0 0 0 2px #1f285d1a; }
+.chat-quote-amount :is(input,select):focus { border-color:transparent !important; box-shadow:none !important; }
+.chat-quote-amount select:focus { border-right-color:#f0f1f4 !important; }
+
+/* Messages */
+.chat-workflow-message { display:flex; gap:12px; padding:16px 4px; border-bottom:1px solid #f0f1f4; font-size:14px; line-height:22px; }
+.chat-workflow-message > img { width:40px; height:40px; border-radius:8px; object-fit:cover; flex-shrink:0; }
+.chat-workflow-message-content { flex:1; min-width:0; }
+.chat-workflow-message-heading { display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:4px; }
+.chat-workflow-message-heading > span { color:#18181b; font-size:14px; line-height:20px; font-weight:600; }
+.chat-workflow-message time { color:#71717a; font-size:12px; line-height:16px; white-space:nowrap; }
+.chat-workflow-message p { color:#52525b; font-size:14px; line-height:22px; white-space:pre-wrap; overflow-wrap:anywhere; }
+
+/* Quotation sent by a merchant */
+.chat-quote-message { box-sizing:border-box; width:100%; max-width:440px; margin-top:8px; padding:12px 16px; border:1px solid #f0f1f4; border-radius:8px; background:#f7f8fb; }
+.chat-quote-message-top { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:4px 12px; }
+.chat-quote-message-label { display:inline-flex; flex-basis:100%; align-items:center; gap:6px; color:#696f93; font-size:13px; line-height:18px; font-weight:500; }
+.chat-quote-message .material-symbols-outlined { font-size:16px; line-height:1; }
+.chat-quote-message-amount { color:#27272a; font-size:18px; line-height:28px; font-weight:600; }
+.chat-quote-message-validity { display:inline-flex; align-items:center; gap:4px; height:28px; padding:0 8px; border-radius:4px; background:#fefce8; color:#62420e; font-size:13px; line-height:18px; font-weight:500; white-space:nowrap; }
+.chat-workflow-message p.chat-quote-message-details { margin-top:12px; padding-top:12px; border-top:1px solid #e4e6ee; color:#3f3f46; }
+
+/* Quotation request from the post owner */
+.chat-quote-request-message { display:flex; flex-direction:column; align-items:flex-start; gap:8px; }
+.chat-quote-request-label { display:inline-flex; align-items:center; gap:4px; height:28px; padding:0 8px; border-radius:4px; background:#f0f1f4; color:#1f285d; font-size:13px; line-height:18px; font-weight:500; }
+.chat-quote-request-label .material-symbols-outlined { font-size:16px; line-height:1; }
+.chat-quote-request-message details summary { display:block; list-style:none; cursor:pointer; color:#52525b; overflow-wrap:anywhere; }
+.chat-quote-request-message details summary::-webkit-details-marker { display:none; }
+.chat-quote-request-toggle::before { content:attr(data-more); margin-left:4px; color:#565d85; font-weight:500; }
+.chat-quote-request-message details[open] .chat-quote-request-preview { display:none; }
+.chat-quote-request-message details[open] .chat-quote-request-toggle::before { content:attr(data-less); margin-left:0; }
+.chat-quote-request-message details[open] summary { margin-bottom:4px; }
+
+/* Narrow chat pane (phones, tablets, small laptops with the conversation list open). */
+@container (max-width: 640px) {
+  .chat-inline-quote { grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:12px; padding:12px 16px 16px; }
+  .chat-inline-quote-intro { grid-column:1 / -1; }
+  /* Toggle drops to its own row under the formatting buttons. */
+  .chat-page-container .ql-toolbar:has(.chat-request-quote-toggle) { display:flex; flex-wrap:wrap; align-items:center; padding-right:8px; }
+  .chat-page-container .ql-toolbar:has(.chat-request-quote-toggle)::after { content:""; order:1; flex-basis:100%; height:0; }
+  .chat-request-quote-toggle { order:2; position:static; transform:none; margin:8px 0 4px 4px; }
+}
+@container (max-width: 359px) {
+  .chat-inline-quote { grid-template-columns:minmax(0,1fr); }
+}
+@media (max-width:1023px) {
+  .chat-workflow-message-heading { flex-direction:column; align-items:flex-start; gap:0; }
+  /* 16px text in fields so mobile browsers don't zoom in on focus. */
+  .chat-inline-quote :is(input,select) { font-size:16px; }
+}
