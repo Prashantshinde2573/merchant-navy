@@ -41,6 +41,7 @@ export function MyPosts() {
   const allCount = allMyPosts.length;
   const liveCount = allMyPosts.filter(p => p.status === 'Live' || (!p.status && p.id !== 'my-post-1')).length;
   const awardedCount = allMyPosts.filter(p => p.status === 'Awarded').length;
+  const rateNowCount = allMyPosts.filter(p => p.status === 'Rate Now').length;
   const draftsCount = allMyPosts.filter(p => p.status === 'Draft').length;
   const historyCount = allMyPosts.filter(p => p.status === 'History' || p.status === 'Closed').length;
 
@@ -130,7 +131,7 @@ export function MyPosts() {
                   className="z-0 w-full flex group relative justify-center items-center cursor-pointer transition-opacity tap-highlight-transparent text-small rounded-none px-3 py-3 h-auto border-b-2 border-transparent data-[selected=true]:border-red-500"
                 >
                   <div className="relative z-10 whitespace-nowrap transition-colors group-data-[selected=true]:text-primary text-blue-600">
-                    <div className="flex items-center gap-1.5"><span className={`text-sm ${activeTab === 'rate-now' ? 'font-semibold' : ''}`}>Rate Now</span></div>
+                    <div className="flex items-center gap-1.5"><span className={`text-sm ${activeTab === 'rate-now' ? 'font-semibold' : ''}`}>Rate Now</span>{rateNowCount>0 && <span className="flex h-4 min-w-4 items-center justify-center rounded-full border border-zinc-100 tab-count bg-zinc-50 px-1 text-xs">{rateNowCount}</span>}</div>
                   </div>
                 </button>
                 <button

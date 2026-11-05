@@ -1,0 +1,15 @@
+.review-workflow-dialog { font-size:14px;line-height:22px; }
+.review-job-summary { display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;background:#f4f4f5;margin-bottom:24px; }
+.review-job-summary img { width:48px;height:48px;object-fit:cover;border-radius:8px;flex-shrink:0; }
+.review-job-summary > div { min-width:0; }
+.review-job-summary strong,.review-job-summary p { display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+.review-job-summary p { color:#71717a;font-size:13px;line-height:20px; }
+.review-workflow-dialog fieldset { margin:0 0 24px; }
+.review-workflow-dialog legend { font-weight:500; }
+.review-help { color:#71717a;font-weight:400; }
+.review-stars { display:flex;gap:4px;margin-top:4px; }
+.review-stars button { width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center; }
+.review-feedback-label { display:flex;justify-content:space-between;gap:12px; }
+.review-workflow-dialog textarea { min-height:80px;font:inherit; }
+.review-workflow-dialog footer button { min-height:40px;font-size:14px; }
+.review-workflow-dialog .primary:disabled { opacity:.5;cursor:default; }

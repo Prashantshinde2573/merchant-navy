@@ -9,7 +9,7 @@ import {WorkflowDialog} from '../../components/Workflow/WorkflowDialog';
 export function Chat() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [selectedThreadId, setSelectedThreadId] = useState(id || null);
+  const selectedThreadId = id || null;
   const [searchQuery, setSearchQuery] = useState('');
   const [draft, setDraft] = useState('');
   const [localMessages, setMessages] = useState({});
@@ -29,7 +29,7 @@ export function Chat() {
     setWorkflowError('');
     if(actionLabel==='Request Quote'){try{workflow.dispatch('requestQuote',{id:workflowThread.id});}catch(error){setWorkflowError(error.message);}return;}
     if(actionLabel==='Award'){setDialog('award');return;}
-    setQuoteAmount(workflowThread?.quote?.amount||'');setQuoteCurrency(workflowThread?.quote?.currency||'USD');setQuoteDetails(workflowThread?.quote?.details||'');setDialog('quote');
+    setQuoteAmount(workflowThread?.quote?.amount||'');setQuoteCurrency(workflowThread?.quote?.currency||'USD');setQuoteDetails(workflowThread?.quote?.details||'');if(workflowThread?.quote?.validUntil)setQuoteUntil(workflowThread.quote.validUntil);setDialog('quote');
   };
 
   const [attachmentNames, setAttachmentNames] = useState([]);
@@ -53,9 +53,6 @@ export function Chat() {
     if (composerRef.current) composerRef.current.innerHTML = '';
   }, [selectedThreadId]);
 
-  useEffect(() => {
-    setSelectedThreadId(id || null);
-  }, [id]);
 
   const threads = [
     ...workflowThreads.map(app=>{const person=demoCompany(app.ownerId===currentUser?app.applicantId:app.ownerId);return {id:app.threadId,name:person.name,avatar:person.avatar,time:workflowDate(app.messages?.at(-1)?.createdAt||app.discussionAt),lastMessage:app.messages?.at(-1)?.body||'Discussion started'};}),
@@ -96,7 +93,7 @@ export function Chat() {
 
   return (
     <div data-thread-open={Boolean(selectedThreadId)} className="chat-page-container bg-blue-25 flex h-[calc(100dvh-3.5rem)] min-h-0 w-full">
-      {dialog && workflowThread && <WorkflowDialog title={dialog==='award'?'Confirm Award':'Submit Quotation'} onClose={()=>setDialog(null)}>{dialog==='award'?<><p>Are you sure you want to award {other?.name}?</p><p>Quote Amount: {quotePrice(workflowThread.quote)}</p></>:<><label>Quote Amount<input aria-label="Quote amount" type="number" min="0.01" step="0.01" value={quoteAmount} onChange={event=>setQuoteAmount(event.target.value)}/></label><label>Currency<select aria-label="Currency" value={quoteCurrency} onChange={event=>setQuoteCurrency(event.target.value)}>{['USD','INR','EUR','GBP','AED'].map(currency=><option key={currency}>{currency}</option>)}</select></label><label>Valid until<input aria-label="Valid until" type="date" value={quoteUntil} onChange={event=>setQuoteUntil(event.target.value)}/></label><label>Quotation details<textarea aria-label="Quotation details" value={quoteDetails} onChange={event=>setQuoteDetails(event.target.value)}/></label></>}{workflowError && <p role="alert">{workflowError}</p>}<footer><button onClick={()=>setDialog(null)}>Cancel</button><button className="primary" onClick={()=>{try{workflow.dispatch(dialog==='award'?'award':'quote',{id:workflowThread.id,amount:quoteAmount,currency:quoteCurrency,validUntil:quoteUntil,details:quoteDetails});setDialog(null);}catch(error){setWorkflowError(error.message);}}}>{dialog==='award'?'Confirm Award':'Submit Quotation'}</button></footer></WorkflowDialog>}
+      {dialog && workflowThread && <WorkflowDialog className={dialog==='quote'?'quotation-workflow-dialog':''} title={dialog==='award'?'Confirm Award':'Submit Quotation'} onClose={()=>setDialog(null)}>{dialog==='award'?<><p>Are you sure you want to award {other?.name}?</p><p>Quote Amount: {quotePrice(workflowThread.quote)}</p></>:<><label>Quote Amount<input aria-label="Quote amount" type="number" min="0.01" step="0.01" value={quoteAmount} onChange={event=>setQuoteAmount(event.target.value)}/></label><label>Currency<select aria-label="Currency" value={quoteCurrency} onChange={event=>setQuoteCurrency(event.target.value)}>{['USD','INR','EUR','GBP','AED'].map(currency=><option key={currency}>{currency}</option>)}</select></label><label>Valid until<input aria-label="Valid until" type="date" value={quoteUntil} onChange={event=>setQuoteUntil(event.target.value)}/></label><label>Quotation details<textarea aria-label="Quotation details" value={quoteDetails} onChange={event=>setQuoteDetails(event.target.value)}/></label></>}{workflowError && <p role="alert">{workflowError}</p>}<footer><button onClick={()=>setDialog(null)}>Cancel</button><button className="primary" onClick={()=>{try{workflow.dispatch(dialog==='award'?'award':'quote',{id:workflowThread.id,amount:quoteAmount,currency:quoteCurrency,validUntil:quoteUntil,details:quoteDetails});setDialog(null);}catch(error){setWorkflowError(error.message);}}}>{dialog==='award'?'Confirm Award':'Submit Quotation'}</button></footer></WorkflowDialog>}
       {/* Sidebar */}
       <div className={`h-full w-full max-w-md shrink-0 flex-col border-r border-gray-200 bg-content1 ${selectedThreadId ? 'hidden md:flex' : 'flex'}`}>
         <div className="app-search-box bg-blue-25 shadow-neutral-sm mx-4 mt-4 mb-2 flex h-[40px] items-center rounded-[6px] border border-blue-50 px-[6px] py-[4px]">
@@ -123,9 +120,11 @@ export function Chat() {
                 role="button"
                 tabIndex={0}
                 aria-label={`Open conversation with ${thread.name}`}
+                aria-pressed={isSelected}
+                data-selected={isSelected}
                 onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); navigate(`/chats/${thread.id}`); } }}
                 onClick={() => navigate(`/chats/${thread.id}`)}
-                className={`hover:bg-blue-25 relative mx-2 mb-1 flex cursor-pointer items-start gap-3 rounded-[8px] border px-[13px] py-[13px] transition-colors ${
+                className={`chat-conversation-row hover:bg-blue-25 relative mx-2 mb-1 flex cursor-pointer items-start gap-3 rounded-[8px] border px-[13px] py-[13px] transition-colors ${
                   isSelected
                     ? 'bg-blue-25 border-l-primary border-l-[3px] border-[#0D1A470D]'
                     : 'border-transparent bg-white'
