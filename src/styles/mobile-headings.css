@@ -19,6 +19,12 @@
   }
 }
 @media (max-width: 1023px) {
+  .app-main-layout .my-posts-page > .mb-6:first-child,
+  .app-main-layout .wins-page-wrapper .wins-header-section {
+    margin-bottom: 0 !important;
+    padding-bottom: 16px;
+  }
+
   .app-main-layout .my-posts-page > .mb-6:first-child .mobile-heading-group {
     gap: var(--mobile-heading-description-gap) !important;
   }

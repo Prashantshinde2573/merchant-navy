@@ -181,7 +181,6 @@ export function MyPosts() {
                 const agePrefix = ageLabel.match(/^Posted\s+/i)?.[0] || '';
                 const isAwarded = post.status === 'Awarded';
                 const isDraft = post.status === 'Draft';
-                const isLive = post.status === 'Live' || (!post.status && post.id !== 'my-post-1');
                 const postApps = getApplicationsForPost ? getApplicationsForPost(post.id) : [];
                 const quotationsCount = post.quotationsCount !== undefined ? post.quotationsCount : postApps.length;
 
@@ -199,11 +198,6 @@ export function MyPosts() {
                         {isAwarded && (
                           <span className="ui-status inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
                             Awarded
-                          </span>
-                        )}
-                        {isLive && (
-                          <span className="ui-status inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                            Live
                           </span>
                         )}
                         {isDraft && (
