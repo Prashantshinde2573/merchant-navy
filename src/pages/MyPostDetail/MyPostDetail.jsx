@@ -131,7 +131,7 @@ export function MyPostDetail() {
               <div className="flex items-center gap-5 my-post-detail-header-actions">
                 <div className="flex items-center gap-3">
                   {post.isUrgent && (
-                    <div className="ui-status relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-7 text-small rounded-small text-default-foreground bg-danger-100">
+                    <div className="ui-status ui-status--urgent relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-7 text-small rounded-small text-default-foreground bg-danger-100">
                       <span className="flex-1 px-2 text-danger-600 font-semibold text-[13px]">
                         Urgent
                       </span>

@@ -76,6 +76,12 @@
   margin-top: 24px;
 }
 
+@media (max-width: 1023px) {
+  .auth-page--otp .otp-code {
+    margin-inline: auto;
+  }
+}
+
 .otp-digit {
   display: grid;
   place-items: center;

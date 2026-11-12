@@ -194,7 +194,7 @@ export function MyPosts() {
                       <div className="flex items-center justify-between">
                         <div>
                           {post.isUrgent && (
-                            <div className="ui-status relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 text-tiny rounded-full text-default-700 bg-danger-100 h-7">
+                            <div className="ui-status ui-status--urgent relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 text-tiny rounded-full text-default-700 bg-danger-100 h-7">
                               <span className="flex-1 px-1 text-danger-600 font-semibold text-[13px]">Urgent</span>
                             </div>
                           )}

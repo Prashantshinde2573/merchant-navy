@@ -17,6 +17,18 @@
   width: 100% !important;
 }
 
+@media (max-width: 1023px) {
+  /* Match the Awarded button's rendered height in the mobile action row. */
+  #root .mobile-quotations-cards .merchant-row-actions > .post-overflow-trigger {
+    height: 40px;
+    min-height: 40px;
+  }
+
+  #root .mobile-quotations-cards .merchant-row-actions > .merchant-card-trigger {
+    width: 40px;
+  }
+}
+
 /* Recommendation Badge Pill */
 .recommended-badge-pill {
   display: inline-flex !important;

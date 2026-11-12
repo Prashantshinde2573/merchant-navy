@@ -96,13 +96,19 @@
 [data-post-actions-dropdown] { min-width: 200px; padding: 8px; border-radius: 14px; }
 [data-post-actions-dropdown] button { min-height: 32px; font-size: 14px; font-weight: 400; }
 [data-post-actions-dropdown] .lucide-flag { display: none; }
+.home-page [data-post-actions-dropdown]:has(> .home-report-option:only-child) {
+  padding: 0;
+}
+
+.home-page [data-post-actions-dropdown] .home-report-option {
+  min-width: 120px;
+  padding: 12px;
+  border-radius: 8px;
+}
+
 @media (max-width: 1023px) {
   [data-post-actions-dropdown] { min-width: 160px; max-width: calc(100vw - 48px); }
   [data-post-actions-dropdown] button { min-height: 44px; }
-
-  .home-page [data-feed-post] [data-post-actions-dropdown] button[role="menuitem"] {
-    padding: 12px;
-  }
 
   .home-page .ui-card > div:has(input[aria-label="Post your requirements..."]) > span > img {
     object-fit: contain;
