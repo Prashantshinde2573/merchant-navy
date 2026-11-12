@@ -81,7 +81,7 @@ export function Login() {
   };
 
   return (
-    <main className="auth-page min-h-screen w-full text-content1-foreground">
+    <main className={`auth-page min-h-screen w-full text-content1-foreground${step === "otp" ? " auth-page--otp" : ""}`}>
       <div className="grid min-h-screen w-full lg:grid-cols-[1fr_720px]">
         <section
           className="hidden min-h-screen bg-cover bg-center lg:block"
@@ -157,73 +157,64 @@ export function Login() {
               </>
             ) : (
               <>
-                <div className="space-y-2 mobile-heading-group">
-                  <h1 className="page-title text-content1-foreground text-2xl leading-8 font-semibold">
-                    Enter verification code
-                  </h1>
-                  <p id="otp-instructions" className="text-xs text-neutral-500">
-                    Enter the 6-digit OTP code sent to <strong>{email}</strong>
-                  </p>
-
-                </div>
-
-                {notice && <p role="status" className="text-sm text-neutral-500">{notice}</p>}
-                <form onSubmit={handleOtpSubmit} className="w-full space-y-4">
-                  <div className="group flex flex-col relative justify-end w-full" data-slot="base">
-                    <div data-slot="main-wrapper" className="h-full flex flex-col">
-                      <div data-slot="input-wrapper" className="relative w-full inline-flex tap-highlight-transparent flex-row items-center shadow-xs px-3 gap-3 h-12 min-h-12 border border-cyan-100 shadow-neutral-sm rounded-lg bg-blue-25">
-                        <div data-slot="inner-wrapper" className="inline-flex w-full items-center h-full box-border">
-                          <input
-                            data-slot="input"
-                            className="w-full bg-transparent outline-none border-none text-center tracking-widest text-lg font-bold caret-content1-foreground text-content1-foreground placeholder:text-sm placeholder:tracking-normal placeholder:font-normal placeholder:text-foreground-400"
-                            aria-label="OTP"
-                            placeholder="6-digit code"
-                            inputMode="numeric"
-                            autoComplete="one-time-code"
-                            pattern="[0-9]{6}"
-                            aria-describedby="otp-instructions"
-                            maxLength={6}
-                            autoFocus
-                            value={otp}
-                            onChange={(e) => setOtp(e.target.value.replace(/\D/g, "")) }
-                            required
-                          />
-                        </div>
-                      </div>
-                    </div>
+                <h1 className="otp-heading">Sign in to your account</h1>
+                <form onSubmit={handleOtpSubmit} className="otp-form">
+                  <div className="otp-email">
+                    <span>{email}</span>
+                    <button
+                      type="button"
+                      aria-label="Edit email"
+                      disabled={loading}
+                      onClick={() => {
+                        setStep('email');
+                        setOtp('');
+                        setError('');
+                        setNotice('');
+                      }}
+                    >
+                      Edit
+                    </button>
                   </div>
+
+                  <div className="otp-code">
+                    {Array.from({ length: 6 }, (_, index) => (
+                      <span
+                        key={index}
+                        className="otp-digit"
+                        data-current={index === Math.min(otp.length, 5)}
+                        aria-hidden="true"
+                      >
+                        {otp[index]}
+                      </span>
+                    ))}
+                    <input
+                      aria-label="OTP"
+                      inputMode="numeric"
+                      autoComplete="one-time-code"
+                      pattern="[0-9]{6}"
+                      value={otp}
+                      onChange={(event) => setOtp(event.target.value.replace(/\D/g, '').slice(0, 6))}
+                      required
+                    />
+                  </div>
+
+                  {notice && <p role="status" className="otp-notice">{notice}</p>}
 
                   <button
-                    type="submit"
-                    tabIndex="0"
-                    disabled={loading}
-                    className="ui-button z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal overflow-hidden px-6 min-w-24 h-12 text-medium gap-3 rounded-large bg-primary text-primary-foreground hover:opacity-90 w-full transition cursor-pointer disabled:opacity-60"
+                    type="button"
+                    onClick={handleResend}
+                    disabled={resendSeconds > 0 || loading}
+                    className="otp-resend"
+                    aria-label={resendSeconds > 0 ? `Resend OTP in ${resendSeconds} seconds` : 'Resend OTP'}
                   >
-                    {loading ? "Verifying..." : "Verify & Continue"}
+                    Resend OTP
                   </button>
 
-                  <div className="flex items-center justify-between text-xs pt-1">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setStep("email");
-                        setOtp("");
-                        setError("");
-                      }}
-                      className="text-neutral-500 hover:text-neutral-800 cursor-pointer flex items-center gap-1"
-                    >
-                      <span className="material-symbols-outlined text-sm">arrow_back</span>
-                      Change email
-                    </button>
-                    <button
-                      type="button"
-                      onClick={handleResend}
-                      disabled={resendSeconds > 0 || loading}
-                      className="otp-resend text-blue-700 hover:text-blue-900 font-medium cursor-pointer"
-                    >
-                      {resendSeconds > 0 ? `Resend in ${resendSeconds}s` : 'Resend code'}
-                    </button>
-                  </div>
+                  <button type="submit" disabled={loading} className="otp-continue">
+                    {loading ? 'Verifying...' : 'Continue'}
+                  </button>
+
+                  <a className="otp-forgot" href="#forgot">Forgot password?</a>
                 </form>
               </>
             )}

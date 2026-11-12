@@ -3,6 +3,13 @@
   width: 100%;
 }
 
+@media (min-width: 1024px) {
+  #root .my-merchants-page .ui-button[href="/chats"] {
+    font-size: 12px;
+    padding: 12px;
+  }
+}
+
 /* MOBILE ONLY */
 @media (max-width: 767px) {
   /* Container padding */

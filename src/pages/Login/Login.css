@@ -12,5 +12,130 @@
 }
 
 
-.auth-page #otp-instructions { color: #71717a; }
-.auth-page .otp-resend:disabled { opacity: .6; cursor: default; }
+.auth-page--otp img {
+  height: 54px;
+}
+
+@media (min-width: 1024px) {
+  .auth-page--otp section:last-child {
+    padding-top: 8px;
+  }
+}
+
+.auth-page--otp .otp-heading {
+  margin: 0;
+  color: #18181b;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+}
+
+.otp-form {
+  width: 100%;
+  color: #18181b;
+  text-align: center;
+}
+
+.otp-email,
+.otp-digit {
+  border: 1px solid #dfe4e7;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 6%);
+}
+
+.otp-email {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 12px;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.otp-email span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.otp-email button {
+  padding: 8px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.otp-code {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 48px));
+  gap: 8px;
+  width: min(100%, 328px);
+  margin-top: 24px;
+}
+
+.otp-digit {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  height: 48px;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.otp-code input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.otp-code:focus-within .otp-digit[data-current="true"] {
+  border-color: #202657;
+  box-shadow: 0 0 0 1px #202657;
+}
+
+.auth-page.auth-page--otp .otp-resend {
+  display: block;
+  min-height: 0;
+  margin: 22px auto 12px;
+  color: #767c9c;
+  font-size: 14px;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+.auth-page.auth-page--otp .otp-resend:disabled {
+  opacity: 1;
+}
+
+.otp-continue {
+  width: 100%;
+  min-height: 48px;
+  border-radius: 14px;
+  background: #202657;
+  color: white;
+  font-size: 16px;
+  line-height: 24px;
+  cursor: pointer;
+}
+
+.otp-continue:disabled {
+  opacity: .6;
+}
+
+.otp-forgot,
+.otp-notice {
+  display: block;
+  margin-top: 16px;
+  color: #a1a1a1;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.otp-notice {
+  color: #71717a;
+}

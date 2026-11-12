@@ -99,6 +99,15 @@
 @media (max-width: 1023px) {
   [data-post-actions-dropdown] { min-width: 160px; max-width: calc(100vw - 48px); }
   [data-post-actions-dropdown] button { min-height: 44px; }
+
+  .home-page [data-feed-post] [data-post-actions-dropdown] button[role="menuitem"] {
+    padding: 12px;
+  }
+
+  .home-page .ui-card > div:has(input[aria-label="Post your requirements..."]) > span > img {
+    object-fit: contain;
+    object-position: center;
+  }
 }
 @media (min-width: 1024px) {
   [data-feed-post] .line-clamp-2 { line-height: 21px; }
