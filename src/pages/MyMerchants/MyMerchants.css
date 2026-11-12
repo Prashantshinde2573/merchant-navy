@@ -5,7 +5,9 @@
 
 @media (min-width: 1024px) {
   #root .my-merchants-page .ui-button[href="/chats"] {
+    min-height: 32px;
     font-size: 12px;
+    line-height: 12px;
     padding: 12px;
   }
 }
