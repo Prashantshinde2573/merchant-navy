@@ -44,6 +44,10 @@
   .applied-match{font-weight:600;font-size:14px;line-height:20px}
   .applied-match-detail{gap:6px;margin-top:5px;font-size:11px}
   .applied-match-detail span{gap:3px}
+  .applied-merchants[aria-label="Merchant applications"] td[data-label]::before,
+  .applied-merchants[aria-label="Merchant applications"] .applied-match-detail {
+    font-size: 13px;
+  }
   .applied-merchants td.applied-actions-cell{
     grid-column:1 / -1;grid-row:3;border-top:1px solid #ececf0;padding-top:14px;
   }
@@ -61,6 +65,27 @@
 .applied-merchants td{padding-bottom:10px}
 .applied-merchants th.applied-checkbox,.applied-merchants td.applied-checkbox{width:38px}
 .applied-identity{gap:12px}.applied-identity img{flex-shrink:0}
+
+  .applied-merchants[aria-label="Merchant applications"] .applied-match-detail {
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
+  .applied-merchants[aria-label="Merchant applications"] .applied-match-detail > span {
+    flex-shrink: 0;
+    align-items: center;
+  }
+
+  .applied-merchants[aria-label="Merchant applications"] .applied-match-detail .port-service-icon {
+    display: inline-grid !important;
+    place-items: center;
+    flex-basis: auto !important;
+  }
+
+  .applied-merchants[aria-label="Merchant applications"] .applied-match-detail > i {
+    flex-shrink: 0;
+  }
 }
 
 .application-list-empty { display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:72px 0;text-align:center;color:#71717a; }

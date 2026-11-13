@@ -16,12 +16,19 @@ function Avatar({ name, image, initials, className = '' }) {
 export function VendorProfileModal({ companyName, onClose }) {
   const [activeTab, setActiveTab] = useState('Company');
   const dialogRef = useRef(null);
+  const dragStart = useRef(null);
   const tabRefs = useRef([]);
   const bodyRef = useRef(null);
   const profile = COMPANY_PROFILES[companyName] || (companyName ? { name: companyName, fields: [], ports: [], services: [], certificates: [], insurance: [], team: [], gallery: [], reviews: [] } : null);
   useDialogFocus(Boolean(profile), onClose, dialogRef);
   useEffect(() => { setActiveTab('Company'); }, [companyName]);
   if (!profile) return null;
+  const endDrag = (event) => {
+    const start = dragStart.current;
+    dragStart.current = null;
+    dialogRef.current?.style.removeProperty('--vendor-profile-drag');
+    if (start !== null && event.type === 'pointerup' && event.clientY - start > 64) onClose();
+  };
   const selectTab = tab => { setActiveTab(tab); if (bodyRef.current) bodyRef.current.scrollTop = 0; };
   const handleTabKeys = event => {
     if (!['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(event.key)) return;
@@ -32,6 +39,21 @@ export function VendorProfileModal({ companyName, onClose }) {
   };
   return createPortal(<div className="vendor-profile-backdrop" onClick={event => { if (event.target === event.currentTarget) onClose(); }}>
     <section ref={dialogRef} tabIndex={-1} role="dialog" aria-modal="true" aria-labelledby="vendor-profile-name" className="vendor-profile-dialog">
+      <div
+        className="vendor-profile-drag-handle"
+        aria-hidden="true"
+        onPointerDown={event => {
+          if (!event.isPrimary || event.button !== 0) return;
+          event.currentTarget.setPointerCapture(event.pointerId);
+          dragStart.current = event.clientY;
+        }}
+        onPointerMove={event => {
+          if (dragStart.current === null || !event.currentTarget.hasPointerCapture(event.pointerId)) return;
+          dialogRef.current.style.setProperty('--vendor-profile-drag', `${Math.max(0, event.clientY - dragStart.current)}px`);
+        }}
+        onPointerUp={endDrag}
+        onLostPointerCapture={endDrag}
+      />
       <header className="vendor-profile-header">
         <Avatar name={profile.name} image={profile.avatar} initials={profile.initials} />
         <div className="vendor-profile-identity"><h2 id="vendor-profile-name" title={profile.name}>{profile.name}</h2>
