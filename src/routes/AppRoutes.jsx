@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { ProtectedRoute } from './ProtectedRoute';
 import { AppLayout } from '../components/Layout/AppLayout';
 
+import { Signup, signupSteps } from '../pages/Signup/Signup';
 import { Login } from '../pages/Login/Login';
 import { Home } from '../pages/Home/Home';
 import { MyPosts } from '../pages/MyPosts/MyPosts';
@@ -15,6 +16,7 @@ import { Chat } from '../pages/Chat/Chat';
 import { Wins } from '../pages/Wins/Wins';
 import { Help } from '../pages/Help/Help';
 import { Announcements } from '../pages/Announcements/Announcements';
+import { AnnouncementDetail } from '../pages/Announcements/AnnouncementDetail';
 import { CompanyProfile } from '../pages/CompanyProfile/CompanyProfile';
 import { ProfileSettings } from '../pages/ProfileSettings/ProfileSettings';
 
@@ -23,6 +25,10 @@ export function AppRoutes() {
     <Routes>
       {/* Public Login Route */}
       <Route path="/login" element={<Login />} />
+
+      {signupSteps.map(({ path }, step) => (
+        <Route key={path} path={path} element={<Signup step={step} />} />
+      ))}
 
       {/* Protected App Routes */}
       <Route
@@ -52,7 +58,7 @@ export function AppRoutes() {
         <Route path="wins" element={<Wins />} />
         <Route path="help" element={<Help />} />
         <Route path="announcements" element={<Announcements />} />
-        <Route path="announcements/:id" element={<Announcements />} />
+        <Route path="announcements/:id" element={<AnnouncementDetail />} />
         <Route path="company-profile" element={<CompanyProfile />} />
         <Route path="company/:id" element={<CompanyProfile />} />
         <Route path="settings" element={<ProfileSettings />} />

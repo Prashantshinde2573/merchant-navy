@@ -7,7 +7,7 @@ import { usePosts } from '../../context/PostContext';
 import { useDialogFocus } from '../../hooks/useDialogFocus';
 import './PostActions.css';
 
-export function PostActions({ post, showClose = false, editOnly = false }) {
+export function PostActions({ post, showClose = false, editOnly = false, onRate }) {
   const navigate = useNavigate();
   const { updatePost } = usePosts();
   const [menu, setMenu] = useState(false);
@@ -24,7 +24,8 @@ export function PostActions({ post, showClose = false, editOnly = false }) {
   const open = value => { setMenu(false); setDialog(value); };
   return <>
     {editOnly ? <button type="button" className="post-edit-button" onClick={() => open('edit')}>Edit Post</button> : <div className="post-actions" ref={root}>
-      {showClose && !['Closed', 'History'].includes(post.status) && <button type="button" className="post-close-button" onClick={() => open('close')}>Mark Close</button>}
+      {onRate && <button type="button" className="post-close-button" onClick={onRate}>Rate Now</button>}
+      {showClose && !onRate && !['Closed', 'History'].includes(post.status) && <button type="button" className="post-close-button" onClick={() => open('close')}>Mark Close</button>}
       <button type="button" className="post-overflow-trigger" aria-label="More actions" aria-haspopup="menu" aria-expanded={menu} onClick={() => setMenu(!menu)}><MoreVertical size={20} /></button>
       {menu && <div className="post-overflow-menu" role="menu"><button role="menuitem" autoFocus onClick={() => open('edit')}>Edit Post</button><button role="menuitem" className="danger" onClick={() => open('delete')}>Delete Post</button></div>}
     </div>}

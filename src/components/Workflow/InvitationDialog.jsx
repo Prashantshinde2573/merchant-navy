@@ -10,7 +10,7 @@ export function InvitationDialog({names,onClose,onSend}) {
  const format=(command)=>{editor.current?.focus();document.execCommand(command,false);read();};
  const chooseFile=event=>{const next=event.target.files?.[0];event.target.value='';if(!next)return;if(next.size>20*1024*1024||!(next.type==='application/pdf'||next.type.startsWith('image/'))){setError('Choose one PDF or image up to 20 MB.');return;}setFile(next);setError('');};
  const send=async()=>{if(sending)return;if(message.length>1500){setError('Message must be 1,500 characters or fewer.');return;}setSending(true);setError('');try{await onSend(message,{fileName:file?.name||'',fileType:file?.type||'',fileSize:file?.size||0,messageHtml:editor.current?.innerHTML||''});onClose();}catch(e){setError(e.message);setSending(false);}};
- return <WorkflowDialog className="invitation-workflow-dialog" title={`Invite to Discussion - ${names.join(', ')}`} onClose={()=>{if(!sending)onClose();}}>
+ return <WorkflowDialog mobileSheet className="invitation-workflow-dialog" title={`Invite to Discussion - ${names.join(', ')}`} onClose={()=>{if(!sending)onClose();}}>
   <div className="invitation-scroll-body">
   <div className="flex items-center justify-between mb-2 text-sm"><span>Message</span><span className="text-xs text-zinc-500" aria-live="polite">{message.length}/1500</span></div>
   <div className="quill"><div className="ql-toolbar ql-snow" role="toolbar" aria-label="Invitation message formatting">

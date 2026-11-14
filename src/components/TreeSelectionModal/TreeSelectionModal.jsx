@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ChevronRight, Search, X } from 'lucide-react';
 import { useDialogFocus } from '../../hooks/useDialogFocus';
+import { MobileSheetHandle } from '../MobileSheet/MobileSheetHandle';
 import './TreeSelectionModal.css';
 
 function GroupCheckbox({ label, checked, partial, onChange }) {
@@ -20,11 +21,12 @@ export function TreeSelectionModal({ isOpen, title, subtitle, searchPlaceholder,
   const query = search.trim().toLowerCase();
   const toggleItem = item => setDraft(previous => previous.includes(item) ? previous.filter(value => value !== item) : [...previous, item]);
   const filtered = groups.map(group => ({ ...group, matches: group.name.toLowerCase().includes(query) ? group.children : group.children.filter(item => item.toLowerCase().includes(query)) })).filter(group => !query || group.name.toLowerCase().includes(query) || group.matches.length);
-  return <div className="tree-selection-backdrop" onClick={event => { if (event.target === event.currentTarget) onClose(); }}>
-    <section ref={dialog} tabIndex={-1} role="dialog" aria-modal="true" aria-labelledby="tree-selection-title" className="tree-selection-dialog">
+  return <div className="tree-selection-backdrop mobile-sheet-backdrop" onClick={event => { if (event.target === event.currentTarget) onClose(); }}>
+    <section ref={dialog} tabIndex={-1} role="dialog" aria-modal="true" aria-labelledby="tree-selection-title" className="tree-selection-dialog mobile-sheet-panel">
+      <MobileSheetHandle panelRef={dialog} onClose={onClose} />
       <header><div className="tree-selection-title-row"><div><h3 id="tree-selection-title">{title}</h3><p>{subtitle}</p></div><button type="button" aria-label={`Close ${title.toLowerCase()}`} onClick={onClose}><X size={18} /></button></div>
         <div className="tree-selection-search app-search-box"><Search size={18} aria-hidden="true" /><input aria-label={searchPlaceholder} placeholder={searchPlaceholder} value={search} onChange={event => setSearch(event.target.value)} />{search && <button type="button" aria-label="Clear search" onClick={() => setSearch('')}><X size={16} /></button>}</div>
-        <div className="tree-selection-tools"><div><button type="button" onClick={() => setExpanded(groups.map(group => group.name))}>Expand All</button><button type="button" onClick={() => setExpanded([])}>Collapse All</button></div>{draft.length > 0 && <button type="button" onClick={() => setDraft([])}>Clear All</button>}</div>
+        <div className="tree-selection-tools"><div><button type="button" onClick={() => setExpanded(groups.map(group => group.name))}>Expand All</button><button type="button" onClick={() => setExpanded([])}>Collapse All</button></div>{draft.length > 0 && <button type="button" className="tree-selection-clear" onClick={() => setDraft([])}>Clear All</button>}</div>
       </header>
       <div className="tree-selection-list">
         {filtered.map(group => {

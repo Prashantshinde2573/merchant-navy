@@ -1,18 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { announcements } from '../../data/announcements';
 import './Announcements.css';
 
 export function Announcements() {
   const [searchQuery, setSearchQuery] = useState('');
-
-  const announcements = [
-    {
-      id: 'wad5c6MC3puyjcRvLhWvG',
-      author: 'admin@merchant.navy',
-      title: 'Testing Announcement 1',
-      timeAgo: '4 months ago',
-    },
-  ];
 
   const filteredAnnouncements = announcements.filter(
     (a) =>
@@ -79,8 +71,9 @@ export function Announcements() {
 
         <div className="ui-card overflow-hidden rounded-xl border border-zinc-100 bg-white shadow-[0px_1px_2px_rgba(0,0,0,0.05)]">
           {filteredAnnouncements.map((item) => (
-            <div
+            <Link
               key={item.id}
+              to={`/announcements/${item.id}`}
               className="ui-card-padding flex items-start justify-between gap-4 px-6 sm:px-8 py-4 transition-colors hover:bg-zinc-50 border-b border-zinc-100 last:border-b-0 cursor-pointer"
             >
               <div className="flex flex-col gap-1 min-w-0 flex-1">
@@ -94,7 +87,7 @@ export function Announcements() {
               <span className="mt-0.5 shrink-0 text-[11px] leading-4.5 text-zinc-500">
                 {item.timeAgo}
               </span>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

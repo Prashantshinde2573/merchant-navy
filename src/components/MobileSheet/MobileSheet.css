@@ -1,0 +1,60 @@
+.mobile-sheet-handle {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .mobile-sheet-backdrop:has(> .mobile-sheet-panel) {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0;
+    overflow: hidden;
+    background: rgb(0 0 0 / 28%);
+    backdrop-filter: blur(3px);
+  }
+
+  .mobile-sheet-backdrop > .mobile-sheet-panel {
+    box-sizing: border-box;
+    width: 100%;
+    height: 90dvh;
+    max-height: 100%;
+    border-radius: 16px 16px 0 0;
+    transform: translateY(var(--mobile-sheet-drag, 0px));
+  }
+
+  .mobile-sheet-panel > :is(header, footer) {
+    flex-shrink: 0;
+  }
+
+  .mobile-sheet-panel > .tree-selection-list {
+    flex: 1;
+  }
+
+  .mobile-sheet-handle {
+    display: grid;
+    place-items: center;
+    height: 20px;
+    flex-shrink: 0;
+    touch-action: none;
+    cursor: grab;
+  }
+
+  .mobile-sheet-handle::after {
+    content: '';
+    width: 36px;
+    height: 4px;
+    border-radius: 4px;
+    background: #d4d4d8;
+  }
+}
+
+@media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
+  .mobile-sheet-backdrop > .mobile-sheet-panel {
+    animation: mobile-sheet-enter 240ms ease-out;
+  }
+}
+
+@keyframes mobile-sheet-enter {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}

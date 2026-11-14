@@ -73,7 +73,7 @@ export function Login() {
       const res = verifyOtp(otp, email);
       setLoading(false);
       if (res.success) {
-        navigate('/home', { replace: true });
+        navigate(res.registrationRequired ? '/business-info' : '/home', { replace: true });
       } else {
         setError(res.message);
       }

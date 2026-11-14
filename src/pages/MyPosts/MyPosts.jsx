@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { usePosts } from '../../context/PostContext';
 import { PostActions } from '../../components/PostActions/PostActions';
+import { ReviewDialog } from '../../components/Workflow/ReviewDialog';
 import './MyPosts.css';
 import { useAuth } from '../../context/AuthContext';
 
@@ -25,7 +26,8 @@ export function MyPosts() {
   const {currentUser}=useAuth();
   const [activeTab, setActiveTab] = useState(new URLSearchParams(window.location.search).get('tab')||'all');
   const [searchQuery, setSearchQuery] = useState('');
-  const { getMyPosts, getApplicationsForPost, postChanges } = usePosts();
+  const [reviewTarget, setReviewTarget] = useState(null);
+  const { getMyPosts, getApplicationsForPost, postChanges, workflow } = usePosts();
 
   const customMyPosts = getMyPosts ? getMyPosts() : [];
   
@@ -67,6 +69,13 @@ export function MyPosts() {
 
   return (
     <>
+      {reviewTarget && (
+        <ReviewDialog
+          application={reviewTarget}
+          onSubmit={payload => workflow.dispatch('review', payload)}
+          onClose={() => setReviewTarget(null)}
+        />
+      )}
       <div className="my-posts-page mobile-page mx-auto w-full max-w-5xl px-6 py-6">
         <div className="mb-6">
           <div className="inline-flex flex-col items-start justify-start gap-1.5 mobile-heading-group">
@@ -182,6 +191,9 @@ export function MyPosts() {
                 const isAwarded = post.status === 'Awarded';
                 const isDraft = post.status === 'Draft';
                 const postApps = getApplicationsForPost ? getApplicationsForPost(post.id) : [];
+                const ratingApplication = activeTab === 'rate-now' && post.ownerId === currentUser
+                  ? postApps.find(app => app.ownerId === currentUser && app.status === 'completed' && !app.review)
+                  : null;
                 const quotationsCount = post.quotationsCount !== undefined ? post.quotationsCount : postApps.length;
 
                 return (
@@ -239,7 +251,11 @@ export function MyPosts() {
                           </div>
                           <div className="my-post-card-actions flex items-center gap-3">
                             <Link className="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden border-medium px-4 min-w-20 h-10 text-small gap-2 rounded-medium bg-transparent text-primary border-blue-200 hover:bg-blue-50" to={`/my-posts/${post.id}`}>View Details</Link>
-                            <PostActions post={post} showClose />
+                            <PostActions
+                              post={post}
+                              showClose={activeTab !== 'rate-now'}
+                              onRate={ratingApplication ? () => setReviewTarget(ratingApplication) : undefined}
+                            />
                           </div>
                         </div>
                       </div>

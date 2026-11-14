@@ -1,6 +1,9 @@
 import React, { createContext, useContext, useState } from 'react';
 import {readDemoSession,saveDemoSession,clearDemoSession} from '../utils/demoSession';
 
+import { COMPANY_EMAIL } from '../utils/companyWorkflow';
+import { clearRegistration, readRegistration, registeredAccount, saveRegisteredAccount, saveRegistration } from '../utils/demoRegistration';
+
 const AuthContext = createContext(null);
 
 export const DEMO_EMAIL = 'shivhare.yuvraj@gmail.com';
@@ -26,15 +29,38 @@ export function AuthProvider({ children }) {
     return { success: false, message: 'Please enter a valid email address' };
   };
 
+  const signIn = email => {
+    saveDemoSession(sessionStorage, email);
+    setCurrentUser(email);
+    setIsAuthenticated(true);
+  };
+
   const verifyOtp = (otp, email) => {
-    const trimmedOtp = otp.trim();
-    if (trimmedOtp === DEMO_OTP) {
-      setIsAuthenticated(true);
-      setCurrentUser((email || DEMO_EMAIL).trim().toLowerCase());
-      saveDemoSession(sessionStorage,email||DEMO_EMAIL);
+    if (otp.trim() !== DEMO_OTP) {
+      return { success: false, message: 'Invalid verification code. Please check the code and try again.' };
+    }
+    const address = (email || DEMO_EMAIL).trim().toLowerCase();
+    if (address === DEMO_EMAIL || address === COMPANY_EMAIL || registeredAccount(address)) {
+      clearRegistration();
+      signIn(address);
       return { success: true };
     }
-    return { success: false, message: 'Invalid verification code. Please check the code and try again.' };
+    const pending = readRegistration();
+    if (pending?.email !== address) saveRegistration({ email: address });
+    return { success: true, registrationRequired: true };
+  };
+
+  const completeRegistration = () => {
+    const draft = readRegistration();
+    if (!draft?.email || !draft.phoneVerified || !draft.name?.trim() || !draft.country ||
+        !draft.contactName?.trim() || !draft.jobTitle?.trim() ||
+        !draft.ports?.length || !draft.services?.length || !draft.consent) {
+      throw new Error('Complete all required registration fields before continuing.');
+    }
+    const { email, ...profile } = draft;
+    saveRegisteredAccount(email, profile);
+    signIn(email);
+    clearRegistration();
   };
 
   const logout = () => {
@@ -43,7 +69,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, currentUser, sendOtp, verifyOtp, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, currentUser, sendOtp, verifyOtp, completeRegistration, logout }}>
       {children}
     </AuthContext.Provider>
   );

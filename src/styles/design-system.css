@@ -78,7 +78,7 @@ body { font-family: 'App Inter', Inter, sans-serif; }
 #root .notifications-page [role=link] > .flex-1 { min-width: 0; gap: 4px; }
 #root .notifications-page [role=link] p:first-child { font-size: 14px; line-height: 22px; }
 #root .notifications-page [role=link] p:last-child { font-size: 13px; line-height: 18px; }
-#root .notifications-page [role=link] > .size-12 { width: 40px; height: 40px; }
+#root .notifications-page [role=link] > .size-12 { width: 48px; height: 48px; }
 @media (max-width: 1023px) {
   :root { --ui-card-padding: 16px; --ui-page-title-size: 20px; --ui-body-size: 14px; --ui-body-line: 22px; }
   #root .ui-card-padding { padding: var(--ui-card-padding) !important; }

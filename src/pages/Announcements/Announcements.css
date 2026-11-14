@@ -10,3 +10,130 @@
     padding-right: 16px !important;
   }
 }
+
+.announcement-detail-crumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  color: #71717a;
+}
+
+.announcement-detail-crumb a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.announcement-detail-crumb a:hover { color: #1f285d; }
+.announcement-detail-crumb [aria-current] { color: #1f285d; font-weight: 500; }
+
+.announcement-article {
+  overflow: hidden;
+  border: 1px solid #edf0f7;
+  background: white;
+}
+
+.announcement-article > header {
+  padding: 28px 32px 24px;
+  border-bottom: 1px solid #f0f1f4;
+}
+
+.announcement-article h1 {
+  font-size: 24px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.announcement-detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.announcement-detail-tags > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: #f5f6f8;
+  color: #52525b;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.announcement-detail-tags > span:first-child {
+  background: #edf9f1;
+  color: #27643e;
+}
+
+.announcement-article-body {
+  display: grid;
+  gap: 28px;
+  padding: 32px 46px;
+  font-size: 15px;
+  line-height: 24px;
+  overflow-wrap: anywhere;
+}
+
+.announcement-article-body img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.announcement-article > footer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 24px 32px 0;
+  padding: 20px 0 24px;
+  border-top: 1px solid #edf0f7;
+}
+
+.announcement-author-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: #eef3fc;
+  color: #1f285d;
+}
+
+.announcement-author {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  color: #424976;
+  overflow-wrap: anywhere;
+}
+
+.announcement-author time,
+.announcement-share-status {
+  font-size: 12px;
+  color: #71717a;
+}
+
+.announcement-article footer button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: #71717a;
+  cursor: pointer;
+}
+
+.announcement-share-status { flex-basis: 100%; }
+
+@media (max-width: 1023px) {
+  .announcement-article > header { padding: 20px 16px; }
+  .announcement-article-body { padding: 24px 16px; gap: 20px; }
+  .announcement-article > footer { margin: 16px 16px 0; }
+}
