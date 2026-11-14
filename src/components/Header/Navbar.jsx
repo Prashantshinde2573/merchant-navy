@@ -13,7 +13,6 @@ export function Navbar() {
   const { unreadCount, chatUnreadCount } = useNotifications();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [showAnnouncementsModal, setShowAnnouncementsModal] = useState(false);
   const desktopDropdownRef = useRef(null);
   const mobileDropdownRef = useRef(null);
   const pathname = location.pathname;
@@ -283,42 +282,6 @@ export function Navbar() {
         ))}
       </nav>
 
-      {/* ==================== MOBILE ANNOUNCEMENTS MODAL ==================== */}
-      {showAnnouncementsModal && (
-        <div className="md:hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs">
-          <div className="bg-white w-full max-w-sm rounded-2xl border border-blue-50 shadow-2xl p-5 flex flex-col gap-4 max-h-[85vh] overflow-y-auto">
-            <div className="flex items-center justify-between pb-3 border-b border-gray-100">
-              <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-primary text-2xl">campaign</span>
-                <h3 className="ui-section-title font-semibold text-lg text-gray-900">Announcements</h3>
-              </div>
-              <button
-                type="button"
-                onClick={() => setShowAnnouncementsModal(false)}
-                className="text-gray-400 hover:text-gray-600 p-1 cursor-pointer"
-              >
-                <span className="material-symbols-outlined text-xl">close</span>
-              </button>
-            </div>
-
-            <div className="space-y-3">
-              <div className="p-3 bg-blue-50/50 rounded-xl border border-blue-100/60">
-                <p className="text-xs font-normal text-zinc-500">admin@merchant.navy</p>
-                <p className="text-sm font-semibold text-gray-900 mt-0.5">Testing Announcement 1</p>
-                <p className="text-[11px] text-zinc-400 mt-1">May 6, 2026</p>
-              </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setShowAnnouncementsModal(false)}
-              className="w-full py-2.5 bg-blue-50 text-primary font-semibold rounded-xl hover:bg-blue-100 transition-colors text-sm cursor-pointer"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
     </>
   );
 }

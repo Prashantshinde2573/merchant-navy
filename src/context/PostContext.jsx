@@ -2,13 +2,12 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { POSTS_DATA, DEFAULT_POST, DEFAULT_MY_POST } from '../data/postsData';
 import { useAuth } from './AuthContext';
 import { useCompanyWorkflow } from '../hooks/useCompanyWorkflow';
-import { COMPANY_EMAIL, APPLICANT_EMAIL, demoCompany, ownerOfPost, compactBudget, quotePrice, workflowDate } from '../utils/companyWorkflow';
+import { COMPANY_EMAIL, demoCompany, ownerOfPost, compactBudget, quotePrice, workflowDate } from '../utils/companyWorkflow';
 import { COMPANY_PROFILES } from '../data/companyProfiles';
 
 const PostContext = createContext();
 
 const STORAGE_CUSTOM_POSTS = 'merchant_navy_custom_posts';
-const STORAGE_APPLICATIONS = 'merchant_navy_applications';
 const STORAGE_REPORTS = 'merchant_navy_reports';
 
 export function PostProvider({ children }) {

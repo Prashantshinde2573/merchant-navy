@@ -1,7 +1,4 @@
 /* Help Isolated Styles */
-.help-container {
-  max-width: 100%;
-}
 
 /* MOBILE ONLY */
 @media (max-width: 767px) {

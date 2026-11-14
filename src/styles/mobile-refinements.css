@@ -19,7 +19,6 @@
 }
 
 /* Empty states need explicit padding at every screen size. */
-.wins-empty-card { padding:32px 24px; box-sizing:border-box; }
 @media(max-width:1023px){
   .port-service-icon.port-service-icon { display:inline-flex!important; align-items:center; justify-content:center; text-align:center; vertical-align:middle; margin-top:0!important; }
   #root :is(.home-page,.my-posts-page) .flex:has(> .port-service-icon) { align-items:center!important; }
@@ -48,8 +47,6 @@
 @media(max-width:1023px){
   #root .app-main-layout .app-top-nav { padding-left:12px!important; padding-right:12px!important; }
   .mobile-top-header .mobile-navbar-logo { padding-inline:0!important; }
-  .mobile-navbar-profile { display:inline-flex; align-items:center; justify-content:center; width:40px; min-width:40px; height:44px; flex-shrink:0; border-radius:8px; }
-  .mobile-navbar-profile img { display:block; width:32px; height:32px; border-radius:8px; object-fit:cover; }
   .vendor-profile-section .vendor-profile-chips { margin-left:32px; min-width:0; }
 }
 
@@ -71,7 +68,6 @@
 }
 
 @media(max-width:1023px){
-  .mobile-navbar-actions .mobile-navbar-profile { width:32px; min-width:32px; margin-right:-4px; }
   #_r_19q_ .quill .ql-toolbar { display:flex!important; align-items:center; flex-wrap:nowrap!important; overflow-x:auto; white-space:nowrap; scrollbar-width:none; }
   #_r_19q_ .quill .ql-toolbar::-webkit-scrollbar { display:none; }
   #_r_19q_ .quill .ql-toolbar .ql-formats { display:inline-flex; align-items:center; flex:0 0 auto; flex-wrap:nowrap!important; width:auto!important; gap:2px; margin:0 4px 0 0; }

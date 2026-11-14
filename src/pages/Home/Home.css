@@ -1,7 +1,4 @@
 /* Home Page Isolated Styles */
-.home-feed-card {
-  transition: all 0.2s ease-in-out;
-}
 
 /* MOBILE ONLY OVERRIDES - Desktop is 100% untouched */
 @media (max-width: 767px) {

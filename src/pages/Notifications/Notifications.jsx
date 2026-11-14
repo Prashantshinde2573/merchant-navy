@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNotifications } from '../../context/NotificationContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CheckCheck, Gift, MessageSquare, Star, UserCheck } from 'lucide-react';
 import './Notifications.css';
 

@@ -1,6 +1,6 @@
 import { ContentIcon } from '../../components/ContentIcon/ContentIcon';
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { usePosts } from '../../context/PostContext';
 import { PostActions } from '../../components/PostActions/PostActions';
 import { ReviewDialog } from '../../components/Workflow/ReviewDialog';
@@ -22,7 +22,6 @@ const DEFAULT_MY_POST = {
 };
 
 export function MyPosts() {
-  const navigate = useNavigate();
   const {currentUser}=useAuth();
   const [activeTab, setActiveTab] = useState(new URLSearchParams(window.location.search).get('tab')||'all');
   const [searchQuery, setSearchQuery] = useState('');

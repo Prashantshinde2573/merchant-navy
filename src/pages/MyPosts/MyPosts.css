@@ -1,7 +1,4 @@
 /* MyPosts Isolated Styles */
-.my-posts-tabs {
-  scrollbar-width: thin;
-}
 
 /* MOBILE ONLY */
 @media (max-width: 767px) {

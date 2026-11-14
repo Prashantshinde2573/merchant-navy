@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './Chat.css';
 import {usePosts} from '../../context/PostContext';
 import {useAuth} from '../../context/AuthContext';

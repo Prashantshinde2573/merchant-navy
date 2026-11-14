@@ -1,7 +1,4 @@
 /* MyMerchants Isolated Styles */
-.my-merchants-table {
-  width: 100%;
-}
 
 @media (min-width: 1024px) {
   #root .my-merchants-page .ui-button[href="/chats"] {

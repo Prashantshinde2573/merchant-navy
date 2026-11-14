@@ -1,6 +1,5 @@
 import { PortServiceIcon } from '../../components/PortServiceIcon/PortServiceIcon';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import './CompanyProfile.css';
 
 const DEFAULT_PROFILE = {
